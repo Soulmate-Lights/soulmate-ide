@@ -1,0 +1,122 @@
+.list {
+  display: flex;
+  width: 240px;
+  flex-shrink: 0;
+  border-right: 1px solid var(--border-color);
+  flex-direction: column;
+  background-color: #efefef;
+}
+
+.dark .list {
+  background: #333;
+}
+
+.sketch {
+  display: flex;
+  width: 100%;
+  box-sizing: border-box;
+  justify-content: flex-start;
+  text-decoration: none;
+  align-items: center;
+  color: #333;
+  padding: 8px 8px 8px 12px;
+}
+
+.sketch a {
+  color: inherit;
+  text-decoration: none;
+  flex-grow: 1;
+  padding-left: 8px;
+}
+
+.sketch .delete {
+  flex-grow: 0;
+  margin-left: auto;
+  padding: 4px;
+  width: 26px;
+  height: 26px;
+  border-radius: 4px;
+  opacity: 0.2;
+}
+
+.sketch:hover .delete {
+  opacity: 0.5;
+}
+
+.sketch .delete:hover {
+  background: red;
+  color: white;
+  opacity: 1;
+}
+
+.dark .sketch {
+  color: white;
+}
+
+.dark .sketch:hover {
+  background: #666;
+}
+
+.sketch.selected,
+.sketch.selected:hover {
+  background: rgb(211, 211, 211);
+  font-weight: 500;
+}
+
+.dark .sketch.selected,
+.dark .sketch.selected:hover {
+  background: #222;
+  color: white;
+}
+
+.sketch .video-wrapper {
+  margin-right: 8px;
+}
+
+.sketch:hover {
+  background: #f3f3f3;
+}
+
+.sketch video,
+.video-wrapper,
+.video-wrapper::after {
+  display: block;
+  position: relative;
+  top: 0px;
+  left: 0px;
+  height: 32px;
+  width: 32px;
+  border-radius: 8px;
+}
+
+.video-wrapper {
+  margin: 4px;
+}
+
+.video-wrapper::after {
+  position: absolute;
+  box-shadow: inset 0px 0px 2px #333;
+  content: " ";
+}
+
+.dark .video-wrapper {
+  box-shadow: inset 0px 0px 2px #222;
+}
+
+.sketch span {
+  display: flex;
+  flex-grow: 1;
+  align-items: center;
+}
+
+.new {
+  box-sizing: border-box;
+}
+
+.list .button {
+  margin: 8px;
+}
+
+.list .logout {
+  margin-top: auto;
+}

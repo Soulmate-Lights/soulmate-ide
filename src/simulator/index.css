@@ -1,0 +1,266 @@
+:root {
+  --border-color: rgb(211, 211, 211);
+}
+
+.dark {
+  --border-color: #000;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  overflow: hidden;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+body {
+  padding: 0 16px;
+  font-family: "Avenir Next", "Avenir", "Roboto", sans-serif;
+  width: 100%;
+  box-sizing: border-box;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  overflow: none;
+}
+
+#app,
+#root {
+  width: 100%;
+  max-width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  overflow: none;
+}
+
+.dark {
+  background: #444;
+  color: white;
+}
+
+.welcome {
+  margin: auto auto;
+  text-align: center;
+}
+
+.frame {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+}
+
+.editor {
+  display: flex;
+  position: relative;
+  width: 50%;
+  box-sizing: border-box;
+  flex-direction: column;
+  flex-grow: 1;
+  overflow: none;
+}
+
+.app-container {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  flex-direction: row;
+}
+
+canvas {
+  width: 400px;
+  height: 400px;
+}
+
+.pixels {
+  display: flex;
+  width: 400px;
+  flex-direction: column;
+  border-left: 1px solid #ddd;
+}
+
+.dark .pixels {
+  border-left: 1px solid #000;
+}
+
+.toolbar {
+  display: flex;
+  padding: 8px 12px;
+  background-color: #efefef;
+  border-top: 1px solid var(--border-color);
+  box-sizing: border-box;
+  width: 100%;
+  font-size: 14px;
+  justify-content: flex-end;
+}
+
+.dark .toolbar {
+  background: #333;
+  color: white;
+}
+
+.spacer {
+  flex: 1;
+}
+
+.code-editor {
+  display: flex;
+  width: 100%;
+  flex-grow: 1;
+  min-height: 0;
+  max-width: 100%;
+  flex-grow: 1;
+  box-sizing: border-box;
+}
+
+.code-editor-wrapper {
+  display: flex;
+  width: 100%;
+  flex-grow: 1;
+  min-height: 0;
+  max-width: 100%;
+  padding: 0 0 0 4px;
+  flex-grow: 1;
+  box-sizing: border-box;
+}
+
+.compiler-output {
+  overflow: auto;
+  flex-grow: 1;
+  box-sizing: border-box;
+  padding: 8px 12px;
+  margin: 0;
+  font-size: 11px;
+  height: 150px;
+  flex-grow: 0;
+  overflow: auto;
+  background: #333;
+  color: lightgreen;
+}
+
+.dark .compiler-output {
+  background: #333;
+  color: lightgreen;
+}
+
+.compiler-output pre {
+  margin: 0;
+  white-space: pre-line;
+}
+
+.tabs {
+  background: #ddd;
+  padding: 8px;
+}
+
+.dark .tabs {
+  background: #333;
+  color: white;
+}
+
+.dark .tabs a {
+  color: white;
+}
+
+.simulator {
+  display: flex;
+  position: relative;
+  flex-grow: 1;
+  width: 400px;
+  background: #333;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  overflow: auto;
+  padding: 50px 0;
+}
+
+.canvas-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-height: 100%;
+  overflow: auto;
+  box-shadow: 0 0 5px #222;
+}
+
+.simulator canvas {
+  border-radius: 2px;
+}
+
+.dark .simulator {
+  border-bottom: 1px solid #000;
+  background: #222;
+}
+
+@keyframes rotating {
+  from {
+    -ms-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+
+  to {
+    -ms-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -webkit-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+.loader {
+  width: 50px;
+  height: 50px;
+  align-self: center;
+  justify-self: center;
+  transform-origin: 50% 50%;
+  animation: rotating 2s linear infinite;
+}
+
+.button {
+  display: flex;
+  text-decoration: none;
+  justify-content: center;
+  align-items: center;
+  background: #dedede;
+  color: #333;
+  text-align: center;
+  padding: 5px 12px 4px 12px;
+  border-radius: 2px;
+  box-shadow: 1px 1px 1px #aaa;
+  cursor: pointer;
+  user-select: none;
+}
+
+.button svg {
+  position: relative;
+  top: -1px;
+  margin-right: 8px;
+}
+
+.button:active {
+  box-shadow: inset 1px 1px 1px #999;
+  background: #cdcdcd;
+}
+
+.button[disabled] {
+  box-shadow: none;
+  box-shadow: 0 0 1px #666;
+  color: #888;
+}
+
+.dark .button {
+  background: #444;
+  box-shadow: 1px 1px 2px #222;
+  color: white;
+}
+
+.dark .button:active {
+  background: #222;
+}
