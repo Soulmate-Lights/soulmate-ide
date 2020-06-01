@@ -1,5 +1,5 @@
 {
-  "name": "soulmate-electron-2",
+  "name": "Soulmate",
   "version": "1.0.0",
   "main": "src/electron.js",
   "license": "MIT",
@@ -36,7 +36,18 @@
   },
   "scripts": {
     "react-start": "parcel -p 3000 index.html",
-    "react-build": "parcel build index.html",
-    "start": "concurrently \"cross-env BROWSER=none yarn react-start\" \"wait-on http://localhost:3000 && electron . \""
+    "react-build": "parcel build index.html --out-dir build --public-url ./",
+    "start": "concurrently \"cross-env BROWSER=none yarn react-start\" \"wait-on http://localhost:3000 && electron . \"",
+    "electron-build": "electron-builder ",
+    "build": "yarn react-build && yarn electron-build --icon src/AppIcon.icns"
+  },
+  "build": {
+    "appId": "com.soulmatelights.editor",
+    "files": [
+      "src/icon.png",
+      "src/electron.js",
+      "src/preload.js",
+      "build/**/*"
+    ]
   }
 }
