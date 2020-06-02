@@ -1,6 +1,5 @@
-import uniqBy from 'lodash/uniqBy';
+import uniqBy from "lodash/uniqBy";
 import "./index.css";
-import { createBrowserHistory } from "history";
 import React, { useRef, useState, useEffect } from "react";
 import Editor from "./Editor";
 import { Link, Router, Switch, Route } from "react-router-dom";
@@ -8,7 +7,7 @@ import { Mode, useLightSwitch } from "use-light-switch";
 import { fetchJson, post, postDelete } from "./utils";
 import List from "./List";
 
-const history = createBrowserHistory();
+import history from "../utils/history";
 
 const PatternEditor = ({ id }) => {
   const mode = useLightSwitch();
@@ -20,15 +19,15 @@ const PatternEditor = ({ id }) => {
   const [soulmates, setSoulmates] = useState([]);
   const [soulmate, setSoulmate] = useState(false);
 
-  ipcRenderer.on('soulmate', (event, arg) => {
+  ipcRenderer.on("soulmate", (event, arg) => {
     let newSoulmates = [...soulmates, arg];
-    newSoulmates = uniqBy(newSoulmates, 'name');
+    newSoulmates = uniqBy(newSoulmates, "name");
     setSoulmates(newSoulmates);
-  })
+  });
 
   useEffect(() => {
-    ipcRenderer.send('scan', {});
-  }, [])
+    ipcRenderer.send("scan", {});
+  }, []);
 
   const fetchSketches = () => {
     return fetchJson("/sketches/list").then(setSketches);
@@ -55,20 +54,20 @@ const PatternEditor = ({ id }) => {
 
   const destroy = (id) => {
     if (!loggedIn) return;
-    if (!confirm('Delete this sketch?')) return;
+    if (!confirm("Delete this sketch?")) return;
     postDelete(`/sketches/${id}`).then(() => fetchSketches());
   };
 
-  let interval = useRef();
-  useEffect(() => {
-    setInterval(() => {
-      interval.current = fetchSketches();
-    }, 8000);
+  // let interval = useRef();
+  // useEffect(() => {
+  //   setInterval(() => {
+  //     interval.current = fetchSketches();
+  //   }, 8000);
 
-    return () => {
-      clearInterval(interval.current);
-    }
-  }, [])
+  //   return () => {
+  //     clearInterval(interval.current);
+  //   };
+  // }, []);
 
   return (
     <div className={`frame ${dark && "dark"}`}>

@@ -4,6 +4,7 @@
   "main": "src/electron.js",
   "license": "MIT",
   "dependencies": {
+    "@auth0/auth0-spa-js": "^1.8.2",
     "avr8js": "^0.9.1",
     "bonjour": "^3.5.0",
     "electron-is-dev": "^1.2.0",
@@ -34,6 +35,9 @@
     "parcel-bundler": "^1.12.4",
     "typescript": "^3.9.3",
     "wait-on": "^5.0.0"
+  },
+  "alias": {
+    "@auth0/auth0-spa-js": "./node_modules/@auth0/auth0-spa-js/dist/lib/auth0-spa-js.cjs.js"
   },
   "scripts": {
     "react-start": "parcel -p 3000 index.html",
