@@ -38,10 +38,11 @@
   },
   "scripts": {
     "react-start": "parcel -p 3000 index.html",
-    "react-build": "parcel build index.html --out-dir build --public-url ./",
+    "react-build": "yarn build-worker && parcel build index.html --out-dir build --public-url ./",
     "start": "concurrently \"cross-env BROWSER=none yarn react-start\" \"wait-on http://localhost:3000 && electron . \"",
     "electron-build": "electron-builder ",
-    "build": "yarn react-build && yarn electron-build"
+    "build": "yarn react-build && yarn electron-build",
+    "build-worker": "parcel build node_modules/monaco-editor/esm/vs/editor/editor.worker.js --no-source-maps"
   },
   "build": {
     "directories": {
