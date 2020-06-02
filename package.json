@@ -44,7 +44,7 @@
     "build": "yarn react-build && yarn electron-build"
   },
   "build": {
-    "appId": "com.soulmatelights.editor",
+    "appId": "com.elliottkember.soulmate",
     "files": [
       "src/icon.png",
       "src/electron.js",
