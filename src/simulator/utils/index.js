@@ -1,15 +1,17 @@
-// export const token = () => false; // document.querySelector("[name=csrf-token]").content;
-
 const server = "https://editor.soulmatelights.com";
 // const server = "http://localhost:3001";
 
-export const fetchJson = (url, token) =>
-  // fetch("https://editor.soulmatelights.com/sketches/list", {
-  fetch(server + url, {
-    headers: {
+export const fetchJson = (url, token) => {
+  let headers = {};
+  if (token) {
+    headers = {
       Authorization: `Bearer ${token}`,
-    },
+    };
+  }
+  return fetch(server + url, {
+    headers,
   }).then((result) => result.json());
+};
 
 export const post = (url, token, body = {}) => {
   return fetch(server + url, {

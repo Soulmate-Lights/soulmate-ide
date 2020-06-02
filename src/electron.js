@@ -13,11 +13,11 @@ let mainWindow;
 
 const { protocol } = require("electron");
 
-// const mainUrl = isDev
-//   ? "http://localhost:3000"
-//   : `file://${path.join(__dirname, "../build/index.html")}`;
+const mainUrl = isDev
+  ? "http://localhost:3000"
+  : `file://${path.join(__dirname, "../build/index.html")}`;
 
-const mainUrl = `file://${path.join(__dirname, "../build/index.html")}`;
+// const mainUrl = `file://${path.join(__dirname, "../build/index.html")}`;
 
 // app.whenReady().then(() => {
 //   protocol.registerFileProtocol(
@@ -40,6 +40,8 @@ const mainUrl = `file://${path.join(__dirname, "../build/index.html")}`;
 //   );
 // });
 
+const auth = require("./auth");
+
 function createWindow() {
   app.userAgentFallback = app.userAgentFallback.replace(
     "Electron/" + process.versions.electron,
@@ -51,6 +53,7 @@ function createWindow() {
     height: 800,
     // icon: __dirname + "/icon.png",
     webPreferences: {
+      enableRemoteModule: true,
       nodeIntegration: true,
       webSecurity: false,
       preload: __dirname + "/preload.js",

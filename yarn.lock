@@ -2515,6 +2515,13 @@ coa@^2.0.2:
     chalk "^2.4.1"
     q "^1.1.2"
 
+codependency@2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/codependency/-/codependency-2.1.0.tgz#597d01ccc6b2704ab8d7a12af5d27ac9b4e27e8a"
+  integrity sha512-JIdmYkE8Z6jwH1OUf4a5H5jk9YShPQkaYPUAiN+ktyChmPP77LGbeKrxWGPqdCnpTmt0hRIn8TXBVu01U3HDhg==
+  dependencies:
+    semver "^5.3.0"
+
 collection-visit@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/collection-visit/-/collection-visit-1.0.0.tgz#4bc0373c164bc3291b4d368c829cf1a80a59dca0"
@@ -3264,6 +3271,14 @@ ejs@^3.1.3:
   integrity sha512-wmtrUGyfSC23GC/B1SMv2ogAUgbQEtDmTIhfqielrG5ExIM9TP4UoYdi90jLF1aTcsWCJNEO0UrgKzP0y3nTSg==
   dependencies:
     jake "^10.6.1"
+
+electron-auth0-login@^1.3.0:
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/electron-auth0-login/-/electron-auth0-login-1.3.0.tgz#0e06c13d8033a310aa8b7fc00cafb9453d239bbc"
+  integrity sha512-ucGnUWom87Uz2BXXh+k1PGp1zFa9lsoGLcyJRtyYpgJv6zZs3DYP0mBHsMGKwwAaR38cDcFyIbEfQek3QeJgWw==
+  dependencies:
+    codependency "2.1.0"
+    qs "6.5.2"
 
 electron-builder@^22.7.0:
   version "22.7.0"
@@ -4691,6 +4706,11 @@ jsprim@^1.2.2:
     json-schema "0.2.3"
     verror "1.10.0"
 
+jwt-decode@^2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/jwt-decode/-/jwt-decode-2.2.0.tgz#7d86bd56679f58ce6a84704a657dd392bba81a79"
+  integrity sha1-fYa9VmefWM5qhHBKZX3TkruoGnk=
+
 keyv@^3.0.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/keyv/-/keyv-3.1.0.tgz#ecc228486f69991e49e9476485a5be1e8fc5c4d9"
@@ -6117,7 +6137,7 @@ q@^1.1.2:
   resolved "https://registry.yarnpkg.com/q/-/q-1.5.1.tgz#7e32f75b41381291d04611f1bf14109ac00651d7"
   integrity sha1-fjL3W0E4EpHQRhHxvxQQmsAGUdc=
 
-qs@~6.5.2:
+qs@6.5.2, qs@~6.5.2:
   version "6.5.2"
   resolved "https://registry.yarnpkg.com/qs/-/qs-6.5.2.tgz#cb3ae806e8740444584ef154ce8ee98d403f3e36"
   integrity sha512-N5ZAX4/LxJmF+7wN74pUD6qAh9/wnvdQcjq9TZjevvXzSUo7bfmw91saqMjzGS2xq91/odN2dW/WOl7qQHNDGA==
@@ -6446,7 +6466,7 @@ request-promise-core@1.1.3:
   dependencies:
     lodash "^4.17.15"
 
-request-promise-native@^1.0.5:
+request-promise-native@^1.0.5, request-promise-native@^1.0.8:
   version "1.0.8"
   resolved "https://registry.yarnpkg.com/request-promise-native/-/request-promise-native-1.0.8.tgz#a455b960b826e44e2bf8999af64dff2bfe58cb36"
   integrity sha512-dapwLGqkHtwL5AEbfenuzjTYg35Jd6KPytsC2/TLkVMz8rm+tNt72MGUWT1RP/aYawMpN6HqbNGBQaRcBtjQMQ==
@@ -6455,7 +6475,7 @@ request-promise-native@^1.0.5:
     stealthy-require "^1.1.1"
     tough-cookie "^2.3.3"
 
-request@^2.88.0:
+request@^2.88.0, request@^2.88.2:
   version "2.88.2"
   resolved "https://registry.yarnpkg.com/request/-/request-2.88.2.tgz#d73c918731cb5a87da047e207234146f664d12b3"
   integrity sha512-MsvtOrfG9ZcrOwAW+Qi+F6HbD0CWXEh9ou77uOb7FM2WPhwT7smM833PzanhJLsgXjN89Ir6V2PczXNnMpwKhw==

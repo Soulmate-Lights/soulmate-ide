@@ -9,6 +9,7 @@ import List from "./List";
 import { useAuth0 } from "../react-auth0-spa";
 
 import history from "../utils/history";
+import jwtDecode from "jwt-decode";
 
 const PatternEditor = ({ id }) => {
   const {
@@ -22,12 +23,13 @@ const PatternEditor = ({ id }) => {
 
   const mode = useLightSwitch();
   const dark = mode === Mode.Dark;
-  const loggedIn = isAuthenticated; //  document.querySelector("[name=logged-in]");
+  const loggedIn = isAuthenticated;
   const [sketches, setSketches] = useState([]);
   const selectedSketch = sketches.find((s) => s.id === id) || sketches[0];
 
   const [soulmates, setSoulmates] = useState([]);
   const [soulmate, setSoulmate] = useState(false);
+  const [userDetails, setUserDetails] = useState(false);
 
   ipcRenderer.on("soulmate", (event, arg) => {
     let newSoulmates = [...soulmates, arg];
@@ -35,19 +37,34 @@ const PatternEditor = ({ id }) => {
     setSoulmates(newSoulmates);
   });
 
+  const getUserDetails = async () => {
+    const id_token = auth.tokenProperties?.id_token;
+    let newUserDetails = false;
+    if (id_token) newUserDetails = jwtDecode(id_token);
+    setUserDetails(newUserDetails);
+  };
+
+  useEffect(() => {
+    console.log("getting user details", auth.tokenProperties?.id_token);
+    getUserDetails();
+  }, [auth.tokenProperties?.id_token]);
+
   useEffect(() => {
     ipcRenderer.send("scan", {});
   }, []);
 
   const fetchSketches = async () => {
-    // const token = await getIdTokenClaims();
-    const token = await getTokenSilently();
-    return fetchJson("/sketches/list", token).then(setSketches);
+    let token;
+    if (auth.tokenProperties) {
+      token = await auth.getToken();
+      return fetchJson("/sketches/list", token).then(setSketches);
+    }
+    return fetchJson("/sketches/list").then(setSketches);
   };
 
   useEffect(() => {
     fetchSketches();
-  }, [user]);
+  }, [userDetails]);
 
   const add = async () => {
     const name = await promptFor({
@@ -105,6 +122,17 @@ const PatternEditor = ({ id }) => {
         soulmates={soulmates}
         soulmate={soulmate}
         setSoulmate={setSoulmate}
+        userDetails={userDetails}
+        logout={async () => {
+          await auth.logout();
+          console.log("out");
+          getUserDetails();
+        }}
+        login={async () => {
+          await auth.login();
+          console.log("in");
+          getUserDetails();
+        }}
       />
       {selectedSketch && (
         <Editor

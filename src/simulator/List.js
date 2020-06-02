@@ -6,7 +6,6 @@ import { RiDeleteBin2Line, RiLogoutCircleRLine } from "react-icons/ri";
 import { Link } from "react-router-dom";
 import "./List.css";
 import { AiOutlinePlusCircle } from "react-icons/ai";
-import { useRef } from "react";
 import { useAuth0 } from "../react-auth0-spa";
 
 export default ({
@@ -17,10 +16,10 @@ export default ({
   selectedSketch,
   add,
   destroy,
+  userDetails,
+  logout,
+  login,
 }) => {
-  const form = useRef();
-  const { user, isAuthenticated, loginWithRedirect, logout } = useAuth0();
-
   return (
     <div className="list">
       <div className="sketches">
@@ -37,7 +36,7 @@ export default ({
             <video src={sketch.video_url} autoPlay muted loop></video>
           </div> */}
               {name.slice(0, 20)}
-              {isAuthenticated && (
+              {userDetails && (
                 <RiDeleteBin2Line
                   className="delete"
                   onClick={() => destroy(sketch.id)}
@@ -59,25 +58,20 @@ export default ({
         </div>
       ))}
 
-      {!isAuthenticated && (
-        <div
-          onClick={() => {
-            loginWithRedirect();
-          }}
-          className="new button"
-        >
+      {!userDetails && (
+        <div onClick={login} className="new button">
           Log in to create a sketch
         </div>
       )}
-      {isAuthenticated && (
+      {userDetails.name && (
         <React.Fragment>
           <div className="new button" onClick={add}>
             <AiOutlinePlusCircle />
             New sketch
           </div>
           <div className="user">
-            <img src={user?.picture} />
-            {user?.name}
+            <img src={userDetails?.picture} />
+            {userDetails?.name}
           </div>
           <a className="logout button" onClick={logout}>
             <RiLogoutCircleRLine />
