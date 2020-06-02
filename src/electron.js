@@ -34,7 +34,8 @@ function createWindow() {
   ipcMain.on('scan', () => {
     // browse for all http services
     bonjour.find({ type: 'http' }, function (service) {
-      if (service.host.indexOf('Soulmate') > -1) {
+      const lowerCaseHost = service.host.toLowerCase();
+      if (lowerCaseHost.indexOf('soulmate') > -1) {
         mainWindow.webContents.send('soulmate', service)
       }
     })

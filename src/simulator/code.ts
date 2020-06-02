@@ -59,11 +59,11 @@ export const prepareFullCode = (code, rows, cols) => `
 // Don't forget to change this!
 #define FIRMWARE_NAME "soulmate-custom"
 // The number of LEDs in each parallel strip
-#define LED_COLS 32
+#define LED_COLS 15
 // The number of parallel strips
-#define LED_ROWS 2
+#define LED_ROWS 70
 // Normally LED_COLS * LED_ROWS
-#define N_LEDS 64
+#define N_LEDS 1050
 // If you're using WS2812B LED strips, uncomment this line
 // #define USE_WS2812B true
 // How long should we spend in each pattern?
@@ -72,6 +72,11 @@ export const prepareFullCode = (code, rows, cols) => `
 #define FADE_DURATION 3000
 // Total power in milliamps
 #define SOULMATE_MILLIAMPS 700
+
+#define BUTTON_ON_VALUE LOW
+#define SOULMATE_BUTTON_PIN 39
+#define SOULMATE_DATA_PIN 32
+#define SOULMATE_CLOCK_PIN 26
 
 #include <Soulmate.h>
 
