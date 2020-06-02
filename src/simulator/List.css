@@ -26,6 +26,10 @@
   margin-right: 8px;
 }
 
+.dark .device {
+  color: white;
+}
+
 .sketch {
   display: flex;
   width: 100%;

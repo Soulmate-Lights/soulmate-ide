@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import { GrInProgress } from 'react-icons/gr';
 import { BsFillPlayFill } from 'react-icons/bs';
 import { IoMdCloudUpload } from 'react-icons/io';
 import Logo from "./logo.svg";
@@ -23,6 +24,7 @@ const App = ({ code: originalCode, sketch, save, soulmate }) => {
   const [code, setCode] = useState(originalCode);
   const [cols, setCols] = useState(15);
   const [rows, setRows] = useState(70);
+  const [flashing, setFlashing] = useState(false);
 
   const buildCode = async (shouldSave = false) => {
     setBuild(undefined);
@@ -38,6 +40,8 @@ const App = ({ code: originalCode, sketch, save, soulmate }) => {
 
   const makeBuild = async () => {
     if (!soulmate) return;
+
+    setFlashing(true);
 
     const editorCode = monacoInstance.current.editor.getModel().getValue();
     const preparedCode = prepareFullCode(editorCode, rows, cols);
@@ -57,7 +61,7 @@ const App = ({ code: originalCode, sketch, save, soulmate }) => {
         'Content-Length': fs.statSync(build).size,
       }
     }).then(response => {
-      console.log(response);
+      setFlashing(false);
     })
   }
 
@@ -130,11 +134,20 @@ const App = ({ code: originalCode, sketch, save, soulmate }) => {
           </div>
 
           {soulmate &&
-            <div className="button" onClick={() => {
-              makeBuild()
+            <div className="button" disabled={flashing} onClick={() => {
+              !flashing && makeBuild()
             }}>
-              <IoMdCloudUpload />
-            Flash to {soulmate.name}
+              {flashing ?
+                <React.Fragment>
+                  <Logo className="loader" />
+                  Flashing to {soulmate.name}...
+                </React.Fragment>
+                :
+                <React.Fragment>
+                  <IoMdCloudUpload />
+                  Flash to {soulmate.name}
+                </React.Fragment>
+              }
             </div>
           }
         </div>

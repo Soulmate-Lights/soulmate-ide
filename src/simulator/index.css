@@ -246,6 +246,8 @@ canvas {
   position: relative;
   top: -1px;
   margin-right: 8px;
+  width: 16px;
+  height: 16px;
 }
 
 .button:active {
@@ -263,6 +265,10 @@ canvas {
   background: #444;
   box-shadow: 1px 1px 2px #222;
   color: white;
+}
+
+.dark .button[disabled] {
+  background: #555;
 }
 
 .dark .button:active {

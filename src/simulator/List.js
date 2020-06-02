@@ -1,5 +1,6 @@
 import React from 'react';
 import { FaRegLightbulb, FaLightbulb } from 'react-icons/fa';
+import { FiCircle, FiCheckCircle } from 'react-icons/fi';
 import { token } from "./utils";
 import { RiDeleteBin2Line, RiLogoutCircleRLine } from "react-icons/ri";
 import { Link } from 'react-router-dom';
@@ -30,9 +31,10 @@ export default ({ sketches, soulmates, soulmate, setSoulmate, selectedSketch, lo
       );
     })}
 
+
     {soulmates?.map(s => (
-      <div className="device" key={s.name} onClick={() => setSoulmate(s)}>
-        {s === soulmate ? <FaRegLightbulb /> : <FaLightbulb />}
+      <div className={`device ${s === soulmate ? 'connected' : ''}`} key={s.name} onClick={() => setSoulmate(s)}>
+        {s === soulmate ? <FiCheckCircle /> : <FiCircle />}
         {s.name}
       </div>
     ))}

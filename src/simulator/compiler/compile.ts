@@ -29,7 +29,7 @@ export async function buildHex(source: string) {
 }
 
 export async function getFullBuild(source: string) {
-  const res = await window.fetch('http://localhost:8080/build', {
+  const res = await window.fetch('http://54.243.44.4:8081/build', {
     method: "POST",
     mode: "cors",
     credentials: 'same-origin',
