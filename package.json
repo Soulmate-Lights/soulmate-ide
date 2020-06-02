@@ -6,6 +6,7 @@
   "dependencies": {
     "@babel/preset-react": "^7.10.1",
     "@babel/runtime": "^7.10.2",
+    "@svgr/parcel-plugin-svgr": "^5.4.0",
     "avr8js": "^0.9.1",
     "bonjour": "^3.5.0",
     "electron-is-dev": "^1.2.0",

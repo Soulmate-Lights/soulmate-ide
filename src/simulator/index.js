@@ -18,6 +18,7 @@ const PatternEditor = ({ id }) => {
   const selectedSketch = sketches.find((s) => s.id === id) || sketches[0];
 
   const [soulmates, setSoulmates] = useState([]);
+  const [soulmate, setSoulmate] = useState(false);
 
   ipcRenderer.on('soulmate', (event, arg) => {
     let newSoulmates = [...soulmates, arg];
@@ -71,13 +72,23 @@ const PatternEditor = ({ id }) => {
 
   return (
     <div className={`frame ${dark && "dark"}`}>
-      <List sketches={sketches} selectedSketch={selectedSketch} loggedIn={loggedIn} add={add} destroy={destroy} soulmates={soulmates} />
+      <List
+        sketches={sketches}
+        selectedSketch={selectedSketch}
+        loggedIn={loggedIn}
+        add={add}
+        destroy={destroy}
+        soulmates={soulmates}
+        soulmate={soulmate}
+        setSoulmate={setSoulmate}
+      />
       {selectedSketch && (
         <Editor
           save={(code) => save(selectedSketch.id, code)}
           key={selectedSketch.id}
           code={selectedSketch.code}
           name={selectedSketch.name}
+          soulmate={soulmate}
         />
       )}
       {!selectedSketch && (

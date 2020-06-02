@@ -7,9 +7,8 @@ import "./List.css"
 import { AiOutlinePlusCircle } from 'react-icons/ai'
 import { useRef } from 'react';
 
-export default ({ sketches, soulmates, selectedSketch, loggedIn, add, destroy }) => {
+export default ({ sketches, soulmates, soulmate, setSoulmate, selectedSketch, loggedIn, add, destroy }) => {
   const form = useRef();
-
 
   return (<div className="list">
     {sketches.map((sketch) => {
@@ -31,15 +30,15 @@ export default ({ sketches, soulmates, selectedSketch, loggedIn, add, destroy })
       );
     })}
 
-    {soulmates?.map(soulmate => (
-      <div className="device" key={soulmate.name}>
-        {soulmate.name === 'iMac' ? <FaRegLightbulb /> : <FaLightbulb />}
-        {soulmate.name}
+    {soulmates?.map(s => (
+      <div className="device" key={s.name} onClick={() => setSoulmate(s)}>
+        {s === soulmate ? <FaRegLightbulb /> : <FaLightbulb />}
+        {s.name}
       </div>
     ))}
 
     {!loggedIn && (
-      <form action="/auth/auth0" method="post" ref={form}>
+      <form action="https://editor.soulmatelights.com/auth/auth0" method="post" ref={form} target="_blank">
         <input type="hidden" name="authenticity_token" value={token()} />
         <div onClick={() => {
           form.current.submit()

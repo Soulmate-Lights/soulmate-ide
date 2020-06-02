@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { BsFillPlayFill } from 'react-icons/bs';
 import { IoMdCloudUpload } from 'react-icons/io';
-// import Logo from "./logo.svg";
+import Logo from "./logo.svg";
 import { buildHex, getFullBuild } from "./compiler/compile";
 import { prepareCode, prepareFullCode } from "./code";
 import Simulator from "./Simulator";
@@ -12,7 +12,7 @@ import Monaco from 'react-monaco-editor';
 import multer from 'multer'; 1
 import request from 'request';
 
-const App = ({ code: originalCode, sketch, save }) => {
+const App = ({ code: originalCode, sketch, save, soulmate }) => {
   let monacoInstance = useRef(false);
   let buildNumber = useRef(0);
   const mode = useLightSwitch();
@@ -37,17 +37,19 @@ const App = ({ code: originalCode, sketch, save }) => {
   };
 
   const makeBuild = async () => {
+    if (!soulmate) return;
+
     const editorCode = monacoInstance.current.editor.getModel().getValue();
     const preparedCode = prepareFullCode(editorCode, rows, cols);
     const build = await getFullBuild(preparedCode);
-    console.log(build);
 
-    const url = 'http://10.0.1.29/ota';
+    const ip = soulmate.addresses[0];
+    const url = `http://${ip}/ota`;
 
     var body = new FormData();
     const contents = fs.readFileSync(build);
     body.append("image", new Blob([contents]), "firmware.bin");
-    fetch('http://10.0.1.29/ota', {
+    fetch(url, {
       method: 'POST',
       body: body,
       mode: 'no-cors',
@@ -60,22 +62,6 @@ const App = ({ code: originalCode, sketch, save }) => {
   }
 
   useEffect(() => {
-    // window.require(["https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.18.1/min/vs/editor/editor.main.js"], () => {
-    //   monacoInstance.current = monaco.editor.create(editor.current, {
-    //     value: code,
-    //     language: "cpp",
-    //     theme: dark ? "vs-dark" : "vs-light",
-    //     // automaticLayout: true,
-    //     scrollBeyondLastLine: false,
-    //     tabSize: 2,
-    //     lineNumbers: false,
-    //     showFoldingControls: false,
-    //     glyphMargin: false,
-    //     folding: false,
-    //     minimap: {
-    //       enabled: false,
-    //     },
-    //   });
     monacoInstance.current.editor.getModel().onDidChangeContent((event) => {
       const editorCode = monacoInstance.current.editor.getModel().getValue();
       setSketches(sketches);
@@ -85,7 +71,6 @@ const App = ({ code: originalCode, sketch, save }) => {
       buildCode(true);
     });
     buildCode();
-    // });
 
     return () => {
       editor.current.innerHTML = "";
@@ -103,11 +88,11 @@ const App = ({ code: originalCode, sketch, save }) => {
     return () => window.removeEventListener('resize', resizeEditor);
   }, [])
 
-  useEffect(() => {
-    //   window.require(["vs/editor/editor.main"], () => {
-    // monacoInstance.current?.editor.setTheme(dark ? "vs-dark" : "vs-light");
-    //   });
-  }, [dark]);
+  // useEffect(() => {
+  //   //   window.require(["vs/editor/editor.main"], () => {
+  //   // monacoInstance.current?.editor.setTheme(dark ? "vs-dark" : "vs-light");
+  //   //   });
+  // }, [dark]);
 
   return (
     <div className="app-container">
@@ -144,18 +129,20 @@ const App = ({ code: originalCode, sketch, save }) => {
             Compile and run (CMD+S)
           </div>
 
-          <div className="button" onClick={() => {
-            makeBuild()
-          }}>
-            <IoMdCloudUpload />
-            Flash to iMac
-          </div>
+          {soulmate &&
+            <div className="button" onClick={() => {
+              makeBuild()
+            }}>
+              <IoMdCloudUpload />
+            Flash to {soulmate.name}
+            </div>
+          }
         </div>
       </div>
 
       <div className="pixels">
         <div className="simulator">
-          {/* {!build && <Logo className="loader" />} */}
+          {!build && <Logo className="loader" />}
 
           {build && (
             <Simulator
