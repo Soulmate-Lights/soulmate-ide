@@ -1,13 +1,16 @@
 import React, { useEffect, useRef, useState } from "react";
 import { BsFillPlayFill } from 'react-icons/bs';
+import { IoMdCloudUpload } from 'react-icons/io';
 // import Logo from "./logo.svg";
-import { buildHex } from "./compiler/compile";
-import { prepareCode } from "./code";
+import { buildHex, getFullBuild } from "./compiler/compile";
+import { prepareCode, prepareFullCode } from "./code";
 import Simulator from "./Simulator";
 import { Link } from "react-router-dom";
 import { Mode, useLightSwitch } from "use-light-switch";
 
 import Monaco from 'react-monaco-editor';
+import multer from 'multer'; 1
+import request from 'request';
 
 const App = ({ code: originalCode, sketch, save }) => {
   let monacoInstance = useRef(false);
@@ -32,6 +35,29 @@ const App = ({ code: originalCode, sketch, save }) => {
     if (buildNumber.current !== buildNumberAtStart) return;
     setBuild(newBuild);
   };
+
+  const makeBuild = async () => {
+    const editorCode = monacoInstance.current.editor.getModel().getValue();
+    const preparedCode = prepareFullCode(editorCode, rows, cols);
+    const build = await getFullBuild(preparedCode);
+    console.log(build);
+
+    const url = 'http://10.0.1.29/ota';
+
+    var body = new FormData();
+    const contents = fs.readFileSync(build);
+    body.append("image", new Blob([contents]), "firmware.bin");
+    fetch('http://10.0.1.29/ota', {
+      method: 'POST',
+      body: body,
+      mode: 'no-cors',
+      headers: {
+        'Content-Length': fs.statSync(build).size,
+      }
+    }).then(response => {
+      console.log(response);
+    })
+  }
 
   useEffect(() => {
     // window.require(["https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.18.1/min/vs/editor/editor.main.js"], () => {
@@ -116,6 +142,13 @@ const App = ({ code: originalCode, sketch, save }) => {
           >
             <BsFillPlayFill />
             Compile and run (CMD+S)
+          </div>
+
+          <div className="button" onClick={() => {
+            makeBuild()
+          }}>
+            <IoMdCloudUpload />
+            Flash to iMac
           </div>
         </div>
       </div>

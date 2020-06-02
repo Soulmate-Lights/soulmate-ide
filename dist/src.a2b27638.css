@@ -469,6 +469,10 @@ canvas {
   justify-content: flex-end;
 }
 
+.toolbar .button {
+  margin-left: 8px;
+}
+
 .dark .toolbar {
   background: #333;
   color: white;
@@ -2307,6 +2311,21 @@ canvas {
 
 .dark .list {
   background: #333;
+}
+
+.device {
+  display: flex;
+  width: 100%;
+  box-sizing: border-box;
+  justify-content: flex-start;
+  text-decoration: none;
+  align-items: center;
+  color: #333;
+  padding: 8px 8px 8px 12px;
+}
+
+.device svg {
+  margin-right: 8px;
 }
 
 .sketch {

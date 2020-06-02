@@ -1,4 +1,5 @@
 import React from 'react';
+import { FaRegLightbulb, FaLightbulb } from 'react-icons/fa';
 import { token } from "./utils";
 import { RiDeleteBin2Line, RiLogoutCircleRLine } from "react-icons/ri";
 import { Link } from 'react-router-dom';
@@ -31,10 +32,9 @@ export default ({ sketches, soulmates, selectedSketch, loggedIn, add, destroy })
     })}
 
     {soulmates?.map(soulmate => (
-      <div className="sketch" key={soulmate.name}>
+      <div className="device" key={soulmate.name}>
+        {soulmate.name === 'iMac' ? <FaRegLightbulb /> : <FaLightbulb />}
         {soulmate.name}
-
-        <div className="button" style={{ marginLeft: 'auto' }}>Upload</div>
       </div>
     ))}
 

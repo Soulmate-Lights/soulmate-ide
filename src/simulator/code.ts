@@ -53,3 +53,37 @@ void loop() {
   FastLED.show();
 }
 `.trim();
+
+
+export const prepareFullCode = (code, rows, cols) => `
+// Don't forget to change this!
+#define FIRMWARE_NAME "soulmate-custom"
+// The number of LEDs in each parallel strip
+#define LED_COLS 32
+// The number of parallel strips
+#define LED_ROWS 2
+// Normally LED_COLS * LED_ROWS
+#define N_LEDS 64
+// If you're using WS2812B LED strips, uncomment this line
+// #define USE_WS2812B true
+// How long should we spend in each pattern?
+#define CYCLE_LENGTH_IN_MS 120000
+// How long should the Soulmate fade between patterns?
+#define FADE_DURATION 3000
+// Total power in milliamps
+#define SOULMATE_MILLIAMPS 700
+
+#include <Soulmate.h>
+
+namespace Pattern {
+  ${code}
+}
+
+void setup() {
+  Soulmate.addRoutine("Sample Pattern", Pattern::draw);
+  Soulmate.setup();
+}
+
+void loop() {
+  Soulmate.loop();
+}`

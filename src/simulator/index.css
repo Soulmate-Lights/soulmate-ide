@@ -97,6 +97,10 @@ canvas {
   justify-content: flex-end;
 }
 
+.toolbar .button {
+  margin-left: 8px;
+}
+
 .dark .toolbar {
   background: #333;
   color: white;
