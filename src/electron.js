@@ -6,21 +6,25 @@ const BrowserWindow = electron.BrowserWindow;
 const path = require("path");
 const isDev = require("electron-is-dev");
 
-const bonjour = require('bonjour')();
-const { ipcMain } = require('electron')
+const bonjour = require("bonjour")();
+const { ipcMain } = require("electron");
 
 let mainWindow;
 
 function createWindow() {
+  app.userAgentFallback = app.userAgentFallback.replace(
+    "Electron/" + process.versions.electron,
+    ""
+  );
+
   mainWindow = new BrowserWindow({
-    width: 900,
-    height: 680,
-    // icon: __dirname + '/icon.icns',
+    width: 1400,
+    height: 800,
     webPreferences: {
       nodeIntegration: true,
       webSecurity: false,
-      preload: __dirname + '/preload.js'
-    }
+      preload: __dirname + "/preload.js",
+    },
   });
 
   mainWindow.loadURL(
@@ -31,15 +35,15 @@ function createWindow() {
   // mainWindow.webContents.openDevTools()
 
   mainWindow.on("closed", () => (mainWindow = null));
-  ipcMain.on('scan', () => {
+  ipcMain.on("scan", () => {
     // browse for all http services
-    bonjour.find({ type: 'http' }, function (service) {
+    bonjour.find({ type: "http" }, function (service) {
       const lowerCaseHost = service.host.toLowerCase();
-      if (lowerCaseHost.indexOf('soulmate') > -1) {
-        mainWindow.webContents.send('soulmate', service)
+      if (lowerCaseHost.indexOf("soulmate") > -1) {
+        mainWindow.webContents.send("soulmate", service);
       }
-    })
-  })
+    });
+  });
 }
 
 app.on("ready", createWindow);
