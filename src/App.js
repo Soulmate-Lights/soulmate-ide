@@ -23,8 +23,14 @@ export default () => {
     <Auth0Provider
       domain={config.domain}
       client_id={config.clientId}
-      redirect_uri={window.location.origin}
+      redirect_uri={window.location.href}
+      // redirect_uri="https://yellow-boat-0900.auth0.com/"
+      // redirect_uri="https://yellow-boat-0900.auth0.com/mobile"
+      // redirect_uri={"file:///callback"}
+      // redirect_uri={"soulmate:///callback"}
       onRedirectCallback={onRedirectCallback}
+      audience="https://yellow-boat-0900.auth0.com/api/v2/"
+      responseType="token"
     >
       <App />
     </Auth0Provider>

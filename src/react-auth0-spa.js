@@ -21,7 +21,9 @@ export const Auth0Provider = ({
 
   useEffect(() => {
     const initAuth0 = async () => {
+      console.log("init");
       const auth0FromHook = await createAuth0Client(initOptions);
+      console.log(auth0FromHook);
       setAuth0(auth0FromHook);
 
       if (
@@ -51,7 +53,6 @@ export const Auth0Provider = ({
     setPopupOpen(true);
     try {
       await auth0Client.loginWithPopup(params);
-      console.log("logged in with popup");
     } catch (error) {
       console.error(error);
     } finally {
@@ -60,7 +61,6 @@ export const Auth0Provider = ({
     const user = await auth0Client.getUser();
     setUser(user);
     setIsAuthenticated(true);
-    console.log("done");
   };
 
   const handleRedirectCallback = async () => {

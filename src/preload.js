@@ -6,3 +6,6 @@ window.fs = electronFs;
 
 var electron = require("electron");
 window.electron = electron;
+
+const prompt = remote.require("electron-prompt");
+window.promptFor = prompt;

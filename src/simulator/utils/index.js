@@ -1,20 +1,34 @@
-export const token = () => false; // document.querySelector("[name=csrf-token]").content;
+// export const token = () => false; // document.querySelector("[name=csrf-token]").content;
 
-export const fetchJson = (url) =>
-  fetch("http://editor.soulmatelights.com/sketches/list").then((result) => result.json());
+const server = "https://editor.soulmatelights.com";
+// const server = "http://localhost:3001";
 
-export const post = (url, body = {}) => {
-  return fetch(url, {
+export const fetchJson = (url, token) =>
+  // fetch("https://editor.soulmatelights.com/sketches/list", {
+  fetch(server + url, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  }).then((result) => result.json());
+
+export const post = (url, token, body = {}) => {
+  return fetch(server + url, {
     method: "post",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ ...body, authenticity_token: token() }),
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({ ...body }),
   }).then((response) => response.json());
 };
 
-export const postDelete = (url, body = {}) => {
-  return fetch(url, {
+export const postDelete = (url, token, body = {}) => {
+  return fetch(server + url, {
     method: "delete",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ ...body, authenticity_token: token() }),
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({ ...body }),
   }).then((response) => response.json());
 };

@@ -8,6 +8,7 @@
     "avr8js": "^0.9.1",
     "bonjour": "^3.5.0",
     "electron-is-dev": "^1.2.0",
+    "electron-prompt": "^1.5.1",
     "history": "^4.10.1",
     "lodash": "^4.17.15",
     "prop-types": "^15.7.2",

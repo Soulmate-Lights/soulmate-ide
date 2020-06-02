@@ -7,6 +7,11 @@
   background-color: #efefef;
 }
 
+.sketches {
+  overflow: auto;
+  flex-shrink: 1;
+}
+
 .dark .list {
   background: #333;
 }
@@ -136,6 +141,19 @@
   margin: 8px;
 }
 
-.list .logout {
+.user {
+  padding: 8px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   margin-top: auto;
+  margin-bottom: 0;
+}
+
+.user img {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  margin-right: 8px;
 }
