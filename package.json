@@ -42,7 +42,7 @@
     "react-build": "parcel build index.html --out-dir build --public-url ./",
     "start": "concurrently \"cross-env BROWSER=none yarn react-start\" \"wait-on http://localhost:3000 && electron . \"",
     "electron-build": "electron-builder ",
-    "build": "yarn react-build && yarn electron-build --icon src/AppIcon.icns"
+    "build": "yarn react-build && yarn electron-build"
   },
   "build": {
     "appId": "com.soulmatelights.editor",
