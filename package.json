@@ -1,6 +1,6 @@
 {
   "name": "Soulmate",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "main": "src/electron.js",
   "license": "MIT",
   "dependencies": {
@@ -44,13 +44,16 @@
     "build": "yarn react-build && yarn electron-build"
   },
   "build": {
+    "directories": {
+      "buildResources": "assets"
+    },
     "appId": "com.elliottkember.soulmate",
     "files": [
+      "src/icon.icns",
       "src/icon.png",
       "src/electron.js",
       "src/preload.js",
-      "build/**/*",
-      "icon.icns"
+      "build/**/*"
     ]
   }
 }
