@@ -15,6 +15,7 @@ function createWindow() {
   mainWindow = new BrowserWindow({
     width: 900,
     height: 680,
+    icon: __dirname + '/icon.png',
     webPreferences: {
       nodeIntegration: true,
       webSecurity: false,
@@ -27,7 +28,7 @@ function createWindow() {
       ? "http://localhost:3000"
       : `file://${path.join(__dirname, "../build/index.html")}`
   );
-  mainWindow.webContents.openDevTools()
+  // mainWindow.webContents.openDevTools()
 
   mainWindow.on("closed", () => (mainWindow = null));
   ipcMain.on('scan', () => {
