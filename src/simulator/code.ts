@@ -55,7 +55,7 @@ void loop() {
 `.trim();
 
 
-export const prepareFullCode = (code, rows, cols) => `
+export const prepareFullCode = (name, code, rows, cols) => `
 // Don't forget to change this!
 #define FIRMWARE_NAME "soulmate-custom"
 // The number of LEDs in each parallel strip
@@ -71,7 +71,7 @@ export const prepareFullCode = (code, rows, cols) => `
 // How long should the Soulmate fade between patterns?
 #define FADE_DURATION 3000
 // Total power in milliamps
-#define SOULMATE_MILLIAMPS 700
+#define SOULMATE_MILLIAMPS 5000
 
 #define BUTTON_ON_VALUE LOW
 #define SOULMATE_BUTTON_PIN 39
@@ -85,7 +85,7 @@ namespace Pattern {
 }
 
 void setup() {
-  Soulmate.addRoutine("Sample Pattern", Pattern::draw);
+  Soulmate.addRoutine("${name}", Pattern::draw);
   Soulmate.setup();
 }
 

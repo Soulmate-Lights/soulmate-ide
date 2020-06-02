@@ -10,10 +10,9 @@ import { Link } from "react-router-dom";
 import { Mode, useLightSwitch } from "use-light-switch";
 
 import Monaco from 'react-monaco-editor';
-import multer from 'multer'; 1
 import request from 'request';
 
-const App = ({ code: originalCode, sketch, save, soulmate }) => {
+const App = ({ code: originalCode, name, save, soulmate }) => {
   let monacoInstance = useRef(false);
   let buildNumber = useRef(0);
   const mode = useLightSwitch();
@@ -44,7 +43,7 @@ const App = ({ code: originalCode, sketch, save, soulmate }) => {
     setFlashing(true);
 
     const editorCode = monacoInstance.current.editor.getModel().getValue();
-    const preparedCode = prepareFullCode(editorCode, rows, cols);
+    const preparedCode = prepareFullCode(name, editorCode, rows, cols);
     const build = await getFullBuild(preparedCode);
 
     const ip = soulmate.addresses[0];
