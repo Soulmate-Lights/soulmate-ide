@@ -15,7 +15,7 @@ function createWindow() {
   mainWindow = new BrowserWindow({
     width: 900,
     height: 680,
-    icon: __dirname + '/AppIcon.icns'
+    icon: __dirname + '/AppIcon.icns',
     webPreferences: {
       nodeIntegration: true,
       webSecurity: false,
