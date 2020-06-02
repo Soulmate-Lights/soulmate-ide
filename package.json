@@ -16,7 +16,6 @@
     "react-icons": "^3.10.0",
     "react-monaco-editor": "^0.36.0",
     "react-router-dom": "^5.2.0",
-    "request": "^2.88.2",
     "semantic-ui-css": "^2.4.1",
     "use-light-switch": "^1.0.1"
   },
@@ -39,7 +38,7 @@
   "scripts": {
     "react-start": "parcel -p 3000 index.html",
     "react-build": "yarn build-worker && parcel build index.html --out-dir build --public-url ./",
-    "start": "concurrently \"cross-env BROWSER=none yarn react-start\" \"wait-on http://localhost:3000 && electron . \"",
+    "start": "concurrently \"cross-env BROWSER=none yarn react-start\" \"wait-on http://localhost:3000 && electron . \" \"yarn build-worker\"",
     "electron-build": "electron-builder ",
     "build": "yarn react-build && yarn electron-build",
     "build-worker": "parcel build node_modules/monaco-editor/esm/vs/editor/editor.worker.js --no-source-maps"
