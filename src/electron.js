@@ -1,23 +1,18 @@
 const electron = require("electron");
 const app = electron.app;
-
 const BrowserWindow = electron.BrowserWindow;
-
 const path = require("path");
 const isDev = require("electron-is-dev");
-
 const bonjour = require("bonjour")();
 const { ipcMain } = require("electron");
+const { protocol } = require("electron");
+const auth = require("./auth");
 
 let mainWindow;
-
-const { protocol } = require("electron");
 
 const mainUrl = isDev
   ? "http://localhost:3000"
   : `file://${path.join(__dirname, "../build/index.html")}`;
-
-const auth = require("./auth");
 
 function createWindow() {
   app.userAgentFallback = app.userAgentFallback.replace(
