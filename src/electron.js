@@ -23,6 +23,7 @@ function createWindow() {
   mainWindow = new BrowserWindow({
     width: 1400,
     height: 800,
+    show: false,
     webPreferences: {
       enableRemoteModule: true,
       nodeIntegration: true,
@@ -46,6 +47,10 @@ function createWindow() {
         mainWindow.webContents.send("soulmate", service);
       }
     });
+  });
+
+  mainWindow.once("ready-to-show", () => {
+    mainWindow.show();
   });
 }
 
