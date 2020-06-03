@@ -24,6 +24,7 @@ function createWindow() {
     width: 1400,
     height: 800,
     show: false,
+    titleBarStyle: "hiddenInset",
     webPreferences: {
       enableRemoteModule: true,
       nodeIntegration: true,

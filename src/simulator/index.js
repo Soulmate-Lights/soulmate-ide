@@ -1,4 +1,5 @@
 import uniqBy from "lodash/uniqBy";
+import { MdAccountCircle } from "react-icons/md";
 import "./index.css";
 import React, { useRef, useState, useEffect } from "react";
 import Editor from "./Editor";
@@ -114,44 +115,67 @@ const PatternEditor = ({ id }) => {
     };
   }, []);
 
+  const login = async () => {
+    await auth.login();
+    getUserDetails();
+  };
+
+  const logout = async () => {
+    delete localStorage.loginSaved;
+    await auth.logout();
+    getUserDetails();
+  };
+
   return (
-    <div className={`frame ${dark && "dark"}`}>
-      {/* {sketches && ( */}
-      <List
-        sketches={sketches}
-        selectedSketch={selectedSketch}
-        loggedIn={loggedIn}
-        add={add}
-        destroy={destroy}
-        soulmates={soulmates}
-        soulmate={soulmate}
-        setSoulmate={setSoulmate}
-        userDetails={userDetails}
-        logout={async () => {
-          delete localStorage.loginSaved;
-          await auth.logout();
-          getUserDetails();
-        }}
-        login={async () => {
-          await auth.login();
-          getUserDetails();
-        }}
-      />
-      {/* )} */}
-      {selectedSketch && (
-        <Editor
-          save={(code) => save(selectedSketch.id, code)}
-          key={selectedSketch.id}
-          code={selectedSketch.code}
-          name={selectedSketch.name}
-          soulmate={soulmate}
-        />
-      )}
-      {!selectedSketch && (
-        <div className="welcome">
-          <Logo className="loader" />
+    <div className={`app-wrapper ${dark && "dark"}`}>
+      <div className="titlebar">
+        <span className="title">Soulmate</span>
+        <div className="user">
+          {userDetails.name ? (
+            <>
+              <img src={userDetails?.picture} />
+              {userDetails?.name}
+              <a className="logout button" onClick={logout}>
+                Log out
+              </a>
+            </>
+          ) : (
+            <div onClick={login} className="new button">
+              <MdAccountCircle />
+              Log in
+            </div>
+          )}
         </div>
-      )}
+      </div>
+      <div className="frame">
+        <List
+          sketches={sketches}
+          selectedSketch={selectedSketch}
+          loggedIn={loggedIn}
+          add={add}
+          destroy={destroy}
+          soulmates={soulmates}
+          soulmate={soulmate}
+          setSoulmate={setSoulmate}
+          userDetails={userDetails}
+          logout={logout}
+          login={login}
+        />
+        {selectedSketch && (
+          <Editor
+            save={(code) => save(selectedSketch.id, code)}
+            key={selectedSketch.id}
+            code={selectedSketch.code}
+            name={selectedSketch.name}
+            soulmate={soulmate}
+          />
+        )}
+        {!selectedSketch && (
+          <div className="welcome">
+            <Logo className="loader" />
+          </div>
+        )}
+      </div>
     </div>
   );
 };

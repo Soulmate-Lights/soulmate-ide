@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import debounce from "lodash/debounce";
 import { GrInProgress } from "react-icons/gr";
 import { BsFillPlayFill } from "react-icons/bs";
 import { IoMdCloudUpload } from "react-icons/io";
@@ -85,17 +86,15 @@ const App = ({ code: originalCode, name, save, soulmate }) => {
     monacoInstance.current.editor?.layout();
   };
 
+  const debouncedResize = debounce(() => {
+    resizeEditor();
+  }, 500);
+
   useEffect(() => {
-    window.addEventListener("resize", resizeEditor);
+    window.addEventListener("resize", debouncedResize);
 
-    return () => window.removeEventListener("resize", resizeEditor);
+    return () => window.removeEventListener("resize", debouncedResize);
   }, []);
-
-  // useEffect(() => {
-  //   //   //   window.require(["vs/editor/editor.main"], () => {
-  //   monacoInstance?.current?.editor.setTheme(dark ? "vs-dark" : "vs-light");
-  //   //   //   });
-  // }, [dark]);
 
   return (
     <div className="app-container">
@@ -103,7 +102,7 @@ const App = ({ code: originalCode, name, save, soulmate }) => {
         <div className="code-editor-wrapper">
           <div className="code-editor" ref={editor}>
             <Monaco
-              key={dark ? "dark" : "notdark"}
+              key={dark ? "dark" : "light"}
               ref={monacoInstance}
               options={{
                 value: code,

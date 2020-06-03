@@ -38,11 +38,15 @@ export default ({
               key={sketch.id}
               className={`sketch ${selected && "selected"}`}
             >
-              {/*
-                <div className="video-wrapper">
-                  <video src={sketch.video_url} autoPlay muted loop></video>
-                </div>
-              */}
+              <div className="video-wrapper">
+                <video muted loop>
+                  <source
+                    id="media-source"
+                    src={`${sketch.video_url}#t=2`}
+                    type="video/mp4"
+                  />
+                </video>
+              </div>
               {name.slice(0, 20)}
               {userDetails && (
                 <RiDeleteBin2Line
@@ -53,6 +57,7 @@ export default ({
             </Link>
           );
         })}
+        <div className="shadow"></div>
       </div>
 
       {userDetails && sketches && (
@@ -86,7 +91,7 @@ export default ({
         )}
       </div>
 
-      {userDetails.name ? (
+      {/* {userDetails.name ? (
         <div className="user">
           <img src={userDetails?.picture} />
           {userDetails?.name}
@@ -99,7 +104,7 @@ export default ({
           <MdAccountCircle />
           Log in
         </div>
-      )}
+      )} */}
     </div>
   );
 };
