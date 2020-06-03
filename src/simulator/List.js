@@ -2,7 +2,8 @@ import React from "react";
 import { FaRegLightbulb, FaLightbulb } from "react-icons/fa";
 import { FiCircle, FiCheckCircle } from "react-icons/fi";
 import { token } from "./utils";
-import { RiDeleteBin2Line, RiLogoutCircleRLine } from "react-icons/ri";
+import { RiDeleteBin2Line } from "react-icons/ri";
+import { MdCancel } from "react-icons/md";
 import { Link } from "react-router-dom";
 import "./List.css";
 import { AiOutlinePlusCircle } from "react-icons/ai";
@@ -22,6 +23,7 @@ export default ({
 }) => {
   return (
     <div className="list">
+      <p className="heading">Sketches</p>
       <div className="sketches">
         {sketches.map((sketch) => {
           const selected = sketch.id === selectedSketch.id;
@@ -47,36 +49,43 @@ export default ({
         })}
       </div>
 
-      {soulmates?.map((s) => (
-        <div
-          className={`device ${s === soulmate ? "connected" : ""}`}
-          key={s.name}
-          onClick={() => setSoulmate(s)}
-        >
-          {s === soulmate ? <FiCheckCircle /> : <FiCircle />}
-          {s.name}
-        </div>
-      ))}
-
-      {!userDetails && (
+      {!userDetails ? (
         <div onClick={login} className="new button">
           Log in to create a sketch
         </div>
+      ) : (
+        <div className="new button" onClick={add}>
+          <AiOutlinePlusCircle />
+          New sketch
+        </div>
       )}
+
+      {soulmates.length > 0 && (
+        <div className="soulmates">
+          <p className="heading">Soulmates</p>
+
+          {soulmates.map((s) => (
+            <div
+              className={`device ${s === soulmate ? "connected" : ""}`}
+              key={s.name}
+              onClick={() => setSoulmate(s)}
+            >
+              {s === soulmate ? <FiCheckCircle /> : <FiCircle />}
+              {s.name}
+            </div>
+          ))}
+        </div>
+      )}
+
       {userDetails.name && (
         <React.Fragment>
-          <div className="new button" onClick={add}>
-            <AiOutlinePlusCircle />
-            New sketch
-          </div>
           <div className="user">
             <img src={userDetails?.picture} />
             {userDetails?.name}
+            <a className="logout" onClick={logout}>
+              Log out
+            </a>
           </div>
-          <a className="logout button" onClick={logout}>
-            <RiLogoutCircleRLine />
-            Log out
-          </a>
         </React.Fragment>
       )}
     </div>

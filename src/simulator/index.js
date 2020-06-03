@@ -7,29 +7,21 @@ import { Mode, useLightSwitch } from "use-light-switch";
 import { fetchJson, post, postDelete } from "./utils";
 import List from "./List";
 import { useAuth0 } from "../react-auth0-spa";
-
 import history from "../utils/history";
 import jwtDecode from "jwt-decode";
 
 const PatternEditor = ({ id }) => {
-  const {
-    user,
-    isAuthenticated,
-    loginWithRedirect,
-    getTokenSilently,
-    getIdTokenClaims,
-    logout,
-  } = useAuth0();
-
   const mode = useLightSwitch();
   const dark = mode === Mode.Dark;
-  const loggedIn = isAuthenticated;
+
   const [sketches, setSketches] = useState([]);
   const selectedSketch = sketches.find((s) => s.id === id) || sketches[0];
 
   const [soulmates, setSoulmates] = useState([]);
   const [soulmate, setSoulmate] = useState(false);
+
   const [userDetails, setUserDetails] = useState(false);
+  const loggedIn = !!userDetails;
 
   ipcRenderer.on("soulmate", (event, arg) => {
     let newSoulmates = [...soulmates, arg];
@@ -45,7 +37,6 @@ const PatternEditor = ({ id }) => {
   };
 
   useEffect(() => {
-    console.log("getting user details", auth.tokenProperties?.id_token);
     getUserDetails();
   }, [auth.tokenProperties?.id_token]);
 
@@ -77,10 +68,7 @@ const PatternEditor = ({ id }) => {
       type: "input",
       icon: __dirname + "/icon.png",
     });
-    // const name = prompt("New sketch name:");
-    // if (!name) return;
-    // const name = "My new sketch";
-    const token = await getTokenSilently();
+    token = await auth.getToken();
     post("/sketches/create", token, { name }).then((newSketch) => {
       fetchSketches().then(() => history.push(`/${newSketch.id}`));
     });
@@ -96,20 +84,21 @@ const PatternEditor = ({ id }) => {
   const destroy = async (id) => {
     if (!loggedIn) return;
     if (!confirm("Delete this sketch?")) return;
-    const token = await getTokenSilently();
+
+    token = await auth.getToken();
     postDelete(`/sketches/${id}`, token).then(() => fetchSketches());
   };
 
-  // let interval = useRef();
-  // useEffect(() => {
-  //   setInterval(() => {
-  //     interval.current = fetchSketches();
-  //   }, 8000);
+  let interval = useRef();
+  useEffect(() => {
+    interval.current = setInterval(() => {
+      fetchSketches();
+    }, 8000);
 
-  //   return () => {
-  //     clearInterval(interval.current);
-  //   };
-  // }, []);
+    return () => {
+      clearInterval(interval.current);
+    };
+  }, []);
 
   return (
     <div className={`frame ${dark && "dark"}`}>
@@ -125,12 +114,10 @@ const PatternEditor = ({ id }) => {
         userDetails={userDetails}
         logout={async () => {
           await auth.logout();
-          console.log("out");
           getUserDetails();
         }}
         login={async () => {
           await auth.login();
-          console.log("in");
           getUserDetails();
         }}
       />

@@ -16,6 +16,11 @@
   background: #333;
 }
 
+.soulmates {
+  margin-top: auto;
+  padding-bottom: 8px;
+}
+
 .device {
   display: flex;
   width: 100%;
@@ -23,8 +28,13 @@
   justify-content: flex-start;
   text-decoration: none;
   align-items: center;
-  color: #333;
+  color: #444;
   padding: 8px 8px 8px 12px;
+  cursor: pointer;
+}
+
+.device:hover {
+  color: #222;
 }
 
 .device svg {
@@ -142,13 +152,21 @@
 }
 
 .user {
-  padding: 8px;
-  text-align: center;
+  padding: 8px 12px;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: auto;
   margin-bottom: 0;
+  border-top: 1px solid var(--border-color);
+}
+
+.user a {
+  color: inherit;
+  color: #333;
+  margin-left: auto;
+  cursor: pointer;
+  position: relative;
+  top: -1px;
 }
 
 .user img {
@@ -156,4 +174,13 @@
   height: 24px;
   border-radius: 50%;
   margin-right: 8px;
+}
+
+.heading {
+  color: #666;
+  font-size: 10px;
+  padding: 18px 4px 4px 12px;
+  line-height: 1;
+  margin: 0;
+  text-transform: uppercase;
 }
