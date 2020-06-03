@@ -9,13 +9,15 @@ import List from "./List";
 import { useAuth0 } from "../react-auth0-spa";
 import history from "../utils/history";
 import jwtDecode from "jwt-decode";
+import Logo from "./logo.svg";
 
 const PatternEditor = ({ id }) => {
   const mode = useLightSwitch();
   const dark = mode === Mode.Dark;
 
-  const [sketches, setSketches] = useState([]);
-  const selectedSketch = sketches.find((s) => s.id === id) || sketches[0];
+  const [sketches, setSketches] = useState();
+  const selectedSketch =
+    sketches?.find((s) => s.id === id) || (sketches && sketches[0]);
 
   const [soulmates, setSoulmates] = useState([]);
   const [soulmate, setSoulmate] = useState(false);
@@ -102,25 +104,27 @@ const PatternEditor = ({ id }) => {
 
   return (
     <div className={`frame ${dark && "dark"}`}>
-      <List
-        sketches={sketches}
-        selectedSketch={selectedSketch}
-        loggedIn={loggedIn}
-        add={add}
-        destroy={destroy}
-        soulmates={soulmates}
-        soulmate={soulmate}
-        setSoulmate={setSoulmate}
-        userDetails={userDetails}
-        logout={async () => {
-          await auth.logout();
-          getUserDetails();
-        }}
-        login={async () => {
-          await auth.login();
-          getUserDetails();
-        }}
-      />
+      {sketches && (
+        <List
+          sketches={sketches}
+          selectedSketch={selectedSketch}
+          loggedIn={loggedIn}
+          add={add}
+          destroy={destroy}
+          soulmates={soulmates}
+          soulmate={soulmate}
+          setSoulmate={setSoulmate}
+          userDetails={userDetails}
+          logout={async () => {
+            await auth.logout();
+            getUserDetails();
+          }}
+          login={async () => {
+            await auth.login();
+            getUserDetails();
+          }}
+        />
+      )}
       {selectedSketch && (
         <Editor
           save={(code) => save(selectedSketch.id, code)}
@@ -132,10 +136,7 @@ const PatternEditor = ({ id }) => {
       )}
       {!selectedSketch && (
         <div className="welcome">
-          Welcome to the Soulmate editor!
-          <button className="new" onClick={add}>
-            New sketch
-          </button>
+          <Logo className="loader" />
         </div>
       )}
     </div>

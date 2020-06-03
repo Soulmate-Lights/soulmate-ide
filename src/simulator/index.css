@@ -59,6 +59,7 @@ body {
   box-sizing: border-box;
   flex-direction: column;
   flex-grow: 1;
+  flex-shrink: 1;
   overflow: none;
 }
 
@@ -138,16 +139,17 @@ canvas {
   padding: 8px 12px;
   margin: 0;
   font-size: 11px;
-  height: 150px;
+  height: 170px;
+  border-top: 1px solid var(--border-color);
   flex-grow: 0;
   overflow: auto;
-  background: #333;
-  color: lightgreen;
+  color: darkgreen;
 }
 
 .dark .compiler-output {
   background: #333;
   color: lightgreen;
+  box-shadow: inset 0px 5px 5px rgba(0, 0, 0, 0.3);
 }
 
 .compiler-output pre {
@@ -174,12 +176,19 @@ canvas {
   position: relative;
   flex-grow: 1;
   width: 400px;
-  background: #333;
+  background: url('./so-white.png');
+  /* box-shadow: inset 0px 0px 80px 80px black; */
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  overflow: auto;
+  overflow: hidden;
   padding: 50px 0;
+}
+
+.dark .simulator {
+  background: #333 url('./denim.png');
+  border-bottom: 1px solid #000;
+  background: #222;
 }
 
 .canvas-wrapper {
@@ -187,17 +196,12 @@ canvas {
   justify-content: center;
   align-items: center;
   max-height: 100%;
-  overflow: auto;
+  overflow: hidden;
   box-shadow: 0 0 5px #222;
 }
 
 .simulator canvas {
   border-radius: 2px;
-}
-
-.dark .simulator {
-  border-bottom: 1px solid #000;
-  background: #222;
 }
 
 @keyframes rotating {

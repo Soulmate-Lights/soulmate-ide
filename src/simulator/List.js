@@ -60,16 +60,21 @@ export default ({
         <div className="soulmates">
           <p className="heading">Soulmates</p>
 
-          {soulmates.map((s) => (
-            <div
-              className={`device ${s === soulmate ? "connected" : ""}`}
-              key={s.name}
-              onClick={() => setSoulmate(s)}
-            >
-              {s === soulmate ? <FiCheckCircle /> : <FiCircle />}
-              {s.name}
-            </div>
-          ))}
+          {soulmates.map((s) => {
+            const connected = s === soulmate;
+            return (
+              <div
+                className={`device ${connected ? "connected" : ""}`}
+                key={s.name}
+                onClick={() => {
+                  setSoulmate(connected ? false : s);
+                }}
+              >
+                {s === soulmate ? <FiCheckCircle /> : <FiCircle />}
+                {s.name}
+              </div>
+            );
+          })}
         </div>
       )}
 

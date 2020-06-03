@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
-import { GrInProgress } from 'react-icons/gr';
-import { BsFillPlayFill } from 'react-icons/bs';
-import { IoMdCloudUpload } from 'react-icons/io';
+import { GrInProgress } from "react-icons/gr";
+import { BsFillPlayFill } from "react-icons/bs";
+import { IoMdCloudUpload } from "react-icons/io";
 import Logo from "./logo.svg";
 import { buildHex, getFullBuild } from "./compiler/compile";
 import { prepareCode, prepareFullCode } from "./code";
@@ -9,8 +9,8 @@ import Simulator from "./Simulator";
 import { Link } from "react-router-dom";
 import { Mode, useLightSwitch } from "use-light-switch";
 
-import Monaco from 'react-monaco-editor';
-import request from 'request';
+import Monaco from "react-monaco-editor";
+import request from "request";
 
 const App = ({ code: originalCode, name, save, soulmate }) => {
   let monacoInstance = useRef(false);
@@ -53,16 +53,16 @@ const App = ({ code: originalCode, name, save, soulmate }) => {
     const contents = fs.readFileSync(build);
     body.append("image", new Blob([contents]), "firmware.bin");
     fetch(url, {
-      method: 'POST',
+      method: "POST",
       body: body,
-      mode: 'no-cors',
+      mode: "no-cors",
       headers: {
-        'Content-Length': fs.statSync(build).size,
-      }
-    }).then(response => {
+        "Content-Length": fs.statSync(build).size,
+      },
+    }).then((response) => {
       setFlashing(false);
-    })
-  }
+    });
+  };
 
   useEffect(() => {
     monacoInstance.current.editor.getModel().onDidChangeContent((event) => {
@@ -83,18 +83,18 @@ const App = ({ code: originalCode, name, save, soulmate }) => {
 
   const resizeEditor = () => {
     monacoInstance.current.editor?.layout();
-  }
+  };
 
   useEffect(() => {
-    window.addEventListener('resize', resizeEditor);
+    window.addEventListener("resize", resizeEditor);
 
-    return () => window.removeEventListener('resize', resizeEditor);
-  }, [])
+    return () => window.removeEventListener("resize", resizeEditor);
+  }, []);
 
   // useEffect(() => {
-  //   //   window.require(["vs/editor/editor.main"], () => {
-  //   // monacoInstance.current?.editor.setTheme(dark ? "vs-dark" : "vs-light");
-  //   //   });
+  //   //   //   window.require(["vs/editor/editor.main"], () => {
+  //   monacoInstance?.current?.editor.setTheme(dark ? "vs-dark" : "vs-light");
+  //   //   //   });
   // }, [dark]);
 
   return (
@@ -103,12 +103,12 @@ const App = ({ code: originalCode, name, save, soulmate }) => {
         <div className="code-editor-wrapper">
           <div className="code-editor" ref={editor}>
             <Monaco
+              key={dark ? "dark" : "notdark"}
               ref={monacoInstance}
               options={{
                 value: code,
                 language: "cpp",
                 theme: dark ? "vs-dark" : "vs-light",
-                // automaticLayout: true,
                 scrollBeyondLastLine: false,
                 tabSize: 2,
                 lineNumbers: false,
@@ -132,23 +132,27 @@ const App = ({ code: originalCode, name, save, soulmate }) => {
             Compile and run (CMD+S)
           </div>
 
-          {soulmate &&
-            <div className="button" disabled={flashing} onClick={() => {
-              !flashing && makeBuild()
-            }}>
-              {flashing ?
+          {soulmate && (
+            <div
+              className="button"
+              disabled={flashing}
+              onClick={() => {
+                !flashing && makeBuild();
+              }}
+            >
+              {flashing ? (
                 <React.Fragment>
                   <Logo className="loader" />
                   Flashing to {soulmate.name}...
                 </React.Fragment>
-                :
+              ) : (
                 <React.Fragment>
                   <IoMdCloudUpload />
                   Flash to {soulmate.name}
                 </React.Fragment>
-              }
+              )}
             </div>
-          }
+          )}
         </div>
       </div>
 
@@ -167,9 +171,11 @@ const App = ({ code: originalCode, name, save, soulmate }) => {
           )}
         </div>
 
-        <div className="compiler-output">
-          <pre id="compiler-output-text">{build && (build.stderr || build.stdout)}</pre>
-        </div>
+        {build?.stderr && (
+          <div className="compiler-output">
+            <pre id="compiler-output-text">{build.stderr}</pre>
+          </div>
+        )}
       </div>
     </div>
   );
