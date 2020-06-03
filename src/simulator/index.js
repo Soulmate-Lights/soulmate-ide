@@ -1,4 +1,5 @@
 import uniqBy from "lodash/uniqBy";
+import { MdAccountCircle } from "react-icons/md";
 import "./index.css";
 import React, { useRef, useState, useEffect } from "react";
 import Editor from "./Editor";
@@ -34,7 +35,10 @@ const PatternEditor = ({ id }) => {
   const getUserDetails = async () => {
     const id_token = auth.tokenProperties?.id_token;
     let newUserDetails = false;
-    if (id_token) newUserDetails = jwtDecode(id_token);
+    if (id_token) {
+      newUserDetails = jwtDecode(id_token);
+      localStorage.loginSaved = "true";
+    }
     setUserDetails(newUserDetails);
   };
 
@@ -44,6 +48,14 @@ const PatternEditor = ({ id }) => {
 
   useEffect(() => {
     ipcRenderer.send("scan", {});
+  }, []);
+
+  useEffect(() => {
+    if (localStorage.loginSaved) {
+      auth.getToken().then(() => {
+        getUserDetails();
+      });
+    }
   }, []);
 
   const fetchSketches = async () => {
@@ -56,6 +68,7 @@ const PatternEditor = ({ id }) => {
   };
 
   useEffect(() => {
+    setSketches(undefined);
     fetchSketches();
   }, [userDetails]);
 
@@ -77,7 +90,7 @@ const PatternEditor = ({ id }) => {
   };
 
   const save = (id, code) => {
-    sketches.find((s) => s.id === id).code = code;
+    if (sketches) sketches.find((s) => s.id === id).code = code;
     setSketches(sketches);
 
     loggedIn && post("/sketches/save", { id, code }).then(fetchSketches);
@@ -102,9 +115,39 @@ const PatternEditor = ({ id }) => {
     };
   }, []);
 
+  const login = async () => {
+    await auth.login();
+    getUserDetails();
+  };
+
+  const logout = async () => {
+    delete localStorage.loginSaved;
+    await auth.logout();
+    getUserDetails();
+  };
+
   return (
-    <div className={`frame ${dark && "dark"}`}>
-      {sketches && (
+    <div className={`app-wrapper ${dark && "dark"}`}>
+      <div className="titlebar">
+        <span className="title">Soulmate</span>
+        <div className="user">
+          {userDetails.name ? (
+            <>
+              <img src={userDetails?.picture} />
+              {userDetails?.name}
+              <a className="logout button" onClick={logout}>
+                Log out
+              </a>
+            </>
+          ) : (
+            <div onClick={login} className="new button">
+              <MdAccountCircle />
+              Log in
+            </div>
+          )}
+        </div>
+      </div>
+      <div className="frame">
         <List
           sketches={sketches}
           selectedSketch={selectedSketch}
@@ -115,30 +158,24 @@ const PatternEditor = ({ id }) => {
           soulmate={soulmate}
           setSoulmate={setSoulmate}
           userDetails={userDetails}
-          logout={async () => {
-            await auth.logout();
-            getUserDetails();
-          }}
-          login={async () => {
-            await auth.login();
-            getUserDetails();
-          }}
+          logout={logout}
+          login={login}
         />
-      )}
-      {selectedSketch && (
-        <Editor
-          save={(code) => save(selectedSketch.id, code)}
-          key={selectedSketch.id}
-          code={selectedSketch.code}
-          name={selectedSketch.name}
-          soulmate={soulmate}
-        />
-      )}
-      {!selectedSketch && (
-        <div className="welcome">
-          <Logo className="loader" />
-        </div>
-      )}
+        {selectedSketch && (
+          <Editor
+            save={(code) => save(selectedSketch.id, code)}
+            key={selectedSketch.id}
+            code={selectedSketch.code}
+            name={selectedSketch.name}
+            soulmate={soulmate}
+          />
+        )}
+        {!selectedSketch && (
+          <div className="welcome">
+            <Logo className="loader" />
+          </div>
+        )}
+      </div>
     </div>
   );
 };

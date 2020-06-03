@@ -11,6 +11,17 @@
 .sketches {
   overflow: auto;
   flex-shrink: 1;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.sketches .loader {
+  align-self: center;
+  width: 50px;
+  height: 50px;
+  margin: 50px auto;
+  flex-shrink: 0;
 }
 
 .dark .list {
@@ -56,7 +67,8 @@
   text-decoration: none;
   align-items: center;
   color: #333;
-  padding: 8px 8px 8px 12px;
+  padding: 4px 8px 4px 4px;
+  font-size: 12px;
 }
 
 .sketch a {
@@ -90,8 +102,13 @@
   opacity: 1;
 }
 
-.dark .sketch {
-  color: white;
+.dark .sketch .delete:hover {
+  background: #990000;
+}
+
+.dark .sketch,
+.dark .device {
+  color: #d6d6d6;
 }
 
 .dark .sketch:hover {
@@ -157,35 +174,10 @@
   margin: 8px;
 }
 
-.user {
-  padding: 10px 16px 10px 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 0;
-}
-
-.user a {
-  color: inherit;
-  color: #333;
-  margin-left: auto;
-  cursor: pointer;
-  position: relative;
-}
-
-.user img {
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  margin-right: 8px;
-  position: relative;
-  top: -1px;
-}
-
 .heading {
   color: #666;
   font-size: 10px;
-  padding: 18px 4px 8px 12px;
+  padding: 12px 4px 8px 12px;
   line-height: 1;
   margin: 0;
   text-transform: uppercase;
