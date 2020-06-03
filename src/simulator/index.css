@@ -148,6 +148,7 @@ canvas {
 
 .dark .compiler-output {
   background: #333;
+  border-top: 1px solid #000;
   color: lightgreen;
   box-shadow: inset 0px 5px 5px rgba(0, 0, 0, 0.3);
 }
@@ -177,7 +178,6 @@ canvas {
   flex-grow: 1;
   width: 400px;
   background: url('./so-white.png');
-  /* box-shadow: inset 0px 0px 80px 80px black; */
   flex-direction: row;
   justify-content: center;
   align-items: center;
@@ -187,8 +187,7 @@ canvas {
 
 .dark .simulator {
   background: #333 url('./denim.png');
-  border-bottom: 1px solid #000;
-  background: #222;
+  box-shadow: inset 0px 0px 80px 80px black;
 }
 
 .canvas-wrapper {
@@ -250,7 +249,6 @@ canvas {
   position: relative;
   top: -1px;
   margin-right: 8px;
-  width: 16px;
   height: 16px;
 }
 

@@ -1,4 +1,5 @@
 import React from "react";
+import { MdAccountCircle } from "react-icons/md";
 import { FaRegLightbulb, FaLightbulb } from "react-icons/fa";
 import { FiCircle, FiCheckCircle } from "react-icons/fi";
 import { token } from "./utils";
@@ -88,7 +89,8 @@ export default ({
         </div>
       ) : (
         <div onClick={login} className="new button">
-          Log in to create a sketch
+          <MdAccountCircle />
+          Log in
         </div>
       )}
     </div>
