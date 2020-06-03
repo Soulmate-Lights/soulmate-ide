@@ -1,7 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import { AVRRunner } from "./compiler/execute";
 import { WS2812Controller } from "./compiler/ws2812";
-// import Logo from "./logo.svg";
 
 const Simulator = ({ build, building, rows, cols, height, width }) => {
   const canvas = useRef();
