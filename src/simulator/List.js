@@ -49,11 +49,7 @@ export default ({
         })}
       </div>
 
-      {!userDetails ? (
-        <div onClick={login} className="new button">
-          Log in to create a sketch
-        </div>
-      ) : (
+      {userDetails && (
         <div className="new button" onClick={add}>
           <AiOutlinePlusCircle />
           New sketch
@@ -77,16 +73,18 @@ export default ({
         </div>
       )}
 
-      {userDetails.name && (
-        <React.Fragment>
-          <div className="user">
-            <img src={userDetails?.picture} />
-            {userDetails?.name}
-            <a className="logout" onClick={logout}>
-              Log out
-            </a>
-          </div>
-        </React.Fragment>
+      {userDetails.name ? (
+        <div className="user">
+          <img src={userDetails?.picture} />
+          {userDetails?.name}
+          <a className="logout" onClick={logout}>
+            Log out
+          </a>
+        </div>
+      ) : (
+        <div onClick={login} className="new button">
+          Log in to create a sketch
+        </div>
       )}
     </div>
   );

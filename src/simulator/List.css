@@ -18,7 +18,7 @@
 
 .soulmates {
   margin-top: auto;
-  padding-bottom: 8px;
+  margin-bottom: 12px;
 }
 
 .device {
@@ -152,12 +152,11 @@
 }
 
 .user {
-  padding: 8px 12px;
+  padding: 10px 12px;
   display: flex;
   align-items: center;
   justify-content: center;
   margin-bottom: 0;
-  border-top: 1px solid var(--border-color);
 }
 
 .user a {
