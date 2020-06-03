@@ -11,6 +11,16 @@
 .sketches {
   overflow: auto;
   flex-shrink: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.sketches .loader {
+  align-self: center;
+  width: 50px;
+  height: 50px;
+  margin: 50px auto;
+  flex-shrink: 0;
 }
 
 .dark .list {
@@ -171,6 +181,10 @@
   margin-left: auto;
   cursor: pointer;
   position: relative;
+}
+
+.dark .user a {
+  color: white;
 }
 
 .user img {

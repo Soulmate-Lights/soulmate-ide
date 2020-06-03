@@ -9,6 +9,7 @@ import { Link } from "react-router-dom";
 import "./List.css";
 import { AiOutlinePlusCircle } from "react-icons/ai";
 import { useAuth0 } from "../react-auth0-spa";
+import Logo from "./logo.svg";
 
 export default ({
   sketches,
@@ -26,7 +27,9 @@ export default ({
     <div className="list">
       <p className="heading">Sketches</p>
       <div className="sketches">
-        {sketches.map((sketch) => {
+        {!sketches && <Logo className="loader" />}
+
+        {sketches?.map((sketch) => {
           const selected = sketch.id === selectedSketch.id;
           const name = sketch.name || "Untitled";
           return (
@@ -35,9 +38,11 @@ export default ({
               key={sketch.id}
               className={`sketch ${selected && "selected"}`}
             >
-              {/* <div className="video-wrapper">
-            <video src={sketch.video_url} autoPlay muted loop></video>
-          </div> */}
+              {/*
+                <div className="video-wrapper">
+                  <video src={sketch.video_url} autoPlay muted loop></video>
+                </div>
+              */}
               {name.slice(0, 20)}
               {userDetails && (
                 <RiDeleteBin2Line
@@ -50,34 +55,36 @@ export default ({
         })}
       </div>
 
-      {userDetails && (
+      {userDetails && sketches && (
         <div className="new button" onClick={add}>
           <AiOutlinePlusCircle />
           New sketch
         </div>
       )}
 
-      {soulmates.length > 0 && (
-        <div className="soulmates">
-          <p className="heading">Soulmates</p>
+      <div className="soulmates">
+        {soulmates.length > 0 && (
+          <>
+            <p className="heading">Soulmates</p>
 
-          {soulmates.map((s) => {
-            const connected = s === soulmate;
-            return (
-              <div
-                className={`device ${connected ? "connected" : ""}`}
-                key={s.name}
-                onClick={() => {
-                  setSoulmate(connected ? false : s);
-                }}
-              >
-                {s === soulmate ? <FiCheckCircle /> : <FiCircle />}
-                {s.name}
-              </div>
-            );
-          })}
-        </div>
-      )}
+            {soulmates.map((s) => {
+              const connected = s === soulmate;
+              return (
+                <div
+                  className={`device ${connected ? "connected" : ""}`}
+                  key={s.name}
+                  onClick={() => {
+                    setSoulmate(connected ? false : s);
+                  }}
+                >
+                  {s === soulmate ? <FiCheckCircle /> : <FiCircle />}
+                  {s.name}
+                </div>
+              );
+            })}
+          </>
+        )}
+      </div>
 
       {userDetails.name ? (
         <div className="user">

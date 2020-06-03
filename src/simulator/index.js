@@ -34,7 +34,10 @@ const PatternEditor = ({ id }) => {
   const getUserDetails = async () => {
     const id_token = auth.tokenProperties?.id_token;
     let newUserDetails = false;
-    if (id_token) newUserDetails = jwtDecode(id_token);
+    if (id_token) {
+      newUserDetails = jwtDecode(id_token);
+      localStorage.loginSaved = "true";
+    }
     setUserDetails(newUserDetails);
   };
 
@@ -44,6 +47,14 @@ const PatternEditor = ({ id }) => {
 
   useEffect(() => {
     ipcRenderer.send("scan", {});
+  }, []);
+
+  useEffect(() => {
+    if (localStorage.loginSaved) {
+      auth.getToken().then(() => {
+        getUserDetails();
+      });
+    }
   }, []);
 
   const fetchSketches = async () => {
@@ -56,6 +67,7 @@ const PatternEditor = ({ id }) => {
   };
 
   useEffect(() => {
+    setSketches(undefined);
     fetchSketches();
   }, [userDetails]);
 
@@ -77,7 +89,7 @@ const PatternEditor = ({ id }) => {
   };
 
   const save = (id, code) => {
-    sketches.find((s) => s.id === id).code = code;
+    if (sketches) sketches.find((s) => s.id === id).code = code;
     setSketches(sketches);
 
     loggedIn && post("/sketches/save", { id, code }).then(fetchSketches);
@@ -104,27 +116,28 @@ const PatternEditor = ({ id }) => {
 
   return (
     <div className={`frame ${dark && "dark"}`}>
-      {sketches && (
-        <List
-          sketches={sketches}
-          selectedSketch={selectedSketch}
-          loggedIn={loggedIn}
-          add={add}
-          destroy={destroy}
-          soulmates={soulmates}
-          soulmate={soulmate}
-          setSoulmate={setSoulmate}
-          userDetails={userDetails}
-          logout={async () => {
-            await auth.logout();
-            getUserDetails();
-          }}
-          login={async () => {
-            await auth.login();
-            getUserDetails();
-          }}
-        />
-      )}
+      {/* {sketches && ( */}
+      <List
+        sketches={sketches}
+        selectedSketch={selectedSketch}
+        loggedIn={loggedIn}
+        add={add}
+        destroy={destroy}
+        soulmates={soulmates}
+        soulmate={soulmate}
+        setSoulmate={setSoulmate}
+        userDetails={userDetails}
+        logout={async () => {
+          delete localStorage.loginSaved;
+          await auth.logout();
+          getUserDetails();
+        }}
+        login={async () => {
+          await auth.login();
+          getUserDetails();
+        }}
+      />
+      {/* )} */}
       {selectedSketch && (
         <Editor
           save={(code) => save(selectedSketch.id, code)}
