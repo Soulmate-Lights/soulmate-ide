@@ -3,7 +3,7 @@ import Navbar from "./components/Navbar";
 import Custom from "./components/Custom";
 import "./custom.css";
 
-import App from "./simulator";
+import Simulator from "./simulator";
 
 import config from "./auth_config.json";
 import { Auth0Provider } from "./react-auth0-spa";
@@ -28,7 +28,7 @@ export default () => {
       audience="https://yellow-boat-0900.auth0.com/api/v2/"
       responseType="token"
     >
-      <App />
+      <Simulator />
     </Auth0Provider>
   );
 };

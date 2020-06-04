@@ -1,4 +1,5 @@
 import uniqBy from "lodash/uniqBy";
+import { hot } from "react-hot-loader";
 import { MdAccountCircle } from "react-icons/md";
 import "./index.css";
 import React, { useRef, useState, useEffect } from "react";
@@ -16,9 +17,13 @@ const PatternEditor = ({ id }) => {
   const mode = useLightSwitch();
   const dark = mode === Mode.Dark;
 
+  const [allSketches, setAllSketches] = useState();
   const [sketches, setSketches] = useState();
+
+  const combinedSketches = [...(sketches || []), ...(allSketches || [])];
+
   const selectedSketch =
-    sketches?.find((s) => s.id === id) || (sketches && sketches[0]);
+    combinedSketches?.find((s) => s.id === id) || combinedSketches[0];
 
   const [soulmates, setSoulmates] = useState([]);
   const [soulmate, setSoulmate] = useState(false);
@@ -60,6 +65,11 @@ const PatternEditor = ({ id }) => {
 
   const fetchSketches = async () => {
     let token;
+
+    fetchJson("/sketches/list").then((allSketches) => {
+      setAllSketches(allSketches);
+    });
+
     if (auth.tokenProperties) {
       token = await auth.getToken();
       const newSketches = await fetchJson("/sketches/list", token);
@@ -136,7 +146,6 @@ const PatternEditor = ({ id }) => {
             </>
           ) : (
             <div onClick={login} className="new button">
-              <MdAccountCircle />
               Log in
             </div>
           )}
@@ -145,6 +154,7 @@ const PatternEditor = ({ id }) => {
       <div className="frame">
         <List
           sketches={sketches}
+          allSketches={allSketches}
           selectedSketch={selectedSketch}
           loggedIn={loggedIn}
           add={add}
@@ -175,6 +185,8 @@ const PatternEditor = ({ id }) => {
   );
 };
 
+const HotPatternEditor = hot(module)(PatternEditor);
+
 export default () => (
   <Router history={history}>
     <Route
@@ -183,7 +195,7 @@ export default () => (
         match: {
           params: { id },
         },
-      }) => <PatternEditor id={parseInt(id)} />}
+      }) => <HotPatternEditor id={parseInt(id)} />}
     />
   </Router>
 );

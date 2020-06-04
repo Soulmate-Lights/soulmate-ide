@@ -150,6 +150,19 @@ canvas {
   margin-left: 8px;
 }
 
+.toolbar .button .loader {
+  width: 16px;
+  position: relative;
+}
+
+.toolbar .button .loader * {
+  fill: #666;
+}
+
+.dark .toolbar .button .loader * {
+  fill: #dedede;
+}
+
 .dark .toolbar {
   background: #333;
   color: white;
@@ -229,7 +242,7 @@ canvas {
   position: relative;
   flex-grow: 1;
   width: 400px;
-  background: url('./so-white.png');
+  background: url("./so-white.png");
   flex-direction: row;
   justify-content: center;
   align-items: center;
@@ -238,7 +251,7 @@ canvas {
 }
 
 .dark .simulator {
-  background: #333 url('./denim.png');
+  background: #333 url("./denim.png");
   box-shadow: inset 0px 0px 80px 80px black;
 }
 
@@ -357,5 +370,4 @@ canvas {
   border-radius: 50%;
   margin-right: 8px;
   position: relative;
-  top: -1px;
 }

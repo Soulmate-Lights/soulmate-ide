@@ -12,6 +12,7 @@ import { useAuth0 } from "../react-auth0-spa";
 import Logo from "./logo.svg";
 
 export default ({
+  allSketches,
   sketches,
   soulmates,
   soulmate,
@@ -23,15 +24,40 @@ export default ({
   logout,
   login,
 }) => {
-  const [addingNewSketch, setAddingNewSketch] = useState(true);
+  const [addingNewSketch, setAddingNewSketch] = useState(false);
+  const [showingAll, setShowingAll] = useState(false);
+  const sketchesToShow = showingAll ? allSketches : sketches;
 
   return (
     <div className="list">
-      <p className="heading">Sketches</p>
-      <div className="sketches">
-        {!sketches && <Logo className="loader" />}
+      <p className="heading">
+        Sketches
+        {userDetails && (
+          <div className="toggle">
+            <div
+              onClick={() => {
+                setShowingAll(false);
+              }}
+              className={!showingAll ? "selected" : ""}
+            >
+              Mine
+            </div>
+            <div
+              onClick={() => {
+                setShowingAll(true);
+              }}
+              className={showingAll ? "selected" : ""}
+            >
+              All
+            </div>
+          </div>
+        )}
+      </p>
 
-        {sketches?.map((sketch) => {
+      <div className="sketches">
+        {!sketchesToShow && <Logo className="loader" />}
+
+        {sketchesToShow?.map((sketch) => {
           const selected = sketch.id === selectedSketch.id;
           const name = sketch.name || "Untitled";
           return (
@@ -50,7 +76,7 @@ export default ({
                 </video>
               </div>
               {name.slice(0, 20)}
-              {userDetails && (
+              {!showingAll && userDetails && (
                 <RiDeleteBin2Line
                   className="delete"
                   onClick={() => destroy(sketch.id)}
@@ -62,7 +88,7 @@ export default ({
         <div className="shadow"></div>
       </div>
 
-      {userDetails && sketches && (
+      {!showingAll && userDetails && sketches && (
         <>
           {addingNewSketch ? (
             <div className="newSketchName">
