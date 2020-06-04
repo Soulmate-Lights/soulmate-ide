@@ -62,7 +62,9 @@ const PatternEditor = ({ id }) => {
     let token;
     if (auth.tokenProperties) {
       token = await auth.getToken();
-      return fetchJson("/sketches/list", token).then(setSketches);
+      const newSketches = await fetchJson("/sketches/list", token);
+      setSketches(newSketches);
+      return;
     }
     return fetchJson("/sketches/list").then(setSketches);
   };
@@ -84,24 +86,27 @@ const PatternEditor = ({ id }) => {
       icon: __dirname + "/icon.png",
     });
     token = await auth.getToken();
-    post("/sketches/create", token, { name }).then((newSketch) => {
-      fetchSketches().then(() => history.push(`/${newSketch.id}`));
-    });
+    const newSketch = post("/sketches/create", token, { name });
+    await fetchSketches();
+    history.push(`/${newSketch.id}`);
   };
 
-  const save = (id, code) => {
+  const save = async (id, code) => {
     if (sketches) sketches.find((s) => s.id === id).code = code;
     setSketches(sketches);
+    if (!loggedIn) return;
 
-    loggedIn && post("/sketches/save", { id, code }).then(fetchSketches);
+    const token = await auth.getToken();
+    post("/sketches/save", token, { id, code }).then(fetchSketches);
   };
 
   const destroy = async (id) => {
     if (!loggedIn) return;
     if (!confirm("Delete this sketch?")) return;
 
-    token = await auth.getToken();
-    postDelete(`/sketches/${id}`, token).then(() => fetchSketches());
+    const token = await auth.getToken();
+    await postDelete(`/sketches/${id}`, token);
+    fetchSketches();
   };
 
   let interval = useRef();
