@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { MdAccountCircle } from "react-icons/md";
 import { FaRegLightbulb, FaLightbulb } from "react-icons/fa";
 import { FiCircle, FiCheckCircle } from "react-icons/fi";
@@ -23,6 +23,8 @@ export default ({
   logout,
   login,
 }) => {
+  const [addingNewSketch, setAddingNewSketch] = useState(true);
+
   return (
     <div className="list">
       <p className="heading">Sketches</p>
@@ -61,10 +63,34 @@ export default ({
       </div>
 
       {userDetails && sketches && (
-        <div className="new button" onClick={add}>
-          <AiOutlinePlusCircle />
-          New sketch
-        </div>
+        <>
+          {addingNewSketch ? (
+            <div className="newSketchName">
+              <input
+                autoFocus
+                placeholder="Sketch name"
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    add(e.target.value);
+                    setAddingNewSketch(false);
+                  }
+                  if (e.key === "Escape") {
+                    setAddingNewSketch(false);
+                  }
+                }}
+              />
+              <button>Save</button>
+            </div>
+          ) : (
+            <div
+              className="new button"
+              onClick={() => setAddingNewSketch(true)}
+            >
+              <AiOutlinePlusCircle />
+              New sketch
+            </div>
+          )}
+        </>
       )}
 
       <div className="soulmates">
@@ -90,21 +116,6 @@ export default ({
           </>
         )}
       </div>
-
-      {/* {userDetails.name ? (
-        <div className="user">
-          <img src={userDetails?.picture} />
-          {userDetails?.name}
-          <a className="logout" onClick={logout}>
-            Log out
-          </a>
-        </div>
-      ) : (
-        <div onClick={login} className="new button">
-          <MdAccountCircle />
-          Log in
-        </div>
-      )} */}
     </div>
   );
 };

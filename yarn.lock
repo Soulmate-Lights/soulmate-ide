@@ -3238,13 +3238,6 @@ dns-txt@^2.0.2:
   dependencies:
     buffer-indexof "^1.0.0"
 
-doc-ready@^1.0.4:
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/doc-ready/-/doc-ready-1.0.4.tgz#37f5391969cff994303fdfef2e5d50357f8164d3"
-  integrity sha1-N/U5GWnP+ZQwP9/vLl1QNX+BZNM=
-  dependencies:
-    eventie "^1"
-
 dom-serializer@0:
   version "0.2.2"
   resolved "https://registry.yarnpkg.com/dom-serializer/-/dom-serializer-0.2.2.tgz#1afb81f533717175d478655debc5e332d9f9bb51"
@@ -3381,13 +3374,6 @@ electron-is-dev@^1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/electron-is-dev/-/electron-is-dev-1.2.0.tgz#2e5cea0a1b3ccf1c86f577cee77363ef55deb05e"
   integrity sha512-R1oD5gMBPS7PVU8gJwH6CtT0e6VSoD0+SzSnYpNm+dBkcijgA+K7VAMHDfnRq/lkKPZArpzplTW6jfiMYosdzw==
-
-electron-prompt@^1.5.1:
-  version "1.5.1"
-  resolved "https://registry.yarnpkg.com/electron-prompt/-/electron-prompt-1.5.1.tgz#fa9e2e519b76236271d7f83ac716b98d53162731"
-  integrity sha512-rB5eZWIFXG+GWGbTtm/zDleihFmx7EAibSv04r/EM/fwV7jNzPfLfA86e+lSmYa5ZTFnS5mSQNiZD1YYJWJjXw==
-  dependencies:
-    doc-ready "^1.0.4"
 
 electron-publish@22.7.0:
   version "22.7.0"
@@ -3603,11 +3589,6 @@ etag@~1.8.1:
   version "1.8.1"
   resolved "https://registry.yarnpkg.com/etag/-/etag-1.8.1.tgz#41ae2eeb65efa62268aebfea83ac7d79299b0887"
   integrity sha1-Qa4u62XvpiJorr/qg6x9eSmbCIc=
-
-eventie@^1:
-  version "1.0.6"
-  resolved "https://registry.yarnpkg.com/eventie/-/eventie-1.0.6.tgz#d4ffc8b0c2b5e493c2aa1b22cbe918d3aee74437"
-  integrity sha1-1P/IsMK15JPCqhsiy+kY067nRDc=
 
 events@^3.0.0:
   version "3.1.0"

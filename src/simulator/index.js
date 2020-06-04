@@ -74,19 +74,9 @@ const PatternEditor = ({ id }) => {
     fetchSketches();
   }, [userDetails]);
 
-  const add = async () => {
-    const name = await promptFor({
-      title: "New sketch",
-      label: "Sketch name:",
-      value: "",
-      inputAttrs: {
-        type: "text",
-      },
-      type: "input",
-      icon: __dirname + "/icon.png",
-    });
-    token = await auth.getToken();
-    const newSketch = post("/sketches/create", token, { name });
+  const add = async (name) => {
+    const token = await auth.getToken();
+    const newSketch = await post("/sketches/create", token, { name });
     await fetchSketches();
     history.push(`/${newSketch.id}`);
   };

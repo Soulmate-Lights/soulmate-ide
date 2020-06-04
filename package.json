@@ -9,7 +9,6 @@
     "bonjour": "^3.5.0",
     "electron-auth0-login": "^1.3.0",
     "electron-is-dev": "^1.2.0",
-    "electron-prompt": "^1.5.1",
     "history": "^4.10.1",
     "jwt-decode": "^2.2.0",
     "keytar": "^5.0.0",
