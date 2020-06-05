@@ -34,6 +34,7 @@
 }
 
 .device {
+  font-size: 12px;
   display: flex;
   width: 100%;
   box-sizing: border-box;
@@ -67,7 +68,7 @@
   text-decoration: none;
   align-items: center;
   color: #333;
-  padding: 4px 8px 4px 4px;
+  padding: 4px 8px 4px 6px;
   font-size: 12px;
 }
 
@@ -136,25 +137,18 @@
 }
 
 .sketch video,
-.video-wrapper,
-.video-wrapper::after {
+.video-wrapper {
   display: block;
   position: relative;
   top: 0px;
   left: 0px;
   height: 32px;
   width: 32px;
-  border-radius: 8px;
+  border-radius: 4px;
 }
 
 .video-wrapper {
   margin: 4px;
-}
-
-.video-wrapper::after {
-  position: absolute;
-  box-shadow: inset 0px 0px 2px #333;
-  content: " ";
 }
 
 .dark .video-wrapper {
@@ -219,6 +213,19 @@
   padding: 5px;
   color: white;
   box-shadow: inset 1px 1px 1px #888;
+}
+
+.dark .toggle > div {
+  border-color: #222;
+}
+
+.dark .toggle .selected {
+  background: #262626;
+  box-shadow: inset 1px 1px 1px #222;
+}
+
+.blur .toggle {
+  opacity: 0.5;
 }
 
 .newSketchName {
