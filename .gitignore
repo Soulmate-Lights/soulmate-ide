@@ -3,3 +3,5 @@ dist
 .cache
 build
 .DS_Store
+.env
+*.provisionprofile

@@ -9,6 +9,8 @@
     "bonjour": "^3.5.0",
     "electron-auth0-login": "^1.3.0",
     "electron-is-dev": "^1.2.0",
+    "electron-notarize": "^0.3.0",
+    "electron-updater": "^4.3.1",
     "history": "^4.10.1",
     "jwt-decode": "^2.2.0",
     "keytar": "^5.0.0",
@@ -55,6 +57,21 @@
     "build-worker-dev": "parcel build node_modules/monaco-editor/esm/vs/editor/editor.worker.js --no-source-maps"
   },
   "build": {
+    "afterSign": "scripts/notarize.js",
+    "mac": {
+      "publish": {
+        "provider": "s3",
+        "bucket": "soulmate-ide-updates"
+      },
+      "entitlements": "entitlements.plist",
+      "entitlementsInherit": "entitlements.plist",
+      "gatekeeperAssess": false,
+      "hardenedRuntime": true,
+      "provisioningProfile": "Soulmate_macOS.provisionprofile"
+    },
+    "dmg": {
+      "sign": false
+    },
     "directories": {
       "buildResources": "assets"
     },

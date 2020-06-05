@@ -7,6 +7,9 @@ import Simulator from "./simulator";
 import config from "./auth_config.json";
 import { Auth0Provider } from "./react-auth0-spa";
 import history from "./utils/history";
+const { autoUpdater } = require("electron-updater");
+
+autoUpdater.checkForUpdatesAndNotify();
 
 const onRedirectCallback = (appState) => {
   history.push(
