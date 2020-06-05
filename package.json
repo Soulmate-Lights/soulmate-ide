@@ -1,6 +1,6 @@
 {
   "name": "Soulmate",
-  "version": "1.0.11",
+  "version": "1.0.13",
   "main": "src/electron.js",
   "license": "MIT",
   "dependencies": {
@@ -15,6 +15,7 @@
     "jwt-decode": "^2.2.0",
     "keytar": "^5.0.0",
     "lodash": "^4.17.15",
+    "npm-version": "^1.1.0",
     "prop-types": "^15.7.2",
     "react": ">=15",
     "react-dom": "^16.13.1",
@@ -54,7 +55,8 @@
     "electron-build": "electron-builder ",
     "build": "yarn react-build && yarn electron-build",
     "build-worker": "parcel build node_modules/monaco-editor/esm/vs/editor/editor.worker.js -d build --no-source-maps",
-    "build-worker-dev": "parcel build node_modules/monaco-editor/esm/vs/editor/editor.worker.js --no-source-maps"
+    "build-worker-dev": "parcel build node_modules/monaco-editor/esm/vs/editor/editor.worker.js --no-source-maps",
+    "release": "yarn version patch && yarn react-build && yarn electron-build --publish always"
   },
   "build": {
     "afterSign": "scripts/notarize.js",
