@@ -53,10 +53,21 @@ body {
   line-height: 1.1;
   background-color: #efefef;
   border-bottom: 1px solid var(--border-color);
+  color: #999;
+  user-select: none;
 }
 
 .dark .titlebar {
   background: #333;
+}
+
+.focus .titlebar {
+  background: #e3e3e3;
+  color: #666;
+}
+
+.focus.dark .titlebar {
+  background: #2a2a2a;
 }
 
 .titlebar .title {
@@ -305,10 +316,14 @@ canvas {
   text-align: center;
   padding: 4px 12px 4px 12px;
   -webkit-app-region: no-drag;
-  border-radius: 2px;
+  border-radius: 4px;
   box-shadow: 1px 1px 1px #aaa;
   cursor: pointer;
   user-select: none;
+}
+
+.blur .button {
+  background: #efefef;
 }
 
 .button svg {

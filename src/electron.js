@@ -39,12 +39,18 @@ function createWindow() {
 
   mainWindow.loadURL(mainUrl);
 
+  mainWindow.on("focus", () => {
+    mainWindow.webContents.send("focus", true);
+  });
+  mainWindow.on("blur", () => {
+    mainWindow.webContents.send("focus", false);
+  });
+
   mainWindow.on("closed", () => (mainWindow = null));
+
   ipcMain.on("scan", () => {
-    // browse for all http services
     bonjour.find({ type: "http" }, function (service) {
-      const lowerCaseHost = service.host.toLowerCase();
-      if (lowerCaseHost.indexOf("soulmate") > -1) {
+      if (service.host.toLowerCase().indexOf("soulmate") > -1) {
         mainWindow.webContents.send("soulmate", service);
       }
     });

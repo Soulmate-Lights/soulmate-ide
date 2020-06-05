@@ -19,6 +19,7 @@ const PatternEditor = ({ id }) => {
 
   const [allSketches, setAllSketches] = useState();
   const [sketches, setSketches] = useState();
+  const [focus, setFocus] = useState(false);
 
   const combinedSketches = [...(sketches || []), ...(allSketches || [])];
 
@@ -30,6 +31,10 @@ const PatternEditor = ({ id }) => {
 
   const [userDetails, setUserDetails] = useState(false);
   const loggedIn = !!userDetails;
+
+  ipcRenderer.on("focus", (event, isFocused) => {
+    setFocus(isFocused);
+  });
 
   ipcRenderer.on("soulmate", (event, arg) => {
     let newSoulmates = [...soulmates, arg];
@@ -92,12 +97,26 @@ const PatternEditor = ({ id }) => {
   };
 
   const save = async (id, code) => {
-    if (sketches) sketches.find((s) => s.id === id).code = code;
-    setSketches(sketches);
-    if (!loggedIn) return;
+    if (loggedIn && sketches) {
+      const sketch = sketches.find((s) => s.id === id);
 
-    const token = await auth.getToken();
-    post("/sketches/save", token, { id, code }).then(fetchSketches);
+      if (sketch) {
+        sketch.code = code;
+        setSketches(sketches);
+        const token = await auth.getToken();
+        post("/sketches/save", token, { id, code }).then(fetchSketches);
+      }
+    }
+
+    if (allSketches) {
+      const sketch = allSketches.find((s) => s.id === id);
+
+      if (sketch) {
+        debugger;
+        sketch.code = code;
+        setAllSketches(allSketches);
+      }
+    }
   };
 
   const destroy = async (id) => {
@@ -132,7 +151,9 @@ const PatternEditor = ({ id }) => {
   };
 
   return (
-    <div className={`app-wrapper ${dark && "dark"}`}>
+    <div
+      className={`app-wrapper ${dark && "dark"} ${focus ? "focus" : "blur"}`}
+    >
       <div className="titlebar">
         <span className="title">Soulmate</span>
         <div className="user">

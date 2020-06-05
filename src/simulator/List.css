@@ -112,7 +112,7 @@
 }
 
 .dark .sketch:hover {
-  background: #666;
+  background: #444;
 }
 
 .sketch.selected,
@@ -198,6 +198,8 @@
   padding: 4px 5px;
   border: 1px solid #999;
   cursor: pointer;
+  min-width: 36px;
+  text-align: center;
 }
 
 .toggle > div:first-child {
