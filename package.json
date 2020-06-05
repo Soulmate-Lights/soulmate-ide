@@ -16,7 +16,6 @@
     "jwt-decode": "^2.2.0",
     "keytar": "^5.0.0",
     "lodash": "^4.17.15",
-    "npm-version": "^1.1.0",
     "prop-types": "^15.7.2",
     "react": "^16.0.0",
     "react-dom": "^16.13.1",
@@ -41,7 +40,7 @@
     "cross-env": "^7.0.2",
     "electron": "^9.0.0",
     "electron-builder": "^22.7.0",
-    "electron-rebuild": "^1.11.0",
+    "npm-version": "^1.1.0",
     "parcel-bundler": "^1.12.4",
     "typescript": "^3.9.3",
     "wait-on": "^5.0.0"
@@ -52,9 +51,9 @@
   },
   "scripts": {
     "react-start": "parcel -p 3000 index.html",
-    "react-build": "yarn build-worker && parcel build index.html --out-dir build --public-url ./",
+    "react-build": "yarn build-worker && parcel build index.html --out-dir build --public-url ./ --no-source-maps",
     "start": "concurrently \"cross-env BROWSER=none yarn react-start\" \"wait-on http://localhost:3000 && electron . \" \"yarn build-worker-dev\"",
-    "electron-build": "electron-builder ",
+    "electron-build": "electron-builder",
     "build": "yarn react-build && yarn electron-build",
     "build-worker": "parcel build node_modules/monaco-editor/esm/vs/editor/editor.worker.js -d build --no-source-maps",
     "build-worker-dev": "parcel build node_modules/monaco-editor/esm/vs/editor/editor.worker.js --no-source-maps",
