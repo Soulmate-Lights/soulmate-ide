@@ -19,18 +19,16 @@ const PatternEditor = ({ id }) => {
 
   const [allSketches, setAllSketches] = useState();
   const [sketches, setSketches] = useState();
-  const [focus, setFocus] = useState(false);
+  const [focus, setFocus] = useState(true);
+  const [soulmates, setSoulmates] = useState([]);
+  const [soulmate, setSoulmate] = useState(false);
+  const [userDetails, setUserDetails] = useState(false);
+  const loggedIn = !!userDetails;
 
   const combinedSketches = [...(sketches || []), ...(allSketches || [])];
 
   const selectedSketch =
     combinedSketches?.find((s) => s.id === id) || combinedSketches[0];
-
-  const [soulmates, setSoulmates] = useState([]);
-  const [soulmate, setSoulmate] = useState(false);
-
-  const [userDetails, setUserDetails] = useState(false);
-  const loggedIn = !!userDetails;
 
   ipcRenderer.on("focus", (event, isFocused) => {
     setFocus(isFocused);
