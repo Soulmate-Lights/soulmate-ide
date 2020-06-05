@@ -7,6 +7,7 @@ import Simulator from "./simulator";
 import config from "./auth_config.json";
 import { Auth0Provider } from "./react-auth0-spa";
 import history from "./utils/history";
+import * as monaco from "monaco-editor/esm/vs/editor/editor.main.js";
 
 const onRedirectCallback = (appState) => {
   history.push(

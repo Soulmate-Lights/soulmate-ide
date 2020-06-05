@@ -65,8 +65,8 @@ const mainUrl = isDev
   : `file://${path.join(__dirname, "../build/index.html")}`;
 
 function createWindow() {
-  const menu = Menu.buildFromTemplate(template);
-  Menu.setApplicationMenu(menu);
+  // const menu = Menu.buildFromTemplate(template);
+  // Menu.setApplicationMenu(menu);
 
   app.userAgentFallback = app.userAgentFallback.replace(
     "Electron/" + process.versions.electron,

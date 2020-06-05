@@ -5,6 +5,7 @@
   "license": "MIT",
   "dependencies": {
     "@auth0/auth0-spa-js": "^1.8.2",
+    "@hot-loader/react-dom": "^16.13.0",
     "avr8js": "^0.9.1",
     "bonjour": "^3.5.0",
     "electron-auth0-login": "^1.3.0",
@@ -17,7 +18,7 @@
     "lodash": "^4.17.15",
     "npm-version": "^1.1.0",
     "prop-types": "^15.7.2",
-    "react": ">=15",
+    "react": "^16.0.0",
     "react-dom": "^16.13.1",
     "react-hot-loader": "^4.12.21",
     "react-icons": "^3.10.0",
@@ -46,7 +47,8 @@
     "wait-on": "^5.0.0"
   },
   "alias": {
-    "@auth0/auth0-spa-js": "./node_modules/@auth0/auth0-spa-js/dist/lib/auth0-spa-js.cjs.js"
+    "@auth0/auth0-spa-js": "./node_modules/@auth0/auth0-spa-js/dist/lib/auth0-spa-js.cjs.js",
+    "react-dom": "@hot-loader/react-dom"
   },
   "scripts": {
     "react-start": "parcel -p 3000 index.html",
