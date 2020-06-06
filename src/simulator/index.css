@@ -160,7 +160,7 @@ canvas {
 
 .toolbar {
   display: flex;
-  padding: 8px 12px;
+  padding: 8px 16px;
   background-color: #efefef;
   border-top: 1px solid var(--border-color);
   box-sizing: border-box;
@@ -359,7 +359,8 @@ canvas {
   height: 16px;
 }
 
-.button:active {
+.button:active,
+.button.pressed {
   box-shadow: inset 1px 1px 1px #999;
   background: #cdcdcd;
 }
@@ -380,7 +381,8 @@ canvas {
   background: #555;
 }
 
-.dark .button:active {
+.dark .button:active,
+.dark .button.pressed {
   background: #222;
 }
 
@@ -417,29 +419,16 @@ canvas {
   position: relative;
 }
 
-.configurationWrapper {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: absolute;
-  top: 0;
-  left: 0;
-  background: rgba(0, 0, 0, 0.5);
-  z-index: 10;
-}
-
 .configuration {
   background: #efefef;
-  position: absolute;
   z-index: 20;
-  border-radius: 8px;
-  box-shadow: 0 0 10px #000, inset 0 0 1px rgba(255, 255, 255, 0.4);
   color: #333;
-  padding: 16px 32px;
+  padding: 8px 16px 8px;
   font-size: 11px;
   line-height: 1;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
 }
 
 .dark .configuration {
@@ -447,33 +436,31 @@ canvas {
   color: #dedede;
 }
 
-.configuration svg {
-  position: absolute;
-  top: -10px;
-  right: -10px;
-  width: 20px;
-  height: 20px;
-  cursor: pointer;
-}
-
 .configuration p {
   display: flex;
   flex-direction: row;
   align-items: center;
-  margin: 16px 0;
+  width: 50%;
+  margin-bottom: 8px;
+  margin-top: 8px;
 }
 
 .configuration label {
-  width: 100px;
+  width: 120px;
+  text-align: right;
+  padding-right: 8px;
   display: block;
+  position: relative;
 }
 
 .configuration input,
 .configuration select {
-  width: 250px;
   padding: 4px 8px 5px;
   outline: none;
+  flex-grow: 1;
+  flex-shrink: 0;
   border-radius: 4px;
+  font-size: 11px;
 }
 
 .dark .configuration input,
@@ -484,5 +471,5 @@ canvas {
 }
 
 .configuration input {
-  padding: 5px 8px 6px;
+  padding-top: 5px;
 }

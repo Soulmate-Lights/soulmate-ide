@@ -26,12 +26,6 @@ const PatternEditor = ({ id }) => {
   const [userDetails, setUserDetails] = useState(false);
   const loggedIn = !!userDetails;
 
-  const [cols, setCols] = useState(15);
-  const [rows, setRows] = useState(70);
-  const [chipType, setChipType] = useState("atom");
-  const [ledType, setLedType] = useState("APA102");
-  const [configuring, setConfiguring] = useState(false);
-
   const combinedSketches = [...(sketches || []), ...(allSketches || [])];
 
   const selectedSketch =
@@ -101,7 +95,9 @@ const PatternEditor = ({ id }) => {
     history.push(`/${newSketch.id}`);
   };
 
-  const save = async (id, code) => {
+  const save = async (code, config) => {
+    const id = selectedSketch.id;
+
     if (loggedIn && sketches) {
       const sketch = sketches.find((s) => s.id === id);
 
@@ -109,7 +105,7 @@ const PatternEditor = ({ id }) => {
         sketch.code = code;
         setSketches(sketches);
         const token = await auth.getToken();
-        post("/sketches/save", token, { id, code }).then(fetchSketches);
+        post("/sketches/save", token, { id, code, config }).then(fetchSketches);
       }
     }
 
@@ -117,7 +113,6 @@ const PatternEditor = ({ id }) => {
       const sketch = allSketches.find((s) => s.id === id);
 
       if (sketch) {
-        debugger;
         sketch.code = code;
         setAllSketches(allSketches);
       }
@@ -159,58 +154,6 @@ const PatternEditor = ({ id }) => {
     <div
       className={`app-wrapper ${dark && "dark"} ${focus ? "focus" : "blur"}`}
     >
-      {configuring && (
-        <div className="configurationWrapper">
-          <div className="configuration">
-            <RiCloseCircleLine onClick={() => setConfiguring(false)} />
-            <p>
-              <label>Shape</label>
-              <select disabled>
-                <option>Rectangle</option>
-                <option>Cylinder</option>
-                <option>Hexagon</option>
-              </select>
-            </p>
-            <p>
-              <label>Width</label>
-              <input
-                type="number"
-                value={cols}
-                onChange={(e) => setCols(e.target.value)}
-              />
-            </p>
-            <p>
-              <label>Height</label>
-              <input
-                type="number"
-                value={rows}
-                onChange={(e) => setRows(e.target.value)}
-              />
-            </p>
-            <p>
-              <label>Chip type</label>
-              <select
-                value={chipType}
-                onChange={(e) => setChipType(e.target.value)}
-              >
-                <option value="atom">M5 Atom</option>
-                <option value="d32">Lolin ESP32</option>
-              </select>
-            </p>
-            <p>
-              <label>LEDs</label>
-              <select
-                value={ledType}
-                onChange={(e) => setLedType(e.target.value)}
-              >
-                <option value="APA102">APA102</option>
-                <option value="WS2812B">WS2812B</option>
-              </select>
-            </p>
-          </div>
-        </div>
-      )}
-
       <div className="titlebar">
         <span className="title">Soulmate</span>
         <div className="user">
@@ -246,16 +189,12 @@ const PatternEditor = ({ id }) => {
         />
         {selectedSketch && (
           <Editor
-            save={(code) => save(selectedSketch.id, code)}
+            save={save}
             key={selectedSketch.id}
             code={selectedSketch.code}
             name={selectedSketch.name}
+            config={selectedSketch.config}
             soulmate={soulmate}
-            rows={rows}
-            cols={cols}
-            chipType={chipType}
-            ledType={ledType}
-            setConfiguring={setConfiguring}
           />
         )}
         {!selectedSketch && (

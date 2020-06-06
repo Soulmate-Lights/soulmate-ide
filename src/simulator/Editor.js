@@ -14,17 +14,7 @@ import Monaco from "react-monaco-editor";
 import request from "request";
 import useDebounce from "./useDebounce";
 
-const App = ({
-  code: originalCode,
-  name,
-  save,
-  soulmate,
-  rows,
-  cols,
-  chipType,
-  ledType,
-  setConfiguring,
-}) => {
+const App = ({ code: originalCode, name, save, soulmate, config = {} }) => {
   let monacoInstance = useRef(false);
   let buildNumber = useRef(0);
   const mode = useLightSwitch();
@@ -34,10 +24,16 @@ const App = ({
   const [sketches, setSketches] = useState([]);
   const [code, setCode] = useState(originalCode);
   const [flashing, setFlashing] = useState(false);
+  const [showConfiguration, setShowConfiguration] = useState(false);
+  const [milliamps, setMilliamps] = useState(700);
+  const [rows, setRows] = useState(config.rows || 70);
+  const [cols, setCols] = useState(config.cols || 15);
+  const [chipType, setChipType] = useState(config.chipType || "atom");
+  const [ledType, setLedType] = useState(config.ledType || "APA102");
 
   useEffect(() => {
     buildCode(false);
-  }, [useDebounce(cols, 500), useDebounce(rows, 500)]);
+  }, [useDebounce(cols, 1000), useDebounce(rows, 1000)]);
 
   useEffect(() => {
     setBuild(false);
@@ -48,7 +44,13 @@ const App = ({
     buildNumber.current++;
     const buildNumberAtStart = buildNumber.current;
     const editorCode = monacoInstance.current.editor.getModel().getValue();
-    if (shouldSave) save(editorCode);
+    const config = {
+      rows,
+      cols,
+      chipType,
+      ledType,
+    };
+    if (shouldSave) save(editorCode, config);
     const preparedCode = prepareCode(editorCode, rows, cols);
     const newBuild = await buildHex(preparedCode);
     if (buildNumber.current !== buildNumberAtStart) return;
@@ -67,7 +69,8 @@ const App = ({
       rows,
       cols,
       chipType,
-      ledType
+      ledType,
+      milliamps
     );
     const build = await getFullBuild(preparedCode);
 
@@ -145,10 +148,69 @@ const App = ({
             />
           </div>
         </div>
+
+        {showConfiguration && (
+          <div className="configuration">
+            <p>
+              <label>Rows</label>
+              <input
+                type="number"
+                value={rows}
+                onChange={(e) => setRows(e.target.value)}
+              />
+            </p>
+            <p>
+              <label>Columns</label>
+              <input
+                type="number"
+                value={cols}
+                onChange={(e) => setCols(e.target.value)}
+              />
+            </p>
+            <p>
+              <label>Chip type</label>
+              <select
+                value={chipType}
+                onChange={(e) => setChipType(e.target.value)}
+              >
+                <option value="atom">M5 Atom</option>
+                <option value="d32">Lolin ESP32</option>
+              </select>
+            </p>
+            <p>
+              <label>LEDs</label>
+              <select
+                value={ledType}
+                onChange={(e) => setLedType(e.target.value)}
+              >
+                <option value="APA102">APA102</option>
+                <option value="WS2812B">WS2812B</option>
+              </select>
+            </p>
+            <p>
+              <label>Shape</label>
+              <select disabled>
+                <option>Rectangle</option>
+                <option>Cylinder</option>
+                <option>Hexagon</option>
+              </select>
+            </p>
+            <p>
+              <label>Power (mA)</label>
+              <input
+                type="number"
+                step="100"
+                value={milliamps}
+                onChange={(e) => setMilliamps(e.target.value)}
+              />
+            </p>
+          </div>
+        )}
+
         <div className="toolbar">
           <div
-            className="configure button"
-            onClick={() => setConfiguring(true)}
+            className={`configure button ${showConfiguration && "pressed"}`}
+            onClick={() => setShowConfiguration(!showConfiguration)}
           >
             <MdSettings />
             Configure
