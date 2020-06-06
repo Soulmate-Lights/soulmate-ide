@@ -160,6 +160,16 @@ const App = ({ code: originalCode, name, save, soulmate, config = {} }) => {
               />
             </p>
             <p>
+              <label>LEDs</label>
+              <select
+                value={ledType}
+                onChange={(e) => setLedType(e.target.value)}
+              >
+                <option value="APA102">APA102</option>
+                <option value="WS2812B">WS2812B</option>
+              </select>
+            </p>
+            <p>
               <label>Columns</label>
               <input
                 type="number"
@@ -175,16 +185,6 @@ const App = ({ code: originalCode, name, save, soulmate, config = {} }) => {
               >
                 <option value="atom">M5 Atom</option>
                 <option value="d32">Lolin ESP32</option>
-              </select>
-            </p>
-            <p>
-              <label>LEDs</label>
-              <select
-                value={ledType}
-                onChange={(e) => setLedType(e.target.value)}
-              >
-                <option value="APA102">APA102</option>
-                <option value="WS2812B">WS2812B</option>
               </select>
             </p>
             <p>
