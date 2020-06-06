@@ -30,7 +30,7 @@ export default ({
 
   return (
     <div className="list">
-      <p className="heading">
+      <div className="heading">
         Sketches
         {userDetails && (
           <div className="toggle">
@@ -52,7 +52,7 @@ export default ({
             </div>
           </div>
         )}
-      </p>
+      </div>
 
       <div className="sketches">
         {!sketchesToShow && <Logo className="loader" />}
@@ -122,7 +122,7 @@ export default ({
       <div className="soulmates">
         {soulmates.length > 0 && (
           <>
-            <p className="heading">Soulmates</p>
+            <div className="heading">Soulmates</div>
 
             {soulmates.map((s) => {
               const connected = s === soulmate;

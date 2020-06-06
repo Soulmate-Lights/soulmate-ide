@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import { MdSettings } from "react-icons/md";
 import debounce from "lodash/debounce";
 import { GrInProgress } from "react-icons/gr";
 import { BsFillPlayFill } from "react-icons/bs";
@@ -9,11 +10,45 @@ import { prepareCode, prepareFullCode } from "./code";
 import Simulator from "./Simulator";
 import { Link } from "react-router-dom";
 import { Mode, useLightSwitch } from "use-light-switch";
-
 import Monaco from "react-monaco-editor";
 import request from "request";
 
-const App = ({ code: originalCode, name, save, soulmate }) => {
+// Hook
+function useDebounce(value, delay) {
+  // State and setters for debounced value
+  const [debouncedValue, setDebouncedValue] = useState(value);
+
+  useEffect(
+    () => {
+      // Update debounced value after delay
+      const handler = setTimeout(() => {
+        setDebouncedValue(value);
+      }, delay);
+
+      // Cancel the timeout if value changes (also on delay change or unmount)
+      // This is how we prevent debounced value from updating if value is changed ...
+      // .. within the delay period. Timeout gets cleared and restarted.
+      return () => {
+        clearTimeout(handler);
+      };
+    },
+    [value, delay] // Only re-call effect if value or delay changes
+  );
+
+  return debouncedValue;
+}
+
+const App = ({
+  code: originalCode,
+  name,
+  save,
+  soulmate,
+  rows,
+  cols,
+  chipType,
+  ledType,
+  setConfiguring,
+}) => {
   let monacoInstance = useRef(false);
   let buildNumber = useRef(0);
   const mode = useLightSwitch();
@@ -22,9 +57,15 @@ const App = ({ code: originalCode, name, save, soulmate }) => {
   const [build, setBuild] = useState();
   const [sketches, setSketches] = useState([]);
   const [code, setCode] = useState(originalCode);
-  const [cols, setCols] = useState(15);
-  const [rows, setRows] = useState(70);
   const [flashing, setFlashing] = useState(false);
+
+  useEffect(() => {
+    buildCode(false);
+  }, [useDebounce(cols, 500), useDebounce(rows, 500)]);
+
+  useEffect(() => {
+    setBuild(false);
+  }, [cols, rows]);
 
   const buildCode = async (shouldSave = false) => {
     setBuild(undefined);
@@ -44,7 +85,14 @@ const App = ({ code: originalCode, name, save, soulmate }) => {
     setFlashing(true);
 
     const editorCode = monacoInstance.current.editor.getModel().getValue();
-    const preparedCode = prepareFullCode(name, editorCode, rows, cols);
+    const preparedCode = prepareFullCode(
+      name,
+      editorCode,
+      rows,
+      cols,
+      chipType,
+      ledType
+    );
     const build = await getFullBuild(preparedCode);
 
     const ip = soulmate.addresses[0];
@@ -123,6 +171,14 @@ const App = ({ code: originalCode, name, save, soulmate }) => {
         </div>
         <div className="toolbar">
           <div
+            className="configure button"
+            onClick={() => setConfiguring(true)}
+          >
+            <MdSettings />
+            Configure
+          </div>
+
+          <div
             className="button"
             disabled={!build}
             onClick={() => buildCode(true)}
@@ -164,8 +220,8 @@ const App = ({ code: originalCode, name, save, soulmate }) => {
               build={build}
               cols={cols}
               rows={rows}
-              width={150}
-              height={700}
+              width={cols * 10}
+              height={rows * 10}
             />
           )}
         </div>

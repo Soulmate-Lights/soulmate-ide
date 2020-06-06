@@ -7,6 +7,7 @@ import Editor from "./Editor";
 import { Link, Router, Switch, Route } from "react-router-dom";
 import { Mode, useLightSwitch } from "use-light-switch";
 import { fetchJson, post, postDelete } from "./utils";
+import { RiCloseCircleLine } from "react-icons/ri";
 import List from "./List";
 import { useAuth0 } from "../react-auth0-spa";
 import history from "../utils/history";
@@ -24,6 +25,12 @@ const PatternEditor = ({ id }) => {
   const [soulmate, setSoulmate] = useState(false);
   const [userDetails, setUserDetails] = useState(false);
   const loggedIn = !!userDetails;
+
+  const [cols, setCols] = useState(15);
+  const [rows, setRows] = useState(70);
+  const [chipType, setChipType] = useState("atom");
+  const [ledType, setLedType] = useState("APA102");
+  const [configuring, setConfiguring] = useState(false);
 
   const combinedSketches = [...(sketches || []), ...(allSketches || [])];
 
@@ -152,6 +159,58 @@ const PatternEditor = ({ id }) => {
     <div
       className={`app-wrapper ${dark && "dark"} ${focus ? "focus" : "blur"}`}
     >
+      {configuring && (
+        <div className="configurationWrapper">
+          <div className="configuration">
+            <RiCloseCircleLine onClick={() => setConfiguring(false)} />
+            <p>
+              <label>Shape</label>
+              <select disabled>
+                <option>Rectangle</option>
+                <option>Cylinder</option>
+                <option>Hexagon</option>
+              </select>
+            </p>
+            <p>
+              <label>Width</label>
+              <input
+                type="number"
+                value={cols}
+                onChange={(e) => setCols(e.target.value)}
+              />
+            </p>
+            <p>
+              <label>Height</label>
+              <input
+                type="number"
+                value={rows}
+                onChange={(e) => setRows(e.target.value)}
+              />
+            </p>
+            <p>
+              <label>Chip type</label>
+              <select
+                value={chipType}
+                onChange={(e) => setChipType(e.target.value)}
+              >
+                <option value="atom">M5 Atom</option>
+                <option value="d32">Lolin ESP32</option>
+              </select>
+            </p>
+            <p>
+              <label>LEDs</label>
+              <select
+                value={ledType}
+                onChange={(e) => setLedType(e.target.value)}
+              >
+                <option value="APA102">APA102</option>
+                <option value="WS2812B">WS2812B</option>
+              </select>
+            </p>
+          </div>
+        </div>
+      )}
+
       <div className="titlebar">
         <span className="title">Soulmate</span>
         <div className="user">
@@ -192,6 +251,11 @@ const PatternEditor = ({ id }) => {
             code={selectedSketch.code}
             name={selectedSketch.name}
             soulmate={soulmate}
+            rows={rows}
+            cols={cols}
+            chipType={chipType}
+            ledType={ledType}
+            setConfiguring={setConfiguring}
           />
         )}
         {!selectedSketch && (
