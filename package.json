@@ -40,6 +40,7 @@
     "cross-env": "^7.0.2",
     "electron": "^9.0.0",
     "electron-builder": "^22.7.0",
+    "electron-rebuild": "^1.11.0",
     "npm-version": "^1.1.0",
     "parcel-bundler": "^1.12.4",
     "typescript": "^3.9.3",
@@ -58,7 +59,8 @@
     "build-worker": "parcel build node_modules/monaco-editor/esm/vs/editor/editor.worker.js -d build --no-source-maps",
     "build-worker-dev": "parcel build node_modules/monaco-editor/esm/vs/editor/editor.worker.js --no-source-maps",
     "release": "AWS_PROFILE=soulmate-ide-updates yarn version --patch && yarn react-build && yarn electron-build --publish always",
-    "clean": "rm -r ./build"
+    "clean": "rm -r ./build",
+    "postinstall": "npx electron-rebuild"
   },
   "build": {
     "afterSign": "scripts/notarize.js",
