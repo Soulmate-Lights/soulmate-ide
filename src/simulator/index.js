@@ -1,4 +1,7 @@
 import uniqBy from "lodash/uniqBy";
+import Simulator from "./Simulator";
+import { buildHex, getFullBuild } from "./compiler/compile";
+import { prepareCode, prepareFullCode } from "./code";
 import { hot } from "react-hot-loader";
 import { MdAccountCircle } from "react-icons/md";
 import "./index.css";
@@ -27,6 +30,26 @@ const PatternEditor = ({ id }) => {
   const loggedIn = !!userDetails;
 
   const combinedSketches = [...(sketches || []), ...(allSketches || [])];
+
+  const [builds, setBuilds] = useState({});
+  const build = builds[id];
+
+  const setBuild = (id, build) => {
+    builds[id] = build;
+    setBuilds(builds);
+  };
+
+  const onBuild = async (id, code) => {
+    if (!id) return;
+    setBuild(id, undefined);
+    const sketch = combinedSketches.find((s) => s.id === id);
+    if (!sketch) return;
+    const config = sketch.config;
+    const { rows = 70, cols = 15 } = config;
+    const preparedCode = prepareCode(code, rows, cols);
+    const newBuild = await buildHex(preparedCode);
+    setBuild(id, newBuild);
+  };
 
   const selectedSketch =
     combinedSketches?.find((s) => s.id === id) || combinedSketches[0];
@@ -98,6 +121,8 @@ const PatternEditor = ({ id }) => {
   const save = async (code, config) => {
     const id = selectedSketch.id;
 
+    console.log(id, config);
+
     if (loggedIn && sketches) {
       const sketch = sketches.find((s) => s.id === id);
 
@@ -159,6 +184,8 @@ const PatternEditor = ({ id }) => {
     setSketches([...sketches]);
   };
 
+  const { rows = 70, cols = 15 } = selectedSketch?.config || {};
+
   return (
     <div
       className={`app-wrapper ${dark && "dark"} ${focus ? "focus" : "blur"}`}
@@ -202,8 +229,12 @@ const PatternEditor = ({ id }) => {
             key={selectedSketch.id}
             code={selectedSketch.code}
             name={selectedSketch.name}
-            config={selectedSketch.config}
+            config={selectedSketch.config || { rows, cols }}
             soulmate={soulmate}
+            onBuild={(code) => {
+              onBuild(selectedSketch.id, code);
+            }}
+            // onFlash={didFlash}
           />
         )}
         {!selectedSketch && (
@@ -211,6 +242,28 @@ const PatternEditor = ({ id }) => {
             <Logo className="loader" />
           </div>
         )}
+        <div className="pixels">
+          <div className="simulator">
+            {!build && <Logo className="loader" />}
+
+            {build && (
+              <Simulator
+                key={id}
+                build={build}
+                cols={cols}
+                rows={rows}
+                width={cols * 10}
+                height={rows * 10}
+              />
+            )}
+          </div>
+
+          {build?.stderr && (
+            <div className="compiler-output">
+              <pre id="compiler-output-text">{build.stderr}</pre>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

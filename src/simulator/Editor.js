@@ -14,7 +14,14 @@ import Monaco from "react-monaco-editor";
 import request from "request";
 import useDebounce from "./useDebounce";
 
-const Editor = ({ code: originalCode, name, save, soulmate, config = {} }) => {
+const Editor = ({
+  code: originalCode,
+  name,
+  save,
+  soulmate,
+  config = {},
+  onBuild,
+}) => {
   let monacoInstance = useRef(false);
   let buildNumber = useRef(0);
   const mode = useLightSwitch();
@@ -26,8 +33,7 @@ const Editor = ({ code: originalCode, name, save, soulmate, config = {} }) => {
   const [flashing, setFlashing] = useState(false);
   const [showConfiguration, setShowConfiguration] = useState(false);
   const [milliamps, setMilliamps] = useState(700);
-  const [rows, setRows] = useState(config.rows || 70);
-  const [cols, setCols] = useState(config.cols || 15);
+  const { rows = 70, cols = 15 } = config;
   const [chipType, setChipType] = useState(config.chipType || "atom");
   const [ledType, setLedType] = useState(config.ledType || "APA102");
 
@@ -40,21 +46,8 @@ const Editor = ({ code: originalCode, name, save, soulmate, config = {} }) => {
   }, [cols, rows]);
 
   const buildCode = async (shouldSave = false) => {
-    setBuild(undefined);
-    buildNumber.current++;
-    const buildNumberAtStart = buildNumber.current;
     const editorCode = monacoInstance.current.editor.getModel().getValue();
-    const config = {
-      rows,
-      cols,
-      chipType,
-      ledType,
-    };
-    if (shouldSave) save(editorCode, config);
-    const preparedCode = prepareCode(editorCode, rows, cols);
-    const newBuild = await buildHex(preparedCode);
-    if (buildNumber.current !== buildNumberAtStart) return;
-    setBuild(newBuild);
+    onBuild(editorCode);
   };
 
   const makeBuild = async () => {
@@ -161,7 +154,10 @@ const Editor = ({ code: originalCode, name, save, soulmate, config = {} }) => {
               <input
                 type="number"
                 value={rows}
-                onChange={(e) => setRows(e.target.value)}
+                onChange={(e) => {
+                  const rows = parseInt(e.target.value);
+                  save({ ...config, rows });
+                }}
               />
             </p>
             <p>
@@ -179,7 +175,10 @@ const Editor = ({ code: originalCode, name, save, soulmate, config = {} }) => {
               <input
                 type="number"
                 value={cols}
-                onChange={(e) => setCols(e.target.value)}
+                onChange={(e) => {
+                  const cols = parseInt(e.target.value);
+                  save({ ...config, cols });
+                }}
               />
             </p>
             <p>
@@ -252,28 +251,6 @@ const Editor = ({ code: originalCode, name, save, soulmate, config = {} }) => {
             </div>
           )}
         </div>
-      </div>
-
-      <div className="pixels">
-        <div className="simulator">
-          {!build && <Logo className="loader" />}
-
-          {build && (
-            <Simulator
-              build={build}
-              cols={cols}
-              rows={rows}
-              width={cols * 10}
-              height={rows * 10}
-            />
-          )}
-        </div>
-
-        {build?.stderr && (
-          <div className="compiler-output">
-            <pre id="compiler-output-text">{build.stderr}</pre>
-          </div>
-        )}
       </div>
     </div>
   );
