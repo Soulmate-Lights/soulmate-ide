@@ -150,6 +150,15 @@ const PatternEditor = ({ id }) => {
     getUserDetails();
   };
 
+  const updateSketch = (code) => {
+    const sketchIndex = sketches.findIndex(
+      (sketch) => sketch.id === selectedSketch.id
+    );
+    if (sketchIndex === -1) return;
+    sketches[sketchIndex].code = code;
+    setSketches([...sketches]);
+  };
+
   return (
     <div
       className={`app-wrapper ${dark && "dark"} ${focus ? "focus" : "blur"}`}

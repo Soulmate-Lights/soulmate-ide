@@ -14,7 +14,7 @@ import Monaco from "react-monaco-editor";
 import request from "request";
 import useDebounce from "./useDebounce";
 
-const App = ({ code: originalCode, name, save, soulmate, config = {} }) => {
+const Editor = ({ code: originalCode, name, save, soulmate, config = {} }) => {
   let monacoInstance = useRef(false);
   let buildNumber = useRef(0);
   const mode = useLightSwitch();
@@ -93,14 +93,12 @@ const App = ({ code: originalCode, name, save, soulmate, config = {} }) => {
   };
 
   useEffect(() => {
-    monacoInstance.current.editor.getModel().onDidChangeContent((event) => {
-      const editorCode = monacoInstance.current.editor.getModel().getValue();
-      setSketches(sketches);
-    });
+    // monacoInstance.current.editor.getModel().onDidChangeContent((event) => {
+    //   const editorCode = monacoInstance.current.editor.getModel().getValue();
+    // });
+
     const cmdS = monaco.KeyMod.CtrlCmd | monaco.KeyCode.KEY_S;
-    monacoInstance.current.editor.addCommand(cmdS, () => {
-      buildCode(true);
-    });
+    monacoInstance.current.editor.addCommand(cmdS, () => buildCode(true));
     buildCode();
 
     return () => {
@@ -108,6 +106,13 @@ const App = ({ code: originalCode, name, save, soulmate, config = {} }) => {
       monacoInstance.current.editor = undefined;
     };
   }, []);
+
+  useEffect(() => {
+    const cmdS = monaco.KeyMod.CtrlCmd | monaco.KeyCode.KEY_S;
+    monacoInstance.current.editor.addCommand(cmdS, () => buildCode(true));
+
+    buildCode(true);
+  }, [rows, cols, chipType, ledType]);
 
   const resizeEditor = () => {
     monacoInstance.current.editor?.layout();
@@ -274,4 +279,4 @@ const App = ({ code: originalCode, name, save, soulmate, config = {} }) => {
   );
 };
 
-export default App;
+export default Editor;
