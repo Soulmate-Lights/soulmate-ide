@@ -1,20 +1,20 @@
 import uniqBy from "lodash/uniqBy";
-import { hot } from "react-hot-loader";
-import { MdAccountCircle } from "react-icons/md";
+import {hot} from "react-hot-loader";
+import {MdAccountCircle} from "react-icons/md";
 import "./index.css";
-import React, { useRef, useState, useEffect } from "react";
+import React, {useRef, useState, useEffect} from "react";
 import Editor from "./Editor";
-import { Link, Router, Switch, Route } from "react-router-dom";
-import { Mode, useLightSwitch } from "use-light-switch";
-import { fetchJson, post, postDelete } from "./utils";
-import { RiCloseCircleLine } from "react-icons/ri";
+import {Link, Router, Switch, Route} from "react-router-dom";
+import {Mode, useLightSwitch} from "use-light-switch";
+import {fetchJson, post, postDelete} from "./utils";
+import {RiCloseCircleLine} from "react-icons/ri";
 import List from "./List";
-import { useAuth0 } from "../react-auth0-spa";
+import {useAuth0} from "../react-auth0-spa";
 import history from "../utils/history";
 import jwtDecode from "jwt-decode";
 import Logo from "./logo.svg";
 
-const PatternEditor = ({ id }) => {
+const PatternEditor = ({id}) => {
   const mode = useLightSwitch();
   const dark = mode === Mode.Dark;
 
@@ -90,7 +90,7 @@ const PatternEditor = ({ id }) => {
 
   const add = async (name) => {
     const token = await auth.getToken();
-    const newSketch = await post("/sketches/create", token, { name });
+    const newSketch = await post("/sketches/create", token, {name});
     await fetchSketches();
     history.push(`/${newSketch.id}`);
   };
@@ -105,7 +105,7 @@ const PatternEditor = ({ id }) => {
         sketch.code = code;
         setSketches(sketches);
         const token = await auth.getToken();
-        post("/sketches/save", token, { id, code, config }).then(fetchSketches);
+        post("/sketches/save", token, {id, code, config}).then(fetchSketches);
       }
     }
 
@@ -128,16 +128,16 @@ const PatternEditor = ({ id }) => {
     fetchSketches();
   };
 
-  let interval = useRef();
-  useEffect(() => {
-    interval.current = setInterval(() => {
-      fetchSketches();
-    }, 8000);
+  // let interval = useRef();
+  // useEffect(() => {
+  //   interval.current = setInterval(() => {
+  //     fetchSketches();
+  //   }, 8000);
 
-    return () => {
-      clearInterval(interval.current);
-    };
-  }, []);
+  //   return () => {
+  //     clearInterval(interval.current);
+  //   };
+  // }, []);
 
   const login = async () => {
     await auth.login();
@@ -148,6 +148,15 @@ const PatternEditor = ({ id }) => {
     delete localStorage.loginSaved;
     await auth.logout();
     getUserDetails();
+  };
+
+  const updateSketch = (code) => {
+    const sketchIndex = sketches.findIndex(
+      (sketch) => sketch.id === selectedSketch.id
+    );
+    if (sketchIndex === -1) return;
+    sketches[sketchIndex].code = code;
+    setSketches([...sketches]);
   };
 
   return (
@@ -195,6 +204,7 @@ const PatternEditor = ({ id }) => {
             name={selectedSketch.name}
             config={selectedSketch.config}
             soulmate={soulmate}
+            onChange={updateSketch}
           />
         )}
         {!selectedSketch && (
@@ -215,7 +225,7 @@ export default () => (
       path="/:id?"
       render={({
         match: {
-          params: { id },
+          params: {id},
         },
       }) => <HotPatternEditor id={parseInt(id)} />}
     />
