@@ -1,3 +1,5 @@
+import "regenerator-runtime/runtime";
+
 import createAuth0Client from "@auth0/auth0-spa-js";
 import jwtDecode from "jwt-decode";
 import history from "../../utils/history";

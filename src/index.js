@@ -6,6 +6,8 @@ import history from "./utils/history";
 /* eslint-disable-next-line no-unused-vars */
 import * as monaco from "monaco-editor/esm/vs/editor/editor.main.js";
 
+import "regenerator-runtime/runtime";
+
 const App = () => {
   return <Simulator />;
 };

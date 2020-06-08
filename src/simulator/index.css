@@ -120,7 +120,8 @@ body {
   transition: ease opacity 0.1s;
 }
 
-.blur .frame {
+.blur .frame,
+.blur .titlebar {
   opacity: 0.8;
 }
 
@@ -361,6 +362,10 @@ canvas {
   height: 16px;
 }
 
+.button svg * {
+  fill: currentColor;
+}
+
 .button:active,
 .button.pressed {
   box-shadow: inset 1px 1px 1px #999;
@@ -396,21 +401,15 @@ canvas {
 }
 
 .user .button {
-  color: inherit;
-  color: #333;
   margin-left: auto;
   cursor: pointer;
   position: relative;
-  margin-left: 16px;
-  margin-right: 16px;
+  margin-left: 8px;
+  margin-right: 8px;
 }
 
 .user .button:last-child {
   margin-right: 8px;
-}
-
-.dark .user .button {
-  color: #999;
 }
 
 .user img {

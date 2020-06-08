@@ -1,4 +1,5 @@
 import Simulator from "./Simulator";
+import { GoDesktopDownload } from "react-icons/go";
 import { hot } from "react-hot-loader";
 import "./index.css";
 import React, { useState, useEffect } from "react";
@@ -13,6 +14,8 @@ import { useContainer } from "unstated-next";
 import SketchesContainer from "./sketchesContainer";
 import SoulmatesContainer from "./soulmatesContainer.js";
 import UserContainer from "./userContainer.js";
+
+const isElectron = typeof process !== "undefined";
 
 const PatternEditor = ({ id }) => {
   const {
@@ -75,6 +78,12 @@ const PatternEditor = ({ id }) => {
             <div onClick={login} className="new button">
               Log in
             </div>
+          )}
+          {!isElectron && (
+            <a className="button" href="/download">
+              <GoDesktopDownload style={{ fill: "inherit" }} />
+              Download the app
+            </a>
           )}
         </div>
       </div>
