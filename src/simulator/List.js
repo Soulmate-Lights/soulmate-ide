@@ -37,9 +37,11 @@ const List = ({
     }
 
     if (selectedSketch) {
-      if (sketchesToShow?.map((s) => s.id)?.indexOf(selectedSketch.id) == -1) {
+      if (sketchesToShow?.map((s) => s.id)?.indexOf(selectedSketch?.id) == -1) {
         const sketchToShow = sketchesToShow[0];
-        history.push(`/${sketchToShow.id}`);
+        if (sketchToShow) {
+          history.push(`/${sketchToShow.id}`);
+        }
       }
     }
   }, [sketchesToShow, sketches, allSketches, showingAll]);

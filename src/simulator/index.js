@@ -16,7 +16,7 @@ import UserContainer from "./userContainer.js";
 
 const PatternEditor = ({ id }) => {
   const {
-    sketches,
+    // sketches,
     allSketches,
     save,
     createSketch,
@@ -26,6 +26,8 @@ const PatternEditor = ({ id }) => {
     buildSketch,
     builds,
   } = useContainer(SketchesContainer);
+
+  const sketches = [];
 
   const { soulmates, soulmate, setSoulmate, flash } = useContainer(
     SoulmatesContainer
