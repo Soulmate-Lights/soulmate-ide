@@ -28,14 +28,19 @@ const List = ({
 
   useEffect(() => {
     selectedSketchRef.current?.scrollIntoViewIfNeeded();
-  }, [selectedSketch?.id, sketches?.length]);
+  }, [selectedSketch?.id, sketches?.length, showingAll]);
 
   useEffect(() => {
     if (sketchesToShow && allSketches && !selectedSketch) {
       const sketchToShow = sketchesToShow[0];
       if (sketchToShow) history.push(`/${sketchToShow.id}`);
     }
-  }, [sketchesToShow, sketches, allSketches]);
+
+    if (sketchesToShow?.map((s) => s.id)?.indexOf(selectedSketch.id) == -1) {
+      const sketchToShow = sketchesToShow[0];
+      history.push(`/${sketchToShow.id}`);
+    }
+  }, [sketchesToShow, sketches, allSketches, showingAll]);
 
   const selectedSketchRef = useRef();
 
