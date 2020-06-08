@@ -75,8 +75,12 @@ const SketchesContainer = () => {
   };
 
   const buildSketch = async (id, code) => {
+    // todo: debug this
+    if (!code) return;
+
     builds[id] = undefined;
-    setBuilds(builds);
+    setBuilds({ ...builds });
+
     const sketch = getSketch(id);
     if (!sketch) return;
     const config = sketch.config;
@@ -84,7 +88,7 @@ const SketchesContainer = () => {
     const preparedCode = prepareCode(code, rows, cols);
     const newBuild = await buildHex(preparedCode);
     builds[id] = newBuild;
-    setBuilds(builds);
+    setBuilds({ ...builds });
   };
 
   return {

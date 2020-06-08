@@ -120,7 +120,6 @@ const PatternEditor = ({ id }) => {
 
             {build && (
               <Simulator
-                key={id}
                 build={build}
                 cols={cols}
                 rows={rows}
