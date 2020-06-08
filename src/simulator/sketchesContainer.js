@@ -20,17 +20,6 @@ const SketchesContainer = () => {
     setAllSketches(newAllSketches);
   };
 
-  // let interval = useRef();
-  // useEffect(() => {
-  //   interval.current = setInterval(() => {
-  //     fetchSketches();
-  //   }, 8000);
-
-  //   return () => {
-  //     clearInterval(interval.current);
-  //   };
-  // }, []);
-
   const getSketch = (id) => {
     return (
       sketches?.find((s) => s.id === id) ||
@@ -39,10 +28,10 @@ const SketchesContainer = () => {
   };
 
   const save = async (id, code, config) => {
-    let sketchIndex = sketches.findIndex((s) => s.id === id);
+    let sketchIndex = sketches?.findIndex((s) => s.id === id);
     if (sketchIndex > -1) {
       sketches[sketchIndex] = { ...sketches[sketchIndex], code, config };
-      setSketches(sketches);
+      setSketches([...sketches]);
 
       const token = await auth.getToken();
       post("/sketches/save", token, { id, code, config });
@@ -55,7 +44,7 @@ const SketchesContainer = () => {
         code,
         config,
       };
-      setAllSketches(allSketches);
+      setAllSketches([...allSketches]);
     }
   };
 

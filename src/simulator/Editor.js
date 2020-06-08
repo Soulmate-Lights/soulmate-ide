@@ -1,6 +1,7 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import debounce from "lodash/debounce";
 import { BsFillPlayFill } from "react-icons/bs";
+import { MdSettings } from "react-icons/md";
 import { IoMdCloudUpload } from "react-icons/io";
 import Logo from "./logo.svg";
 import { Mode, useLightSwitch } from "use-light-switch";
@@ -42,6 +43,8 @@ const Editor = ({
   } = config;
   const flashing = soulmate?.flashing;
 
+  const [configuring, setConfiguring] = useState(!!soulmate);
+
   const buildCode = async (shouldSave = false) => {
     const editorCode = monacoInstance.current.editor?.getModel().getValue();
     onBuild(editorCode);
@@ -64,18 +67,22 @@ const Editor = ({
   }, 500);
 
   // Effect hook for changing variables - need to recreate the event listener
-  // for scope
+  // for scope. Only do this after first mount.
+  const mounted = useRef();
   useEffect(() => {
     const cmdS = monaco.KeyMod.CtrlCmd | monaco.KeyCode.KEY_S;
     monacoInstance.current.editor?.addCommand(cmdS, () => buildCode(true));
-    buildCode();
-
-    // This was causing crashes on hot reload
-    // return () => {
-    //   editor.current.innerHTML = "";
-    //   monacoInstance.current.editor = undefined;
-    // };
+    if (mounted.current) {
+      console.log("dimensions changed");
+      buildCode();
+    }
+    mounted.current = true;
   }, [rows, cols, chipType, ledType]);
+
+  // Build on mount if we don't have a build
+  useEffect(() => {
+    if (!build) buildCode();
+  }, []);
 
   // Resizing
 
@@ -119,7 +126,7 @@ const Editor = ({
           </div>
         </div>
 
-        {soulmate && (
+        {configuring && (
           <div className="configuration">
             <p>
               <label>Rows</label>
@@ -193,6 +200,13 @@ const Editor = ({
         )}
 
         <div className="toolbar">
+          <div
+            className={`configure button ${configuring && "pressed"}`}
+            onClick={() => setConfiguring(!configuring)}
+          >
+            <MdSettings />
+            Configure
+          </div>
           <div
             className="button"
             disabled={!build}

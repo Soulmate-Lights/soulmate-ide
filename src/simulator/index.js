@@ -26,17 +26,18 @@ const PatternEditor = ({ id }) => {
     buildSketch,
     builds,
   } = useContainer(SketchesContainer);
+
   const { soulmates, soulmate, setSoulmate, flash } = useContainer(
     SoulmatesContainer
   );
+
   const { userDetails, login, logout } = useContainer(UserContainer);
 
   const [focus, setFocus] = useState(true);
   const loggedIn = !!userDetails;
-
-  const selectedSketch = getSketch(id); // || (allSketches || [])[0];
-
+  const selectedSketch = getSketch(id);
   const build = builds[selectedSketch?.id];
+  const { rows = 70, cols = 15 } = selectedSketch?.config || {};
 
   // TODO: Figure this out - called twice on page load when the user's logged in
   useEffect(reset, [userDetails]);
@@ -44,8 +45,6 @@ const PatternEditor = ({ id }) => {
   useEffect(() => {
     ipcRenderer.on("focus", (event, isFocused) => setFocus(isFocused));
   }, []);
-
-  const { rows = 70, cols = 15 } = selectedSketch?.config || {};
 
   const add = async (name) => {
     const newSketch = await createSketch(name);
@@ -56,6 +55,8 @@ const PatternEditor = ({ id }) => {
   const appClass = `
     ${mode === Mode.Dark && "dark"}
     ${focus ? "focus" : "blur"}`;
+
+  window.build = build;
 
   return (
     <div className={`app-wrapper ${appClass}`}>
@@ -116,9 +117,21 @@ const PatternEditor = ({ id }) => {
         )}
         <div className="pixels">
           <div className="simulator">
-            {!build && <Logo className="loader" />}
+            {!build && (
+              <div
+                style={{
+                  width: cols * 10,
+                  justifyContent: "center",
+                  display: "flex",
+                }}
+              >
+                <Logo className="loader" />
+              </div>
+            )}
+
             {build && (
               <Simulator
+                key={selectedSketch.id}
                 build={build}
                 cols={cols}
                 rows={rows}
@@ -127,7 +140,6 @@ const PatternEditor = ({ id }) => {
               />
             )}
           </div>
-
           {build?.stderr && (
             <div className="compiler-output">
               <pre id="compiler-output-text">{build.stderr}</pre>
