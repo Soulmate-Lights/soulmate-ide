@@ -42,6 +42,7 @@ const PatternEditor = ({ id }) => {
   const [focus, setFocus] = useState(true);
   const loggedIn = !!userDetails;
   const build = builds[id];
+
   const selectedSketch = getSketch(id) || (allSketches || [])[0];
 
   // TODO: Figure this out - called twice on page load when the user's logged in

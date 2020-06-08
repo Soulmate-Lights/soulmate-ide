@@ -11,13 +11,13 @@ const SketchesContainer = () => {
 
   const fetchSketches = async () => {
     let token;
-    fetchJson("/sketches/list").then((allSketches) => {
-      setAllSketches(allSketches);
-    });
+    const newAllSketches = await fetchJson("/sketches/list");
+    setAllSketches(newAllSketches);
 
     if (auth.tokenProperties) {
       token = await auth.getToken();
-      fetchJson("/sketches/list", token).then(setSketches);
+      const newSketches = await fetchJson("/sketches/list", token);
+      setSketches(newSketches);
     }
   };
 
@@ -85,10 +85,8 @@ const SketchesContainer = () => {
 
   const deleteSketch = async (id) => {
     setSketches(sketches.filter((s) => s.id !== id));
-
     const token = await auth.getToken();
     if (!token) return;
-    if (!confirm("Delete this sketch?")) return;
     await postDelete(`/sketches/${id}`, token);
     fetchSketches();
   };

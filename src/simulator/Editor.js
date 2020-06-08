@@ -14,38 +14,38 @@ import Monaco from "react-monaco-editor";
 import request from "request";
 import useDebounce from "./useDebounce";
 
+// TODO: Example for saving tabs?
+// monacoInstance.current.editor.getModel().onDidChangeContent((event) => {
+//   const editorCode = monacoInstance.current.editor.getModel().getValue();
+// });
+
+const defaultConfig = {
+  rows: 70,
+  cols: 15,
+  chipType: "atom",
+  ledType: "APA102",
+  milliamps: 700,
+};
+
 const Editor = ({
-  code: originalCode,
+  code,
   name,
   save,
   soulmate,
-  config = {},
+  config = defaultConfig,
   onBuild,
   build,
   flash,
 }) => {
   let monacoInstance = useRef(false);
-  let buildNumber = useRef(0);
-  const mode = useLightSwitch();
-  const dark = mode === Mode.Dark;
+  const dark = useLightSwitch() === Mode.Dark;
   const editor = useRef();
-  const [sketches, setSketches] = useState([]);
-  const [code, setCode] = useState(originalCode);
-  // const [flashing, setFlashing] = useState(false);
   const [showConfiguration, setShowConfiguration] = useState(false);
-  const [milliamps, setMilliamps] = useState(700);
-  const { rows = 70, cols = 15 } = config;
-  const [chipType, setChipType] = useState(config.chipType || "atom");
-  const [ledType, setLedType] = useState(config.ledType || "APA102");
-
+  const { rows, cols, ledType, chipType } = config;
   const flashing = soulmate?.flashing;
 
-  // useEffect(() => {
-  //   setBuild(false);
-  // }, [cols, rows]);
-
   const buildCode = async (shouldSave = false) => {
-    const editorCode = monacoInstance.current.editor.getModel().getValue();
+    const editorCode = monacoInstance.current.editor?.getModel().getValue();
     onBuild(editorCode);
 
     if (shouldSave) {
@@ -56,23 +56,18 @@ const Editor = ({
   const makeBuild = async () => {
     if (!soulmate) return;
 
-    const editorCode = monacoInstance.current.editor.getModel().getValue();
+    const editorCode = monacoInstance.current.editor?.getModel().getValue();
     flash(soulmate, name, editorCode, rows, cols, chipType, ledType, milliamps);
   };
 
   const saveConfig = debounce((config) => {
-    const editorCode = monacoInstance.current.editor.getModel().getValue();
+    const editorCode = monacoInstance.current.editor?.getModel().getValue();
     save(code, config);
   }, 500);
 
   useEffect(() => {
-    // TODO: Example for saving tabs?
-    // monacoInstance.current.editor.getModel().onDidChangeContent((event) => {
-    //   const editorCode = monacoInstance.current.editor.getModel().getValue();
-    // });
-
     const cmdS = monaco.KeyMod.CtrlCmd | monaco.KeyCode.KEY_S;
-    monacoInstance.current.editor.addCommand(cmdS, () => buildCode(true));
+    monacoInstance.current.editor?.addCommand(cmdS, () => buildCode(true));
     buildCode();
 
     return () => {
@@ -85,7 +80,7 @@ const Editor = ({
   // for scope
   useEffect(() => {
     const cmdS = monaco.KeyMod.CtrlCmd | monaco.KeyCode.KEY_S;
-    monacoInstance.current.editor.addCommand(cmdS, () => buildCode(true));
+    monacoInstance.current.editor?.addCommand(cmdS, () => buildCode(true));
     buildCode();
   }, [rows, cols, chipType, ledType]);
 

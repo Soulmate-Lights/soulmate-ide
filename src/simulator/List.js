@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import history from "../utils/history";
 import { MdAccountCircle } from "react-icons/md";
 import { FaRegLightbulb, FaLightbulb } from "react-icons/fa";
 import { FiCircle, FiCheckCircle } from "react-icons/fi";
@@ -93,6 +94,12 @@ export default ({
                 <RiDeleteBin2Line
                   className="delete"
                   onClick={() => {
+                    if (!confirm("Delete this sketch?")) return;
+                    const sketchIndex = sketches.findIndex(
+                      (s) => s.id === sketch.id
+                    );
+                    const id = sketches[sketchIndex - 1]?.id;
+                    setTimeout(() => history.push(`/57`));
                     destroy(sketch.id);
                   }}
                 />
