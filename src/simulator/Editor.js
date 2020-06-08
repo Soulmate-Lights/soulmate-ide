@@ -73,7 +73,6 @@ const Editor = ({
     const cmdS = monaco.KeyMod.CtrlCmd | monaco.KeyCode.KEY_S;
     monacoInstance.current.editor?.addCommand(cmdS, () => buildCode(true));
     if (mounted.current) {
-      console.log("dimensions changed");
       buildCode();
     }
     mounted.current = true;
