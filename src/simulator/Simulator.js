@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from "react";
 import { AVRRunner } from "./compiler/execute";
 import { WS2812Controller } from "./compiler/ws2812";
 
-const Simulator = ({ build, building, rows, cols, height, width }) => {
+const Simulator = ({ build, rows, cols, height, width }) => {
   const canvas = useRef();
   const runner = useRef();
 

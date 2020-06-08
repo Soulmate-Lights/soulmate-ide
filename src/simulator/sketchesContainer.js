@@ -33,23 +33,20 @@ const SketchesContainer = () => {
   // }, []);
 
   const getSketch = (id) => {
-    try {
-      return (
-        sketches.find((s) => s.id === id) ||
-        allSketches.find((s) => s.id === id)
-      );
-    } catch (e) {
-      return false;
-    }
+    return (
+      sketches?.find((s) => s.id === id) ||
+      allSketches?.find((s) => s.id === id)
+    );
   };
 
   const save = async (id, code, config) => {
-    const sketch = sketches?.find((s) => s.id === id);
-
     let sketchIndex = sketches.findIndex((s) => s.id === id);
     if (sketchIndex > -1) {
       sketches[sketchIndex] = { ...sketches[sketchIndex], code, config };
       setSketches(sketches);
+
+      const token = await auth.getToken();
+      post("/sketches/save", token, { id, code, config });
     }
 
     let allSketchIndex = allSketches.findIndex((s) => s.id === id);
@@ -59,19 +56,6 @@ const SketchesContainer = () => {
         code,
         config,
       };
-      setAllSketches(allSketches);
-    }
-
-    // TODO: Update sketch in state
-    if (sketch) {
-      sketch.code = code;
-      const token = await auth.getToken();
-      post("/sketches/save", token, { id, code, config }).then(fetchSketches);
-    }
-
-    const publicSketch = allSketches?.find((s) => s.id === id);
-    if (publicSketch) {
-      publicSketch.code = code;
       setAllSketches(allSketches);
     }
   };

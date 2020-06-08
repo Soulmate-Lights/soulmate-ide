@@ -1,18 +1,11 @@
-import uniqBy from "lodash/uniqBy";
 import Simulator from "./Simulator";
-import { buildHex, getFullBuild } from "./compiler/compile";
-import { prepareCode, prepareFullCode } from "./code";
 import { hot } from "react-hot-loader";
-import { MdAccountCircle } from "react-icons/md";
 import "./index.css";
-import React, { useRef, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Editor from "./Editor";
-import { Link, Router, Switch, Route } from "react-router-dom";
+import { Router, Route } from "react-router-dom";
 import { Mode, useLightSwitch } from "use-light-switch";
-import { fetchJson, post, postDelete } from "./utils";
-import { RiCloseCircleLine } from "react-icons/ri";
 import List from "./List";
-import { useAuth0 } from "../react-auth0-spa";
 import history from "../utils/history";
 import Logo from "./logo.svg";
 
@@ -36,9 +29,8 @@ const PatternEditor = ({ id }) => {
   const { soulmates, soulmate, setSoulmate, flash } = useContainer(
     SoulmatesContainer
   );
-  const { userDetails, fetchUser, login, logout } = useContainer(UserContainer);
+  const { userDetails, login, logout } = useContainer(UserContainer);
 
-  const mode = useLightSwitch();
   const [focus, setFocus] = useState(true);
   const loggedIn = !!userDetails;
   const build = builds[id];
@@ -56,6 +48,7 @@ const PatternEditor = ({ id }) => {
     history.push(`/${newSketch.id}`);
   };
 
+  const mode = useLightSwitch();
   const appClass = `
     ${mode === Mode.Dark && "dark"}
     ${focus ? "focus" : "blur"}`;
@@ -153,7 +146,7 @@ const HotPatternEditor = hot(module)((params) => (
   </UserContainer.Provider>
 ));
 
-export default () => (
+const RoutedEditor = () => (
   <Router history={history}>
     <Route
       path="/:id?"
@@ -165,3 +158,5 @@ export default () => (
     />
   </Router>
 );
+
+export default RoutedEditor;

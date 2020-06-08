@@ -1,9 +1,8 @@
 import { createContainer } from "unstated-next";
 import uniqBy from "lodash/uniqBy";
-import { fetchJson, post, postDelete } from "./utils";
-import { prepareCode, prepareFullCode } from "./code";
-import { buildHex, getFullBuild } from "./compiler/compile";
-import React, { useState, useEffect } from "react";
+import { prepareFullCode } from "./code";
+import { getFullBuild } from "./compiler/compile";
+import { useState, useEffect } from "react";
 
 const SoulmatesContainer = () => {
   const [soulmates, setSoulmates] = useState([]);

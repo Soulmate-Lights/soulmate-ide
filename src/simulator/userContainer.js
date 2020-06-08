@@ -1,7 +1,6 @@
 import { createContainer } from "unstated-next";
 import jwtDecode from "jwt-decode";
-import { fetchJson, post, postDelete } from "./utils";
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 
 const UserContainer = () => {
   const [userDetails, setUserDetails] = useState(undefined);

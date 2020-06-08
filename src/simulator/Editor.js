@@ -1,18 +1,10 @@
-import React, { useEffect, useRef, useState } from "react";
-import { MdSettings } from "react-icons/md";
+import React, { useEffect, useRef } from "react";
 import debounce from "lodash/debounce";
-import { GrInProgress } from "react-icons/gr";
 import { BsFillPlayFill } from "react-icons/bs";
 import { IoMdCloudUpload } from "react-icons/io";
 import Logo from "./logo.svg";
-import { buildHex, getFullBuild } from "./compiler/compile";
-import { prepareCode, prepareFullCode } from "./code";
-import Simulator from "./Simulator";
-import { Link } from "react-router-dom";
 import { Mode, useLightSwitch } from "use-light-switch";
 import Monaco from "react-monaco-editor";
-import request from "request";
-import useDebounce from "./useDebounce";
 
 // TODO: Example for saving tabs?
 // monacoInstance.current.editor.getModel().onDidChangeContent((event) => {
@@ -38,10 +30,16 @@ const Editor = ({
   flash,
 }) => {
   let monacoInstance = useRef(false);
-  const dark = useLightSwitch() === Mode.Dark;
+  const mode = useLightSwitch();
+  const dark = mode === Mode.Dark;
   const editor = useRef();
-  const [showConfiguration, setShowConfiguration] = useState(false);
-  const { rows, cols, ledType, chipType } = config;
+  const {
+    rows = 70,
+    cols = 15,
+    ledType = "APA102",
+    chipType = "atom",
+    milliamps = 700,
+  } = config;
   const flashing = soulmate?.flashing;
 
   const buildCode = async (shouldSave = false) => {
@@ -62,19 +60,8 @@ const Editor = ({
 
   const saveConfig = debounce((config) => {
     const editorCode = monacoInstance.current.editor?.getModel().getValue();
-    save(code, config);
+    save(editorCode, config);
   }, 500);
-
-  useEffect(() => {
-    const cmdS = monaco.KeyMod.CtrlCmd | monaco.KeyCode.KEY_S;
-    monacoInstance.current.editor?.addCommand(cmdS, () => buildCode(true));
-    buildCode();
-
-    return () => {
-      editor.current.innerHTML = "";
-      monacoInstance.current.editor = undefined;
-    };
-  }, []);
 
   // Effect hook for changing variables - need to recreate the event listener
   // for scope
@@ -82,6 +69,12 @@ const Editor = ({
     const cmdS = monaco.KeyMod.CtrlCmd | monaco.KeyCode.KEY_S;
     monacoInstance.current.editor?.addCommand(cmdS, () => buildCode(true));
     buildCode();
+
+    // This was causing crashes on hot reload
+    // return () => {
+    //   editor.current.innerHTML = "";
+    //   monacoInstance.current.editor = undefined;
+    // };
   }, [rows, cols, chipType, ledType]);
 
   // Resizing
@@ -126,7 +119,7 @@ const Editor = ({
           </div>
         </div>
 
-        {showConfiguration && (
+        {soulmate && (
           <div className="configuration">
             <p>
               <label>Rows</label>
@@ -201,20 +194,12 @@ const Editor = ({
 
         <div className="toolbar">
           <div
-            className={`configure button ${showConfiguration && "pressed"}`}
-            onClick={() => setShowConfiguration(!showConfiguration)}
-          >
-            <MdSettings />
-            Configure
-          </div>
-
-          <div
             className="button"
             disabled={!build}
             onClick={() => buildCode(true)}
           >
             <BsFillPlayFill />
-            Compile and run (CMD+S)
+            Save (CMD+S)
           </div>
 
           {soulmate && (

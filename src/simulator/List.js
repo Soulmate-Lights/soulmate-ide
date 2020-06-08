@@ -1,18 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
 import history from "../utils/history";
-import { MdAccountCircle } from "react-icons/md";
-import { FaRegLightbulb, FaLightbulb } from "react-icons/fa";
 import { FiCircle, FiCheckCircle } from "react-icons/fi";
-import { token } from "./utils";
 import { RiDeleteBin2Line } from "react-icons/ri";
-import { MdCancel } from "react-icons/md";
 import { Link } from "react-router-dom";
 import "./List.css";
 import { AiOutlinePlusCircle } from "react-icons/ai";
-import { useAuth0 } from "../react-auth0-spa";
 import Logo from "./logo.svg";
 
-export default ({
+const List = ({
   allSketches,
   sketches,
   soulmates,
@@ -22,8 +17,6 @@ export default ({
   add,
   destroy,
   userDetails,
-  logout,
-  login,
 }) => {
   const [addingNewSketch, setAddingNewSketch] = useState(false);
   const [showingAll, setShowingAll] = useState(!userDetails);
@@ -99,7 +92,7 @@ export default ({
                       (s) => s.id === sketch.id
                     );
                     const id = sketches[sketchIndex - 1]?.id;
-                    setTimeout(() => history.push(`/57`));
+                    setTimeout(() => history.push(`/${id}`));
                     destroy(sketch.id);
                   }}
                 />
@@ -174,3 +167,5 @@ export default ({
     </div>
   );
 };
+
+export default List;
