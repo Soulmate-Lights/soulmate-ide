@@ -1,58 +1,11 @@
 const electron = require("electron");
 const app = electron.app;
-const Menu = electron.Menu;
 const BrowserWindow = electron.BrowserWindow;
 const path = require("path");
 const isDev = require("electron-is-dev");
 const bonjour = require("bonjour")();
 const { ipcMain } = require("electron");
-const { protocol } = require("electron");
-const auth = require("./auth");
 const { autoUpdater } = require("electron-updater");
-
-// autoUpdater.logger.transports.file.level = "info";
-autoUpdater.on("checking-for-update", () => {
-  console.log("Checking for update...");
-});
-autoUpdater.on("update-available", (info) => {
-  console.log("Update available.");
-});
-autoUpdater.on("update-not-available", (info) => {
-  console.log("Update not available.");
-});
-autoUpdater.on("error", (err) => {
-  console.log("Error in auto-updater. " + err);
-});
-autoUpdater.on("download-progress", (progressObj) => {
-  let log_message = "Download speed: " + progressObj.bytesPerSecond;
-  log_message = log_message + " - Downloaded " + progressObj.percent + "%";
-  log_message += `(${progressObj.transferred} / ${progressObj.total})`;
-  console.log(log_message);
-});
-autoUpdater.on("update-downloaded", (info) => {
-  console.log("Update downloaded");
-});
-let template = [];
-if (process.platform === "darwin") {
-  // OS X
-  const name = app.getName();
-  template.unshift({
-    label: name,
-    submenu: [
-      {
-        label: "About " + name,
-        role: "about",
-      },
-      {
-        label: "Quit",
-        accelerator: "Command+Q",
-        click() {
-          app.quit();
-        },
-      },
-    ],
-  });
-}
 
 app.on("ready", function () {
   autoUpdater.checkForUpdatesAndNotify();
@@ -85,10 +38,6 @@ function createWindow() {
       preload: __dirname + "/preload.js",
     },
   });
-
-  const {
-    session: { webRequest },
-  } = mainWindow.webContents;
 
   mainWindow.loadURL(mainUrl);
 

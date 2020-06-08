@@ -13,6 +13,9 @@ module.exports = {
     fs: "readonly",
     electron: "readonly",
     auth: "readonly",
+    require: "readonly",
+    process: "readonly",
+    __dirname: "readonly",
   },
   parserOptions: {
     ecmaFeatures: {
@@ -26,5 +29,6 @@ module.exports = {
   rules: {
     strict: 0,
     "react/prop-types": 0,
+    "no-unused-vars": ["error", { argsIgnorePattern: "^_" }],
   },
 };

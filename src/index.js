@@ -1,12 +1,12 @@
 import "@babel/polyfill";
 import ReactDOM from "react-dom";
-import React, { Component, useState, useEffect } from "react";
-import Navbar from "./components/Navbar";
-import Custom from "./components/Custom";
+import React from "react";
 import Simulator from "./simulator";
 import config from "./auth_config.json";
 import { Auth0Provider } from "./react-auth0-spa";
 import history from "./utils/history";
+
+/* eslint-disable-next-line no-unused-vars */
 import * as monaco from "monaco-editor/esm/vs/editor/editor.main.js";
 
 const onRedirectCallback = (appState) => {
@@ -33,7 +33,7 @@ const App = () => {
 };
 
 self.MonacoEnvironment = {
-  getWorkerUrl: function (moduleId, label) {
+  getWorkerUrl: function (_moduleId, _label) {
     return "./editor.worker.js";
   },
 };

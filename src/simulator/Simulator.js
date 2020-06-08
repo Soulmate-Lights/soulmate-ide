@@ -38,7 +38,7 @@ const Simulator = ({ build, rows, cols, height, width }) => {
       matrixController.feedValue(runner.current.portB.pinState(6), cpuNanos())
     );
 
-    runner.current.execute((cpu) => {
+    runner.current.execute((_cpu) => {
       const pixels = matrixController.update(cpuNanos());
 
       if (!pixels) return;
