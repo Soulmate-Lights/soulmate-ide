@@ -13,9 +13,7 @@ const SketchesContainer = () => {
 
   const fetchSketches = async () => {
     if (await loggedIn()) {
-      console.log("logged in, get token");
       const token = await getToken();
-      console.log(token);
       const newSketches = await fetchJson("/sketches/list", token);
       setSketches(newSketches);
     }
