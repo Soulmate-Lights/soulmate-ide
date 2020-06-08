@@ -14,186 +14,58 @@ import { RiCloseCircleLine } from "react-icons/ri";
 import List from "./List";
 import { useAuth0 } from "../react-auth0-spa";
 import history from "../utils/history";
-import jwtDecode from "jwt-decode";
 import Logo from "./logo.svg";
 
+import { useContainer } from "unstated-next";
+import SketchesContainer from "./sketchesContainer";
+import SoulmatesContainer from "./soulmatesContainer.js";
+import UserContainer from "./userContainer.js";
+
 const PatternEditor = ({ id }) => {
+  const {
+    sketches,
+    allSketches,
+    fetchSketches,
+    save,
+    createSketch,
+    deleteSketch,
+    reset,
+    getSketch,
+    buildSketch,
+    builds,
+  } = useContainer(SketchesContainer);
+  const { soulmates, soulmate, setSoulmate } = useContainer(SoulmatesContainer);
+  const { userDetails, fetchUser, login, logout } = useContainer(UserContainer);
+
   const mode = useLightSwitch();
-  const dark = mode === Mode.Dark;
-
-  const [allSketches, setAllSketches] = useState();
-  const [sketches, setSketches] = useState();
   const [focus, setFocus] = useState(true);
-  const [soulmates, setSoulmates] = useState([]);
-  const [soulmate, setSoulmate] = useState(false);
-  const [userDetails, setUserDetails] = useState(false);
   const loggedIn = !!userDetails;
-
-  const combinedSketches = [...(sketches || []), ...(allSketches || [])];
-
-  const [builds, setBuilds] = useState({});
   const build = builds[id];
+  const selectedSketch = getSketch(id) || allSketches[0];
 
-  const setBuild = (id, build) => {
-    builds[id] = build;
-    setBuilds(builds);
-  };
-
-  const onBuild = async (id, code) => {
-    if (!id) return;
-    setBuild(id, undefined);
-    const sketch = combinedSketches.find((s) => s.id === id);
-    if (!sketch) return;
-    const config = sketch.config;
-    const { rows = 70, cols = 15 } = config;
-    const preparedCode = prepareCode(code, rows, cols);
-    const newBuild = await buildHex(preparedCode);
-    setBuild(id, newBuild);
-  };
-
-  const selectedSketch =
-    combinedSketches?.find((s) => s.id === id) || combinedSketches[0];
-
-  ipcRenderer.on("focus", (event, isFocused) => {
-    setFocus(isFocused);
-  });
-
-  ipcRenderer.on("soulmate", (event, arg) => {
-    let newSoulmates = [...soulmates, arg];
-    newSoulmates = uniqBy(newSoulmates, "name");
-    setSoulmates(newSoulmates);
-  });
-
-  const getUserDetails = async () => {
-    const id_token = auth.tokenProperties?.id_token;
-    let newUserDetails = false;
-    if (id_token) {
-      newUserDetails = jwtDecode(id_token);
-      localStorage.loginSaved = "true";
-    }
-    setUserDetails(newUserDetails);
-  };
-
+  useEffect(reset, [userDetails]);
   useEffect(() => {
-    getUserDetails();
-  }, [auth.tokenProperties?.id_token]);
+    buildSketch(id);
+  }, [id]);
 
-  useEffect(() => {
-    ipcRenderer.send("scan", {});
-  }, []);
-
-  useEffect(() => {
-    if (localStorage.loginSaved) {
-      auth.getToken().then(() => {
-        getUserDetails();
-      });
-    }
-  }, []);
-
-  const fetchSketches = async () => {
-    let token;
-
-    fetchJson("/sketches/list").then((allSketches) => {
-      setAllSketches(allSketches);
-    });
-
-    if (auth.tokenProperties) {
-      token = await auth.getToken();
-      const newSketches = await fetchJson("/sketches/list", token);
-      setSketches(newSketches);
-      return;
-    }
-    return fetchJson("/sketches/list").then(setSketches);
-  };
-
-  useEffect(() => {
-    setSketches(undefined);
-    fetchSketches();
-  }, [userDetails]);
+  ipcRenderer.on("focus", (event, isFocused) => setFocus(isFocused));
+  const { rows = 70, cols = 15 } = selectedSketch?.config || {};
 
   const add = async (name) => {
-    const token = await auth.getToken();
-    const newSketch = await post("/sketches/create", token, { name });
-    await fetchSketches();
+    const newSketch = await createSketch(name);
     history.push(`/${newSketch.id}`);
   };
 
-  const save = async (code, config) => {
-    const id = selectedSketch.id;
-
-    console.log(id, config);
-
-    if (loggedIn && sketches) {
-      const sketch = sketches.find((s) => s.id === id);
-
-      if (sketch) {
-        sketch.code = code;
-        setSketches(sketches);
-        const token = await auth.getToken();
-        post("/sketches/save", token, { id, code, config }).then(fetchSketches);
-      }
-    }
-
-    if (allSketches) {
-      const sketch = allSketches.find((s) => s.id === id);
-
-      if (sketch) {
-        sketch.code = code;
-        setAllSketches(allSketches);
-      }
-    }
-  };
-
-  const destroy = async (id) => {
-    if (!loggedIn) return;
-    if (!confirm("Delete this sketch?")) return;
-
-    const token = await auth.getToken();
-    await postDelete(`/sketches/${id}`, token);
-    fetchSketches();
-  };
-
-  let interval = useRef();
-  useEffect(() => {
-    interval.current = setInterval(() => {
-      fetchSketches();
-    }, 8000);
-
-    return () => {
-      clearInterval(interval.current);
-    };
-  }, []);
-
-  const login = async () => {
-    await auth.login();
-    getUserDetails();
-  };
-
-  const logout = async () => {
-    delete localStorage.loginSaved;
-    await auth.logout();
-    getUserDetails();
-  };
-
-  const updateSketch = (code) => {
-    const sketchIndex = sketches.findIndex(
-      (sketch) => sketch.id === selectedSketch.id
-    );
-    if (sketchIndex === -1) return;
-    sketches[sketchIndex].code = code;
-    setSketches([...sketches]);
-  };
-
-  const { rows = 70, cols = 15 } = selectedSketch?.config || {};
+  const appClass = `
+    ${mode === Mode.Dark && "dark"}
+    ${focus ? "focus" : "blur"}`;
 
   return (
-    <div
-      className={`app-wrapper ${dark && "dark"} ${focus ? "focus" : "blur"}`}
-    >
+    <div className={`app-wrapper ${appClass}`}>
       <div className="titlebar">
         <span className="title">Soulmate</span>
         <div className="user">
-          {userDetails.name ? (
+          {userDetails?.name ? (
             <>
               <img src={userDetails?.picture} />
               {userDetails?.name}
@@ -215,7 +87,7 @@ const PatternEditor = ({ id }) => {
           selectedSketch={selectedSketch}
           loggedIn={loggedIn}
           add={add}
-          destroy={destroy}
+          destroy={deleteSketch}
           soulmates={soulmates}
           soulmate={soulmate}
           setSoulmate={setSoulmate}
@@ -225,14 +97,14 @@ const PatternEditor = ({ id }) => {
         />
         {selectedSketch && (
           <Editor
-            save={save}
+            save={(code, config) => save(selectedSketch.id, code, config)}
             key={selectedSketch.id}
             code={selectedSketch.code}
             name={selectedSketch.name}
             config={selectedSketch.config || { rows, cols }}
             soulmate={soulmate}
             onBuild={(code) => {
-              onBuild(selectedSketch.id, code);
+              buildSketch(selectedSketch.id, code);
             }}
             // onFlash={didFlash}
           />
@@ -269,7 +141,15 @@ const PatternEditor = ({ id }) => {
   );
 };
 
-const HotPatternEditor = hot(module)(PatternEditor);
+const HotPatternEditor = hot(module)((params) => (
+  <UserContainer.Provider>
+    <SketchesContainer.Provider>
+      <SoulmatesContainer.Provider>
+        <PatternEditor {...params} />
+      </SoulmatesContainer.Provider>
+    </SketchesContainer.Provider>
+  </UserContainer.Provider>
+));
 
 export default () => (
   <Router history={history}>

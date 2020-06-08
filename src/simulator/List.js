@@ -25,8 +25,8 @@ export default ({
   login,
 }) => {
   const [addingNewSketch, setAddingNewSketch] = useState(false);
-  const [showingAll, setShowingAll] = useState(false);
-  const sketchesToShow = showingAll ? allSketches : sketches;
+  const [showingAll, setShowingAll] = useState(!userDetails);
+  const sketchesToShow = showingAll || !userDetails ? allSketches : sketches;
 
   return (
     <div className="list">
@@ -79,7 +79,10 @@ export default ({
               {!showingAll && userDetails && (
                 <RiDeleteBin2Line
                   className="delete"
-                  onClick={() => destroy(sketch.id)}
+                  onClick={() => {
+                    debugger;
+                    destroy(sketch.id);
+                  }}
                 />
               )}
             </Link>

@@ -27,6 +27,7 @@
     "request-promise-native": "^1.0.8",
     "semantic-ui-css": "^2.4.1",
     "unstated": "^2.1.1",
+    "unstated-next": "^1.1.0",
     "use-light-switch": "^1.0.1"
   },
   "devDependencies": {
@@ -44,6 +45,7 @@
     "electron-rebuild": "^1.11.0",
     "npm-version": "^1.1.0",
     "parcel-bundler": "^1.12.4",
+    "prettier": "^2.0.5",
     "typescript": "^3.9.3",
     "wait-on": "^5.0.0"
   },
