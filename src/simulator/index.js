@@ -3,7 +3,7 @@ import { hot } from "react-hot-loader";
 import "./index.css";
 import React, { useState, useEffect } from "react";
 import Editor from "./Editor";
-import { Router, Route } from "react-router-dom";
+import { Router, Route, Switch } from "react-router-dom";
 import { Mode, useLightSwitch } from "use-light-switch";
 import List from "./List";
 import history from "../utils/history";
@@ -43,7 +43,7 @@ const PatternEditor = ({ id }) => {
   useEffect(reset, [userDetails]);
 
   useEffect(() => {
-    ipcRenderer.on("focus", (event, isFocused) => setFocus(isFocused));
+    window.ipcRenderer?.on("focus", (event, isFocused) => setFocus(isFocused));
   }, []);
 
   const add = async (name) => {
@@ -163,14 +163,19 @@ const HotPatternEditor = hot(module)((params) => (
 
 const RoutedEditor = () => (
   <Router history={history}>
-    <Route
-      path="/:id?"
-      render={({
-        match: {
-          params: { id },
-        },
-      }) => <HotPatternEditor id={parseInt(id)} />}
-    />
+    <Switch>
+      <Route path="/auth">
+        <div></div>
+      </Route>
+      <Route
+        path="/:id?"
+        render={({
+          match: {
+            params: { id },
+          },
+        }) => <HotPatternEditor id={parseInt(id)} />}
+      />
+    </Switch>
   </Router>
 );
 

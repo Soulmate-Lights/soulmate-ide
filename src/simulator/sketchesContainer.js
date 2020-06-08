@@ -4,14 +4,18 @@ import { fetchJson, post, postDelete } from "./utils";
 import { useState } from "react";
 import { prepareCode } from "./code";
 
+import { getToken, loggedIn } from "./utils/auth";
+
 const SketchesContainer = () => {
   const [sketches, setSketches] = useState(undefined);
   const [allSketches, setAllSketches] = useState(undefined);
   const [builds, setBuilds] = useState({});
 
   const fetchSketches = async () => {
-    if (auth.tokenProperties) {
-      const token = await auth.getToken();
+    if (await loggedIn()) {
+      console.log("logged in, get token");
+      const token = await getToken();
+      console.log(token);
       const newSketches = await fetchJson("/sketches/list", token);
       setSketches(newSketches);
     }
@@ -33,7 +37,7 @@ const SketchesContainer = () => {
       sketches[sketchIndex] = { ...sketches[sketchIndex], code, config };
       setSketches([...sketches]);
 
-      const token = await auth.getToken();
+      const token = await getToken();
       post("/sketches/save", token, { id, code, config });
     }
 
@@ -49,7 +53,8 @@ const SketchesContainer = () => {
   };
 
   const createSketch = async (name) => {
-    const token = await auth.getToken();
+    const token = await getToken();
+    console.log(token);
     const newSketch = await post("/sketches/create", token, { name });
     await fetchSketches();
     return newSketch;
@@ -57,7 +62,7 @@ const SketchesContainer = () => {
 
   const deleteSketch = async (id) => {
     setSketches(sketches.filter((s) => s.id !== id));
-    const token = await auth.getToken();
+    const token = await getToken();
     if (!token) return;
     await postDelete(`/sketches/${id}`, token);
     fetchSketches();

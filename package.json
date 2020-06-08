@@ -4,7 +4,7 @@
   "main": "src/electron.js",
   "license": "MIT",
   "dependencies": {
-    "@auth0/auth0-spa-js": "^1.8.2",
+    "@auth0/auth0-spa-js": "^1.9.0",
     "@hot-loader/react-dom": "^16.13.0",
     "avr8js": "^0.9.1",
     "bonjour": "^3.5.0",

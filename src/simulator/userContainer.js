@@ -1,15 +1,19 @@
 import { createContainer } from "unstated-next";
-import jwtDecode from "jwt-decode";
 import { useState, useEffect } from "react";
+
+import {
+  getToken,
+  tokenProperties,
+  triggerLogin,
+  triggerLogout,
+} from "./utils/auth";
 
 const UserContainer = () => {
   const [userDetails, setUserDetails] = useState(undefined);
 
-  const fetchUser = () => {
-    const id_token = auth.tokenProperties?.id_token;
-    let newUserDetails = false;
-    if (id_token) {
-      newUserDetails = jwtDecode(id_token);
+  const fetchUser = async () => {
+    const newUserDetails = await tokenProperties();
+    if (newUserDetails) {
       localStorage.loginSaved = "true";
     }
     setUserDetails(newUserDetails);
@@ -17,7 +21,7 @@ const UserContainer = () => {
 
   useEffect(() => {
     if (localStorage.loginSaved) {
-      auth.getToken().then(() => {
+      getToken().then(() => {
         fetchUser();
       });
     }
@@ -25,16 +29,17 @@ const UserContainer = () => {
 
   useEffect(() => {
     fetchUser();
-  }, [auth.tokenProperties?.id_token]);
+  }, [window.auth?.tokenProperties?.id_token]);
 
   const login = async () => {
-    await auth.login();
+    console.log("login");
+    await triggerLogin();
     fetchUser();
   };
 
   const logout = async () => {
     delete localStorage.loginSaved;
-    await auth.logout();
+    await triggerLogout();
     fetchUser();
   };
 

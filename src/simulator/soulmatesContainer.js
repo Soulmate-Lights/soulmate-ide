@@ -9,6 +9,11 @@ const SoulmatesContainer = () => {
   const [soulmates, setSoulmates] = useState([]);
   const [soulmate, setSoulmate] = useState(undefined);
 
+  // Web-safe!
+  if (!window.ipcRenderer) {
+    return { soulmates, soulmate };
+  }
+
   const addSoulmate = (_event, soulmate) => {
     let newSoulmates = [...soulmates, soulmate];
     newSoulmates = uniqBy(newSoulmates, "addresses[0]");
