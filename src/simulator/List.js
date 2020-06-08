@@ -30,6 +30,13 @@ const List = ({
     selectedSketchRef.current?.scrollIntoViewIfNeeded();
   }, [selectedSketch?.id, sketches?.length]);
 
+  useEffect(() => {
+    if (sketchesToShow && allSketches && !selectedSketch) {
+      const sketchToShow = sketchesToShow[0];
+      if (sketchToShow) history.push(`/${sketchToShow.id}`);
+    }
+  }, [sketchesToShow, sketches, allSketches]);
+
   const selectedSketchRef = useRef();
 
   const anyFlashing = soulmates.some((s) => s?.flashing);
@@ -64,7 +71,7 @@ const List = ({
         {!sketchesToShow && <Logo className="loader" />}
 
         {sketchesToShow?.map((sketch) => {
-          const selected = sketch.id === selectedSketch.id;
+          const selected = sketch.id === selectedSketch?.id;
           const name = sketch.name || "Untitled";
           return (
             <Link

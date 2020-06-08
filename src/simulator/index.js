@@ -33,9 +33,10 @@ const PatternEditor = ({ id }) => {
 
   const [focus, setFocus] = useState(true);
   const loggedIn = !!userDetails;
-  const build = builds[id];
 
-  const selectedSketch = getSketch(id) || (allSketches || [])[0];
+  const selectedSketch = getSketch(id); // || (allSketches || [])[0];
+
+  const build = builds[selectedSketch?.id];
 
   // TODO: Figure this out - called twice on page load when the user's logged in
   useEffect(reset, [userDetails]);
@@ -113,7 +114,6 @@ const PatternEditor = ({ id }) => {
         <div className="pixels">
           <div className="simulator">
             {!build && <Logo className="loader" />}
-
             {build && (
               <Simulator
                 build={build}

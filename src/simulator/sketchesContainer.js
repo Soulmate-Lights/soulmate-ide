@@ -10,15 +10,14 @@ const SketchesContainer = () => {
   const [builds, setBuilds] = useState({});
 
   const fetchSketches = async () => {
-    let token;
-    const newAllSketches = await fetchJson("/sketches/list");
-    setAllSketches(newAllSketches);
-
     if (auth.tokenProperties) {
-      token = await auth.getToken();
+      const token = await auth.getToken();
       const newSketches = await fetchJson("/sketches/list", token);
       setSketches(newSketches);
     }
+
+    const newAllSketches = await fetchJson("/sketches/list");
+    setAllSketches(newAllSketches);
   };
 
   // let interval = useRef();
@@ -81,11 +80,9 @@ const SketchesContainer = () => {
   };
 
   const buildSketch = async (id, code) => {
-    // todo: debug this
-    if (!code) return;
+    if (!code || !id) return;
 
-    builds[id] = undefined;
-    setBuilds({ ...builds });
+    setBuilds({ ...builds, [id]: undefined });
 
     const sketch = getSketch(id);
     if (!sketch) return;
@@ -93,8 +90,7 @@ const SketchesContainer = () => {
     const { rows = 70, cols = 15 } = config;
     const preparedCode = prepareCode(code, rows, cols);
     const newBuild = await buildHex(preparedCode);
-    builds[id] = newBuild;
-    setBuilds({ ...builds });
+    setBuilds({ ...builds, [id]: newBuild });
   };
 
   return {

@@ -41,6 +41,8 @@ function createWindow() {
 
   mainWindow.loadURL(mainUrl);
 
+  if (isDev) mainWindow.webContents.openDevTools();
+
   mainWindow.on("focus", () => {
     mainWindow.webContents.send("focus", true);
   });
