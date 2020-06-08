@@ -76,5 +76,8 @@ export const triggerLogin = async () => {
 export const triggerLogout = async () => {
   if (window.auth) {
     return await auth.logout();
+  } else {
+    localStorage.clear();
+    await auth0.logout();
   }
 };
