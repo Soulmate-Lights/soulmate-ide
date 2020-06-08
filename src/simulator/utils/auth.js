@@ -6,7 +6,6 @@ import config from "../../auth_config.json";
 let auth0;
 
 if (!window.auth && !auth0) {
-  console.log("create auth0 client");
   createAuth0Client({
     domain: config.domain,
     client_id: config.clientId,
@@ -17,34 +16,45 @@ if (!window.auth && !auth0) {
     const query = window.location.search;
     if (query.includes("code=") && query.includes("state=")) {
       await auth0.handleRedirectCallback();
+
+      const claim = await auth0?.getIdTokenClaims();
+      localStorage.token = JSON.stringify(claim.__raw);
+
+      const user = await auth0.getUser();
+      localStorage.user = JSON.stringify(user);
+
       history.push("/");
     }
   });
 }
 
 export const getToken = async () => {
+  if (localStorage.token) return JSON.parse(localStorage.token);
+
   if (window.auth) {
     return await auth.getToken();
   } else {
     // return await window.auth0.getTokenSilently();
 
     const claim = await window.auth0?.getIdTokenClaims();
-    console.log("token", claim.__raw);
     return claim.__raw;
   }
 };
 
 export const loggedIn = async () => {
+  if (localStorage.token) return true;
+
   if (window.auth) {
     return !!window.auth.tokenProperties;
   } else {
     const result = await window.auth0?.isAuthenticated();
-    console.log(result);
     return result;
   }
 };
 
 export const tokenProperties = async () => {
+  if (localStorage.user) return JSON.parse(localStorage.user);
+
   if (window.auth) {
     const id_token = window.auth?.tokenProperties?.id_token;
     return jwtDecode(id_token);

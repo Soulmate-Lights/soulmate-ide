@@ -54,7 +54,6 @@ const SketchesContainer = () => {
 
   const createSketch = async (name) => {
     const token = await getToken();
-    console.log(token);
     const newSketch = await post("/sketches/create", token, { name });
     await fetchSketches();
     return newSketch;
