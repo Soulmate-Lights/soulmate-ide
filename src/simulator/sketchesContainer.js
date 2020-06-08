@@ -5,8 +5,8 @@ import React, { useState, useEffect } from "react";
 import { prepareCode, prepareFullCode } from "./code";
 
 const SketchesContainer = () => {
-  const [sketches, setSketches] = useState([]);
-  const [allSketches, setAllSketches] = useState([]);
+  const [sketches, setSketches] = useState(undefined);
+  const [allSketches, setAllSketches] = useState(undefined);
   const [builds, setBuilds] = useState({});
 
   const fetchSketches = async () => {
@@ -33,21 +33,43 @@ const SketchesContainer = () => {
   // }, []);
 
   const getSketch = (id) => {
-    return (
-      sketches.find((s) => s.id === id) || allSketches.find((s) => s.id === id)
-    );
+    try {
+      return (
+        sketches.find((s) => s.id === id) ||
+        allSketches.find((s) => s.id === id)
+      );
+    } catch (e) {
+      return false;
+    }
   };
 
   const save = async (id, code, config) => {
-    const sketch = sketches.find((s) => s.id === id);
+    const sketch = sketches?.find((s) => s.id === id);
 
+    let sketchIndex = sketches.findIndex((s) => s.id === id);
+    if (sketchIndex > -1) {
+      sketches[sketchIndex] = { ...sketches[sketchIndex], code, config };
+      setSketches(sketches);
+    }
+
+    let allSketchIndex = allSketches.findIndex((s) => s.id === id);
+    if (allSketchIndex > -1) {
+      allSketches[allSketchIndex] = {
+        ...allSketches[allSketchIndex],
+        code,
+        config,
+      };
+      setAllSketches(allSketches);
+    }
+
+    // TODO: Update sketch in state
     if (sketch) {
       sketch.code = code;
       const token = await auth.getToken();
       post("/sketches/save", token, { id, code, config }).then(fetchSketches);
     }
 
-    const publicSketch = allSketches.find((s) => s.id === id);
+    const publicSketch = allSketches?.find((s) => s.id === id);
     if (publicSketch) {
       publicSketch.code = code;
       setAllSketches(allSketches);
@@ -62,6 +84,8 @@ const SketchesContainer = () => {
   };
 
   const deleteSketch = async (id) => {
+    setSketches(sketches.filter((s) => s.id !== id));
+
     const token = await auth.getToken();
     if (!token) return;
     if (!confirm("Delete this sketch?")) return;
@@ -70,7 +94,7 @@ const SketchesContainer = () => {
   };
 
   const reset = () => {
-    setSketches([]);
+    setSketches(undefined);
     fetchSketches();
   };
 
@@ -83,7 +107,7 @@ const SketchesContainer = () => {
 
     const sketch = getSketch(id);
     if (!sketch) return;
-    const config = sketch.config;
+    const config = sketch.config || {};
     const { rows = 70, cols = 15 } = config;
     const preparedCode = prepareCode(code, rows, cols);
     const newBuild = await buildHex(preparedCode);
@@ -101,6 +125,7 @@ const SketchesContainer = () => {
     getSketch,
     buildSketch,
     builds,
+    save,
   };
 };
 

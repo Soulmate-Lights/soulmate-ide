@@ -25,7 +25,6 @@ const PatternEditor = ({ id }) => {
   const {
     sketches,
     allSketches,
-    fetchSketches,
     save,
     createSketch,
     deleteSketch,
@@ -34,19 +33,19 @@ const PatternEditor = ({ id }) => {
     buildSketch,
     builds,
   } = useContainer(SketchesContainer);
-  const { soulmates, soulmate, setSoulmate } = useContainer(SoulmatesContainer);
+  const { soulmates, soulmate, setSoulmate, flash } = useContainer(
+    SoulmatesContainer
+  );
   const { userDetails, fetchUser, login, logout } = useContainer(UserContainer);
 
   const mode = useLightSwitch();
   const [focus, setFocus] = useState(true);
   const loggedIn = !!userDetails;
   const build = builds[id];
-  const selectedSketch = getSketch(id) || allSketches[0];
+  const selectedSketch = getSketch(id) || (allSketches || [])[0];
 
+  // TODO: Figure this out - called twice on page load when the user's logged in
   useEffect(reset, [userDetails]);
-  useEffect(() => {
-    buildSketch(id);
-  }, [id]);
 
   ipcRenderer.on("focus", (event, isFocused) => setFocus(isFocused));
   const { rows = 70, cols = 15 } = selectedSketch?.config || {};
@@ -97,16 +96,19 @@ const PatternEditor = ({ id }) => {
         />
         {selectedSketch && (
           <Editor
-            save={(code, config) => save(selectedSketch.id, code, config)}
             key={selectedSketch.id}
+            save={(code, config) => {
+              save(selectedSketch.id, code, config);
+            }}
             code={selectedSketch.code}
             name={selectedSketch.name}
             config={selectedSketch.config || { rows, cols }}
             soulmate={soulmate}
+            build={build}
             onBuild={(code) => {
               buildSketch(selectedSketch.id, code);
             }}
-            // onFlash={didFlash}
+            flash={flash}
           />
         )}
         {!selectedSketch && (

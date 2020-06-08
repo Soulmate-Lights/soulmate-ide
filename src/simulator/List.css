@@ -254,3 +254,20 @@
   border: 1px solid #888;
   outline: none;
 }
+
+.device .loader {
+  width: 12px;
+  height: 12px;
+  position: relative;
+}
+
+.device .loader * {
+  fill: #666;
+}
+
+.dark .device .loader * {
+  fill: #dedede;
+}
+
+.device .loader {
+}

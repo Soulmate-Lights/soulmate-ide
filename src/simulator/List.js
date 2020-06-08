@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { MdAccountCircle } from "react-icons/md";
 import { FaRegLightbulb, FaLightbulb } from "react-icons/fa";
 import { FiCircle, FiCheckCircle } from "react-icons/fi";
@@ -27,6 +27,18 @@ export default ({
   const [addingNewSketch, setAddingNewSketch] = useState(false);
   const [showingAll, setShowingAll] = useState(!userDetails);
   const sketchesToShow = showingAll || !userDetails ? allSketches : sketches;
+
+  useEffect(() => {
+    setShowingAll(!userDetails);
+  }, [userDetails]);
+
+  useEffect(() => {
+    selectedSketchRef.current?.scrollIntoViewIfNeeded();
+  }, [selectedSketch?.id, sketches?.length]);
+
+  const selectedSketchRef = useRef();
+
+  const anyFlashing = soulmates.some((s) => s?.flashing);
 
   return (
     <div className="list">
@@ -65,6 +77,7 @@ export default ({
               to={`/${sketch.id}`}
               key={sketch.id}
               className={`sketch ${selected && "selected"}`}
+              ref={selected ? selectedSketchRef : null}
             >
               <div className="video-wrapper">
                 <video muted loop>
@@ -80,7 +93,6 @@ export default ({
                 <RiDeleteBin2Line
                   className="delete"
                   onClick={() => {
-                    debugger;
                     destroy(sketch.id);
                   }}
                 />
@@ -134,10 +146,17 @@ export default ({
                   className={`device ${connected ? "connected" : ""}`}
                   key={s.name}
                   onClick={() => {
+                    if (anyFlashing) return;
                     setSoulmate(connected ? false : s);
                   }}
                 >
-                  {s === soulmate ? <FiCheckCircle /> : <FiCircle />}
+                  {s.flashing ? (
+                    <Logo className="loader" />
+                  ) : (
+                    <>
+                      <>{s === soulmate ? <FiCheckCircle /> : <FiCircle />}</>
+                    </>
+                  )}
                   {s.name}
                 </div>
               );

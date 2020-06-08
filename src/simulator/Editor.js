@@ -21,71 +21,52 @@ const Editor = ({
   soulmate,
   config = {},
   onBuild,
+  build,
+  flash,
 }) => {
   let monacoInstance = useRef(false);
   let buildNumber = useRef(0);
   const mode = useLightSwitch();
   const dark = mode === Mode.Dark;
   const editor = useRef();
-  const [build, setBuild] = useState();
   const [sketches, setSketches] = useState([]);
   const [code, setCode] = useState(originalCode);
-  const [flashing, setFlashing] = useState(false);
+  // const [flashing, setFlashing] = useState(false);
   const [showConfiguration, setShowConfiguration] = useState(false);
   const [milliamps, setMilliamps] = useState(700);
   const { rows = 70, cols = 15 } = config;
   const [chipType, setChipType] = useState(config.chipType || "atom");
   const [ledType, setLedType] = useState(config.ledType || "APA102");
 
-  useEffect(() => {
-    buildCode(false);
-  }, [useDebounce(cols, 1000), useDebounce(rows, 1000)]);
+  const flashing = soulmate?.flashing;
 
-  useEffect(() => {
-    setBuild(false);
-  }, [cols, rows]);
+  // useEffect(() => {
+  //   setBuild(false);
+  // }, [cols, rows]);
 
   const buildCode = async (shouldSave = false) => {
     const editorCode = monacoInstance.current.editor.getModel().getValue();
     onBuild(editorCode);
+
+    if (shouldSave) {
+      save(editorCode, config);
+    }
   };
 
   const makeBuild = async () => {
     if (!soulmate) return;
 
-    setFlashing(true);
-
     const editorCode = monacoInstance.current.editor.getModel().getValue();
-    const preparedCode = prepareFullCode(
-      name,
-      editorCode,
-      rows,
-      cols,
-      chipType,
-      ledType,
-      milliamps
-    );
-    const build = await getFullBuild(preparedCode);
-
-    const ip = soulmate.addresses[0];
-    const url = `http://${ip}/ota`;
-
-    var body = new FormData();
-    const contents = fs.readFileSync(build);
-    body.append("image", new Blob([contents]), "firmware.bin");
-    fetch(url, {
-      method: "POST",
-      body: body,
-      mode: "no-cors",
-      headers: {
-        "Content-Length": fs.statSync(build).size,
-      },
-    }).then((response) => {
-      setFlashing(false);
-    });
+    flash(soulmate, name, editorCode, rows, cols, chipType, ledType, milliamps);
   };
 
+  const saveConfig = debounce((config) => {
+    const editorCode = monacoInstance.current.editor.getModel().getValue();
+    save(code, config);
+  }, 500);
+
   useEffect(() => {
+    // TODO: Example for saving tabs?
     // monacoInstance.current.editor.getModel().onDidChangeContent((event) => {
     //   const editorCode = monacoInstance.current.editor.getModel().getValue();
     // });
@@ -100,12 +81,15 @@ const Editor = ({
     };
   }, []);
 
+  // Effect hook for changing variables - need to recreate the event listener
+  // for scope
   useEffect(() => {
     const cmdS = monaco.KeyMod.CtrlCmd | monaco.KeyCode.KEY_S;
     monacoInstance.current.editor.addCommand(cmdS, () => buildCode(true));
-
-    buildCode(true);
+    buildCode();
   }, [rows, cols, chipType, ledType]);
+
+  // Resizing
 
   const resizeEditor = () => {
     monacoInstance.current.editor?.layout();
@@ -153,18 +137,20 @@ const Editor = ({
               <label>Rows</label>
               <input
                 type="number"
-                value={rows}
+                defaultValue={rows}
                 onChange={(e) => {
                   const rows = parseInt(e.target.value);
-                  save({ ...config, rows });
+                  saveConfig({ ...config, rows });
                 }}
               />
             </p>
             <p>
               <label>LEDs</label>
               <select
-                value={ledType}
-                onChange={(e) => setLedType(e.target.value)}
+                defaultValue={ledType}
+                onChange={(e) => {
+                  saveConfig({ ...config, ledType: e.target.value });
+                }}
               >
                 <option value="APA102">APA102</option>
                 <option value="WS2812B">WS2812B</option>
@@ -174,18 +160,20 @@ const Editor = ({
               <label>Columns</label>
               <input
                 type="number"
-                value={cols}
+                defaultValue={cols}
                 onChange={(e) => {
                   const cols = parseInt(e.target.value);
-                  save({ ...config, cols });
+                  saveConfig({ ...config, cols });
                 }}
               />
             </p>
             <p>
               <label>Chip type</label>
               <select
-                value={chipType}
-                onChange={(e) => setChipType(e.target.value)}
+                defaultValue={chipType}
+                onChange={(e) => {
+                  saveConfig({ ...config, chipType: e.target.value });
+                }}
               >
                 <option value="atom">M5 Atom</option>
                 <option value="d32">Lolin ESP32</option>
@@ -205,7 +193,12 @@ const Editor = ({
                 type="number"
                 step="100"
                 value={milliamps}
-                onChange={(e) => setMilliamps(e.target.value)}
+                onChange={(e) => {
+                  saveConfig({
+                    ...config,
+                    milliamps: parseInt(e.target.value),
+                  });
+                }}
               />
             </p>
           </div>
