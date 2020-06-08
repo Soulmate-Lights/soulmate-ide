@@ -20,7 +20,7 @@ const SketchesContainer = () => {
       setSketches(newSketches);
     }
 
-    const newAllSketches = await fetchJson("/sketches/list");
+    const newAllSketches = await fetchJson("/sketches/all");
     setAllSketches(newAllSketches);
   };
 
