@@ -85,7 +85,8 @@ body {
 }
 
 .titlebar .user {
-  margin-right: 8px;
+  right: 8px;
+  position: absolute;
 }
 
 .titlebar svg * {
