@@ -15,7 +15,7 @@ import SketchesContainer from "./sketchesContainer";
 import SoulmatesContainer from "./soulmatesContainer.js";
 import UserContainer from "./userContainer.js";
 
-const isElectron = typeof process !== "undefined";
+const isElectron = () => typeof process !== "undefined";
 
 const PatternEditor = ({ id }) => {
   const {
@@ -79,7 +79,7 @@ const PatternEditor = ({ id }) => {
               Log in
             </div>
           )}
-          {!isElectron && (
+          {!isElectron() && (
             <a className="button" href="/download">
               <GoDesktopDownload style={{ fill: "inherit" }} />
               Download the app
