@@ -41,7 +41,10 @@ const PatternEditor = ({ id }) => {
   // TODO: Figure this out - called twice on page load when the user's logged in
   useEffect(reset, [userDetails]);
 
-  ipcRenderer.on("focus", (event, isFocused) => setFocus(isFocused));
+  useEffect(() => {
+    ipcRenderer.on("focus", (event, isFocused) => setFocus(isFocused));
+  }, []);
+
   const { rows = 70, cols = 15 } = selectedSketch?.config || {};
 
   const add = async (name) => {

@@ -46,6 +46,7 @@ function createWindow() {
   mainWindow.on("focus", () => {
     mainWindow.webContents.send("focus", true);
   });
+
   mainWindow.on("blur", () => {
     mainWindow.webContents.send("focus", false);
   });

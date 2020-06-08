@@ -3,20 +3,33 @@ import uniqBy from "lodash/uniqBy";
 import { prepareFullCode } from "./code";
 import { getFullBuild } from "./compiler/compile";
 import { useState, useEffect } from "react";
+import useInterval from "./utils/useInterval";
 
 const SoulmatesContainer = () => {
   const [soulmates, setSoulmates] = useState([]);
   const [soulmate, setSoulmate] = useState(undefined);
 
-  ipcRenderer.on("soulmate", (event, arg) => {
-    let newSoulmates = [...soulmates, arg];
-    newSoulmates = uniqBy(newSoulmates, "name");
+  const addSoulmate = (_event, soulmate) => {
+    let newSoulmates = [...soulmates, soulmate];
+    newSoulmates = uniqBy(newSoulmates, "addresses[0]");
     setSoulmates(newSoulmates);
-  });
+  };
+
+  useEffect(() => {
+    ipcRenderer.on("soulmate", addSoulmate);
+    return () => ipcRenderer.removeListener("soulmate", addSoulmate);
+  }, [soulmates]);
 
   useEffect(() => {
     ipcRenderer.send("scan", {});
+    setTimeout(() => {
+      ipcRenderer.send("scan", {});
+    }, 1000);
   }, []);
+
+  useInterval(() => {
+    ipcRenderer.send("scan", {});
+  }, 5000);
 
   const flash = async (
     soulmate,
