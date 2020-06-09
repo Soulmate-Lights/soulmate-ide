@@ -1,7 +1,6 @@
 import ReactDOM from "react-dom";
 import React from "react";
 import Simulator from "./simulator";
-import history from "./utils/history";
 
 /* eslint-disable-next-line no-unused-vars */
 import * as monaco from "monaco-editor/esm/vs/editor/editor.main.js";
@@ -13,10 +12,14 @@ const App = () => {
 };
 
 self.MonacoEnvironment = {
-  getWorkerUrl: function (_moduleId, _label) {
-    return "./editor.worker.js";
+  getWorker: function (_moduleId, _label) {
+    return new Worker(
+      "../node_modules/monaco-editor/esm/vs/editor/editor.worker.js"
+    );
   },
 };
+
+monaco.editor.createWebWorker({});
 
 module.hot?.accept();
 
