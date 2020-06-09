@@ -7,7 +7,9 @@ import config from "../../auth_config.json";
 
 let auth0;
 
-if (!window.auth && !auth0) {
+const isElectron = !!window?.process?.type;
+
+if (!isElectron && !window.auth && !auth0) {
   createAuth0Client({
     domain: config.domain,
     client_id: config.clientId,
@@ -34,10 +36,8 @@ export const getToken = async () => {
   if (localStorage.token) return JSON.parse(localStorage.token);
 
   if (window.auth) {
-    return await auth.getToken();
+    return window.auth.tokenProperties?.access_token;
   } else {
-    // return await window.auth0.getTokenSilently();
-
     const claim = await window.auth0?.getIdTokenClaims();
     return claim.__raw;
   }
@@ -59,6 +59,7 @@ export const tokenProperties = async () => {
 
   if (window.auth) {
     const id_token = window.auth?.tokenProperties?.id_token;
+    if (!id_token) return false;
     return jwtDecode(id_token);
   } else {
     return await auth0.getUser();
@@ -76,10 +77,10 @@ export const triggerLogin = async () => {
 };
 
 export const triggerLogout = async () => {
+  localStorage.clear();
   if (window.auth) {
-    return await auth.logout();
+    await window.auth.logout();
   } else {
-    localStorage.clear();
-    await auth0.logout();
+    await auth0.logout({ returnTo: window.location.origin });
   }
 };

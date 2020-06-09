@@ -32,7 +32,6 @@ const UserContainer = () => {
   }, [window.auth?.tokenProperties?.id_token]);
 
   const login = async () => {
-    console.log("login");
     await triggerLogin();
     fetchUser();
   };
