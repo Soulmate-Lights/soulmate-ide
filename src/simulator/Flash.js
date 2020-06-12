@@ -39,7 +39,7 @@ const Flash = ({ id }) => {
           Flash to:
           {soulmates.map((s) => (
             <div
-              key={s.id}
+              key={s.addresses[0]}
               className="chooseSoulmateSoulmate"
               onClick={() => setSoulmate(s)}
             >
