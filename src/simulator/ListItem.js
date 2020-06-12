@@ -4,7 +4,7 @@ import SketchesContainer from "./sketchesContainer";
 import { FiEdit3 } from "react-icons/fi";
 import { RiDeleteBin2Line } from "react-icons/ri";
 import { Link } from "react-router-dom";
-import useContextMenu from "./useContextMenu";
+
 import isElectron from "./utils/isElectron";
 import history from "../utils/history";
 import "./List.css";
@@ -24,6 +24,7 @@ const ListItem = ({ sketch, selected, showControls }) => {
   };
 
   if (isElectron()) {
+    const useContextMenu = require("./useContextMenu").default;
     useContextMenu(
       ref,
       {

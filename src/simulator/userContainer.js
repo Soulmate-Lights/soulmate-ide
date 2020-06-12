@@ -2,7 +2,7 @@ import { createContainer } from "unstated-next";
 import { useState, useEffect } from "react";
 
 import {
-  getToken,
+  getTokenOnStartup,
   tokenProperties,
   triggerLogin,
   triggerLogout,
@@ -21,7 +21,7 @@ const UserContainer = () => {
 
   useEffect(() => {
     if (localStorage.loginSaved) {
-      getToken().then(() => {
+      getTokenOnStartup().then(() => {
         fetchUser();
       });
     }

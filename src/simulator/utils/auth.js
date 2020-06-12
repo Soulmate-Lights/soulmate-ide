@@ -8,11 +8,6 @@ import isElectron from "./isElectron";
 
 let auth0;
 
-if (window.auth) {
-  console.log("getToken");
-  window.auth.getToken();
-}
-
 if (!isElectron() && !window.auth && !auth0) {
   createAuth0Client({
     domain: config.domain,
@@ -35,6 +30,12 @@ if (!isElectron() && !window.auth && !auth0) {
     }
   });
 }
+
+export const getTokenOnStartup = () => {
+  if (window.auth) return window.auth.getToken();
+
+  return Promise.resolve();
+};
 
 export const getToken = async () => {
   if (localStorage.token) return JSON.parse(localStorage.token);
@@ -62,9 +63,7 @@ export const tokenProperties = async () => {
   if (localStorage.user) return JSON.parse(localStorage.user);
 
   if (window.auth) {
-    console.log("we have window.auth");
     const id_token = window.auth?.tokenProperties?.id_token;
-    console.log({ id_token });
     if (!id_token) return false;
     return jwtDecode(id_token);
   } else {
