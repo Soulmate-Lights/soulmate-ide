@@ -6,6 +6,9 @@ import { IoMdCloudUpload } from "react-icons/io";
 import Logo from "./logo.svg";
 import { Mode, useLightSwitch } from "use-light-switch";
 import Monaco from "react-monaco-editor";
+import { useContainer } from "unstated-next";
+import SoulmatesContainer from "./soulmatesContainer.js";
+import SketchesContainer from "./sketchesContainer.js";
 
 // TODO: Example for saving tabs?
 // monacoInstance.current.editor.getModel().onDidChangeContent((event) => {
@@ -20,16 +23,11 @@ const defaultConfig = {
   milliamps: 700,
 };
 
-const Editor = ({
-  code,
-  name,
-  save,
-  soulmate,
-  config = defaultConfig,
-  onBuild,
-  build,
-  flash,
-}) => {
+const Editor = ({ config = defaultConfig, sketch, build }) => {
+  const { code, name } = sketch;
+  const { save, buildSketch } = useContainer(SketchesContainer);
+  const { soulmate, flash } = useContainer(SoulmatesContainer);
+
   let monacoInstance = useRef(false);
   const mode = useLightSwitch();
   const dark = mode === Mode.Dark;
@@ -47,7 +45,7 @@ const Editor = ({
 
   const buildCode = async (shouldSave = false) => {
     const editorCode = monacoInstance.current.editor?.getModel().getValue();
-    onBuild(editorCode);
+    buildSketch(sketch.id, editorCode);
 
     if (shouldSave) {
       save(editorCode, config);
@@ -85,13 +83,8 @@ const Editor = ({
 
   // Resizing
 
-  const resizeEditor = () => {
-    monacoInstance.current.editor?.layout();
-  };
-
-  const debouncedResize = debounce(() => {
-    resizeEditor();
-  }, 500);
+  const resizeEditor = () => monacoInstance.current.editor?.layout();
+  const debouncedResize = debounce(resizeEditor, 100);
 
   useEffect(() => {
     window.addEventListener("resize", debouncedResize);

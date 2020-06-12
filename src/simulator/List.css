@@ -83,7 +83,7 @@
   color: #333;
 }
 
-.sketch .delete {
+.sketch svg {
   flex-grow: 0;
   margin-left: auto;
   padding: 4px;
@@ -93,8 +93,13 @@
   opacity: 0.2;
 }
 
-.sketch:hover .delete {
+.sketch:hover svg {
   opacity: 0.5;
+}
+
+.sketch .rename:hover {
+  background: white;
+  opacity: 1;
 }
 
 .sketch .delete:hover {
@@ -270,4 +275,11 @@
 }
 
 .device .loader {
+}
+
+.actions {
+  margin-left: auto;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }

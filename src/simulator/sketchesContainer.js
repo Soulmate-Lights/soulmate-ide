@@ -31,6 +31,8 @@ const SketchesContainer = () => {
 
   const save = async (id, code, config) => {
     let sketchIndex = sketches?.findIndex((s) => s.id === id);
+    console.log({ sketches, id });
+    console.log(sketchIndex);
     if (sketchIndex > -1) {
       sketches[sketchIndex] = { ...sketches[sketchIndex], code, config };
       setSketches([...sketches]);
@@ -48,6 +50,16 @@ const SketchesContainer = () => {
       };
       setAllSketches([...allSketches]);
     }
+  };
+
+  const rename = async (id, name) => {
+    let sketchIndex = sketches?.findIndex((s) => s.id === id);
+    if (!sketchIndex) return;
+    const sketch = { ...sketches[sketchIndex], name };
+    sketches[sketchIndex] = sketch;
+    setSketches(sketches);
+    const token = await getToken();
+    post("/sketches/save", token, { id, name });
   };
 
   const createSketch = async (name) => {
@@ -95,6 +107,7 @@ const SketchesContainer = () => {
     buildSketch,
     builds,
     save,
+    rename,
   };
 };
 
