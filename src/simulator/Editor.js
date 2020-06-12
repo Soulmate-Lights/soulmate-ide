@@ -47,10 +47,13 @@ const Editor = ({ config = defaultConfig, sketch, build }) => {
     const editorCode = monacoInstance.current.editor?.getModel().getValue();
     buildSketch(sketch.id, editorCode);
 
-    if (shouldSave) {
-      save(editorCode, config);
-    }
+    if (shouldSave) save(sketch.id, editorCode, config);
   };
+
+  const saveConfig = debounce((config) => {
+    const editorCode = monacoInstance.current.editor?.getModel().getValue();
+    save(sketch.id, editorCode, config);
+  }, 500);
 
   const makeBuild = async () => {
     if (!soulmate) return;
@@ -58,11 +61,6 @@ const Editor = ({ config = defaultConfig, sketch, build }) => {
     const editorCode = monacoInstance.current.editor?.getModel().getValue();
     flash(soulmate, name, editorCode, rows, cols, chipType, ledType, milliamps);
   };
-
-  const saveConfig = debounce((config) => {
-    const editorCode = monacoInstance.current.editor?.getModel().getValue();
-    save(editorCode, config);
-  }, 500);
 
   // Effect hook for changing variables - need to recreate the event listener
   // for scope. Only do this after first mount.
@@ -179,7 +177,7 @@ const Editor = ({ config = defaultConfig, sketch, build }) => {
               <input
                 type="number"
                 step="100"
-                value={milliamps}
+                defaultValue={milliamps}
                 onChange={(e) => {
                   saveConfig({
                     ...config,

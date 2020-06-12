@@ -4,16 +4,22 @@ import { FiCircle, FiCheckCircle } from "react-icons/fi";
 import { AiOutlinePlusCircle } from "react-icons/ai";
 import Logo from "./logo.svg";
 import ListItem from "./ListItem";
-import { useContainer } from "unstated-next";
 import SketchesContainer from "./sketchesContainer";
 import "./List.css";
 import SoulmatesContainer from "./soulmatesContainer";
 
-const List = ({ selectedSketch, destroy, userDetails }) => {
-  const { sketches, allSketches, createSketch } = useContainer(
-    SketchesContainer
-  );
-  const { soulmates, soulmate, setSoulmate } = useContainer(SoulmatesContainer);
+const List = ({ selectedSketch, userDetails }) => {
+  const {
+    sketches,
+    allSketches,
+    createSketch,
+  } = SketchesContainer.useContainer();
+  const {
+    soulmates,
+    soulmate,
+    setSoulmate,
+  } = SoulmatesContainer.useContainer();
+
   const [addingNewSketch, setAddingNewSketch] = useState(false);
   const [showingAll, setShowingAll] = useState(!userDetails);
   const sketchesToShow = showingAll || !userDetails ? allSketches : sketches;
@@ -62,7 +68,6 @@ const List = ({ selectedSketch, destroy, userDetails }) => {
           </div>
         )}
       </div>
-
       <div className="sketches">
         {!sketchesToShow && <Logo className="loader" />}
 
@@ -76,7 +81,6 @@ const List = ({ selectedSketch, destroy, userDetails }) => {
         ))}
         <div className="shadow"></div>
       </div>
-
       {!showingAll && userDetails && sketches && (
         <>
           {addingNewSketch ? (
@@ -107,7 +111,6 @@ const List = ({ selectedSketch, destroy, userDetails }) => {
           )}
         </>
       )}
-
       <div className="soulmates">
         {soulmates.length > 0 && (
           <>
