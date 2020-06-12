@@ -9,6 +9,15 @@ const SketchesContainer = () => {
   const [sketches, setSketches] = useState(undefined);
   const [allSketches, setAllSketches] = useState(undefined);
   const [builds, setBuilds] = useState({});
+  const [selectedSketches, setSelectedSketches] = useState([]);
+
+  const toggleSketch = (sketch) => {
+    if (selectedSketches.map((s) => s.id).includes(sketch.id)) {
+      setSelectedSketches(selectedSketches.filter((s) => s.id !== sketch.id));
+    } else {
+      setSelectedSketches([...selectedSketches, sketch]);
+    }
+  };
 
   const fetchSketches = async () => {
     if (await loggedIn()) {
@@ -105,6 +114,9 @@ const SketchesContainer = () => {
     builds,
     save,
     rename,
+    selectedSketches,
+    setSelectedSketches,
+    toggleSketch,
   };
 };
 

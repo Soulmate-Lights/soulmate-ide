@@ -91,143 +91,141 @@ const Editor = ({ config = defaultConfig, sketch, build }) => {
   }, []);
 
   return (
-    <div className="app-container">
-      <div className="editor">
-        <div className="code-editor-wrapper">
-          <div className="code-editor" ref={editor}>
-            <Monaco
-              key={dark ? "dark" : "light"}
-              ref={monacoInstance}
-              options={{
-                value: code,
-                language: "cpp",
-                theme: dark ? "vs-dark" : "vs-light",
-                scrollBeyondLastLine: false,
-                tabSize: 2,
-                lineNumbers: false,
-                showFoldingControls: false,
-                glyphMargin: false,
-                folding: false,
-                minimap: {
-                  enabled: false,
-                },
+    <div className="editor">
+      <div className="code-editor-wrapper">
+        <div className="code-editor" ref={editor}>
+          <Monaco
+            key={dark ? "dark" : "light"}
+            ref={monacoInstance}
+            options={{
+              value: code,
+              language: "cpp",
+              theme: dark ? "vs-dark" : "vs-light",
+              scrollBeyondLastLine: false,
+              tabSize: 2,
+              lineNumbers: false,
+              showFoldingControls: false,
+              glyphMargin: false,
+              folding: false,
+              minimap: {
+                enabled: false,
+              },
+            }}
+          />
+        </div>
+      </div>
+
+      {configuring && (
+        <div className="configuration">
+          <p>
+            <label>Rows</label>
+            <input
+              type="number"
+              defaultValue={rows}
+              onChange={(e) => {
+                const rows = parseInt(e.target.value);
+                saveConfig({ ...config, rows });
               }}
             />
-          </div>
-        </div>
-
-        {configuring && (
-          <div className="configuration">
-            <p>
-              <label>Rows</label>
-              <input
-                type="number"
-                defaultValue={rows}
-                onChange={(e) => {
-                  const rows = parseInt(e.target.value);
-                  saveConfig({ ...config, rows });
-                }}
-              />
-            </p>
-            <p>
-              <label>LEDs</label>
-              <select
-                defaultValue={ledType}
-                onChange={(e) => {
-                  saveConfig({ ...config, ledType: e.target.value });
-                }}
-              >
-                <option value="APA102">APA102</option>
-                <option value="WS2812B">WS2812B</option>
-              </select>
-            </p>
-            <p>
-              <label>Columns</label>
-              <input
-                type="number"
-                defaultValue={cols}
-                onChange={(e) => {
-                  const cols = parseInt(e.target.value);
-                  saveConfig({ ...config, cols });
-                }}
-              />
-            </p>
-            <p>
-              <label>Chip type</label>
-              <select
-                defaultValue={chipType}
-                onChange={(e) => {
-                  saveConfig({ ...config, chipType: e.target.value });
-                }}
-              >
-                <option value="atom">M5 Atom</option>
-                <option value="d32">Lolin ESP32</option>
-              </select>
-            </p>
-            <p>
-              <label>Shape</label>
-              <select disabled>
-                <option>Rectangle</option>
-                <option>Cylinder</option>
-                <option>Hexagon</option>
-              </select>
-            </p>
-            <p>
-              <label>Power (mA)</label>
-              <input
-                type="number"
-                step="100"
-                defaultValue={milliamps}
-                onChange={(e) => {
-                  saveConfig({
-                    ...config,
-                    milliamps: parseInt(e.target.value),
-                  });
-                }}
-              />
-            </p>
-          </div>
-        )}
-
-        <div className="toolbar">
-          <div
-            className={`configure button ${configuring && "pressed"}`}
-            onClick={() => setConfiguring(!configuring)}
-          >
-            <MdSettings />
-            Configure
-          </div>
-          <div
-            className="button"
-            disabled={!build}
-            onClick={() => buildCode(true)}
-          >
-            <BsFillPlayFill />
-            Save (CMD+S)
-          </div>
-
-          {soulmate && (
-            <div
-              className="button"
-              disabled={flashing}
-              onClick={() => {
-                !flashing && makeBuild();
+          </p>
+          <p>
+            <label>LEDs</label>
+            <select
+              defaultValue={ledType}
+              onChange={(e) => {
+                saveConfig({ ...config, ledType: e.target.value });
               }}
             >
-              {flashing ? (
-                <React.Fragment>
-                  <Logo className="loader" />
-                  Flashing to {soulmate.name}...
-                </React.Fragment>
-              ) : (
-                <React.Fragment>
-                  <IoMdCloudUpload />
-                  Flash to {soulmate.name}
-                </React.Fragment>
-              )}
-            </div>
-          )}
+              <option value="APA102">APA102</option>
+              <option value="WS2812B">WS2812B</option>
+            </select>
+          </p>
+          <p>
+            <label>Columns</label>
+            <input
+              type="number"
+              defaultValue={cols}
+              onChange={(e) => {
+                const cols = parseInt(e.target.value);
+                saveConfig({ ...config, cols });
+              }}
+            />
+          </p>
+          <p>
+            <label>Chip type</label>
+            <select
+              defaultValue={chipType}
+              onChange={(e) => {
+                saveConfig({ ...config, chipType: e.target.value });
+              }}
+            >
+              <option value="atom">M5 Atom</option>
+              <option value="d32">Lolin ESP32</option>
+            </select>
+          </p>
+          <p>
+            <label>Shape</label>
+            <select disabled>
+              <option>Rectangle</option>
+              <option>Cylinder</option>
+              <option>Hexagon</option>
+            </select>
+          </p>
+          <p>
+            <label>Power (mA)</label>
+            <input
+              type="number"
+              step="100"
+              defaultValue={milliamps}
+              onChange={(e) => {
+                saveConfig({
+                  ...config,
+                  milliamps: parseInt(e.target.value),
+                });
+              }}
+            />
+          </p>
         </div>
+      )}
+
+      <div className="toolbar">
+        <div
+          className={`configure button ${configuring && "pressed"}`}
+          onClick={() => setConfiguring(!configuring)}
+        >
+          <MdSettings />
+          Configure
+        </div>
+        <div
+          className="button"
+          disabled={!build}
+          onClick={() => buildCode(true)}
+        >
+          <BsFillPlayFill />
+          Save (CMD+S)
+        </div>
+
+        {soulmate && (
+          <div
+            className="button"
+            disabled={flashing}
+            onClick={() => {
+              !flashing && makeBuild();
+            }}
+          >
+            {flashing ? (
+              <React.Fragment>
+                <Logo className="loader" />
+                Flashing to {soulmate.name}...
+              </React.Fragment>
+            ) : (
+              <React.Fragment>
+                <IoMdCloudUpload />
+                Flash to {soulmate.name}
+              </React.Fragment>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );

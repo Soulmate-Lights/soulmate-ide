@@ -1,4 +1,5 @@
 import React, { useRef, useEffect, useState } from "react";
+import { FiCircle, FiCheckCircle } from "react-icons/fi";
 import { useContainer } from "unstated-next";
 import SketchesContainer from "./sketchesContainer";
 import { FiEdit3 } from "react-icons/fi";
@@ -9,9 +10,15 @@ import isElectron from "./utils/isElectron";
 import history from "../utils/history";
 import "./List.css";
 
-const ListItem = ({ sketch, selected, showControls }) => {
+const ListItem = ({ sketch, selected, showControls, selectMode }) => {
   const ref = useRef(null);
-  const { rename, sketches, deleteSketch } = useContainer(SketchesContainer);
+  const {
+    rename,
+    sketches,
+    deleteSketch,
+    selectedSketches,
+    toggleSketch,
+  } = useContainer(SketchesContainer);
   const [renaming, setRenaming] = useState(false);
   const name = sketch.name || "Untitled";
 
@@ -52,12 +59,17 @@ const ListItem = ({ sketch, selected, showControls }) => {
     if (selected) ref.current.scrollIntoViewIfNeeded();
   }, [selected]);
 
+  const inSelection = selectedSketches.map((s) => s.id).includes(sketch.id);
+
   return (
     <Link
       ref={ref}
       to={`/${sketch.id}`}
       key={sketch.id}
       className={`sketch ${selected && "selected"}`}
+      onClick={() => {
+        if (selectMode) toggleSketch(sketch);
+      }}
     >
       <div className="video-wrapper">
         <video muted loop>
@@ -88,12 +100,21 @@ const ListItem = ({ sketch, selected, showControls }) => {
       ) : (
         name
       )}
-      {!isElectron() && (
-        <div className="actions">
-          <FiEdit3 className="rename" onClick={() => setRenaming(true)} />
-          <RiDeleteBin2Line className="delete" onClick={confirmAndDelete} />
-        </div>
-      )}
+      <div className="actions">
+        {!isElectron() && (
+          <>
+            <FiEdit3
+              className="rename action"
+              onClick={() => setRenaming(true)}
+            />
+            <RiDeleteBin2Line
+              className="delete action"
+              onClick={confirmAndDelete}
+            />
+          </>
+        )}
+        {selectMode && <>{inSelection ? <FiCheckCircle /> : <FiCircle />}</>}
+      </div>
     </Link>
   );
 };

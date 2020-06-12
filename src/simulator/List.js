@@ -7,8 +7,9 @@ import ListItem from "./ListItem";
 import SketchesContainer from "./sketchesContainer";
 import "./List.css";
 import SoulmatesContainer from "./soulmatesContainer";
+import isElectron from "./utils/isElectron";
 
-const List = ({ selectedSketch, userDetails }) => {
+const List = ({ selectedSketch, userDetails, flashMode, setFlashMode }) => {
   const {
     sketches,
     allSketches,
@@ -49,6 +50,28 @@ const List = ({ selectedSketch, userDetails }) => {
 
   return (
     <div className="list">
+      {isElectron() && (
+        <>
+          <div className="heading">
+            Mode
+            <div className="toggle">
+              <div
+                onClick={() => setFlashMode(false)}
+                className={!flashMode ? "selected" : ""}
+              >
+                Preview
+              </div>
+              <div
+                onClick={() => setFlashMode(true)}
+                className={flashMode ? "selected" : ""}
+              >
+                Flash
+              </div>
+            </div>
+          </div>
+          <hr />
+        </>
+      )}
       <div className="heading">
         Sketches
         {userDetails && (
@@ -77,6 +100,7 @@ const List = ({ selectedSketch, userDetails }) => {
             sketch={sketch}
             selected={sketch.id === selectedSketch?.id}
             showControls={!showingAll}
+            selectMode={flashMode}
           />
         ))}
         <div className="shadow"></div>

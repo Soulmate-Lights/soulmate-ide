@@ -90,10 +90,13 @@
   width: 26px;
   height: 26px;
   border-radius: 4px;
+}
+
+.sketch svg.action {
   opacity: 0.2;
 }
 
-.sketch:hover svg {
+.sketch:hover svg.action {
   opacity: 0.5;
 }
 
@@ -184,6 +187,12 @@
   display: flex;
   flex-direction: row;
   align-items: center;
+}
+
+hr {
+  border-color: rgba(255, 255, 255, 0.5);
+  width: 100%;
+  margin: 2px 0 0 0;
 }
 
 .toggle {

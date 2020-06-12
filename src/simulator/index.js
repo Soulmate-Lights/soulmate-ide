@@ -14,15 +14,21 @@ import SketchesContainer from "./sketchesContainer";
 import SoulmatesContainer from "./soulmatesContainer.js";
 import UserContainer from "./userContainer.js";
 import isElectron from "./utils/isElectron";
+import Flash from "./Flash";
 
 const PatternEditor = ({ id }) => {
-  const { save, reset, getSketch, builds } = useContainer(SketchesContainer);
-  const { soulmate, flash } = useContainer(SoulmatesContainer);
+  const { save, reset, getSketch, builds, selectedSketches } = useContainer(
+    SketchesContainer
+  );
+  const { soulmate, soulmates, setSoulmate, flash } = useContainer(
+    SoulmatesContainer
+  );
   const { userDetails, login, logout } = useContainer(UserContainer);
   const [focus, setFocus] = useState(true);
   const selectedSketch = getSketch(id);
   const build = builds[selectedSketch?.id];
   const { rows = 70, cols = 15 } = selectedSketch?.config || {};
+  const [flashMode, setFlashMode] = useState(true);
 
   // TODO: Figure this out - called twice on page load when the user's logged in
   useEffect(reset, [userDetails]);
@@ -65,20 +71,30 @@ const PatternEditor = ({ id }) => {
         </div>
       </div>
       <div className="frame">
-        <List selectedSketch={selectedSketch} userDetails={userDetails} />
-        {selectedSketch && (
-          <Editor
-            key={selectedSketch.id}
-            save={(code, config) => {
-              save(selectedSketch.id, code, config);
-            }}
-            sketch={selectedSketch}
-            config={selectedSketch.config || { rows, cols }}
-            soulmate={soulmate}
-            build={build}
-            flash={flash}
-          />
-        )}
+        <List
+          selectedSketch={selectedSketch}
+          userDetails={userDetails}
+          flashMode={flashMode}
+          setFlashMode={setFlashMode}
+        />
+
+        <div className="app-container">
+          {selectedSketch && !flashMode && (
+            <Editor
+              key={selectedSketch.id}
+              save={(code, config) => {
+                save(selectedSketch.id, code, config);
+              }}
+              sketch={selectedSketch}
+              config={selectedSketch.config || { rows, cols }}
+              soulmate={soulmate}
+              build={build}
+              flash={flash}
+            />
+          )}
+
+          {flashMode && <Flash id={id} />}
+        </div>
         {!selectedSketch && (
           <div className="welcome">
             <Logo className="loader" />
