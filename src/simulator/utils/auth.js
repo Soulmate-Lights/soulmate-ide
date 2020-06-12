@@ -4,12 +4,11 @@ import createAuth0Client from "@auth0/auth0-spa-js";
 import jwtDecode from "jwt-decode";
 import history from "../../utils/history";
 import config from "../../auth_config.json";
+import isElectron from "./isElectron";
 
 let auth0;
 
-const isElectron = !!window?.process?.type;
-
-if (!isElectron && !window.auth && !auth0) {
+if (!isElectron() && !window.auth && !auth0) {
   createAuth0Client({
     domain: config.domain,
     client_id: config.clientId,
@@ -31,6 +30,12 @@ if (!isElectron && !window.auth && !auth0) {
     }
   });
 }
+
+export const getTokenOnStartup = () => {
+  if (window.auth) return window.auth.getToken();
+
+  return Promise.resolve();
+};
 
 export const getToken = async () => {
   if (localStorage.token) return JSON.parse(localStorage.token);

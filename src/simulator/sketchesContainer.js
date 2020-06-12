@@ -3,7 +3,6 @@ import { buildHex } from "./compiler/compile";
 import { fetchJson, post, postDelete } from "./utils";
 import { useState } from "react";
 import { prepareCode } from "./code";
-
 import { getToken, loggedIn } from "./utils/auth";
 
 const SketchesContainer = () => {
@@ -39,7 +38,7 @@ const SketchesContainer = () => {
       post("/sketches/save", token, { id, code, config });
     }
 
-    let allSketchIndex = allSketches.findIndex((s) => s.id === id);
+    let allSketchIndex = allSketches?.findIndex((s) => s.id === id);
     if (allSketchIndex > -1) {
       allSketches[allSketchIndex] = {
         ...allSketches[allSketchIndex],
@@ -48,6 +47,16 @@ const SketchesContainer = () => {
       };
       setAllSketches([...allSketches]);
     }
+  };
+
+  const rename = async (id, name) => {
+    let sketchIndex = sketches?.findIndex((s) => s.id === id);
+    if (!sketchIndex) return;
+    const sketch = { ...sketches[sketchIndex], name };
+    sketches[sketchIndex] = sketch;
+    setSketches(sketches);
+    const token = await getToken();
+    post("/sketches/save", token, { id, name });
   };
 
   const createSketch = async (name) => {
@@ -95,6 +104,7 @@ const SketchesContainer = () => {
     buildSketch,
     builds,
     save,
+    rename,
   };
 };
 

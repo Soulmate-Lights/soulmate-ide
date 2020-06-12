@@ -9,35 +9,17 @@ import { Mode, useLightSwitch } from "use-light-switch";
 import List from "./List";
 import history from "../utils/history";
 import Logo from "./logo.svg";
-
 import { useContainer } from "unstated-next";
 import SketchesContainer from "./sketchesContainer";
 import SoulmatesContainer from "./soulmatesContainer.js";
 import UserContainer from "./userContainer.js";
-
-const isElectron = !!window?.process?.type;
+import isElectron from "./utils/isElectron";
 
 const PatternEditor = ({ id }) => {
-  const {
-    sketches,
-    allSketches,
-    save,
-    createSketch,
-    deleteSketch,
-    reset,
-    getSketch,
-    buildSketch,
-    builds,
-  } = useContainer(SketchesContainer);
-
-  const { soulmates, soulmate, setSoulmate, flash } = useContainer(
-    SoulmatesContainer
-  );
-
+  const { save, reset, getSketch, builds } = useContainer(SketchesContainer);
+  const { soulmate, flash } = useContainer(SoulmatesContainer);
   const { userDetails, login, logout } = useContainer(UserContainer);
-
   const [focus, setFocus] = useState(true);
-  const loggedIn = !!userDetails;
   const selectedSketch = getSketch(id);
   const build = builds[selectedSketch?.id];
   const { rows = 70, cols = 15 } = selectedSketch?.config || {};
@@ -48,11 +30,6 @@ const PatternEditor = ({ id }) => {
   useEffect(() => {
     window.ipcRenderer?.on("focus", (event, isFocused) => setFocus(isFocused));
   }, []);
-
-  const add = async (name) => {
-    const newSketch = await createSketch(name);
-    history.push(`/${newSketch.id}`);
-  };
 
   const mode = useLightSwitch();
   const appClass = `
@@ -79,7 +56,7 @@ const PatternEditor = ({ id }) => {
               Log in
             </div>
           )}
-          {!isElectron && (
+          {!isElectron() && (
             <a className="button" href="/download">
               <GoDesktopDownload style={{ fill: "inherit" }} />
               Download the app
@@ -88,34 +65,17 @@ const PatternEditor = ({ id }) => {
         </div>
       </div>
       <div className="frame">
-        <List
-          sketches={sketches}
-          allSketches={allSketches}
-          selectedSketch={selectedSketch}
-          loggedIn={loggedIn}
-          add={add}
-          destroy={deleteSketch}
-          soulmates={soulmates}
-          soulmate={soulmate}
-          setSoulmate={setSoulmate}
-          userDetails={userDetails}
-          logout={logout}
-          login={login}
-        />
+        <List selectedSketch={selectedSketch} userDetails={userDetails} />
         {selectedSketch && (
           <Editor
             key={selectedSketch.id}
             save={(code, config) => {
               save(selectedSketch.id, code, config);
             }}
-            code={selectedSketch.code}
-            name={selectedSketch.name}
+            sketch={selectedSketch}
             config={selectedSketch.config || { rows, cols }}
             soulmate={soulmate}
             build={build}
-            onBuild={(code) => {
-              buildSketch(selectedSketch.id, code);
-            }}
             flash={flash}
           />
         )}

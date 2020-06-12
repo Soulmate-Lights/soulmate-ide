@@ -216,6 +216,7 @@ canvas {
   max-width: 100%;
   flex-grow: 1;
   box-sizing: border-box;
+  overflow: hidden;
 }
 
 .code-editor-wrapper {
