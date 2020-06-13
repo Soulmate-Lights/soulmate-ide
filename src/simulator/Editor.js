@@ -119,13 +119,13 @@ const Editor = ({ sketch, build }) => {
       {configuring && (
         <div className="configuration">
           <p>
-            <label>Rows</label>
+            <label>Columns</label>
             <input
               type="number"
-              value={rows}
+              value={cols}
               onChange={(e) => {
-                const rows = parseInt(e.target.value);
-                setConfig({ ...config, rows });
+                const cols = parseInt(e.target.value);
+                setConfig({ ...config, cols });
               }}
             />
           </p>
@@ -142,13 +142,13 @@ const Editor = ({ sketch, build }) => {
             </select>
           </p>
           <p>
-            <label>Columns</label>
+            <label>Rows</label>
             <input
               type="number"
-              value={cols}
+              value={rows}
               onChange={(e) => {
-                const cols = parseInt(e.target.value);
-                setConfig({ ...config, cols });
+                const rows = parseInt(e.target.value);
+                setConfig({ ...config, rows });
               }}
             />
           </p>

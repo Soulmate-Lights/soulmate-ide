@@ -81,13 +81,13 @@ const Flash = ({ id }) => {
         <div className="heading">Configuration</div>
         <div className="configuration">
           <p>
-            <label>Rows</label>
+            <label>Columns</label>
             <input
               type="number"
-              value={rows}
+              value={cols}
               onChange={(e) => {
-                const rows = parseInt(e.target.value);
-                saveConfig(soulmate, { ...config, rows });
+                const cols = parseInt(e.target.value);
+                saveConfig(soulmate, { ...config, cols });
               }}
             />
           </p>
@@ -104,13 +104,13 @@ const Flash = ({ id }) => {
             </select>
           </p>
           <p>
-            <label>Columns</label>
+            <label>Rows</label>
             <input
               type="number"
-              value={cols}
+              value={rows}
               onChange={(e) => {
-                const cols = parseInt(e.target.value);
-                saveConfig(soulmate, { ...config, cols });
+                const rows = parseInt(e.target.value);
+                saveConfig(soulmate, { ...config, rows });
               }}
             />
           </p>
