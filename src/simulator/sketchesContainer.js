@@ -100,11 +100,12 @@ const SketchesContainer = () => {
     if (!id) return;
     const sketch = getSketch(id);
     if (!sketch) return;
-    setBuilds({ ...builds, [id]: undefined });
+
+    const key = `${sketch.id}-${config.rows}-${config.cols}`;
+    setBuilds({ ...builds, [key]: undefined });
     const { rows = 70, cols = 15 } = config;
     const preparedCode = prepareCode(code || sketch.code, rows, cols);
     const newBuild = await buildHex(preparedCode);
-    const key = `${id}-${config.rows}-${config.cols}`;
     setBuilds({ ...builds, [key]: newBuild });
   };
 
