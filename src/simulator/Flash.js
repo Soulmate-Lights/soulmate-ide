@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useContainer } from "unstated-next";
 import SketchesContainer from "./sketchesContainer";
@@ -8,12 +8,40 @@ import { TiDelete } from "react-icons/ti";
 import { MdReorder } from "react-icons/md";
 import "./flash.css";
 
+// const defaultConfig = {
+//   rows: 70,
+//   cols: 15,
+//   chipType: "atom",
+//   ledType: "APA102",
+//   milliamps: 700,
+// };
+
 const Flash = ({ id }) => {
   const { selectedSketches, toggleSketch } = useContainer(SketchesContainer);
-  const { soulmate, soulmates, setSoulmate } = useContainer(SoulmatesContainer);
-  const config = {};
+  const {
+    soulmate,
+    soulmates,
+    setSoulmate,
+    flashMultiple,
+    getConfig,
+    saveConfig,
+  } = useContainer(SoulmatesContainer);
+  // const [config, setConfig] = useState(getConfig(soulmate));
+  const config = getConfig(soulmate);
+  const setConfig = (config) => saveConfig(soulmate, config);
   const { rows, cols, ledType, chipType, milliamps } = config;
-  const saveConfig = () => {};
+
+  const flash = () => {
+    flashMultiple(
+      soulmate,
+      selectedSketches,
+      rows,
+      cols,
+      ledType,
+      chipType,
+      milliamps
+    );
+  };
 
   return (
     <div className="flash">
@@ -54,19 +82,19 @@ const Flash = ({ id }) => {
             <label>Rows</label>
             <input
               type="number"
-              defaultValue={rows}
+              value={rows}
               onChange={(e) => {
                 const rows = parseInt(e.target.value);
-                saveConfig({ ...config, rows });
+                setConfig({ ...config, rows });
               }}
             />
           </p>
           <p>
             <label>LEDs</label>
             <select
-              defaultValue={ledType}
+              value={ledType}
               onChange={(e) => {
-                saveConfig({ ...config, ledType: e.target.value });
+                setConfig({ ...config, ledType: e.target.value });
               }}
             >
               <option value="APA102">APA102</option>
@@ -77,19 +105,19 @@ const Flash = ({ id }) => {
             <label>Columns</label>
             <input
               type="number"
-              defaultValue={cols}
+              value={cols}
               onChange={(e) => {
                 const cols = parseInt(e.target.value);
-                saveConfig({ ...config, cols });
+                setConfig({ ...config, cols });
               }}
             />
           </p>
           <p>
             <label>Chip type</label>
             <select
-              defaultValue={chipType}
+              value={chipType}
               onChange={(e) => {
-                saveConfig({ ...config, chipType: e.target.value });
+                setConfig({ ...config, chipType: e.target.value });
               }}
             >
               <option value="atom">M5 Atom</option>
@@ -109,9 +137,9 @@ const Flash = ({ id }) => {
             <input
               type="number"
               step="100"
-              defaultValue={milliamps}
+              value={milliamps}
               onChange={(e) => {
-                saveConfig({
+                setConfig({
                   ...config,
                   milliamps: parseInt(e.target.value),
                 });
@@ -120,7 +148,13 @@ const Flash = ({ id }) => {
           </p>
         </div>
 
-        {soulmate && <div className="button">Flash to {soulmate.name}</div>}
+        {soulmate && (
+          <div onClick={flash} className="button">
+            Flash to {soulmate.name}
+          </div>
+        )}
+
+        {soulmate?.flashing && <div>Flashing...</div>}
       </div>
     </div>
   );

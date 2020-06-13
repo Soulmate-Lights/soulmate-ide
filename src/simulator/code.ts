@@ -54,16 +54,42 @@ void loop() {
 }
 `.trim();
 
-export const prepareFullCode = (
-  name,
-  code,
+export const prepareFullCodeWithMultipleSketches = (
+  sketches,
   rows,
   cols,
   chipType,
   ledType,
   milliamps
-) => `
-// Don't forget to change this!
+) => {
+  const classNameFromSketchName = (name) => {
+    return name.replace(/ /g, "");
+  };
+
+  const sanitizedSketchName = (name) => {
+    return name.replace(/"/g, "");
+  };
+
+  const code = sketches
+    .map(
+      ({ name, code }) =>
+        `namespace ${classNameFromSketchName(name)} {
+      ${code}
+    }`
+    )
+    .join("\n");
+
+  const initialization = sketches
+    .map(
+      ({ name }) =>
+        `Soulmate.addRoutine("${sanitizedSketchName(
+          name
+        )}", ${classNameFromSketchName(name)}::draw);`
+    )
+    .join("\n");
+
+  return `
+  // Don't forget to change this!
 #define FIRMWARE_NAME "soulmate-custom"
 // The number of LEDs in each parallel strip
 #define LED_COLS ${cols}
@@ -95,15 +121,14 @@ ${
 
 #include <Soulmate.h>
 
-namespace Pattern {
-  ${code}
-}
+${code}
 
 void setup() {
-  Soulmate.addRoutine("${name}", Pattern::draw);
+  ${initialization}
   Soulmate.setup();
 }
 
 void loop() {
   Soulmate.loop();
 }`;
+};

@@ -1,13 +1,22 @@
 import { createContainer } from "unstated-next";
 import uniqBy from "lodash/uniqBy";
-import { prepareFullCode } from "./code";
+import { prepareFullCodeWithMultipleSketches } from "./code";
 import { getFullBuild } from "./compiler/compile";
 import { useState, useEffect } from "react";
 import useInterval from "./utils/useInterval";
 
+const defaultConfig = {
+  rows: 70,
+  cols: 15,
+  chipType: "atom",
+  ledType: "APA102",
+  milliamps: 700,
+};
+
 const SoulmatesContainer = () => {
   const [soulmates, setSoulmates] = useState([]);
   const [soulmate, setSoulmate] = useState(undefined);
+  const [configs, setConfigs] = useState({});
 
   // Web-safe!
   if (!window.ipcRenderer) {
@@ -36,10 +45,9 @@ const SoulmatesContainer = () => {
     ipcRenderer.send("scan", {});
   }, 5000);
 
-  const flash = async (
+  const flashMultiple = async (
     soulmate,
-    name,
-    code,
+    sketches,
     rows,
     cols,
     chipType,
@@ -50,25 +58,19 @@ const SoulmatesContainer = () => {
       (s) => s.addresses[0] === soulmate.addresses[0]
     );
     let updatedSoulmate = { ...soulmates[soulmateIndex], flashing: true };
-    soulmates[soulmateIndex] = updatedSoulmate;
     setSoulmate(updatedSoulmate);
     setSoulmates(soulmates);
-
-    const preparedCode = prepareFullCode(
-      name,
-      code,
+    const preparedCode = prepareFullCodeWithMultipleSketches(
+      sketches,
       rows,
       cols,
       chipType,
       ledType,
       milliamps
     );
-
     const build = await getFullBuild(preparedCode);
-
     const ip = soulmate.addresses[0];
     const url = `http://${ip}/ota`;
-
     var body = new FormData();
     const contents = fs.readFileSync(build);
     body.append("image", new Blob([contents]), "firmware.bin");
@@ -90,7 +92,25 @@ const SoulmatesContainer = () => {
     setSoulmates(soulmates);
   };
 
-  return { soulmates, soulmate, setSoulmate, flash };
+  const saveConfig = (soulmate, config) => {
+    if (!soulmate) return;
+    const key = soulmate.name;
+    setConfigs({ ...configs, [key]: config });
+  };
+
+  const getConfig = (soulmate) => {
+    const key = soulmate?.name;
+    return configs[key] || defaultConfig;
+  };
+
+  return {
+    soulmates,
+    soulmate,
+    setSoulmate,
+    flashMultiple,
+    saveConfig,
+    getConfig,
+  };
 };
 
 export default createContainer(SoulmatesContainer);

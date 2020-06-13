@@ -18,12 +18,12 @@ import Flash from "./Flash";
 
 const PatternEditor = ({ id }) => {
   const { save, reset, getSketch, builds } = useContainer(SketchesContainer);
-  const { soulmate, flash } = useContainer(SoulmatesContainer);
+  const { soulmate, flash, getConfig } = useContainer(SoulmatesContainer);
   const { userDetails, login, logout } = useContainer(UserContainer);
   const [focus, setFocus] = useState(true);
   const selectedSketch = getSketch(id);
   const build = builds[selectedSketch?.id];
-  const { rows = 70, cols = 15 } = selectedSketch?.config || {};
+  const { rows, cols } = getConfig(soulmate);
   const [flashMode, setFlashMode] = useState(false);
 
   // TODO: Figure this out - called twice on page load when the user's logged in
@@ -37,8 +37,6 @@ const PatternEditor = ({ id }) => {
   const appClass = `
     ${mode === Mode.Dark && "dark"}
     ${focus ? "focus" : "blur"}`;
-
-  window.build = build;
 
   return (
     <div className={`app-wrapper ${appClass}`}>
@@ -82,7 +80,6 @@ const PatternEditor = ({ id }) => {
                 save(selectedSketch.id, code, config);
               }}
               sketch={selectedSketch}
-              config={selectedSketch.config || { rows, cols }}
               soulmate={soulmate}
               build={build}
               flash={flash}

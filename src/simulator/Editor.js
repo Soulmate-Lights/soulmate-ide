@@ -23,22 +23,20 @@ const defaultConfig = {
   milliamps: 700,
 };
 
-const Editor = ({ config = defaultConfig, sketch, build }) => {
-  const { code, name } = sketch;
+const Editor = ({ sketch, build }) => {
+  const { code } = sketch;
   const { save, buildSketch } = useContainer(SketchesContainer);
-  const { soulmate, flash } = useContainer(SoulmatesContainer);
+  const { soulmate, flashMultiple, getConfig, saveConfig } = useContainer(
+    SoulmatesContainer
+  );
+
+  const config = getConfig(soulmate);
 
   let monacoInstance = useRef(false);
   const mode = useLightSwitch();
   const dark = mode === Mode.Dark;
   const editor = useRef();
-  const {
-    rows = 70,
-    cols = 15,
-    ledType = "APA102",
-    chipType = "atom",
-    milliamps = 700,
-  } = config;
+  const { rows, cols, ledType, chipType, milliamps } = config;
   const flashing = soulmate?.flashing;
 
   const [configuring, setConfiguring] = useState(!!soulmate);
@@ -50,16 +48,25 @@ const Editor = ({ config = defaultConfig, sketch, build }) => {
     if (shouldSave) save(sketch.id, editorCode, config);
   };
 
-  const saveConfig = debounce((config) => {
+  const setConfig = (config) => {
+    saveConfig(soulmate, config);
     const editorCode = monacoInstance.current.editor?.getModel().getValue();
     save(sketch.id, editorCode, config);
-  }, 500);
+  };
 
   const makeBuild = async () => {
     if (!soulmate) return;
 
     const editorCode = monacoInstance.current.editor?.getModel().getValue();
-    flash(soulmate, name, editorCode, rows, cols, chipType, ledType, milliamps);
+    flashMultiple(
+      soulmate,
+      [{ ...sketch, code: editorCode }],
+      rows,
+      cols,
+      chipType,
+      ledType,
+      milliamps
+    );
   };
 
   // Effect hook for changing variables - need to recreate the event listener
@@ -124,7 +131,7 @@ const Editor = ({ config = defaultConfig, sketch, build }) => {
               defaultValue={rows}
               onChange={(e) => {
                 const rows = parseInt(e.target.value);
-                saveConfig({ ...config, rows });
+                setConfig({ ...config, rows });
               }}
             />
           </p>
@@ -133,7 +140,7 @@ const Editor = ({ config = defaultConfig, sketch, build }) => {
             <select
               defaultValue={ledType}
               onChange={(e) => {
-                saveConfig({ ...config, ledType: e.target.value });
+                setConfig({ ...config, ledType: e.target.value });
               }}
             >
               <option value="APA102">APA102</option>
@@ -147,7 +154,7 @@ const Editor = ({ config = defaultConfig, sketch, build }) => {
               defaultValue={cols}
               onChange={(e) => {
                 const cols = parseInt(e.target.value);
-                saveConfig({ ...config, cols });
+                setConfig({ ...config, cols });
               }}
             />
           </p>
@@ -156,7 +163,7 @@ const Editor = ({ config = defaultConfig, sketch, build }) => {
             <select
               defaultValue={chipType}
               onChange={(e) => {
-                saveConfig({ ...config, chipType: e.target.value });
+                setConfig({ ...config, chipType: e.target.value });
               }}
             >
               <option value="atom">M5 Atom</option>
