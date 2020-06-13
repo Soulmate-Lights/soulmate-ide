@@ -101,6 +101,11 @@ const ListItem = ({ sketch, selected, showControls, selectMode }) => {
         name
       )}
       <div className="actions">
+        {sketch.config.cols && (
+          <span className="dimensions">
+            {sketch.config?.cols} x {sketch.config?.rows}
+          </span>
+        )}
         {!isElectron() && (
           <>
             <FiEdit3

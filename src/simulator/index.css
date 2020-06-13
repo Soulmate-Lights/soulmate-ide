@@ -112,6 +112,7 @@ body {
 .welcome {
   margin: auto auto;
   text-align: center;
+  flex-grow: 1;
 }
 
 .frame {

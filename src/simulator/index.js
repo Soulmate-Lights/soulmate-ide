@@ -17,13 +17,15 @@ import isElectron from "./utils/isElectron";
 import Flash from "./Flash";
 
 const PatternEditor = ({ id }) => {
-  const { save, reset, getSketch, builds } = useContainer(SketchesContainer);
+  const { save, reset, getSketch, getBuild } = useContainer(SketchesContainer);
   const { soulmate, flash, getConfig } = useContainer(SoulmatesContainer);
   const { userDetails, login, logout } = useContainer(UserContainer);
   const [focus, setFocus] = useState(true);
   const selectedSketch = getSketch(id);
-  const build = builds[selectedSketch?.id];
-  const { rows, cols } = getConfig(soulmate);
+  const config = (soulmate && getConfig(soulmate)) ||
+    selectedSketch?.config || { rows: 70, cols: 15 };
+  const { rows = 70, cols = 15 } = config;
+  const build = getBuild(selectedSketch, config);
   const [flashMode, setFlashMode] = useState(false);
 
   // TODO: Figure this out - called twice on page load when the user's logged in
@@ -73,6 +75,11 @@ const PatternEditor = ({ id }) => {
         />
 
         <div className="app-container">
+          {!selectedSketch && (
+            <div className="welcome">
+              <Logo className="loader" />
+            </div>
+          )}
           {selectedSketch && !flashMode && (
             <Editor
               key={selectedSketch.id}
@@ -88,42 +95,40 @@ const PatternEditor = ({ id }) => {
 
           {flashMode && <Flash id={id} />}
         </div>
-        {!selectedSketch && (
-          <div className="welcome">
-            <Logo className="loader" />
-          </div>
-        )}
-        <div className="pixels">
-          <div className="simulator">
-            {!build && (
-              <div
-                style={{
-                  width: cols * 10,
-                  justifyContent: "center",
-                  display: "flex",
-                }}
-              >
-                <Logo className="loader" />
+
+        {selectedSketch && (
+          <div className="pixels">
+            <div className="simulator">
+              {!build && (
+                <div
+                  style={{
+                    width: cols * 10,
+                    justifyContent: "center",
+                    display: "flex",
+                  }}
+                >
+                  <Logo className="loader" />
+                </div>
+              )}
+
+              {build && (
+                <Simulator
+                  key={`${selectedSketch.id}-${rows}-${cols}`}
+                  build={build}
+                  cols={cols}
+                  rows={rows}
+                  width={cols * 10}
+                  height={rows * 10}
+                />
+              )}
+            </div>
+            {build?.stderr && (
+              <div className="compiler-output">
+                <pre id="compiler-output-text">{build.stderr}</pre>
               </div>
             )}
-
-            {build && (
-              <Simulator
-                key={selectedSketch.id}
-                build={build}
-                cols={cols}
-                rows={rows}
-                width={cols * 10}
-                height={rows * 10}
-              />
-            )}
           </div>
-          {build?.stderr && (
-            <div className="compiler-output">
-              <pre id="compiler-output-text">{build.stderr}</pre>
-            </div>
-          )}
-        </div>
+        )}
       </div>
     </div>
   );

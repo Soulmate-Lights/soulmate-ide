@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useContainer } from "unstated-next";
 import SketchesContainer from "./sketchesContainer";
@@ -8,16 +8,10 @@ import { TiDelete } from "react-icons/ti";
 import { MdReorder } from "react-icons/md";
 import "./flash.css";
 
-// const defaultConfig = {
-//   rows: 70,
-//   cols: 15,
-//   chipType: "atom",
-//   ledType: "APA102",
-//   milliamps: 700,
-// };
-
 const Flash = ({ id }) => {
-  const { selectedSketches, toggleSketch } = useContainer(SketchesContainer);
+  const { selectedSketches, toggleSketch, buildSketch } = useContainer(
+    SketchesContainer
+  );
   const {
     soulmate,
     soulmates,
@@ -26,10 +20,12 @@ const Flash = ({ id }) => {
     getConfig,
     saveConfig,
   } = useContainer(SoulmatesContainer);
-  // const [config, setConfig] = useState(getConfig(soulmate));
   const config = getConfig(soulmate);
-  const setConfig = (config) => saveConfig(soulmate, config);
   const { rows, cols, ledType, chipType, milliamps } = config;
+
+  useEffect(() => {
+    buildSketch(id, false, config);
+  }, [soulmate, rows, cols, id]);
 
   const flash = () => {
     flashMultiple(
@@ -47,6 +43,11 @@ const Flash = ({ id }) => {
     <div className="flash">
       <div className="selectedSketches">
         <div className="heading">Sketches selected</div>
+
+        {selectedSketches.length === 0 && (
+          <p className="empty">No sketches selected</p>
+        )}
+
         {selectedSketches.map((sketch) => (
           <Link
             to={`/${sketch.id}`}
@@ -62,9 +63,9 @@ const Flash = ({ id }) => {
         ))}
       </div>
 
-      <div className="chooseSoulmate">
-        <div>
-          Flash to:
+      <div className="flashConfiguration">
+        <div className="chooseSoulmate">
+          <div className="heading">Choose a Soulmate</div>
           {soulmates.map((s) => (
             <div
               key={s.addresses[0]}
@@ -77,6 +78,7 @@ const Flash = ({ id }) => {
           ))}
         </div>
 
+        <div className="heading">Configuration</div>
         <div className="configuration">
           <p>
             <label>Rows</label>
@@ -85,7 +87,7 @@ const Flash = ({ id }) => {
               value={rows}
               onChange={(e) => {
                 const rows = parseInt(e.target.value);
-                setConfig({ ...config, rows });
+                saveConfig(soulmate, { ...config, rows });
               }}
             />
           </p>
@@ -94,7 +96,7 @@ const Flash = ({ id }) => {
             <select
               value={ledType}
               onChange={(e) => {
-                setConfig({ ...config, ledType: e.target.value });
+                saveConfig(soulmate, { ...config, ledType: e.target.value });
               }}
             >
               <option value="APA102">APA102</option>
@@ -108,7 +110,7 @@ const Flash = ({ id }) => {
               value={cols}
               onChange={(e) => {
                 const cols = parseInt(e.target.value);
-                setConfig({ ...config, cols });
+                saveConfig(soulmate, { ...config, cols });
               }}
             />
           </p>
@@ -117,7 +119,7 @@ const Flash = ({ id }) => {
             <select
               value={chipType}
               onChange={(e) => {
-                setConfig({ ...config, chipType: e.target.value });
+                saveConfig(soulmate, { ...config, chipType: e.target.value });
               }}
             >
               <option value="atom">M5 Atom</option>
@@ -139,7 +141,7 @@ const Flash = ({ id }) => {
               step="100"
               value={milliamps}
               onChange={(e) => {
-                setConfig({
+                saveConfig(soulmate, {
                   ...config,
                   milliamps: parseInt(e.target.value),
                 });
@@ -149,12 +151,19 @@ const Flash = ({ id }) => {
         </div>
 
         {soulmate && (
-          <div onClick={flash} className="button">
-            Flash to {soulmate.name}
+          <div
+            onClick={() => {
+              if (soulmate.flashing) return;
+              flash();
+            }}
+            disabled={soulmate.flashing}
+            className="flashButton button"
+          >
+            {soulmate.flashing
+              ? `Flashing to ${soulmate.name}...`
+              : `Flash to ${soulmate.name}`}
           </div>
         )}
-
-        {soulmate?.flashing && <div>Flashing...</div>}
       </div>
     </div>
   );

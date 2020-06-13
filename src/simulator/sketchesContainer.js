@@ -11,6 +11,14 @@ const SketchesContainer = () => {
   const [builds, setBuilds] = useState({});
   const [selectedSketches, setSelectedSketches] = useState([]);
 
+  window.builds = builds;
+
+  const getBuild = (sketch, config) => {
+    if (!sketch) return;
+    const key = `${sketch.id}-${config.rows}-${config.cols}`;
+    return builds[key];
+  };
+
   const toggleSketch = (sketch) => {
     if (selectedSketches.map((s) => s.id).includes(sketch.id)) {
       setSelectedSketches(selectedSketches.filter((s) => s.id !== sketch.id));
@@ -88,18 +96,16 @@ const SketchesContainer = () => {
     fetchSketches();
   };
 
-  const buildSketch = async (id, code) => {
-    if (!code || !id) return;
-
-    setBuilds({ ...builds, [id]: undefined });
-
+  const buildSketch = async (id, code, config) => {
+    if (!id) return;
     const sketch = getSketch(id);
     if (!sketch) return;
-    const config = sketch.config || {};
+    setBuilds({ ...builds, [id]: undefined });
     const { rows = 70, cols = 15 } = config;
-    const preparedCode = prepareCode(code, rows, cols);
+    const preparedCode = prepareCode(code || sketch.code, rows, cols);
     const newBuild = await buildHex(preparedCode);
-    setBuilds({ ...builds, [id]: newBuild });
+    const key = `${id}-${config.rows}-${config.cols}`;
+    setBuilds({ ...builds, [key]: newBuild });
   };
 
   return {
@@ -117,6 +123,7 @@ const SketchesContainer = () => {
     selectedSketches,
     setSelectedSketches,
     toggleSketch,
+    getBuild,
   };
 };
 

@@ -15,14 +15,6 @@ import SketchesContainer from "./sketchesContainer.js";
 //   const editorCode = monacoInstance.current.editor.getModel().getValue();
 // });
 
-const defaultConfig = {
-  rows: 70,
-  cols: 15,
-  chipType: "atom",
-  ledType: "APA102",
-  milliamps: 700,
-};
-
 const Editor = ({ sketch, build }) => {
   const { code } = sketch;
   const { save, buildSketch } = useContainer(SketchesContainer);
@@ -30,7 +22,7 @@ const Editor = ({ sketch, build }) => {
     SoulmatesContainer
   );
 
-  const config = getConfig(soulmate);
+  const config = soulmate ? getConfig(soulmate) : sketch.config;
 
   let monacoInstance = useRef(false);
   const mode = useLightSwitch();
@@ -43,14 +35,16 @@ const Editor = ({ sketch, build }) => {
 
   const buildCode = async (shouldSave = false) => {
     const editorCode = monacoInstance.current.editor?.getModel().getValue();
-    buildSketch(sketch.id, editorCode);
+    buildSketch(sketch.id, editorCode, config);
 
     if (shouldSave) save(sketch.id, editorCode, config);
   };
 
   const setConfig = (config) => {
-    saveConfig(soulmate, config);
     const editorCode = monacoInstance.current.editor?.getModel().getValue();
+    if (soulmate) {
+      saveConfig(soulmate, config);
+    }
     save(sketch.id, editorCode, config);
   };
 
@@ -128,7 +122,7 @@ const Editor = ({ sketch, build }) => {
             <label>Rows</label>
             <input
               type="number"
-              defaultValue={rows}
+              value={rows}
               onChange={(e) => {
                 const rows = parseInt(e.target.value);
                 setConfig({ ...config, rows });
@@ -138,7 +132,7 @@ const Editor = ({ sketch, build }) => {
           <p>
             <label>LEDs</label>
             <select
-              defaultValue={ledType}
+              value={ledType}
               onChange={(e) => {
                 setConfig({ ...config, ledType: e.target.value });
               }}
@@ -151,7 +145,7 @@ const Editor = ({ sketch, build }) => {
             <label>Columns</label>
             <input
               type="number"
-              defaultValue={cols}
+              value={cols}
               onChange={(e) => {
                 const cols = parseInt(e.target.value);
                 setConfig({ ...config, cols });
@@ -161,7 +155,7 @@ const Editor = ({ sketch, build }) => {
           <p>
             <label>Chip type</label>
             <select
-              defaultValue={chipType}
+              value={chipType}
               onChange={(e) => {
                 setConfig({ ...config, chipType: e.target.value });
               }}
@@ -183,7 +177,7 @@ const Editor = ({ sketch, build }) => {
             <input
               type="number"
               step="100"
-              defaultValue={milliamps}
+              value={milliamps}
               onChange={(e) => {
                 saveConfig({
                   ...config,
@@ -201,7 +195,7 @@ const Editor = ({ sketch, build }) => {
           onClick={() => setConfiguring(!configuring)}
         >
           <MdSettings />
-          Configure
+          Configure {soulmate?.name || sketch.name}
         </div>
         <div
           className="button"
@@ -223,12 +217,12 @@ const Editor = ({ sketch, build }) => {
             {flashing ? (
               <React.Fragment>
                 <Logo className="loader" />
-                Flashing to {soulmate.name}...
+                Flashing {sketch.name} to {soulmate.name}...
               </React.Fragment>
             ) : (
               <React.Fragment>
                 <IoMdCloudUpload />
-                Flash to {soulmate.name}
+                Flash {sketch.name} to {soulmate.name}
               </React.Fragment>
             )}
           </div>

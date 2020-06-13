@@ -27,6 +27,12 @@ const SoulmatesContainer = () => {
     let newSoulmates = [...soulmates, soulmate];
     newSoulmates = uniqBy(newSoulmates, "addresses[0]");
     setSoulmates(newSoulmates);
+
+    if (localStorage[soulmate.name]) {
+      const config = JSON.parse(localStorage[soulmate.name]);
+      const key = soulmate.name;
+      setConfigs({ ...configs, [key]: config });
+    }
   };
 
   useEffect(() => {
@@ -50,8 +56,8 @@ const SoulmatesContainer = () => {
     sketches,
     rows,
     cols,
-    chipType,
     ledType,
+    chipType,
     milliamps
   ) => {
     let soulmateIndex = soulmates.findIndex(
@@ -94,6 +100,7 @@ const SoulmatesContainer = () => {
 
   const saveConfig = (soulmate, config) => {
     if (!soulmate) return;
+    localStorage[soulmate.name] = JSON.stringify(config);
     const key = soulmate.name;
     setConfigs({ ...configs, [key]: config });
   };

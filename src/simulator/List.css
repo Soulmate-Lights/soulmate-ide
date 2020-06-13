@@ -292,3 +292,8 @@ hr {
   flex-direction: row;
   align-items: center;
 }
+
+.dimensions {
+  font-size: 10px;
+  color: #999;
+}
