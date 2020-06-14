@@ -33,8 +33,8 @@ const Flash = ({ id }) => {
       selectedSketches,
       rows,
       cols,
-      ledType,
       chipType,
+      ledType,
       milliamps
     );
   };

@@ -52,6 +52,7 @@ const Editor = ({ sketch, build }) => {
     if (!soulmate) return;
 
     const editorCode = monacoInstance.current.editor?.getModel().getValue();
+
     flashMultiple(
       soulmate,
       [{ ...sketch, code: editorCode }],

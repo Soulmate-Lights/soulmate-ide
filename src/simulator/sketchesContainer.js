@@ -11,8 +11,6 @@ const SketchesContainer = () => {
   const [builds, setBuilds] = useState({});
   const [selectedSketches, setSelectedSketches] = useState([]);
 
-  window.builds = builds;
-
   const getBuild = (sketch, config) => {
     if (!sketch) return;
     const key = `${sketch.id}-${config.rows}-${config.cols}`;

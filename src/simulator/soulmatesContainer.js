@@ -56,8 +56,8 @@ const SoulmatesContainer = () => {
     sketches,
     rows,
     cols,
-    ledType,
     chipType,
+    ledType,
     milliamps
   ) => {
     let soulmateIndex = soulmates.findIndex(
@@ -66,6 +66,7 @@ const SoulmatesContainer = () => {
     let updatedSoulmate = { ...soulmates[soulmateIndex], flashing: true };
     setSoulmate(updatedSoulmate);
     setSoulmates(soulmates);
+
     const preparedCode = prepareFullCodeWithMultipleSketches(
       sketches,
       rows,
