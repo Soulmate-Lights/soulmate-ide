@@ -141,7 +141,7 @@ const List = ({ selectedSketch, userDetails, flashMode, setFlashMode }) => {
             <div className="heading">Soulmates</div>
 
             {soulmates.map((s) => {
-              const connected = s === soulmate;
+              const connected = s.name === soulmate.name;
               return (
                 <div
                   className={`device ${connected ? "connected" : ""}`}
