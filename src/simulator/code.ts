@@ -1,4 +1,4 @@
-export const prepareCode = (code, rows, cols) =>
+export const preparePreviewCode = (code, rows, cols) =>
   `#define FASTLED_INTERNAL
 #include "FastLED.h"
 
@@ -56,11 +56,11 @@ void loop() {
 
 export const prepareFullCodeWithMultipleSketches = (
   sketches,
-  rows,
-  cols,
-  chipType,
-  ledType,
-  milliamps
+  rows = 70,
+  cols = 15,
+  chipType = "atom",
+  ledType = "APA102",
+  milliamps = 700
 ) => {
   const classNameFromSketchName = (name) => {
     return name.replace(/ /g, "");
@@ -89,7 +89,7 @@ export const prepareFullCodeWithMultipleSketches = (
     .join("\n");
 
   return `
-  // Don't forget to change this!
+// Don't forget to change this!
 #define FIRMWARE_NAME "soulmate-custom"
 // The number of LEDs in each parallel strip
 #define LED_COLS ${cols}
@@ -104,7 +104,7 @@ export const prepareFullCodeWithMultipleSketches = (
 // How long should the Soulmate fade between patterns?
 #define FADE_DURATION 3000
 // Total power in milliamps
-#define SOULMATE_MILLIAMPS ${milliamps || 700}
+#define SOULMATE_MILLIAMPS ${milliamps}
 
 ${ledType === "WS2812B" ? `#define USE_WS2812B true` : ""}
 
@@ -114,8 +114,7 @@ ${
 #define BUTTON_ON_VALUE LOW
 #define SOULMATE_BUTTON_PIN 39
 #define SOULMATE_DATA_PIN 32
-#define SOULMATE_CLOCK_PIN 26
-`
+#define SOULMATE_CLOCK_PIN 26`
     : ""
 }
 

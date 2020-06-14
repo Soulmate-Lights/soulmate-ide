@@ -72,7 +72,7 @@ const Flash = ({ id }) => {
               className="chooseSoulmateSoulmate"
               onClick={() => setSoulmate(s)}
             >
-              {s.name === soulmate.name ? <FiCheckCircle /> : <FiCircle />}
+              {s.name === soulmate?.name ? <FiCheckCircle /> : <FiCircle />}
               {s.name}
             </div>
           ))}

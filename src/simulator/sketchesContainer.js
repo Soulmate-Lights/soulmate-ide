@@ -2,7 +2,7 @@ import { createContainer } from "unstated-next";
 import { buildHex } from "./compiler/compile";
 import { fetchJson, post, postDelete } from "./utils";
 import { useState } from "react";
-import { prepareCode } from "./code";
+import { preparePreviewCode } from "./code";
 import { getToken, loggedIn } from "./utils/auth";
 
 const SketchesContainer = () => {
@@ -102,7 +102,7 @@ const SketchesContainer = () => {
     const key = `${sketch.id}-${config.rows}-${config.cols}`;
     setBuilds({ ...builds, [key]: undefined });
     const { rows = 70, cols = 15 } = config;
-    const preparedCode = prepareCode(code || sketch.code, rows, cols);
+    const preparedCode = preparePreviewCode(code || sketch.code, rows, cols);
     const newBuild = await buildHex(preparedCode);
     setBuilds({ ...builds, [key]: newBuild });
   };
