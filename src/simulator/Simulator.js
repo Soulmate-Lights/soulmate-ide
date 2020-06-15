@@ -61,7 +61,10 @@ const Simulator = ({ build, rows, cols, height, width }) => {
       drawPixels(pixelsToDraw);
     });
 
-    return () => runner.current.stop();
+    return () => {
+      runner.current.stop();
+      runner.current = null;
+    };
   }, []);
 
   return (

@@ -29,6 +29,8 @@ const UserContainer = () => {
         fetchUser();
         reset();
       });
+    } else {
+      reset();
     }
   }, []);
 
