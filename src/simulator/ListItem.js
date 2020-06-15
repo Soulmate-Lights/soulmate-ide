@@ -72,7 +72,7 @@ const ListItem = ({ sketch, selected, showControls, selectMode }) => {
         <video muted loop>
           <source
             id="media-source"
-            src={`${sketch.video_url}#t=2`}
+            src={`${sketch.video_url}#t=0.5`}
             type="video/mp4"
           />
         </video>
