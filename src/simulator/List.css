@@ -87,7 +87,7 @@
 
 .sketch svg {
   flex-grow: 0;
-  margin-left: auto;
+  margin-left: 5px;
   padding: 4px;
   width: 26px;
   height: 26px;
