@@ -90,6 +90,7 @@
 }
 
 .empty {
+  background: rgba(255, 255, 255, 0.5);
   font-size: 11px;
   display: flex;
   flex-grow: 1;
@@ -97,7 +98,7 @@
   padding: 0 40px;
   color: #666;
   font-size: 10px;
-  padding: 12px 8px 8px 12px;
-  line-height: 1;
+  padding: 24px;
+  font-style: italic;
   margin: 0;
 }

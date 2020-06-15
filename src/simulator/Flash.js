@@ -85,7 +85,9 @@ const Flash = ({ id }) => {
         <div className="heading">Sketches selected</div>
 
         {selectedSketches.length === 0 && (
-          <p className="empty">No sketches selected</p>
+          <>
+            <p className="empty">No sketches selected</p>
+          </>
         )}
 
         <SortableList

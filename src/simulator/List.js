@@ -115,31 +115,29 @@ const List = ({ selectedSketch, userDetails, flashMode, setFlashMode }) => {
       )}
 
       <div className="soulmates">
-        {isElectron() && (
-          <>
-            <hr />
-            <div className="heading">
-              Mode
-              <div className="toggle">
-                <div
-                  onClick={() => setFlashMode(false)}
-                  className={!flashMode ? "selected" : ""}
-                >
-                  Preview
-                </div>
-                <div
-                  onClick={() => setFlashMode(true)}
-                  className={flashMode ? "selected" : ""}
-                >
-                  Build
-                </div>
-              </div>
-            </div>
-          </>
-        )}
         {soulmates.length > 0 && (
           <>
-            <div className="heading">Soulmates</div>
+            <div className="heading">
+              Soulmates
+              {isElectron() && (
+                <>
+                  <div className="toggle">
+                    <div
+                      onClick={() => setFlashMode(false)}
+                      className={!flashMode ? "selected" : ""}
+                    >
+                      Preview
+                    </div>
+                    <div
+                      onClick={() => setFlashMode(true)}
+                      className={flashMode ? "selected" : ""}
+                    >
+                      Flash
+                    </div>
+                  </div>
+                </>
+              )}
+            </div>
 
             {soulmates.map((s) => {
               const connected = s.name === soulmate?.name;
