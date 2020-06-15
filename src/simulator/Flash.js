@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import Logo from "./logo.svg";
 import { Link } from "react-router-dom";
 import { useContainer } from "unstated-next";
 import SketchesContainer from "./sketchesContainer";
@@ -159,6 +160,7 @@ const Flash = ({ id }) => {
             disabled={soulmate.flashing}
             className="flashButton button"
           >
+            {soulmate.flashing && <Logo className="loader" />}
             {soulmate.flashing
               ? `Flashing to ${soulmate.name}...`
               : `Flash to ${soulmate.name}`}

@@ -163,12 +163,6 @@
   box-shadow: inset 0px 0px 2px #222;
 }
 
-.sketch span {
-  display: flex;
-  flex-grow: 1;
-  align-items: center;
-}
-
 .new {
   box-sizing: border-box;
 }
@@ -291,9 +285,19 @@ hr {
   display: flex;
   flex-direction: row;
   align-items: center;
+  flex-shrink: 0;
 }
 
 .dimensions {
   font-size: 10px;
   color: #999;
+  flex-shrink: 0;
+}
+
+.sketchName {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  flex-grow: 1;
+  margin-right: 10px;
 }

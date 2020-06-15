@@ -98,7 +98,7 @@ const ListItem = ({ sketch, selected, showControls, selectMode }) => {
           }}
         />
       ) : (
-        name
+        <span className="sketchName">{name}</span>
       )}
       <div className="actions">
         {sketch.config.cols && (
