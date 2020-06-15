@@ -103,7 +103,7 @@ const ListItem = ({ sketch, selected, showControls, selectMode }) => {
             {sketch.config?.cols} x {sketch.config?.rows}
           </span>
         )}
-        {!isElectron() && (
+        {showControls && !isElectron() && (
           <>
             <FiEdit3
               className="rename action"
