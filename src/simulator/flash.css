@@ -12,7 +12,7 @@
   border-right: 1px solid var(--border-color);
 }
 
-.selectedSketches .selectedSketch {
+.selectedSketch {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -22,17 +22,18 @@
   text-decoration: none;
 }
 
-.selectedSketches .selectedSketch.selected {
+.selectedSketch.selected {
   background: white;
 }
 
-.selectedSketches .selectedSketch svg:first-child {
+.selectedSketch svg:first-child {
   margin-right: 8px;
-  width: 14px;
-  height: 14px;
+  width: 12px;
+  height: 12px;
+  fill: rgba(0, 0, 0, 0.3);
 }
 
-.selectedSketches .selectedSketch svg:last-child {
+.selectedSketch svg:last-child {
   margin-left: auto;
   width: 16px;
   height: 16px;
@@ -40,15 +41,16 @@
   opacity: 0.5;
 }
 
-.selectedSketches .selectedSketch:hover svg:last-child {
+.selectedSketch:hover svg:last-child {
   opacity: 1;
 }
 
-.selectedSketches .selectedSketch video {
+.selectedSketch video {
   margin-right: 8px;
   border-radius: 8px;
   width: 24px;
   height: 24px;
+  background: black;
 }
 
 .flashConfiguration {

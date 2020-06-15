@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { SortableContainer, SortableElement } from "react-sortable-hoc";
 import Logo from "./logo.svg";
 import { Link } from "react-router-dom";
 import { useContainer } from "unstated-next";
@@ -7,12 +8,49 @@ import SoulmatesContainer from "./soulmatesContainer.js";
 import { FiCheckCircle, FiCircle } from "react-icons/fi";
 import { TiDelete } from "react-icons/ti";
 import { MdReorder } from "react-icons/md";
+import arrayMove from "array-move";
+
 import "./flash.css";
 
-const Flash = ({ id }) => {
-  const { selectedSketches, toggleSketch, buildSketch } = useContainer(
-    SketchesContainer
+const SortableItem = SortableElement(({ value, toggleSketch, id }) => {
+  const sketch = value;
+  return (
+    <div
+      to={`/${sketch.id}`}
+      className={`selectedSketch ${sketch.id === "id" ? "selected" : ""}`}
+      key={sketch.id}
+    >
+      <MdReorder />
+      <video loop src={sketch.video_url} autoPlay muted></video>
+      {sketch.name}
+
+      <TiDelete onClick={() => toggleSketch(sketch)} />
+    </div>
   );
+});
+
+const SortableList = SortableContainer(({ items, toggleSketch }) => {
+  return (
+    <div>
+      {items.map((sketch, index) => (
+        <SortableItem
+          key={`item-${sketch.id}`}
+          index={index}
+          value={sketch}
+          toggleSketch={toggleSketch}
+        />
+      ))}
+    </div>
+  );
+});
+
+const Flash = ({ id }) => {
+  const {
+    selectedSketches,
+    setSelectedSketches,
+    toggleSketch,
+    buildSketch,
+  } = useContainer(SketchesContainer);
   const {
     soulmate,
     soulmates,
@@ -29,6 +67,7 @@ const Flash = ({ id }) => {
   }, [soulmate, rows, cols, id]);
 
   const flash = () => {
+    if (soulmate.flashing) return;
     flashMultiple(
       soulmate,
       selectedSketches,
@@ -49,19 +88,19 @@ const Flash = ({ id }) => {
           <p className="empty">No sketches selected</p>
         )}
 
-        {selectedSketches.map((sketch) => (
-          <Link
-            to={`/${sketch.id}`}
-            className={`selectedSketch ${sketch.id === id ? "selected" : ""}`}
-            key={sketch.id}
-          >
-            <MdReorder />
-            <video loop src={sketch.video_url} autoPlay muted></video>
-            {sketch.name}
-
-            <TiDelete onClick={() => toggleSketch(sketch)} />
-          </Link>
-        ))}
+        <SortableList
+          test="true"
+          toggleSketch={toggleSketch}
+          items={selectedSketches}
+          onSortEnd={({ oldIndex, newIndex }) => {
+            const newSelectedSketches = arrayMove(
+              selectedSketches,
+              oldIndex,
+              newIndex
+            );
+            setSelectedSketches(newSelectedSketches);
+          }}
+        />
       </div>
 
       <div className="flashConfiguration">
@@ -153,10 +192,7 @@ const Flash = ({ id }) => {
 
         {soulmate && (
           <div
-            onClick={() => {
-              if (soulmate.flashing) return;
-              flash();
-            }}
+            onClick={flash}
             disabled={soulmate.flashing}
             className="flashButton button"
           >
