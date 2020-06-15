@@ -1,6 +1,9 @@
 import { createContainer } from "unstated-next";
 import { useState, useEffect } from "react";
 
+import SketchesContainer from "./sketchesContainer";
+import { useContainer } from "unstated-next";
+
 import {
   getTokenOnStartup,
   tokenProperties,
@@ -9,6 +12,7 @@ import {
 } from "./utils/auth";
 
 const UserContainer = () => {
+  const { reset } = useContainer(SketchesContainer);
   const [userDetails, setUserDetails] = useState(undefined);
 
   const fetchUser = async () => {
@@ -23,23 +27,22 @@ const UserContainer = () => {
     if (localStorage.loginSaved) {
       getTokenOnStartup().then(() => {
         fetchUser();
+        reset();
       });
     }
   }, []);
 
-  useEffect(() => {
-    fetchUser();
-  }, [window.auth?.tokenProperties?.id_token]);
-
   const login = async () => {
     await triggerLogin();
     fetchUser();
+    reset();
   };
 
   const logout = async () => {
     delete localStorage.loginSaved;
     await triggerLogout();
     fetchUser();
+    reset();
   };
 
   return { fetchUser, userDetails, login, logout };

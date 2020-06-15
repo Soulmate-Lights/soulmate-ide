@@ -17,7 +17,7 @@ import isElectron from "./utils/isElectron";
 import Flash from "./Flash";
 
 const PatternEditor = ({ id }) => {
-  const { save, reset, getSketch, getBuild } = useContainer(SketchesContainer);
+  const { save, getSketch, getBuild } = useContainer(SketchesContainer);
   const { soulmate, flash, getConfig } = useContainer(SoulmatesContainer);
   const { userDetails, login, logout } = useContainer(UserContainer);
   const [focus, setFocus] = useState(true);
@@ -27,9 +27,6 @@ const PatternEditor = ({ id }) => {
   const { rows = 70, cols = 15 } = config;
   const build = getBuild(selectedSketch, config);
   const [flashMode, setFlashMode] = useState(false);
-
-  // TODO: Figure this out - called twice on page load when the user's logged in
-  useEffect(reset, [userDetails]);
 
   useEffect(() => {
     window.ipcRenderer?.on("focus", (event, isFocused) => setFocus(isFocused));
@@ -135,13 +132,13 @@ const PatternEditor = ({ id }) => {
 };
 
 const HotPatternEditor = hot(module)((params) => (
-  <UserContainer.Provider>
-    <SketchesContainer.Provider>
+  <SketchesContainer.Provider>
+    <UserContainer.Provider>
       <SoulmatesContainer.Provider>
         <PatternEditor {...params} />
       </SoulmatesContainer.Provider>
-    </SketchesContainer.Provider>
-  </UserContainer.Provider>
+    </UserContainer.Provider>
+  </SketchesContainer.Provider>
 ));
 
 const RoutedEditor = () => (
