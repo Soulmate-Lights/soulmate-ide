@@ -25,8 +25,8 @@ function createWindow() {
     show: false,
     titleBarStyle: "hiddenInset",
     webPreferences: {
+      enableRemoteModule: true,
       // Removed these June 11th for security
-      // enableRemoteModule: true,
       // nodeIntegration: true,
       // webSecurity: false,
       preload: __dirname + "/preload.js",
