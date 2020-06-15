@@ -74,17 +74,22 @@
   align-items: center;
   padding: 4px 8px 4px 6px;
   font-size: 12px;
+  color: var(--text-color);
 }
 
 .sketch a {
-  color: var(--text-color);
   text-decoration: none;
   flex-grow: 1;
   padding-left: 8px;
 }
 
 .sketch:hover {
-  color: #333;
+  color: var(--text-color);
+}
+
+.dark .sketch:hover {
+  background: #444;
+  color: var(--text-color);
 }
 
 .sketch svg {
@@ -117,10 +122,6 @@
 
 .dark .sketch .delete:hover {
   background: #990000;
-}
-
-.dark .sketch:hover {
-  background: #444;
 }
 
 .sketch.selected,
