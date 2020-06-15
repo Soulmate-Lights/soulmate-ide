@@ -84,10 +84,7 @@
 }
 
 .flashButton.button {
-  width: 250px;
-  flex-grow: 0;
   margin-left: auto;
-  display: inline-block;
   margin: 16px 16px 16px auto;
 }
 
