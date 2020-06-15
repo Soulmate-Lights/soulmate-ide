@@ -1,6 +1,8 @@
 .list {
   display: flex;
-  width: 240px;
+  width: 20%;
+  min-width: 200px;
+  max-width: 300px;
   flex-shrink: 0;
   border-right: 1px solid var(--border-color);
   flex-direction: column;
