@@ -52,10 +52,8 @@
 }
 
 .flashConfiguration {
-  padding: 40px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
 }
 
 .chooseSoulmate {
@@ -67,11 +65,11 @@
 
 .flash .configuration {
   border-radius: 8px;
-  margin-bottom: 24px;
+  margin: 0 16px;
 }
 
 .chooseSoulmateSoulmate {
-  margin: 4px 8px;
+  margin: 4px 12px;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -86,6 +84,7 @@
   flex-grow: 0;
   margin-left: auto;
   display: inline-block;
+  margin: 16px 16px 16px auto;
 }
 
 .empty {

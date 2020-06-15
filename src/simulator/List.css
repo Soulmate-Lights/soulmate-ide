@@ -165,8 +165,9 @@
   box-shadow: inset 0px 0px 2px #222;
 }
 
-.new {
+.list .new.button {
   box-sizing: border-box;
+  margin-bottom: 8px;
 }
 
 .list .button {
@@ -174,9 +175,10 @@
 }
 
 .heading {
+  height: 35px;
   color: #666;
   font-size: 10px;
-  padding: 12px 8px 8px 12px;
+  padding: 8px 8px 8px 12px;
   line-height: 1;
   margin: 0;
   text-transform: uppercase;
@@ -188,7 +190,7 @@
 hr {
   border-color: rgba(255, 255, 255, 0.5);
   width: 100%;
-  margin: 2px 0 0 0;
+  margin: 4px 0 4px 0;
 }
 
 .toggle {
@@ -291,9 +293,12 @@ hr {
 }
 
 .dimensions {
-  font-size: 10px;
+  font-size: 9px;
   color: #999;
   flex-shrink: 0;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 6px;
+  padding: 2px 4px;
 }
 
 .sketchName {
