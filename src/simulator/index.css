@@ -1,13 +1,31 @@
 :root {
   --border-color: rgb(211, 211, 211);
+  --panel-background: #efefef;
+  --heading-color: ##666;
+  --text-color: #333;
+  --outline-color: rgba(0, 0, 0, 0.2);
+  --selected-background: rgb(211, 211, 211);
 }
 
 .dark {
   --border-color: #222;
+  --panel-background: #333;
+  --heading-color: #999;
+  --outline-color: rgba(255, 255, 255, 0.2);
+  --selected-background: #222;
 }
 
 * {
   box-sizing: border-box;
+}
+
+.dark input {
+  background: #666;
+  color: white !important;
+}
+
+.dark input::placeholder {
+  color: #999;
 }
 
 html {
@@ -105,7 +123,7 @@ body {
 }
 
 .dark {
-  background: #444;
+  background: #222;
   color: white;
 }
 

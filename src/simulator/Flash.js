@@ -1,7 +1,6 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { SortableContainer, SortableElement } from "react-sortable-hoc";
 import Logo from "./logo.svg";
-import { Link } from "react-router-dom";
 import { useContainer } from "unstated-next";
 import SketchesContainer from "./sketchesContainer";
 import SoulmatesContainer from "./soulmatesContainer.js";
@@ -16,8 +15,7 @@ const SortableItem = SortableElement(({ value, toggleSketch, id }) => {
   const sketch = value;
   return (
     <div
-      to={`/${sketch.id}`}
-      className={`selectedSketch ${sketch.id === "id" ? "selected" : ""}`}
+      className={`selectedSketch ${sketch.id === id ? "selected" : ""}`}
       key={sketch.id}
     >
       <MdReorder />
@@ -29,7 +27,7 @@ const SortableItem = SortableElement(({ value, toggleSketch, id }) => {
   );
 });
 
-const SortableList = SortableContainer(({ items, toggleSketch }) => {
+const SortableList = SortableContainer(({ items, toggleSketch, id }) => {
   return (
     <div>
       {items.map((sketch, index) => (
@@ -37,6 +35,7 @@ const SortableList = SortableContainer(({ items, toggleSketch }) => {
           key={`item-${sketch.id}`}
           index={index}
           value={sketch}
+          id={id}
           toggleSketch={toggleSketch}
         />
       ))}
@@ -79,8 +78,10 @@ const Flash = ({ id }) => {
     );
   };
 
+  const container = useRef();
+
   return (
-    <div className="flash">
+    <div className="flash" ref={container}>
       <div className="selectedSketches">
         <div className="heading">Sketches selected</div>
 
@@ -91,7 +92,11 @@ const Flash = ({ id }) => {
         )}
 
         <SortableList
-          test="true"
+          helperContainer={container.current}
+          onSortStart={(node, index) => {
+            console.log(node);
+          }}
+          id={id}
           toggleSketch={toggleSketch}
           items={selectedSketches}
           onSortEnd={({ oldIndex, newIndex }) => {

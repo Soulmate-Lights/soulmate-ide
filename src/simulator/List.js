@@ -100,7 +100,7 @@ const List = ({ selectedSketch, userDetails, flashMode, setFlashMode }) => {
                   }
                 }}
               />
-              <button>Save</button>
+              <div className="button">Save</div>
             </div>
           ) : (
             <div

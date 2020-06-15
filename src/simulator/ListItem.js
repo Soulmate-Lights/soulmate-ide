@@ -67,9 +67,6 @@ const ListItem = ({ sketch, selected, showControls, selectMode }) => {
       to={`/${sketch.id}`}
       key={sketch.id}
       className={`sketch ${selected && "selected"}`}
-      onClick={() => {
-        if (selectMode) toggleSketch(sketch);
-      }}
     >
       <div className="video-wrapper">
         <video muted loop>
@@ -118,7 +115,23 @@ const ListItem = ({ sketch, selected, showControls, selectMode }) => {
             />
           </>
         )}
-        {selectMode && <>{inSelection ? <FiCheckCircle /> : <FiCircle />}</>}
+        {selectMode && (
+          <>
+            {inSelection ? (
+              <FiCheckCircle
+                onClick={() => {
+                  if (selectMode) toggleSketch(sketch);
+                }}
+              />
+            ) : (
+              <FiCircle
+                onClick={() => {
+                  if (selectMode) toggleSketch(sketch);
+                }}
+              />
+            )}
+          </>
+        )}
       </div>
     </Link>
   );
