@@ -62,18 +62,14 @@ export const prepareFullCodeWithMultipleSketches = (
   ledType = "APA102",
   milliamps = 700
 ) => {
-  const classNameFromSketchName = (name) => {
-    return name.replace(/ /g, "");
-  };
-
   const sanitizedSketchName = (name) => {
     return name.replace(/"/g, "");
   };
 
   const code = sketches
     .map(
-      ({ name, code }) =>
-        `namespace ${classNameFromSketchName(name)} {
+      ({ code }, index) =>
+        `namespace Pattern${index} {
       ${code}
     }`
     )
@@ -81,10 +77,10 @@ export const prepareFullCodeWithMultipleSketches = (
 
   const initialization = sketches
     .map(
-      ({ name }) =>
+      ({ name }, index) =>
         `Soulmate.addRoutine("${sanitizedSketchName(
           name
-        )}", ${classNameFromSketchName(name)}::draw);`
+        )}", Pattern${index}::draw);`
     )
     .join("\n");
 

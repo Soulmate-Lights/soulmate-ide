@@ -75,6 +75,7 @@ const SoulmatesContainer = () => {
       ledType,
       milliamps
     );
+
     const build = await getFullBuild(preparedCode);
     const ip = soulmate.addresses[0];
     const url = `http://${ip}/ota`;
