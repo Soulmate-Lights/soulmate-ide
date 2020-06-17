@@ -120,77 +120,87 @@ const Flash = ({ id }) => {
           ))}
         </div>
 
-        <div className="heading">Configuration</div>
-        <div className="configuration">
-          <p>
-            <label>Columns</label>
-            <input
-              type="number"
-              value={cols}
-              onChange={(e) => {
-                const cols = parseInt(e.target.value);
-                saveConfig(soulmate, { ...config, cols });
-              }}
-            />
-          </p>
-          <p>
-            <label>LEDs</label>
-            <select
-              value={ledType}
-              onChange={(e) => {
-                saveConfig(soulmate, { ...config, ledType: e.target.value });
-              }}
-            >
-              <option value="APA102">APA102</option>
-              <option value="WS2812B">WS2812B</option>
-            </select>
-          </p>
-          <p>
-            <label>Rows</label>
-            <input
-              type="number"
-              value={rows}
-              onChange={(e) => {
-                const rows = parseInt(e.target.value);
-                saveConfig(soulmate, { ...config, rows });
-              }}
-            />
-          </p>
-          <p>
-            <label>Chip type</label>
-            <select
-              value={chipType}
-              onChange={(e) => {
-                saveConfig(soulmate, { ...config, chipType: e.target.value });
-              }}
-            >
-              <option value="atom">M5 Atom</option>
-              <option value="d32">Lolin ESP32</option>
-            </select>
-          </p>
-          <p>
-            <label>Shape</label>
-            <select disabled>
-              <option>Rectangle</option>
-              <option>Cylinder</option>
-              <option>Hexagon</option>
-            </select>
-          </p>
-          <p>
-            <label>Power (mA)</label>
-            <input
-              type="number"
-              step="100"
-              value={milliamps}
-              onChange={(e) => {
-                saveConfig(soulmate, {
-                  ...config,
-                  milliamps: parseInt(e.target.value),
-                });
-              }}
-            />
-          </p>
-        </div>
+        {soulmate && (
+          <>
+            <div className="heading">Configuration</div>
+            <div className="configuration">
+              <p>
+                <label>Columns</label>
+                <input
+                  type="number"
+                  value={cols}
+                  onChange={(e) => {
+                    const cols = parseInt(e.target.value);
+                    saveConfig(soulmate, { ...config, cols });
+                  }}
+                />
+              </p>
+              <p>
+                <label>LEDs</label>
+                <select
+                  value={ledType}
+                  onChange={(e) => {
+                    saveConfig(soulmate, {
+                      ...config,
+                      ledType: e.target.value,
+                    });
+                  }}
+                >
+                  <option value="APA102">APA102</option>
+                  <option value="WS2812B">WS2812B</option>
+                </select>
+              </p>
+              <p>
+                <label>Rows</label>
+                <input
+                  type="number"
+                  value={rows}
+                  onChange={(e) => {
+                    const rows = parseInt(e.target.value);
+                    saveConfig(soulmate, { ...config, rows });
+                  }}
+                />
+              </p>
+              <p>
+                <label>Chip type</label>
+                <select
+                  value={chipType}
+                  onChange={(e) => {
+                    saveConfig(soulmate, {
+                      ...config,
+                      chipType: e.target.value,
+                    });
+                  }}
+                >
+                  <option value="atom">M5 Atom</option>
+                  <option value="d32">Lolin ESP32</option>
+                </select>
+              </p>
+              <p>
+                <label>Shape</label>
+                <select disabled>
+                  <option>Rectangle</option>
+                  <option>Cylinder</option>
+                  <option>Hexagon</option>
+                </select>
+              </p>
+              <p>
+                <label>Power (mA)</label>
+                <input
+                  type="number"
+                  step="100"
+                  value={milliamps}
+                  onChange={(e) => {
+                    saveConfig(soulmate, {
+                      ...config,
+                      milliamps: parseInt(e.target.value),
+                    });
+                  }}
+                />
+              </p>
+            </div>
+          </>
+        )}
 
         {soulmate && (
           <div
