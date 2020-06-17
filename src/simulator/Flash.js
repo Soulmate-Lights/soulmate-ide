@@ -21,8 +21,6 @@ const SortableItem = SortableElement(({ value, toggleSketch, id }) => {
       <MdReorder />
       <video loop src={sketch.video_url} autoPlay muted></video>
       {sketch.name}
-
-      <TiDelete onClick={() => toggleSketch(sketch)} />
     </div>
   );
 });
@@ -93,9 +91,6 @@ const Flash = ({ id }) => {
 
         <SortableList
           helperContainer={container.current}
-          onSortStart={(node, index) => {
-            console.log(node);
-          }}
           id={id}
           toggleSketch={toggleSketch}
           items={selectedSketches}
