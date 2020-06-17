@@ -1,6 +1,6 @@
 {
   "name": "Soulmate",
-  "version": "1.0.33",
+  "version": "1.0.34",
   "main": "src/electron.js",
   "license": "MIT",
   "dependencies": {
