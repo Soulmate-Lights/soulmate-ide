@@ -45,27 +45,31 @@ const Editor = ({ sketch, build }) => {
   const buildCode = async (shouldSave = false) => {
     const monacoEditor = monacoInstance.current.editor;
     let editorCode = monacoEditor?.getModel().getValue();
-    editorCode = jsBeautifier(editorCode, jsBeautifierConfig);
-    const position = monacoEditor.getSelection();
-    monacoEditor.executeEdits("beautifier", [
-      {
-        identifier: "delete",
-        range: new monaco.Range(1, 1, 10000, 1),
-        text: "",
-        forceMoveMarkers: true,
-      },
-    ]);
-    monacoEditor.executeEdits("beautifier", [
-      {
-        identifier: "insert",
-        range: new monaco.Range(1, 1, 1, 1),
-        text: editorCode,
-        forceMoveMarkers: true,
-      },
-    ]);
-    monacoEditor.setSelection(position);
-    buildSketch(sketch.id, editorCode, config);
-    if (shouldSave) save(sketch.id, editorCode, config);
+    const formattedCode = jsBeautifier(editorCode, jsBeautifierConfig);
+
+    if (formattedCode !== editorCode) {
+      const position = monacoEditor.getSelection();
+      monacoEditor.executeEdits("beautifier", [
+        {
+          identifier: "delete",
+          range: new monaco.Range(1, 1, 10000, 1),
+          text: "",
+          forceMoveMarkers: true,
+        },
+      ]);
+      monacoEditor.executeEdits("beautifier", [
+        {
+          identifier: "insert",
+          range: new monaco.Range(1, 1, 1, 1),
+          text: formattedCode,
+          forceMoveMarkers: true,
+        },
+      ]);
+      monacoEditor.setSelection(position);
+    }
+
+    buildSketch(sketch.id, formattedCode, config);
+    if (shouldSave) save(sketch.id, formattedCode, config);
   };
 
   const setConfig = (config) => {
