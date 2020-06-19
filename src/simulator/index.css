@@ -237,6 +237,26 @@ canvas {
   flex-grow: 1;
   box-sizing: border-box;
   overflow: hidden;
+  position: relative;
+}
+
+.auto-format-checkbox {
+  display: block;
+  position: absolute;
+  top: 4px;
+  right: 20px;
+  font-size: 10px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  opacity: 0.2;
+  transition: ease opacity 0.4s;
+  user-select: none;
+  cursor: pointer;
+}
+
+.auto-format-checkbox:hover {
+  opacity: 1;
 }
 
 .code-editor-wrapper {

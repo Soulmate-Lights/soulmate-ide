@@ -24,12 +24,13 @@ const jsBeautifierConfig = {
 // });
 
 const Editor = ({ sketch, build }) => {
-  // const { code } = sketch;
   const code = jsBeautifier(sketch.code, jsBeautifierConfig);
   const { save, buildSketch } = useContainer(SketchesContainer);
   const { soulmate, flashMultiple, getConfig, saveConfig } = useContainer(
     SoulmatesContainer
   );
+
+  const formatCheckboxRef = useRef();
 
   const config = soulmate ? getConfig(soulmate) : sketch.config;
 
@@ -45,31 +46,35 @@ const Editor = ({ sketch, build }) => {
   const buildCode = async (shouldSave = false) => {
     const monacoEditor = monacoInstance.current.editor;
     let editorCode = monacoEditor?.getModel().getValue();
-    const formattedCode = jsBeautifier(editorCode, jsBeautifierConfig);
 
-    if (formattedCode !== editorCode) {
-      const position = monacoEditor.getSelection();
-      monacoEditor.executeEdits("beautifier", [
-        {
-          identifier: "delete",
-          range: new monaco.Range(1, 1, 10000, 1),
-          text: "",
-          forceMoveMarkers: true,
-        },
-      ]);
-      monacoEditor.executeEdits("beautifier", [
-        {
-          identifier: "insert",
-          range: new monaco.Range(1, 1, 1, 1),
-          text: formattedCode,
-          forceMoveMarkers: true,
-        },
-      ]);
-      monacoEditor.setSelection(position);
+    if (formatCheckboxRef.current.checked) {
+      const formattedCode = jsBeautifier(editorCode, jsBeautifierConfig);
+
+      if (formattedCode !== editorCode) {
+        editorCode = formattedCode;
+        const position = monacoEditor.getSelection();
+        monacoEditor.executeEdits("beautifier", [
+          {
+            identifier: "delete",
+            range: new monaco.Range(1, 1, 10000, 1),
+            text: "",
+            forceMoveMarkers: true,
+          },
+        ]);
+        monacoEditor.executeEdits("beautifier", [
+          {
+            identifier: "insert",
+            range: new monaco.Range(1, 1, 1, 1),
+            text: editorCode,
+            forceMoveMarkers: true,
+          },
+        ]);
+        monacoEditor.setSelection(position);
+      }
     }
 
-    buildSketch(sketch.id, formattedCode, config);
-    if (shouldSave) save(sketch.id, formattedCode, config);
+    buildSketch(sketch.id, editorCode, config);
+    if (shouldSave) save(sketch.id, editorCode, config);
   };
 
   const setConfig = (config) => {
@@ -155,6 +160,19 @@ const Editor = ({ sketch, build }) => {
           />
         </div>
       </div>
+
+      <label htmlFor="auto-format" className="auto-format-checkbox">
+        Auto-format
+        <input
+          id="auto-format"
+          defaultChecked={localStorage.autoFormat === "true"}
+          type="checkbox"
+          ref={formatCheckboxRef}
+          onChange={(e) => {
+            localStorage.autoFormat = e.target.checked;
+          }}
+        />
+      </label>
 
       {configuring && (
         <div className="configuration">
