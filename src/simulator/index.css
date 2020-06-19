@@ -265,7 +265,6 @@ canvas {
   flex-grow: 1;
   min-height: 0;
   max-width: 100%;
-  padding: 4px 0 0 4px;
   flex-grow: 1;
   box-sizing: border-box;
 }
@@ -512,4 +511,8 @@ canvas {
 
 .configuration input {
   padding-top: 5px;
+}
+
+.monaco-editor .lines-content.monaco-editor-background {
+  margin: 8px 0;
 }
