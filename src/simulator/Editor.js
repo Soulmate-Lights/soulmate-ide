@@ -147,6 +147,15 @@ const Editor = ({ sketch, build }) => {
           <Monaco
             key={dark ? "dark" : "light"}
             ref={monacoInstance}
+            editorDidMount={(editor) => {
+              editor.changeViewZones((accessor) => {
+                accessor.addZone({
+                  afterLineNumber: 0,
+                  heightInPx: 8,
+                  domNode: document.createElement("SPAN"),
+                });
+              });
+            }}
             options={{
               value: code,
               language: "cpp",
