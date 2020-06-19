@@ -15,6 +15,7 @@
     "electron-notarize": "^0.3.0",
     "electron-updater": "^4.3.1",
     "history": "^4.10.1",
+    "js-beautify": "^1.11.0",
     "jwt-decode": "^2.2.0",
     "keytar": "^5.0.0",
     "lodash": "^4.17.15",

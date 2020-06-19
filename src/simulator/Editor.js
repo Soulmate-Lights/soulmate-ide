@@ -10,13 +10,22 @@ import { useContainer } from "unstated-next";
 import SoulmatesContainer from "./soulmatesContainer.js";
 import SketchesContainer from "./sketchesContainer.js";
 
+import jsBeautifier from "js-beautify";
+
+const jsBeautifierConfig = {
+  indent_size: 2,
+  indent_empty_lines: true,
+  brace_style: "collapse-preserve-inline",
+};
+
 // TODO: Example for saving tabs?
 // monacoInstance.current.editor.getModel().onDidChangeContent((event) => {
 //   const editorCode = monacoInstance.current.editor.getModel().getValue();
 // });
 
 const Editor = ({ sketch, build }) => {
-  const { code } = sketch;
+  // const { code } = sketch;
+  const code = jsBeautifier(sketch.code, jsBeautifierConfig);
   const { save, buildSketch } = useContainer(SketchesContainer);
   const { soulmate, flashMultiple, getConfig, saveConfig } = useContainer(
     SoulmatesContainer
@@ -34,14 +43,34 @@ const Editor = ({ sketch, build }) => {
   const [configuring, setConfiguring] = useState(!!soulmate);
 
   const buildCode = async (shouldSave = false) => {
-    const editorCode = monacoInstance.current.editor?.getModel().getValue();
+    const monacoEditor = monacoInstance.current.editor;
+    let editorCode = monacoEditor?.getModel().getValue();
+    editorCode = jsBeautifier(editorCode, jsBeautifierConfig);
+    const position = monacoEditor.getSelection();
+    monacoEditor.executeEdits("beautifier", [
+      {
+        identifier: "delete",
+        range: new monaco.Range(1, 1, 10000, 1),
+        text: "",
+        forceMoveMarkers: true,
+      },
+    ]);
+    monacoEditor.executeEdits("beautifier", [
+      {
+        identifier: "insert",
+        range: new monaco.Range(1, 1, 1, 1),
+        text: editorCode,
+        forceMoveMarkers: true,
+      },
+    ]);
+    monacoEditor.setSelection(position);
     buildSketch(sketch.id, editorCode, config);
-
     if (shouldSave) save(sketch.id, editorCode, config);
   };
 
   const setConfig = (config) => {
-    const editorCode = monacoInstance.current.editor?.getModel().getValue();
+    const monacoEditor = monacoInstance.current.editor;
+    const editorCode = monacoEditor?.getModel().getValue();
     if (soulmate) {
       saveConfig(soulmate, config);
     }
@@ -51,7 +80,8 @@ const Editor = ({ sketch, build }) => {
   const makeBuild = async () => {
     if (!soulmate) return;
 
-    const editorCode = monacoInstance.current.editor?.getModel().getValue();
+    const monacoEditor = monacoInstance.current.editor;
+    const editorCode = monacoEditor?.getModel().getValue();
 
     flashMultiple(
       soulmate,
@@ -68,8 +98,9 @@ const Editor = ({ sketch, build }) => {
   // for scope. Only do this after first mount.
   const mounted = useRef();
   useEffect(() => {
+    const monacoEditor = monacoInstance.current.editor;
     const cmdS = monaco.KeyMod.CtrlCmd | monaco.KeyCode.KEY_S;
-    monacoInstance.current.editor?.addCommand(cmdS, () => buildCode(true));
+    monacoEditor?.addCommand(cmdS, () => buildCode(true));
     if (mounted.current) {
       buildCode();
     }
@@ -79,11 +110,15 @@ const Editor = ({ sketch, build }) => {
   // Build on mount if we don't have a build
   useEffect(() => {
     if (!build) buildCode();
+    monacoInstance.current.editor?.focus();
   }, []);
 
   // Resizing
 
-  const resizeEditor = () => monacoInstance.current.editor?.layout();
+  const resizeEditor = () => {
+    const monacoEditor = monacoInstance.current.editor;
+    monacoEditor?.layout();
+  };
   const debouncedResize = debounce(resizeEditor, 100);
 
   useEffect(() => {
