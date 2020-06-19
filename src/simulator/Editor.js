@@ -24,7 +24,10 @@ const jsBeautifierConfig = {
 // });
 
 const Editor = ({ sketch, build }) => {
-  const code = jsBeautifier(sketch.code, jsBeautifierConfig);
+  let code = sketch.code;
+  if (localStorage.autoFormat === "true") {
+    code = jsBeautifier(sketch.code, jsBeautifierConfig);
+  }
   const { save, buildSketch } = useContainer(SketchesContainer);
   const { soulmate, flashMultiple, getConfig, saveConfig } = useContainer(
     SoulmatesContainer
@@ -49,7 +52,7 @@ const Editor = ({ sketch, build }) => {
 
     if (formatCheckboxRef.current.checked) {
       const formattedCode = jsBeautifier(editorCode, jsBeautifierConfig);
-
+      const scroll = monacoEditor.getScrollTop();
       if (formattedCode !== editorCode) {
         editorCode = formattedCode;
         const position = monacoEditor.getSelection();
@@ -70,6 +73,7 @@ const Editor = ({ sketch, build }) => {
           },
         ]);
         monacoEditor.setSelection(position);
+        monacoEditor.setScrollTop(scroll);
       }
     }
 
