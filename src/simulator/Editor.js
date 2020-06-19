@@ -170,6 +170,7 @@ const Editor = ({ sketch, build }) => {
           ref={formatCheckboxRef}
           onChange={(e) => {
             localStorage.autoFormat = e.target.checked;
+            buildCode(false);
           }}
         />
       </label>
