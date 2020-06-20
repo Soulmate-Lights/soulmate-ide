@@ -127,3 +127,20 @@ void loop() {
   Soulmate.loop();
 }`;
 };
+
+export const emptyCode = `void draw() {
+  // Your pattern code goes here.
+  // This draw() function is called repeatedly and the LEDs will be
+  // printed after every loop.
+  //
+  // Some helpful variables:
+  // LED_COLS: number of columns
+  // LED_ROWS: number of rows
+  // N_LEDS: total number of LEDs (LED_COLS * LED_ROWS)
+  //
+  // You can also use:
+  // uint16_t gridIndexHorizontal(x, y) - the index of a given x/y coordinate
+  // uint8_t beatsin8(bpm, minimum, maximum, offset) - an 8-bit sine wave
+  //
+  // For more information, visit https://github.com/FastLED/FastLED/wiki/Overview
+}`;

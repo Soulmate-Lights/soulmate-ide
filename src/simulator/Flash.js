@@ -5,13 +5,12 @@ import { useContainer } from "unstated-next";
 import SketchesContainer from "./sketchesContainer";
 import SoulmatesContainer from "./soulmatesContainer.js";
 import { FiCheckCircle, FiCircle } from "react-icons/fi";
-import { TiDelete } from "react-icons/ti";
 import { MdReorder } from "react-icons/md";
 import arrayMove from "array-move";
 
 import "./flash.css";
 
-const SortableItem = SortableElement(({ value, toggleSketch, id }) => {
+const SortableItem = SortableElement(({ value, id }) => {
   const sketch = value;
   return (
     <div

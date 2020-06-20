@@ -9,6 +9,7 @@ import Monaco from "react-monaco-editor";
 import { useContainer } from "unstated-next";
 import SoulmatesContainer from "./soulmatesContainer.js";
 import SketchesContainer from "./sketchesContainer.js";
+import { emptyCode } from "./code";
 
 import jsBeautifier from "js-beautify";
 
@@ -54,7 +55,7 @@ const Editor = ({ sketch, build }) => {
 
   useEffect(() => {
     const monacoEditor = monacoInstance.current.editor;
-    let code = sketch.code;
+    let code = sketch.code || emptyCode;
     if (localStorage.autoFormat === "true") {
       code = formatCode(sketch.code);
     }
@@ -174,6 +175,7 @@ const Editor = ({ sketch, build }) => {
               });
             }}
             options={{
+              links: false,
               value: code,
               language: "cpp",
               theme: dark ? "vs-dark" : "vs-light",
