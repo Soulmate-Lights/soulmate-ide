@@ -18,6 +18,12 @@ const jsBeautifierConfig = {
   brace_style: "collapse-preserve-inline",
 };
 
+const formatCode = (code) => {
+  let result = jsBeautifier(code, jsBeautifierConfig);
+  result = result.replace(/- >/g, "->");
+  return result;
+};
+
 // TODO: Example for saving tabs?
 // monacoInstance.current.editor.getModel().onDidChangeContent((event) => {
 //   const editorCode = monacoInstance.current.editor.getModel().getValue();
@@ -26,7 +32,7 @@ const jsBeautifierConfig = {
 const Editor = ({ sketch, build }) => {
   let code = sketch.code;
   if (localStorage.autoFormat === "true") {
-    code = jsBeautifier(sketch.code, jsBeautifierConfig);
+    code = formatCode(sketch.code);
   }
   const { save, buildSketch } = useContainer(SketchesContainer);
   const { soulmate, flashMultiple, getConfig, saveConfig } = useContainer(
@@ -51,7 +57,7 @@ const Editor = ({ sketch, build }) => {
     let editorCode = monacoEditor?.getModel().getValue();
 
     if (formatCheckboxRef.current.checked) {
-      const formattedCode = jsBeautifier(editorCode, jsBeautifierConfig);
+      const formattedCode = formatCode(editorCode);
       const scroll = monacoEditor.getScrollTop();
       if (formattedCode !== editorCode) {
         editorCode = formattedCode;
