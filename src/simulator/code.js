@@ -137,6 +137,7 @@ export const emptyCode = `void draw() {
   // LED_COLS: number of columns
   // LED_ROWS: number of rows
   // N_LEDS: total number of LEDs (LED_COLS * LED_ROWS)
+  // Soulmate.leds: the LED array to print to
   //
   // You can also use:
   // uint16_t gridIndexHorizontal(x, y) - the index of a given x/y coordinate
