@@ -52,6 +52,17 @@ const Editor = ({ sketch, build }) => {
 
   const [configuring, setConfiguring] = useState(!!soulmate);
 
+  useEffect(() => {
+    const monacoEditor = monacoInstance.current.editor;
+    let code = sketch.code;
+    if (localStorage.autoFormat === "true") {
+      code = formatCode(sketch.code);
+    }
+    monacoEditor.getModel().setValue(code);
+    monacoEditor.focus();
+    if (!build) buildCode();
+  }, [sketch.code]);
+
   const buildCode = async (shouldSave = false) => {
     const monacoEditor = monacoInstance.current.editor;
     let editorCode = monacoEditor?.getModel().getValue();

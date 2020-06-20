@@ -79,7 +79,7 @@ const PatternEditor = ({ id }) => {
           )}
           {selectedSketch && !flashMode && (
             <Editor
-              key={selectedSketch.id}
+              // key={selectedSketch.id}
               save={(code, config) => {
                 save(selectedSketch.id, code, config);
               }}

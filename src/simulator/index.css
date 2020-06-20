@@ -342,7 +342,7 @@ canvas {
 
 .simulator canvas {
   border-radius: 2px;
-  background: black;
+  background: white;
 }
 
 @keyframes rotating {

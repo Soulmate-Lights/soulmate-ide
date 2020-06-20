@@ -33,7 +33,6 @@ const Simulator = ({ build, rows, cols, height, width }) => {
     const cpuNanos = () =>
       Math.round((runner.current.cpu.cycles / MHZ) * 1000000000);
 
-    // Hook to PORTB register
     runner.current.portB.addListener(() =>
       matrixController.feedValue(runner.current.portB.pinState(6), cpuNanos())
     );
