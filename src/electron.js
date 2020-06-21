@@ -1,5 +1,5 @@
 const electron = require("electron");
-const { app, BrowserWindow, Menu, ipcMain } = electron;
+const { app, BrowserWindow, ipcMain } = electron;
 const path = require("path");
 const isDev = require("electron-is-dev");
 const bonjour = require("bonjour")();
@@ -10,8 +10,6 @@ app.on("ready", () => {
 });
 
 let mainWindow;
-
-Menu.setApplicationMenu(null);
 
 function createWindow() {
   app.userAgentFallback = app.userAgentFallback.replace(
