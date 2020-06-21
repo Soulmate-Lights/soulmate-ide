@@ -3,6 +3,12 @@ import Logo from "./logo.svg";
 import { AVRRunner } from "./compiler/execute";
 import { WS2812Controller } from "./compiler/ws2812";
 
+const cleanError = (error) =>
+  error
+    .replace(/\/home\/ec2-user\/wokwi-hexi\/\/sketch\/sketch\.ino:/g, "")
+    .replace(/ In function 'void Pattern::draw\(\)':\n/g, "")
+    .replace(/Error during build: exit status 1/g, "");
+
 const Simulator = ({ build, rows, cols, height, width }) => {
   const canvas = useRef();
   const runner = useRef();
@@ -90,8 +96,6 @@ const Simulator = ({ build, rows, cols, height, width }) => {
     };
   }, [build]);
 
-  window.stderr = build?.stderr;
-
   return (
     <div className="simulator">
       {!build && (
@@ -124,15 +128,7 @@ const Simulator = ({ build, rows, cols, height, width }) => {
       )}
       {build?.stderr && (
         <div className="compiler-output">
-          <pre className="compiler-output-text">
-            {build.stderr
-              .replace(
-                /\/home\/ec2-user\/wokwi-hexi\/\/sketch\/sketch\.ino:/g,
-                ""
-              )
-              .replace(/ In function 'void Pattern::draw\(\)':\n/g, "")
-              .replace(/Error during build: exit status 1/g, "")}
-          </pre>
+          <pre className="compiler-output-text">{cleanError(build.stderr)}</pre>
         </div>
       )}
     </div>

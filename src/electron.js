@@ -1,10 +1,8 @@
 const electron = require("electron");
-const app = electron.app;
-const BrowserWindow = electron.BrowserWindow;
+const { app, BrowserWindow, Menu, ipcMain } = electron;
 const path = require("path");
 const isDev = require("electron-is-dev");
 const bonjour = require("bonjour")();
-const { ipcMain } = electron;
 const { autoUpdater } = require("electron-updater");
 
 app.on("ready", () => {
@@ -12,6 +10,8 @@ app.on("ready", () => {
 });
 
 let mainWindow;
+
+Menu.setApplicationMenu(null);
 
 function createWindow() {
   app.userAgentFallback = app.userAgentFallback.replace(
