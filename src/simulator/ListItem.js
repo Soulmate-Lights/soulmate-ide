@@ -19,7 +19,9 @@ export const ListItemGroup = ({
   showingAll,
   flashMode,
 }) => {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(
+    sketches.map((s) => s.id).includes(selectedSketchId)
+  );
   return (
     <>
       <span className="username" onClick={() => setOpen(!open)}>

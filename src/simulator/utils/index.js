@@ -1,5 +1,5 @@
-const server = "https://editor.soulmatelights.com";
-// const server = "http://localhost:3001";
+// const server = "https://editor.soulmatelights.com";
+const server = "http://localhost:3001";
 
 export const fetchJson = (url, token) => {
   let headers = {};
