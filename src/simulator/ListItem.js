@@ -23,24 +23,27 @@ export const ListItemGroup = ({
     sketches.map((s) => s.id).includes(selectedSketchId)
   );
   return (
-    <>
+    <div>
       <span className="username" onClick={() => setOpen(!open)}>
         {user && <img src={user.image} />}
         {user?.name || "Unknown user"}
         {open ? <GoChevronDown /> : <GoChevronRight />}
         <span>{sketches.length}</span>
       </span>
-      {open &&
-        sketches.map((sketch) => (
-          <ListItem
-            key={sketch.id}
-            sketch={sketch}
-            selected={sketch.id === selectedSketchId}
-            showControls={!showingAll}
-            selectMode={flashMode}
-          />
-        ))}
-    </>
+      {open && (
+        <div className="group">
+          {sketches.map((sketch) => (
+            <ListItem
+              key={sketch.id}
+              sketch={sketch}
+              selected={sketch.id === selectedSketchId}
+              showControls={!showingAll}
+              selectMode={flashMode}
+            />
+          ))}
+        </div>
+      )}
+    </div>
   );
 };
 
