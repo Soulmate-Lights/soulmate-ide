@@ -6,9 +6,40 @@ import { FiEdit3 } from "react-icons/fi";
 import { RiDeleteBin2Line } from "react-icons/ri";
 import { Link } from "react-router-dom";
 
+import { GoChevronDown, GoChevronRight } from "react-icons/go";
+
 import isElectron from "./utils/isElectron";
 import history from "../utils/history";
 import "./List.css";
+
+export const ListItemGroup = ({
+  name,
+  sketches,
+  selectedSketchId,
+  showingAll,
+  flashMode,
+}) => {
+  const [open, setOpen] = useState(false);
+  return (
+    <>
+      <span className="username" onClick={() => setOpen(!open)}>
+        {open ? <GoChevronDown /> : <GoChevronRight />}
+        {name || "Unknown user"}
+        <span>{sketches.length}</span>
+      </span>
+      {open &&
+        sketches.map((sketch) => (
+          <ListItem
+            key={sketch.id}
+            sketch={sketch}
+            selected={sketch.id === selectedSketchId}
+            showControls={!showingAll}
+            selectMode={flashMode}
+          />
+        ))}
+    </>
+  );
+};
 
 const ListItem = ({ sketch, selected, showControls, selectMode }) => {
   const ref = useRef(null);

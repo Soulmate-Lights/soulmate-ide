@@ -306,3 +306,31 @@ hr {
   flex-grow: 1;
   margin-right: 10px;
 }
+
+.username {
+  padding: 4px 8px 4px 12px;
+  font-size: 11px;
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  cursor: pointer;
+  background: rgba(0, 0, 0, 0.05)
+}
+
+.username svg {
+  margin-right: 4px;
+  position: relative;
+  top: 1px;
+}
+
+.username span {
+  font-size: 9px;
+  color: #999;
+  flex-shrink: 0;
+  border: 1px solid var(--outline-color);
+  border-radius: 6px;
+  padding: 2px 4px;
+  margin-left: auto;
+  min-width: 16px;
+}

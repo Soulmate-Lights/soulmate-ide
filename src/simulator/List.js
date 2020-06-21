@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from "react";
+import keyBy from "lodash/keyBy";
+import groupBy from "lodash/groupBy";
+import map from "lodash/map";
 import history from "../utils/history";
 import { FiCircle, FiCheckCircle } from "react-icons/fi";
 import { AiOutlinePlusCircle } from "react-icons/ai";
 import Logo from "./logo.svg";
-import ListItem from "./ListItem";
+import ListItem, { ListItemGroup } from "./ListItem";
 import SketchesContainer from "./sketchesContainer";
 import "./List.css";
 import SoulmatesContainer from "./soulmatesContainer";
@@ -48,6 +51,9 @@ const List = ({ selectedSketch, userDetails, flashMode, setFlashMode }) => {
     }
   }, [sketchesToShow, sketches, allSketches, showingAll]);
 
+  const groupedSketches = groupBy(sketchesToShow, "user.id");
+  const users = keyBy(map(sketchesToShow, "user"), "id");
+
   return (
     <div className="list">
       <div className="heading">
@@ -72,15 +78,31 @@ const List = ({ selectedSketch, userDetails, flashMode, setFlashMode }) => {
       <div className="sketches">
         {!sketchesToShow && <Logo className="loader" />}
 
-        {sketchesToShow?.map((sketch) => (
-          <ListItem
-            key={sketch.id}
-            sketch={sketch}
-            selected={sketch.id === selectedSketch?.id}
-            showControls={!showingAll}
-            selectMode={flashMode}
-          />
-        ))}
+        {showingAll
+          ? map(groupedSketches, (sketches, id) => {
+              const user = users[id];
+
+              return (
+                <ListItemGroup
+                  key={user?.id}
+                  name={user?.name}
+                  selectedSketchId={selectedSketch?.id}
+                  sketches={sketches || []}
+                  showControls={!showingAll}
+                  selectMode={flashMode}
+                />
+              );
+            })
+          : map(sketches, (sketch) => (
+              <ListItem
+                key={sketch.id}
+                sketch={sketch}
+                selected={sketch.id === selectedSketch?.id}
+                showControls={!showingAll}
+                selectMode={flashMode}
+              />
+            ))}
+
         <div className="shadow"></div>
       </div>
       {!showingAll && userDetails && sketches && (
