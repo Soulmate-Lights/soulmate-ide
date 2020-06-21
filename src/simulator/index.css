@@ -273,7 +273,12 @@ canvas {
   background: rgb(29, 29, 29);
 }
 
-.compiler-output {
+.compiler-output,
+.serial-output {
+  background: white;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
   overflow: auto;
   flex-grow: 1;
   box-sizing: border-box;
@@ -287,14 +292,16 @@ canvas {
   color: darkgreen;
 }
 
-.dark .compiler-output {
+.dark .compiler-output,
+.dark .serial-output {
   background: #333;
   border-top: 1px solid #000;
   color: lightgreen;
   box-shadow: inset 0px 5px 5px rgba(0, 0, 0, 0.3);
 }
 
-.compiler-output pre {
+.compiler-output pre,
+.serial-output pre {
   margin: 0;
   white-space: pre-line;
 }
@@ -338,11 +345,11 @@ canvas {
   max-height: 100%;
   overflow: hidden;
   box-shadow: 0 0 5px #222;
+  position: relative;
 }
 
 .simulator canvas {
   border-radius: 2px;
-  background: white;
 }
 
 @keyframes rotating {

@@ -1,12 +1,16 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import Logo from "./logo.svg";
 import { AVRRunner } from "./compiler/execute";
 import { WS2812Controller } from "./compiler/ws2812";
 
 const Simulator = ({ build, rows, cols, height, width }) => {
   const canvas = useRef();
   const runner = useRef();
+  const compilerOutputDiv = useRef();
+  const [serialOutput, setSerialOutput] = useState("");
 
   const drawPixels = (pixels) => {
+    if (!canvas.current) return;
     var ctx = canvas.current.getContext("2d");
     ctx.clearRect(0, 0, canvas.current.width, canvas.current.height);
 
@@ -25,7 +29,23 @@ const Simulator = ({ build, rows, cols, height, width }) => {
     }
   };
 
+  let text = "";
+
+  const addSerialOutput = (value) => {
+    text += value;
+    setSerialOutput(text);
+  };
+
   useEffect(() => {
+    if (compilerOutputDiv.current) {
+      compilerOutputDiv.current.scrollTop =
+        compilerOutputDiv.current.scrollHeight;
+    }
+  }, [serialOutput]);
+
+  useEffect(() => {
+    setSerialOutput("");
+    if (!build) return;
     runner.current = new AVRRunner(build.hex);
     const matrixController = new WS2812Controller(cols * rows);
 
@@ -36,6 +56,10 @@ const Simulator = ({ build, rows, cols, height, width }) => {
     runner.current.portB.addListener(() =>
       matrixController.feedValue(runner.current.portB.pinState(6), cpuNanos())
     );
+
+    runner.current.usart.onByteTransmit = (value) => {
+      addSerialOutput(String.fromCharCode(value));
+    };
 
     runner.current.execute((_cpu) => {
       const pixels = matrixController.update(cpuNanos());
@@ -64,16 +88,53 @@ const Simulator = ({ build, rows, cols, height, width }) => {
       runner.current.stop();
       runner.current = null;
     };
-  }, []);
+  }, [build]);
+
+  window.stderr = build?.stderr;
 
   return (
-    <div className="canvas-wrapper">
-      <canvas
-        width={width}
-        height={height}
-        style={{ width, height }}
-        ref={canvas}
-      />
+    <div className="simulator">
+      {!build && (
+        <div
+          style={{
+            width: cols * 10,
+            justifyContent: "center",
+            display: "flex",
+          }}
+        >
+          <Logo className="loader" />
+        </div>
+      )}
+
+      {build && (
+        <div className="canvas-wrapper">
+          <canvas
+            width={width}
+            height={height}
+            style={{ width, height }}
+            ref={canvas}
+          />
+        </div>
+      )}
+
+      {serialOutput && (
+        <div className="serial-output" ref={compilerOutputDiv}>
+          <pre className="serial-output-text">{serialOutput}</pre>
+        </div>
+      )}
+      {build?.stderr && (
+        <div className="compiler-output">
+          <pre className="compiler-output-text">
+            {build.stderr
+              .replace(
+                /\/home\/ec2-user\/wokwi-hexi\/\/sketch\/sketch\.ino:/g,
+                ""
+              )
+              .replace(/ In function 'void Pattern::draw\(\)':\n/g, "")
+              .replace(/Error during build: exit status 1/g, "")}
+          </pre>
+        </div>
+      )}
     </div>
   );
 };

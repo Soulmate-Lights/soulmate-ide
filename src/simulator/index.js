@@ -90,35 +90,14 @@ const PatternEditor = ({ id }) => {
 
         {selectedSketch && (
           <div className="pixels">
-            <div className="simulator">
-              {!build && (
-                <div
-                  style={{
-                    width: cols * 10,
-                    justifyContent: "center",
-                    display: "flex",
-                  }}
-                >
-                  <Logo className="loader" />
-                </div>
-              )}
-
-              {build && (
-                <Simulator
-                  key={`${selectedSketch.id}-${rows}-${cols}`}
-                  build={build}
-                  cols={cols}
-                  rows={rows}
-                  width={cols * 10}
-                  height={rows * 10}
-                />
-              )}
-            </div>
-            {build?.stderr && (
-              <div className="compiler-output">
-                <pre id="compiler-output-text">{build.stderr}</pre>
-              </div>
-            )}
+            <Simulator
+              key={`${selectedSketch.id}-${rows}-${cols}`}
+              build={build}
+              cols={cols}
+              rows={rows}
+              width={cols * 10}
+              height={rows * 10}
+            />
           </div>
         )}
       </div>

@@ -42,6 +42,7 @@ int16_t gridIndexHorizontal(int16_t x, int16_t y) {
 void setup() {
   FastLED.addLeds<NEOPIXEL, DATA_PIN>(Soulmate.leds, N_LEDS);
   FastLED.setBrightness(255);
+  Serial.begin(9600);
 }
 
 namespace Pattern {
