@@ -104,8 +104,9 @@ const Editor = ({ sketch, build }) => {
     const editorCode = monacoEditor?.getModel().getValue();
     if (soulmate) {
       saveConfig(soulmate, config);
+    } else {
+      save(sketch.id, editorCode, config);
     }
-    save(sketch.id, editorCode, config);
   };
 
   const makeBuild = async () => {
@@ -270,7 +271,7 @@ const Editor = ({ sketch, build }) => {
               step="100"
               value={milliamps}
               onChange={(e) => {
-                saveConfig({
+                setConfig({
                   ...config,
                   milliamps: parseInt(e.target.value),
                 });
