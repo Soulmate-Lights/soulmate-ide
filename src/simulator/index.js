@@ -79,14 +79,9 @@ const PatternEditor = ({ id }) => {
           )}
           {selectedSketch && !flashMode && (
             <Editor
-              // key={selectedSketch.id}
-              save={(code, config) => {
-                save(selectedSketch.id, code, config);
-              }}
+              key={selectedSketch.id}
               sketch={selectedSketch}
-              soulmate={soulmate}
               build={build}
-              flash={flash}
             />
           )}
 

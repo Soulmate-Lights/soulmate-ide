@@ -62,7 +62,7 @@ const Editor = ({ sketch, build }) => {
     monacoEditor.getModel().setValue(code);
     monacoEditor.focus();
     if (!build) buildCode();
-  }, [sketch.code]);
+  }, [sketch.id]);
 
   const buildCode = async (shouldSave = false) => {
     const monacoEditor = monacoInstance.current.editor;

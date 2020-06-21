@@ -50,7 +50,7 @@ const SketchesContainer = () => {
       setSketches([...sketches]);
 
       const token = await getToken();
-      post("/sketches/save", token, { id, code, config });
+      await post("/sketches/save", token, { id, code, config });
     }
 
     let allSketchIndex = allSketches?.findIndex((s) => s.id === id);
