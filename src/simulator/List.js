@@ -85,7 +85,7 @@ const List = ({ selectedSketch, userDetails, flashMode, setFlashMode }) => {
               return (
                 <ListItemGroup
                   key={user?.id}
-                  name={user?.name}
+                  user={user}
                   selectedSketchId={selectedSketch?.id}
                   sketches={sketches || []}
                   showControls={!showingAll}

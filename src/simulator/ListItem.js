@@ -13,7 +13,7 @@ import history from "../utils/history";
 import "./List.css";
 
 export const ListItemGroup = ({
-  name,
+  user,
   sketches,
   selectedSketchId,
   showingAll,
@@ -23,8 +23,9 @@ export const ListItemGroup = ({
   return (
     <>
       <span className="username" onClick={() => setOpen(!open)}>
+        {user && <img src={user.image} />}
+        {user?.name || "Unknown user"}
         {open ? <GoChevronDown /> : <GoChevronRight />}
-        {name || "Unknown user"}
         <span>{sketches.length}</span>
       </span>
       {open &&
