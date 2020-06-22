@@ -43,6 +43,21 @@ const SketchesContainer = () => {
     );
   };
 
+  const persistCode = async (id, code) => {
+    let sketchIndex = sketches?.findIndex((s) => s.id === id);
+    sketches[sketchIndex] = { ...sketches[sketchIndex], code };
+    setSketches([...sketches]);
+
+    let allSketchIndex = allSketches?.findIndex((s) => s.id === id);
+    if (allSketchIndex > -1) {
+      allSketches[allSketchIndex] = {
+        ...allSketches[allSketchIndex],
+        code,
+      };
+      setAllSketches([...allSketches]);
+    }
+  };
+
   const save = async (id, code, config) => {
     let sketchIndex = sketches?.findIndex((s) => s.id === id);
     if (sketchIndex > -1) {
@@ -118,6 +133,7 @@ const SketchesContainer = () => {
     buildSketch,
     builds,
     save,
+    persistCode,
     rename,
     selectedSketches,
     setSelectedSketches,

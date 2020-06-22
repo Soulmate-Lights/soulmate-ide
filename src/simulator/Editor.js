@@ -35,7 +35,7 @@ const Editor = ({ sketch, build }) => {
   if (localStorage.autoFormat === "true") {
     code = formatCode(sketch.code);
   }
-  const { save, buildSketch } = useContainer(SketchesContainer);
+  const { save, buildSketch, persistCode } = useContainer(SketchesContainer);
   const { soulmate, flashMultiple, getConfig, saveConfig } = useContainer(
     SoulmatesContainer
   );
@@ -63,6 +63,14 @@ const Editor = ({ sketch, build }) => {
     monacoEditor.focus();
     if (!build) buildCode();
   }, [sketch.id]);
+
+  useEffect(() => {
+    return () => {
+      const monacoEditor = monacoInstance.current.editor;
+      let editorCode = monacoEditor?.getModel().getValue();
+      persistCode(sketch.id, editorCode);
+    };
+  }, []);
 
   const buildCode = async (shouldSave = false) => {
     const monacoEditor = monacoInstance.current.editor;
