@@ -1,5 +1,5 @@
 const electron = require("electron");
-const { app, BrowserWindow, ipcMain } = electron;
+const { app, BrowserWindow, ipcMain, systemPreferences } = electron;
 const path = require("path");
 const isDev = require("electron-is-dev");
 const bonjour = require("bonjour")();
@@ -22,6 +22,7 @@ function createWindow() {
     height: 800,
     show: false,
     titleBarStyle: "hiddenInset",
+    backgroundColor: systemPreferences.isDarkMode() ? "#333" : "#fff",
     webPreferences: {
       enableRemoteModule: true,
       // Removed these June 11th for security

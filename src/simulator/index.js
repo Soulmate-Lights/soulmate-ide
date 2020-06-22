@@ -4,7 +4,7 @@ import { hot, setConfig } from "react-hot-loader";
 import "./index.css";
 import React, { useState, useEffect } from "react";
 import Editor from "./Editor";
-import { Router, Route, Switch } from "react-router-dom";
+import { Router, HashRouter, Route, Switch } from "react-router-dom";
 import { Mode, useLightSwitch } from "use-light-switch";
 import List from "./List";
 import history from "../utils/history";
@@ -16,6 +16,8 @@ import SoulmatesContainer from "./soulmatesContainer";
 import UserContainer from "./userContainer.js";
 import isElectron from "./utils/isElectron";
 import Flash from "./Flash";
+
+const SpecificRouter = isElectron() ? HashRouter : Router;
 
 setConfig({
   ErrorOverlay: () => {
@@ -127,7 +129,7 @@ const HotPatternEditor = hot(module)((params) => (
 ));
 
 const RoutedEditor = () => (
-  <Router history={history}>
+  <SpecificRouter history={history}>
     <Switch>
       <Route path="/auth">
         <div></div>
@@ -141,7 +143,7 @@ const RoutedEditor = () => (
         }) => <HotPatternEditor id={parseInt(id)} />}
       />
     </Switch>
-  </Router>
+  </SpecificRouter>
 );
 
 export default RoutedEditor;
