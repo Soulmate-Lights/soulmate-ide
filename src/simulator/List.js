@@ -136,7 +136,6 @@ const List = ({ selectedSketch, userDetails, flashMode, setFlashMode }) => {
           )}
         </>
       )}
-
       <div className="soulmates">
         {soulmates.length > 0 && (
           <>

@@ -15,6 +15,5 @@ self.MonacoEnvironment = {
 };
 
 monaco.editor.createWebWorker({});
-module.hot?.accept();
 
 ReactDOM.render(<App />, document.getElementById("root"));

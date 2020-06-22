@@ -35,7 +35,9 @@ const Editor = ({ sketch, build }) => {
   if (localStorage.autoFormat === "true") {
     code = formatCode(sketch.code);
   }
-  const { save, buildSketch, persistCode } = useContainer(SketchesContainer);
+  const { save, buildSketch, persistCode, sketchIsMine } = useContainer(
+    SketchesContainer
+  );
   const { soulmate, flashMultiple, getConfig, saveConfig } = useContainer(
     SoulmatesContainer
   );
@@ -303,7 +305,7 @@ const Editor = ({ sketch, build }) => {
           onClick={() => buildCode(true)}
         >
           <BsFillPlayFill />
-          Save (CMD+S)
+          {sketchIsMine(sketch) ? "Save" : "Preview"} (CMD+S)
         </div>
 
         {soulmate && (
