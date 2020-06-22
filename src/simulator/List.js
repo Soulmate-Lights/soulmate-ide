@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import Emojify from "react-emojione";
 import keyBy from "lodash/keyBy";
 import groupBy from "lodash/groupBy";
 import map from "lodash/map";
@@ -177,7 +178,16 @@ const List = ({ selectedSketch, userDetails, flashMode, setFlashMode }) => {
                   ) : (
                     <>{s === soulmate ? <FiCheckCircle /> : <FiCircle />}</>
                   )}
-                  {s.name}
+                  <Emojify
+                    style={{
+                      height: 16,
+                      width: 16,
+                      position: "relative",
+                      top: -1,
+                    }}
+                  >
+                    {s.name}
+                  </Emojify>
                 </div>
               );
             })}
