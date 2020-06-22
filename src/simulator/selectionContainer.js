@@ -1,7 +1,7 @@
 import { createContainer } from "unstated-next";
 import { useState } from "react";
 
-const SelectionsContainer = () => {
+const SelectionContainer = () => {
   const [selections, setSelections] = useState({});
 
   const getSelection = (id) => {
@@ -19,4 +19,4 @@ const SelectionsContainer = () => {
   };
 };
 
-export default createContainer(SelectionsContainer);
+export default createContainer(SelectionContainer);

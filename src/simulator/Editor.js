@@ -32,7 +32,7 @@ const formatCode = (code) => {
 // });
 
 const Editor = ({ sketch, build }) => {
-  let code = sketch.dirtyCode || sketch.code;
+  let code = sketch.dirtyCode || sketch.code || emptyCode;
   if (localStorage.autoFormat === "true") {
     code = formatCode(sketch.code);
   }
