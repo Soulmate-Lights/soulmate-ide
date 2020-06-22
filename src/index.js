@@ -4,8 +4,6 @@ import Simulator from "./simulator";
 import "regenerator-runtime/runtime";
 import * as monaco from "monaco-editor/esm/vs/editor/editor.main.js";
 
-const App = () => <Simulator />;
-
 self.MonacoEnvironment = {
   getWorker: function (_moduleId, _label) {
     return new Worker(
@@ -16,4 +14,4 @@ self.MonacoEnvironment = {
 
 monaco.editor.createWebWorker({});
 
-ReactDOM.render(<App />, document.getElementById("root"));
+ReactDOM.render(<Simulator />, document.getElementById("root"));

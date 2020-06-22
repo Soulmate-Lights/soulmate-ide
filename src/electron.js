@@ -36,6 +36,9 @@ function createWindow() {
     : `file://${path.join(__dirname, "../build/index.html")}`;
 
   mainWindow.loadURL(mainUrl);
+  mainWindow.webContents.on("did-fail-load", () => {
+    mainWindow.loadURL(mainUrl);
+  });
 
   if (isDev) mainWindow.webContents.openDevTools();
 
