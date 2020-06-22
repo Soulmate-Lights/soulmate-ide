@@ -36,21 +36,15 @@ const Editor = ({ sketch, build }) => {
   if (localStorage.autoFormat === "true") {
     code = formatCode(sketch.code);
   }
-
   const { getSelection, setSelection } = useContainer(SelectionsContainer);
-
   const { save, buildSketch, persistCode, sketchIsMine } = useContainer(
     SketchesContainer
   );
-
   const { soulmate, flashMultiple, getConfig, saveConfig } = useContainer(
     SoulmatesContainer
   );
-
   const formatCheckboxRef = useRef();
-
   const config = soulmate ? getConfig(soulmate) : sketch.config;
-
   let monacoInstance = useRef(false);
   const mode = useLightSwitch();
   const dark = mode === Mode.Dark;
@@ -60,20 +54,28 @@ const Editor = ({ sketch, build }) => {
 
   const [configuring, setConfiguring] = useState(!!soulmate);
 
+  // Effect hook for changing variables - need to recreate the event listener
+  // for scope. Only do this after first mount.
+  // const mounted = useRef();
   useEffect(() => {
     const monacoEditor = monacoInstance.current.editor;
+    const cmdS = monaco.KeyMod.CtrlCmd | monaco.KeyCode.KEY_S;
+    monacoEditor?.addCommand(cmdS, () => buildCode(true));
+    monacoEditor?.onDidChangeCursorSelection(({ selection }) => {
+      setSelection(sketch.id, selection);
+    });
 
-    monacoEditor.focus();
     if (!build) buildCode();
 
     if (getSelection(sketch.id)) {
       monacoEditor.setSelection(getSelection(sketch.id));
     }
+  }, [rows, cols, chipType, ledType]);
 
-    return () => {
-      setSelection(sketch.id, monacoInstance.current.editor.getSelection());
-    };
-  }, [sketch.id]);
+  useEffect(() => {
+    const monacoEditor = monacoInstance.current.editor;
+    monacoEditor.focus();
+  }, []);
 
   const buildCode = async (shouldSave = false) => {
     const monacoEditor = monacoInstance.current.editor;
@@ -136,19 +138,6 @@ const Editor = ({ sketch, build }) => {
       milliamps
     );
   };
-
-  // Effect hook for changing variables - need to recreate the event listener
-  // for scope. Only do this after first mount.
-  const mounted = useRef();
-  useEffect(() => {
-    const monacoEditor = monacoInstance.current.editor;
-    const cmdS = monaco.KeyMod.CtrlCmd | monaco.KeyCode.KEY_S;
-    monacoEditor?.addCommand(cmdS, () => buildCode(true));
-    if (mounted.current) {
-      buildCode();
-    }
-    mounted.current = true;
-  }, [rows, cols, chipType, ledType]);
 
   // Resizing
 
