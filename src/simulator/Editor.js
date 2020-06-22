@@ -8,6 +8,7 @@ import { Mode, useLightSwitch } from "use-light-switch";
 import Monaco from "react-monaco-editor";
 import { useContainer } from "unstated-next";
 import SoulmatesContainer from "./soulmatesContainer.js";
+import SelectionsContainer from "./selectionContainer";
 import SketchesContainer from "./sketchesContainer.js";
 import { emptyCode } from "./code";
 
@@ -31,13 +32,17 @@ const formatCode = (code) => {
 // });
 
 const Editor = ({ sketch, build }) => {
-  let code = sketch.code;
+  let code = sketch.dirtyCode || sketch.code;
   if (localStorage.autoFormat === "true") {
     code = formatCode(sketch.code);
   }
+
+  const { getSelection, setSelection } = useContainer(SelectionsContainer);
+
   const { save, buildSketch, persistCode, sketchIsMine } = useContainer(
     SketchesContainer
   );
+
   const { soulmate, flashMultiple, getConfig, saveConfig } = useContainer(
     SoulmatesContainer
   );
@@ -57,22 +62,18 @@ const Editor = ({ sketch, build }) => {
 
   useEffect(() => {
     const monacoEditor = monacoInstance.current.editor;
-    let code = sketch.code || emptyCode;
-    if (localStorage.autoFormat === "true") {
-      code = formatCode(sketch.code);
-    }
-    monacoEditor.getModel().setValue(code);
+
     monacoEditor.focus();
     if (!build) buildCode();
-  }, [sketch.id]);
 
-  useEffect(() => {
+    if (getSelection(sketch.id)) {
+      monacoEditor.setSelection(getSelection(sketch.id));
+    }
+
     return () => {
-      const monacoEditor = monacoInstance.current.editor;
-      let editorCode = monacoEditor?.getModel().getValue();
-      persistCode(sketch.id, editorCode);
+      setSelection(sketch.id, monacoInstance.current.editor.getSelection());
     };
-  }, []);
+  }, [sketch.id]);
 
   const buildCode = async (shouldSave = false) => {
     const monacoEditor = monacoInstance.current.editor;
@@ -149,12 +150,6 @@ const Editor = ({ sketch, build }) => {
     mounted.current = true;
   }, [rows, cols, chipType, ledType]);
 
-  // Build on mount if we don't have a build
-  useEffect(() => {
-    if (!build) buildCode();
-    monacoInstance.current.editor?.focus();
-  }, []);
-
   // Resizing
 
   const resizeEditor = () => {
@@ -176,6 +171,9 @@ const Editor = ({ sketch, build }) => {
           <Monaco
             key={dark ? "dark" : "light"}
             ref={monacoInstance}
+            onChange={(code) => {
+              persistCode(sketch.id, code);
+            }}
             editorDidMount={(editor) => {
               editor.changeViewZones((accessor) => {
                 accessor.addZone({
@@ -203,7 +201,6 @@ const Editor = ({ sketch, build }) => {
           />
         </div>
       </div>
-
       <label htmlFor="auto-format" className="auto-format-checkbox">
         Auto-format
         <input
@@ -217,7 +214,6 @@ const Editor = ({ sketch, build }) => {
           }}
         />
       </label>
-
       {configuring && (
         <div className="configuration">
           <p>
@@ -290,7 +286,6 @@ const Editor = ({ sketch, build }) => {
           </p>
         </div>
       )}
-
       <div className="toolbar">
         <div
           className={`configure button ${configuring && "pressed"}`}

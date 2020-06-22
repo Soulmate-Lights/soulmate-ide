@@ -63,13 +63,15 @@ const SketchesContainer = () => {
 
   // Sketch actions
 
-  const persistCode = async (id, code) => {
-    if (getSketch(id).code === code) return;
-    updateSketch(id, { code, dirty: true });
+  const persistCode = (id, code) => {
+    updateSketch(id, {
+      dirtyCode: code,
+      dirty: getSketch(id).code !== code,
+    });
   };
 
   const save = async (id, code, config) => {
-    updateSketch(id, { code, config, dirty: false });
+    updateSketch(id, { code, dirtyCode: undefined, config, dirty: false });
 
     let sketchIndex = sketches?.findIndex((s) => s.id === id);
     if (sketchIndex > -1) {

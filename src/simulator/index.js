@@ -11,7 +11,8 @@ import history from "../utils/history";
 import Logo from "./logo.svg";
 import { useContainer } from "unstated-next";
 import SketchesContainer from "./sketchesContainer";
-import SoulmatesContainer from "./soulmatesContainer.js";
+import SelectionsContainer from "./selectionContainer";
+import SoulmatesContainer from "./soulmatesContainer";
 import UserContainer from "./userContainer.js";
 import isElectron from "./utils/isElectron";
 import Flash from "./Flash";
@@ -114,13 +115,15 @@ const PatternEditor = ({ id }) => {
 
 // hot(module)
 const HotPatternEditor = hot(module)((params) => (
-  <SketchesContainer.Provider>
-    <UserContainer.Provider>
-      <SoulmatesContainer.Provider>
-        <PatternEditor {...params} />
-      </SoulmatesContainer.Provider>
-    </UserContainer.Provider>
-  </SketchesContainer.Provider>
+  <SelectionsContainer.Provider>
+    <SketchesContainer.Provider>
+      <UserContainer.Provider>
+        <SoulmatesContainer.Provider>
+          <PatternEditor {...params} />
+        </SoulmatesContainer.Provider>
+      </UserContainer.Provider>
+    </SketchesContainer.Provider>
+  </SelectionsContainer.Provider>
 ));
 
 const RoutedEditor = () => (
