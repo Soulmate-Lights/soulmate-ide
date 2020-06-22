@@ -147,6 +147,8 @@ const Editor = ({ sketch, build }) => {
   };
   const debouncedResize = debounce(resizeEditor, 100);
 
+  useEffect(resizeEditor, [configuring]);
+
   useEffect(() => {
     window.addEventListener("resize", debouncedResize);
 
