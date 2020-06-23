@@ -1,5 +1,5 @@
 const electron = require("electron");
-const { app, BrowserWindow, ipcMain } = electron;
+const { app, BrowserWindow, ipcMain, systemPreferences } = electron;
 const path = require("path");
 const isDev = require("electron-is-dev");
 const bonjour = require("bonjour")();
@@ -22,6 +22,7 @@ function createWindow() {
     height: 800,
     show: false,
     titleBarStyle: "hiddenInset",
+    backgroundColor: systemPreferences.isDarkMode() ? "#333" : "#fff",
     webPreferences: {
       enableRemoteModule: true,
       // Removed these June 11th for security
@@ -36,6 +37,9 @@ function createWindow() {
     : `file://${path.join(__dirname, "../build/index.html")}`;
 
   mainWindow.loadURL(mainUrl);
+  mainWindow.webContents.on("did-fail-load", () => {
+    mainWindow.loadURL(mainUrl);
+  });
 
   if (isDev) mainWindow.webContents.openDevTools();
 

@@ -8,6 +8,7 @@ import { Mode, useLightSwitch } from "use-light-switch";
 import Monaco from "react-monaco-editor";
 import { useContainer } from "unstated-next";
 import SoulmatesContainer from "./soulmatesContainer.js";
+import SelectionsContainer from "./selectionContainer";
 import SketchesContainer from "./sketchesContainer.js";
 import { emptyCode } from "./code";
 
@@ -31,19 +32,19 @@ const formatCode = (code) => {
 // });
 
 const Editor = ({ sketch, build }) => {
-  let code = sketch.code;
+  let code = sketch.dirtyCode || sketch.code || emptyCode;
   if (localStorage.autoFormat === "true") {
     code = formatCode(sketch.code);
   }
-  const { save, buildSketch } = useContainer(SketchesContainer);
+  const { getSelection, setSelection } = useContainer(SelectionsContainer);
+  const { save, buildSketch, persistCode, sketchIsMine } = useContainer(
+    SketchesContainer
+  );
   const { soulmate, flashMultiple, getConfig, saveConfig } = useContainer(
     SoulmatesContainer
   );
-
   const formatCheckboxRef = useRef();
-
   const config = soulmate ? getConfig(soulmate) : sketch.config;
-
   let monacoInstance = useRef(false);
   const mode = useLightSwitch();
   const dark = mode === Mode.Dark;
@@ -53,16 +54,28 @@ const Editor = ({ sketch, build }) => {
 
   const [configuring, setConfiguring] = useState(!!soulmate);
 
+  // Effect hook for changing variables - need to recreate the event listener
+  // for scope. Only do this after first mount.
+  // const mounted = useRef();
   useEffect(() => {
     const monacoEditor = monacoInstance.current.editor;
-    let code = sketch.code || emptyCode;
-    if (localStorage.autoFormat === "true") {
-      code = formatCode(sketch.code);
-    }
-    monacoEditor.getModel().setValue(code);
-    monacoEditor.focus();
+    const cmdS = monaco.KeyMod.CtrlCmd | monaco.KeyCode.KEY_S;
+    monacoEditor?.addCommand(cmdS, () => buildCode(true));
+    monacoEditor?.onDidChangeCursorSelection(({ selection }) => {
+      setSelection(sketch.id, selection);
+    });
+
     if (!build) buildCode();
-  }, [sketch.id]);
+
+    if (getSelection(sketch.id)) {
+      monacoEditor.setSelection(getSelection(sketch.id));
+    }
+  }, [rows, cols, chipType, ledType]);
+
+  useEffect(() => {
+    const monacoEditor = monacoInstance.current.editor;
+    monacoEditor.focus();
+  }, []);
 
   const buildCode = async (shouldSave = false) => {
     const monacoEditor = monacoInstance.current.editor;
@@ -126,25 +139,6 @@ const Editor = ({ sketch, build }) => {
     );
   };
 
-  // Effect hook for changing variables - need to recreate the event listener
-  // for scope. Only do this after first mount.
-  const mounted = useRef();
-  useEffect(() => {
-    const monacoEditor = monacoInstance.current.editor;
-    const cmdS = monaco.KeyMod.CtrlCmd | monaco.KeyCode.KEY_S;
-    monacoEditor?.addCommand(cmdS, () => buildCode(true));
-    if (mounted.current) {
-      buildCode();
-    }
-    mounted.current = true;
-  }, [rows, cols, chipType, ledType]);
-
-  // Build on mount if we don't have a build
-  useEffect(() => {
-    if (!build) buildCode();
-    monacoInstance.current.editor?.focus();
-  }, []);
-
   // Resizing
 
   const resizeEditor = () => {
@@ -152,6 +146,8 @@ const Editor = ({ sketch, build }) => {
     monacoEditor?.layout();
   };
   const debouncedResize = debounce(resizeEditor, 100);
+
+  useEffect(resizeEditor, [configuring]);
 
   useEffect(() => {
     window.addEventListener("resize", debouncedResize);
@@ -166,6 +162,9 @@ const Editor = ({ sketch, build }) => {
           <Monaco
             key={dark ? "dark" : "light"}
             ref={monacoInstance}
+            onChange={(code) => {
+              persistCode(sketch.id, code);
+            }}
             editorDidMount={(editor) => {
               editor.changeViewZones((accessor) => {
                 accessor.addZone({
@@ -193,7 +192,6 @@ const Editor = ({ sketch, build }) => {
           />
         </div>
       </div>
-
       <label htmlFor="auto-format" className="auto-format-checkbox">
         Auto-format
         <input
@@ -207,7 +205,6 @@ const Editor = ({ sketch, build }) => {
           }}
         />
       </label>
-
       {configuring && (
         <div className="configuration">
           <p>
@@ -280,7 +277,6 @@ const Editor = ({ sketch, build }) => {
           </p>
         </div>
       )}
-
       <div className="toolbar">
         <div
           className={`configure button ${configuring && "pressed"}`}
@@ -295,7 +291,7 @@ const Editor = ({ sketch, build }) => {
           onClick={() => buildCode(true)}
         >
           <BsFillPlayFill />
-          Save (CMD+S)
+          {sketchIsMine(sketch) ? "Save" : "Preview"} (CMD+S)
         </div>
 
         {soulmate && (

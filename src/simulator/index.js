@@ -1,24 +1,34 @@
 import Simulator from "./Simulator";
 import { GoDesktopDownload } from "react-icons/go";
-import { hot } from "react-hot-loader";
+import { hot, setConfig } from "react-hot-loader";
 import "./index.css";
 import React, { useState, useEffect } from "react";
 import Editor from "./Editor";
-import { Router, Route, Switch } from "react-router-dom";
+import { Router, HashRouter, Route, Switch } from "react-router-dom";
 import { Mode, useLightSwitch } from "use-light-switch";
 import List from "./List";
 import history from "../utils/history";
 import Logo from "./logo.svg";
 import { useContainer } from "unstated-next";
 import SketchesContainer from "./sketchesContainer";
-import SoulmatesContainer from "./soulmatesContainer.js";
+import SelectionsContainer from "./selectionContainer";
+import SoulmatesContainer from "./soulmatesContainer";
 import UserContainer from "./userContainer.js";
 import isElectron from "./utils/isElectron";
 import Flash from "./Flash";
 
+const SpecificRouter = isElectron() ? HashRouter : Router;
+
+setConfig({
+  ErrorOverlay: () => {
+    window.location.reload();
+    return null;
+  },
+});
+
 const PatternEditor = ({ id }) => {
-  const { save, getSketch, getBuild } = useContainer(SketchesContainer);
-  const { soulmate, flash, getConfig } = useContainer(SoulmatesContainer);
+  const { getSketch, getBuild } = useContainer(SketchesContainer);
+  const { soulmate, getConfig } = useContainer(SoulmatesContainer);
   const { userDetails, login, logout } = useContainer(UserContainer);
   const [focus, setFocus] = useState(true);
   const selectedSketch = getSketch(id);
@@ -105,18 +115,21 @@ const PatternEditor = ({ id }) => {
   );
 };
 
+// hot(module)
 const HotPatternEditor = hot(module)((params) => (
-  <SketchesContainer.Provider>
-    <UserContainer.Provider>
-      <SoulmatesContainer.Provider>
-        <PatternEditor {...params} />
-      </SoulmatesContainer.Provider>
-    </UserContainer.Provider>
-  </SketchesContainer.Provider>
+  <SelectionsContainer.Provider>
+    <SketchesContainer.Provider>
+      <UserContainer.Provider>
+        <SoulmatesContainer.Provider>
+          <PatternEditor {...params} />
+        </SoulmatesContainer.Provider>
+      </UserContainer.Provider>
+    </SketchesContainer.Provider>
+  </SelectionsContainer.Provider>
 ));
 
 const RoutedEditor = () => (
-  <Router history={history}>
+  <SpecificRouter history={history}>
     <Switch>
       <Route path="/auth">
         <div></div>
@@ -130,7 +143,7 @@ const RoutedEditor = () => (
         }) => <HotPatternEditor id={parseInt(id)} />}
       />
     </Switch>
-  </Router>
+  </SpecificRouter>
 );
 
 export default RoutedEditor;

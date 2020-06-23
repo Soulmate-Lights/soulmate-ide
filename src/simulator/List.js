@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import Emojify from "react-emojione";
 import keyBy from "lodash/keyBy";
 import groupBy from "lodash/groupBy";
 import map from "lodash/map";
@@ -7,22 +8,18 @@ import { FiCircle, FiCheckCircle } from "react-icons/fi";
 import { AiOutlinePlusCircle } from "react-icons/ai";
 import Logo from "./logo.svg";
 import ListItem, { ListItemGroup } from "./ListItem";
+import { useContainer } from "unstated-next";
 import SketchesContainer from "./sketchesContainer";
-import "./List.css";
 import SoulmatesContainer from "./soulmatesContainer";
 import isElectron from "./utils/isElectron";
+import "./List.css";
 
 const List = ({ selectedSketch, userDetails, flashMode, setFlashMode }) => {
-  const {
-    sketches,
-    allSketches,
-    createSketch,
-  } = SketchesContainer.useContainer();
-  const {
-    soulmates,
-    soulmate,
-    setSoulmate,
-  } = SoulmatesContainer.useContainer();
+  const { sketches, allSketches, createSketch } = useContainer(
+    SketchesContainer
+  );
+
+  const { soulmates, soulmate, setSoulmate } = useContainer(SoulmatesContainer);
 
   const [addingNewSketch, setAddingNewSketch] = useState(false);
   const [showingAll, setShowingAll] = useState(!userDetails);
@@ -135,7 +132,6 @@ const List = ({ selectedSketch, userDetails, flashMode, setFlashMode }) => {
           )}
         </>
       )}
-
       <div className="soulmates">
         {soulmates.length > 0 && (
           <>
@@ -177,7 +173,16 @@ const List = ({ selectedSketch, userDetails, flashMode, setFlashMode }) => {
                   ) : (
                     <>{s === soulmate ? <FiCheckCircle /> : <FiCircle />}</>
                   )}
-                  {s.name}
+                  <Emojify
+                    style={{
+                      height: 16,
+                      width: 16,
+                      position: "relative",
+                      top: -1,
+                    }}
+                  >
+                    {s.name}
+                  </Emojify>
                 </div>
               );
             })}
