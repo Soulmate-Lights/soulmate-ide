@@ -99,6 +99,9 @@
       "src/preload.js",
       "src/auth.js",
       "build/**/*"
+    ],
+    "extraFiles": [
+      "builder"
     ]
   }
 }
