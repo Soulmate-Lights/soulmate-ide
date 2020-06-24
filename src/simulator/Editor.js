@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import debounce from "lodash/debounce";
 import { BsFillPlayFill } from "react-icons/bs";
 import { MdSettings } from "react-icons/md";
+import { FaUsb } from "react-icons/fa";
 import { IoMdCloudUpload } from "react-icons/io";
 import Logo from "./logo.svg";
 import { Mode, useLightSwitch } from "use-light-switch";
@@ -40,9 +41,15 @@ const Editor = ({ sketch, build }) => {
   const { save, buildSketch, persistCode, sketchIsMine } = useContainer(
     SketchesContainer
   );
-  const { soulmate, flashMultiple, getConfig, saveConfig } = useContainer(
-    SoulmatesContainer
-  );
+  const {
+    soulmate,
+    flashMultiple,
+    flashToUsb,
+    getConfig,
+    saveConfig,
+    usbFlashingPercentage,
+    usbConnected,
+  } = useContainer(SoulmatesContainer);
   const formatCheckboxRef = useRef();
   const config = soulmate ? getConfig(soulmate) : sketch.config;
   let monacoInstance = useRef(false);
@@ -120,6 +127,20 @@ const Editor = ({ sketch, build }) => {
     } else {
       save(sketch.id, editorCode, config);
     }
+  };
+
+  const makeBuildUsb = async () => {
+    const monacoEditor = monacoInstance.current.editor;
+    const editorCode = monacoEditor?.getModel().getValue();
+
+    flashToUsb(
+      [{ ...sketch, code: editorCode }],
+      rows,
+      cols,
+      chipType,
+      ledType,
+      milliamps
+    );
   };
 
   const makeBuild = async () => {
@@ -293,6 +314,36 @@ const Editor = ({ sketch, build }) => {
           <BsFillPlayFill />
           {sketchIsMine(sketch) ? "Save" : "Preview"} (CMD+S)
         </div>
+
+        {usbConnected && (
+          <div
+            className="button"
+            disabled={usbFlashingPercentage > -1}
+            onClick={() => {
+              !flashing && makeBuildUsb();
+            }}
+          >
+            <React.Fragment>
+              {usbFlashingPercentage > -1 ? (
+                <>
+                  <Logo className="loader" />
+                  <progress
+                    className="usb-flash"
+                    value={usbFlashingPercentage}
+                    max="100"
+                  >
+                    {usbFlashingPercentage}%{" "}
+                  </progress>
+                </>
+              ) : (
+                <>
+                  <FaUsb />
+                  <>Upload {sketch.name} over USB</>
+                </>
+              )}
+            </React.Fragment>
+          </div>
+        )}
 
         {soulmate && (
           <div

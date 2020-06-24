@@ -519,3 +519,20 @@ canvas {
 .configuration input {
   padding-top: 5px;
 }
+
+.usb-flash {
+  background: white;
+  border-radius: 8px;
+  height: 8px;
+}
+
+.usb-flash::-webkit-progress-bar {
+  background: white;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+}
+
+.usb-flash::-webkit-progress-value {
+  background: var(--text-color);
+  border-radius: 8px;
+}

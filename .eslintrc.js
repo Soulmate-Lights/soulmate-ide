@@ -15,6 +15,7 @@ module.exports = {
     auth: "readonly",
     require: "readonly",
     process: "readonly",
+    remote: "readonly",
     __dirname: "readonly",
   },
   parserOptions: {

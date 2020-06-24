@@ -5,6 +5,16 @@ import { getFullBuild } from "./compiler/compile";
 import { useState, useEffect } from "react";
 import useInterval from "./utils/useInterval";
 
+const childProcess = remote.require("child_process");
+const path = remote.require("path");
+const fs = remote.require("fs");
+import { rootPath } from "electron-root-path";
+const IS_PROD = process.env.NODE_ENV === "production";
+const root = rootPath;
+const { getAppPath } = remote.app;
+const isPackaged =
+  remote.process.mainModule.filename.indexOf("app.asar") !== -1;
+
 const defaultConfig = {
   rows: 70,
   cols: 15,
@@ -112,6 +122,85 @@ const SoulmatesContainer = () => {
     return configs[key] || defaultConfig;
   };
 
+  const [usbFlashingPercentage, setUsbFlashingPercentage] = useState(-1);
+
+  const [usbConnected, setUsbConnected] = useState(false);
+  let usbInterval;
+  useEffect(() => {
+    const checkUsb = () => {
+      const ports = fs.readdirSync("/dev");
+      const port = ports.filter((p) => p.includes("tty.usbserial"))[0];
+      setUsbConnected(!!port);
+    };
+    checkUsb();
+    usbInterval = setInterval(checkUsb, 2000);
+
+    return () => {
+      clearInterval(usbInterval);
+    };
+  }, []);
+
+  const flashToUsb = async (
+    sketches,
+    rows,
+    cols,
+    chipType,
+    ledType,
+    milliamps
+  ) => {
+    const preparedCode = prepareFullCodeWithMultipleSketches(
+      sketches,
+      rows,
+      cols,
+      chipType,
+      ledType,
+      milliamps
+    );
+
+    setUsbFlashingPercentage(0);
+
+    const build = await getFullBuild(preparedCode);
+
+    const dir =
+      IS_PROD && isPackaged
+        ? path.join(path.dirname(getAppPath()), "..", "./builder")
+        : path.join(root, "builder");
+    const ports = fs.readdirSync("/dev");
+    const port = ports.filter((p) => p.includes("tty.usbserial"))[0];
+
+    const cmd = `
+    cd "${dir}" &&
+    ./pip install pyserial &&
+    python ./esptool.py --chip esp32 --port /dev/${port} --baud 1500000 --before default_reset --after hard_reset write_flash -z --flash_mode dio --flash_freq 80m --flash_size detect 0xe000 ./ota_data_initial.bin 0x1000 ./bootloader.bin 0x10000 ${build} 0x8000 ./partitions.bin`;
+
+    var child = childProcess.exec(cmd);
+    child.on("error", console.log);
+    child.stderr.on("data", console.log);
+    child.stdout.on("data", (data) => {
+      const text = data.toString().trim();
+
+      try {
+        if (
+          text.includes("Writing at 0x0000e000") ||
+          text.includes("Writing at 0x00001000")
+        ) {
+          return;
+        } else {
+          let number = parseInt(
+            data.toString().split("...")[1].split("(")[1].split(" ")[0]
+          );
+          number = Math.min(number, 100);
+          setUsbFlashingPercentage(number);
+        }
+      } catch (e) {
+        // nothing
+      }
+    });
+    child.on("close", () => {
+      setUsbFlashingPercentage(-1);
+    });
+  };
+
   return {
     soulmates,
     soulmate,
@@ -119,7 +208,14 @@ const SoulmatesContainer = () => {
     flashMultiple,
     saveConfig,
     getConfig,
+    flashToUsb,
+    usbFlashingPercentage,
+    usbConnected,
   };
 };
 
-export default createContainer(SoulmatesContainer);
+const container = createContainer(SoulmatesContainer);
+
+window.soulmatesContainer = container;
+
+export default container;
