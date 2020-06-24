@@ -167,10 +167,18 @@ const SoulmatesContainer = () => {
         : path.join(root, "builder");
     const ports = fs.readdirSync("/dev");
     const port = ports.filter((p) => p.includes("tty.usbserial"))[0];
+    const home = remote.require("os").homedir();
+
+    if (!fs.existsSync(`${home}/Library/Python/2.7/bin/pip`)) {
+      childProcess.execSync(`cd "${dir}" && python ./get-pip.py`);
+    }
+
+    childProcess.execSync(
+      `"${home}/Library/Python/2.7/bin/pip" install pyserial`
+    );
 
     const cmd = `
     cd "${dir}" &&
-    ./pip install pyserial &&
     python ./esptool.py --chip esp32 --port /dev/${port} --baud 1500000 --before default_reset --after hard_reset write_flash -z --flash_mode dio --flash_freq 80m --flash_size detect 0xe000 ./ota_data_initial.bin 0x1000 ./bootloader.bin 0x10000 ${build} 0x8000 ./partitions.bin`;
 
     var child = childProcess.exec(cmd);
