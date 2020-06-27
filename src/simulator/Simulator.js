@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import Logo from "./logo.svg";
+import { BsPlayFill, BsFillPauseFill } from "react-icons/bs";
 import { AVRRunner } from "./compiler/execute";
 import { WS2812Controller } from "./compiler/ws2812";
 
@@ -10,6 +11,7 @@ const cleanError = (error) =>
     .replace(/Error during build: exit status 1/g, "");
 
 const Simulator = ({ build, rows, cols, height, width }) => {
+  const [paused, setPaused] = useState(false);
   const canvas = useRef();
   const runner = useRef();
   const compilerOutputDiv = useRef();
@@ -43,13 +45,19 @@ const Simulator = ({ build, rows, cols, height, width }) => {
   };
 
   useEffect(() => {
-    if (compilerOutputDiv.current) {
-      compilerOutputDiv.current.scrollTop =
-        compilerOutputDiv.current.scrollHeight;
+    if (paused) {
+      stop();
+    } else {
+      start();
     }
-  }, [serialOutput]);
+  }, [paused]);
 
-  useEffect(() => {
+  const stop = () => {
+    runner.current?.stop();
+    runner.current = null;
+  };
+
+  const start = () => {
     setSerialOutput("");
     if (!build) return;
     runner.current = new AVRRunner(build.hex);
@@ -89,15 +97,25 @@ const Simulator = ({ build, rows, cols, height, width }) => {
 
       drawPixels(pixelsToDraw);
     });
+  };
 
-    return () => {
-      runner.current.stop();
-      runner.current = null;
-    };
+  useEffect(() => {
+    if (compilerOutputDiv.current) {
+      compilerOutputDiv.current.scrollTop =
+        compilerOutputDiv.current.scrollHeight;
+    }
+  }, [serialOutput]);
+
+  useEffect(() => {
+    start();
+    return stop;
   }, [build]);
 
   return (
     <div className="simulator">
+      <div onClick={() => setPaused(!paused)} className="pause button">
+        {paused ? <BsPlayFill /> : <BsFillPauseFill />}
+      </div>
       {!build && (
         <div
           style={{

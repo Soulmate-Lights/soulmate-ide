@@ -536,3 +536,13 @@ canvas {
   background: var(--text-color);
   border-radius: 8px;
 }
+
+.pause.button {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+}
+
+.pause.button svg {
+  margin: 0;
+}
