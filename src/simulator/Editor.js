@@ -48,7 +48,6 @@ const Editor = ({ sketch, build }) => {
     getConfig,
     saveConfig,
     usbFlashingPercentage,
-    usbConnected,
   } = useContainer(SoulmatesContainer);
   const formatCheckboxRef = useRef();
   const config = soulmate ? getConfig(soulmate) : sketch.config;
@@ -58,7 +57,6 @@ const Editor = ({ sketch, build }) => {
   const editor = useRef();
   const { rows, cols, ledType, chipType, milliamps } = config;
   const flashing = soulmate?.flashing;
-
   const [configuring, setConfiguring] = useState(!!soulmate);
 
   // Effect hook for changing variables - need to recreate the event listener
@@ -79,11 +77,29 @@ const Editor = ({ sketch, build }) => {
     }
   }, [rows, cols, chipType, ledType]);
 
+  // Focus editor on mount
   useEffect(() => {
     const monacoEditor = monacoInstance.current.editor;
     monacoEditor.focus();
   }, []);
 
+  // Resizing
+
+  const resizeEditor = () => {
+    const monacoEditor = monacoInstance.current.editor;
+    monacoEditor?.layout();
+  };
+  const debouncedResize = debounce(resizeEditor, 100);
+
+  useEffect(resizeEditor, [configuring]);
+
+  useEffect(() => {
+    window.addEventListener("resize", debouncedResize);
+
+    return () => window.removeEventListener("resize", debouncedResize);
+  }, []);
+
+  // Build for the simulator
   const buildCode = async (shouldSave = false) => {
     const monacoEditor = monacoInstance.current.editor;
     let editorCode = monacoEditor?.getModel().getValue();
@@ -129,22 +145,9 @@ const Editor = ({ sketch, build }) => {
     }
   };
 
-  const makeBuildUsb = async () => {
-    const monacoEditor = monacoInstance.current.editor;
-    const editorCode = monacoEditor?.getModel().getValue();
-
-    flashToUsb(
-      [{ ...sketch, code: editorCode }],
-      rows,
-      cols,
-      chipType,
-      ledType,
-      milliamps
-    );
-  };
-
-  const makeBuild = async () => {
-    if (!soulmate) return;
+  // Flash over USB or WiFi
+  const flash = async () => {
+    if (!soulmate || flashing || usbFlashingPercentage > -1) return;
 
     const monacoEditor = monacoInstance.current.editor;
     const editorCode = monacoEditor?.getModel().getValue();
@@ -159,22 +162,6 @@ const Editor = ({ sketch, build }) => {
       milliamps
     );
   };
-
-  // Resizing
-
-  const resizeEditor = () => {
-    const monacoEditor = monacoInstance.current.editor;
-    monacoEditor?.layout();
-  };
-  const debouncedResize = debounce(resizeEditor, 100);
-
-  useEffect(resizeEditor, [configuring]);
-
-  useEffect(() => {
-    window.addEventListener("resize", debouncedResize);
-
-    return () => window.removeEventListener("resize", debouncedResize);
-  }, []);
 
   return (
     <div className="editor">
@@ -315,54 +302,37 @@ const Editor = ({ sketch, build }) => {
           {sketchIsMine(sketch) ? "Save" : "Preview"} (CMD+S)
         </div>
 
-        {usbConnected && (
-          <div
-            className="button"
-            disabled={usbFlashingPercentage > -1}
-            onClick={() => {
-              !flashing && makeBuildUsb();
-            }}
-          >
-            <React.Fragment>
-              {usbFlashingPercentage > -1 ? (
-                <>
-                  <Logo className="loader" />
-                  <progress
-                    className="usb-flash"
-                    value={usbFlashingPercentage}
-                    max="100"
-                  >
-                    {usbFlashingPercentage}%{" "}
-                  </progress>
-                </>
-              ) : (
-                <>
-                  <FaUsb />
-                  <>Upload {sketch.name} over USB</>
-                </>
-              )}
-            </React.Fragment>
-          </div>
-        )}
-
         {soulmate && (
           <div
             className="button"
-            disabled={flashing}
-            onClick={() => {
-              !flashing && makeBuild();
-            }}
+            disabled={flashing || usbFlashingPercentage > -1}
+            onClick={flash}
           >
-            {flashing ? (
-              <React.Fragment>
+            {usbFlashingPercentage > -1 ? (
+              <>
                 <Logo className="loader" />
-                Flashing {sketch.name} to {soulmate.name}...
-              </React.Fragment>
+                <progress
+                  className="usb-flash"
+                  value={usbFlashingPercentage}
+                  max="100"
+                >
+                  {usbFlashingPercentage}%{" "}
+                </progress>
+              </>
             ) : (
-              <React.Fragment>
-                <IoMdCloudUpload />
-                Flash {sketch.name} to {soulmate.name}
-              </React.Fragment>
+              <>
+                {flashing ? (
+                  <React.Fragment>
+                    <Logo className="loader" />
+                    Flashing {sketch.name} to {soulmate.name}...
+                  </React.Fragment>
+                ) : (
+                  <React.Fragment>
+                    {soulmate.type === "usb" ? <FaUsb /> : <IoMdCloudUpload />}
+                    Flash {sketch.name} to {soulmate.name}
+                  </React.Fragment>
+                )}
+              </>
             )}
           </div>
         )}

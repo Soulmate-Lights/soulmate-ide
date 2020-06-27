@@ -70,13 +70,6 @@ const SoulmatesContainer = () => {
     ledType,
     milliamps
   ) => {
-    let soulmateIndex = soulmates.findIndex(
-      (s) => s.addresses[0] === soulmate.addresses[0]
-    );
-    let updatedSoulmate = { ...soulmates[soulmateIndex], flashing: true };
-    setSoulmate(updatedSoulmate);
-    setSoulmates(soulmates);
-
     const preparedCode = prepareFullCodeWithMultipleSketches(
       sketches,
       rows,
@@ -85,30 +78,93 @@ const SoulmatesContainer = () => {
       ledType,
       milliamps
     );
-
     const build = await getFullBuild(preparedCode);
-    const ip = soulmate.addresses[0];
-    const url = `http://${ip}/ota`;
-    var body = new FormData();
-    const contents = fs.readFileSync(build);
-    body.append("image", new Blob([contents]), "firmware.bin");
-    await fetch(url, {
-      method: "POST",
-      body: body,
-      mode: "no-cors",
-      headers: {
-        "Content-Length": fs.statSync(build).size,
-      },
-    });
+    sendBuildToSoulmate(build, soulmate);
+  };
 
-    soulmateIndex = soulmates.findIndex(
+  // Send to USB or Wifi soulmate
+  const sendBuildToSoulmate = async (build, soulmate) => {
+    let soulmateIndex = soulmates.findIndex(
       (s) => s.addresses[0] === soulmate.addresses[0]
     );
-    updatedSoulmate = { ...soulmates[soulmateIndex], flashing: false };
-    soulmates[soulmateIndex] = updatedSoulmate;
+    let updatedSoulmate = { ...soulmates[soulmateIndex], flashing: true };
     setSoulmate(updatedSoulmate);
     setSoulmates(soulmates);
+
+    if (soulmate.addresses) {
+      const ip = soulmate.addresses[0];
+      const url = `http://${ip}/ota`;
+      var body = new FormData();
+      const contents = fs.readFileSync(build);
+      body.append("image", new Blob([contents]), "firmware.bin");
+      await fetch(url, {
+        method: "POST",
+        body: body,
+        mode: "no-cors",
+        headers: {
+          "Content-Length": fs.statSync(build).size,
+        },
+      });
+
+      soulmateIndex = soulmates.findIndex(
+        (s) => s.addresses[0] === soulmate.addresses[0]
+      );
+      updatedSoulmate = { ...soulmates[soulmateIndex], flashing: false };
+      soulmates[soulmateIndex] = updatedSoulmate;
+      setSoulmate(updatedSoulmate);
+      setSoulmates(soulmates);
+    } else {
+      setUsbFlashingPercentage(0);
+      const dir =
+        IS_PROD && isPackaged
+          ? path.join(path.dirname(getAppPath()), "..", "./builder")
+          : path.join(root, "builder");
+      const ports = fs.readdirSync("/dev");
+      const port = ports.filter((p) => p.includes("tty.usbserial"))[0];
+      const home = remote.require("os").homedir();
+
+      if (!fs.existsSync(`${home}/Library/Python/2.7/bin/pip`)) {
+        childProcess.execSync(`cd "${dir}" && python ./get-pip.py`);
+      }
+
+      childProcess.execSync(
+        `"${home}/Library/Python/2.7/bin/pip" install pyserial`
+      );
+
+      const cmd = `
+    cd "${dir}" &&
+    python ./esptool.py --chip esp32 --port /dev/${port} --baud 1500000 --before default_reset --after hard_reset write_flash -z --flash_mode dio --flash_freq 80m --flash_size detect 0xe000 ./ota_data_initial.bin 0x1000 ./bootloader.bin 0x10000 ${build} 0x8000 ./partitions.bin`;
+
+      var child = childProcess.exec(cmd);
+      child.on("error", console.log);
+      child.stderr.on("data", console.log);
+      child.stdout.on("data", (data) => {
+        const text = data.toString().trim();
+
+        try {
+          if (
+            text.includes("Writing at 0x0000e000") ||
+            text.includes("Writing at 0x00001000")
+          ) {
+            return;
+          } else {
+            let number = parseInt(
+              data.toString().split("...")[1].split("(")[1].split(" ")[0]
+            );
+            number = Math.min(number, 100);
+            setUsbFlashingPercentage(number);
+          }
+        } catch (e) {
+          // nothing
+        }
+      });
+      child.on("close", () => {
+        setUsbFlashingPercentage(-1);
+      });
+    }
   };
+
+  // Config stuff
 
   const saveConfig = (soulmate, config) => {
     if (!soulmate) return;
@@ -122,23 +178,27 @@ const SoulmatesContainer = () => {
     return configs[key] || defaultConfig;
   };
 
+  // Should probably put this on the soulmate itself
   const [usbFlashingPercentage, setUsbFlashingPercentage] = useState(-1);
-
+  // Don't think we need this any more.
+  // We should check ports against soulmates
   const [usbConnected, setUsbConnected] = useState(false);
-  let usbInterval;
-  useEffect(() => {
-    const checkUsb = () => {
-      const ports = fs.readdirSync("/dev");
-      const port = ports.filter((p) => p.includes("tty.usbserial"))[0];
-      setUsbConnected(!!port);
-    };
-    checkUsb();
-    usbInterval = setInterval(checkUsb, 2000);
 
-    return () => {
-      clearInterval(usbInterval);
-    };
-  }, []);
+  const checkUsb = () => {
+    const ports = fs.readdirSync("/dev");
+    const port = ports.filter((p) => p.includes("tty.usbserial"))[0];
+
+    if (port && !usbConnected) {
+      const usbSoulmate = { port, type: "usb", name: "USB Soulmate" };
+      setSoulmates([...soulmates, usbSoulmate]);
+    } else if (!port) {
+      setSoulmates(soulmates.filter((soulmate) => soulmate.type !== "usb"));
+    }
+
+    setUsbConnected(!!port);
+  };
+
+  useInterval(checkUsb, 2000);
 
   const flashToUsb = async (
     sketches,
@@ -157,56 +217,8 @@ const SoulmatesContainer = () => {
       milliamps
     );
 
-    setUsbFlashingPercentage(0);
-
     const build = await getFullBuild(preparedCode);
-
-    const dir =
-      IS_PROD && isPackaged
-        ? path.join(path.dirname(getAppPath()), "..", "./builder")
-        : path.join(root, "builder");
-    const ports = fs.readdirSync("/dev");
-    const port = ports.filter((p) => p.includes("tty.usbserial"))[0];
-    const home = remote.require("os").homedir();
-
-    if (!fs.existsSync(`${home}/Library/Python/2.7/bin/pip`)) {
-      childProcess.execSync(`cd "${dir}" && python ./get-pip.py`);
-    }
-
-    childProcess.execSync(
-      `"${home}/Library/Python/2.7/bin/pip" install pyserial`
-    );
-
-    const cmd = `
-    cd "${dir}" &&
-    python ./esptool.py --chip esp32 --port /dev/${port} --baud 1500000 --before default_reset --after hard_reset write_flash -z --flash_mode dio --flash_freq 80m --flash_size detect 0xe000 ./ota_data_initial.bin 0x1000 ./bootloader.bin 0x10000 ${build} 0x8000 ./partitions.bin`;
-
-    var child = childProcess.exec(cmd);
-    child.on("error", console.log);
-    child.stderr.on("data", console.log);
-    child.stdout.on("data", (data) => {
-      const text = data.toString().trim();
-
-      try {
-        if (
-          text.includes("Writing at 0x0000e000") ||
-          text.includes("Writing at 0x00001000")
-        ) {
-          return;
-        } else {
-          let number = parseInt(
-            data.toString().split("...")[1].split("(")[1].split(" ")[0]
-          );
-          number = Math.min(number, 100);
-          setUsbFlashingPercentage(number);
-        }
-      } catch (e) {
-        // nothing
-      }
-    });
-    child.on("close", () => {
-      setUsbFlashingPercentage(-1);
-    });
+    sendBuildToSoulmate(soulmate, build);
   };
 
   return {

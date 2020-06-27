@@ -109,7 +109,7 @@ const Flash = ({ id }) => {
           <div className="heading">Choose a Soulmate</div>
           {soulmates.map((s) => (
             <div
-              key={s.addresses[0]}
+              key={s.addresses ? s.addresses[0] : s.port}
               className="chooseSoulmateSoulmate"
               onClick={() => setSoulmate(s)}
             >
