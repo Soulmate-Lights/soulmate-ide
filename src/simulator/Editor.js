@@ -41,12 +41,13 @@ const Editor = ({ sketch, build }) => {
   );
 
   const {
-    soulmate,
+    getSelectedSoulmate,
     flashMultiple,
     getConfig,
     saveConfig,
-    usbFlashingPercentage,
   } = useContainer(SoulmatesContainer);
+
+  const soulmate = getSelectedSoulmate();
 
   let code = sketch.dirtyCode || sketch.code || emptyCode;
   if (localStorage.autoFormat === "true") code = formatCode(sketch.code);
@@ -149,7 +150,7 @@ const Editor = ({ sketch, build }) => {
 
   // Flash over USB or WiFi
   const flash = async () => {
-    if (!soulmate || flashing || usbFlashingPercentage > -1) return;
+    if (!soulmate || flashing || soulmate.usbFlashingPercentage > -1) return;
 
     const monacoEditor = monacoInstance.current.editor;
     const editorCode = monacoEditor?.getModel().getValue();
@@ -241,18 +242,18 @@ const Editor = ({ sketch, build }) => {
         {soulmate && (
           <div
             className="button"
-            disabled={flashing || usbFlashingPercentage > -1}
+            disabled={flashing || soulmate.usbFlashingPercentage > -1}
             onClick={flash}
           >
-            {usbFlashingPercentage > -1 ? (
+            {soulmate.usbFlashingPercentage > -1 ? (
               <>
                 <Logo className="loader" />
                 <progress
                   className="usb-flash"
-                  value={usbFlashingPercentage}
+                  value={soulmate.usbFlashingPercentage}
                   max="100"
                 >
-                  {usbFlashingPercentage}%{" "}
+                  {soulmate.usbFlashingPercentage}%{" "}
                 </progress>
               </>
             ) : (

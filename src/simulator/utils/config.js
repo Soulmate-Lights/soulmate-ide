@@ -1,7 +1,7 @@
 export const configs = {
   Square: {
-    rows: 20,
-    cols: 20,
+    rows: 14,
+    cols: 14,
     milliamps: 4000,
     chipType: "atom",
     ledType: "APA102",

@@ -10,7 +10,7 @@ const cleanError = (error) =>
     .replace(/Error during build: exit status 1/g, "");
 
 const Simulator = ({ build, rows, cols, height, width }) => {
-  const [paused, setPaused] = useState(true);
+  const [paused, setPaused] = useState(false);
   const canvas = useRef();
   const runner = useRef();
   const compilerOutputDiv = useRef();

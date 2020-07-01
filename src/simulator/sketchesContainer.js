@@ -123,7 +123,7 @@ const SketchesContainer = () => {
 
     const key = `${sketch.id}-${config.rows}-${config.cols}`;
     setBuilds({ ...builds, [key]: undefined });
-    const { rows = 70, cols = 15 } = config;
+    const { rows = 14, cols = 14 } = config;
     const preparedCode = preparePreviewCode(code || sketch.code, rows, cols);
     const newBuild = await buildHex(preparedCode);
     setBuilds({ ...builds, [key]: newBuild });

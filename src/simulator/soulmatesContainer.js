@@ -15,13 +15,9 @@ const { getAppPath } = remote.app;
 const isPackaged =
   remote.process.mainModule.filename.indexOf("app.asar") !== -1;
 
-const defaultConfig = {
-  rows: 70,
-  cols: 15,
-  chipType: "atom",
-  ledType: "APA102",
-  milliamps: 700,
-};
+import { configs } from "./utils/config";
+
+const defaultConfig = configs.Square;
 
 const SoulmatesContainer = () => {
   const [soulmates, setSoulmates] = useState([]);
@@ -61,6 +57,20 @@ const SoulmatesContainer = () => {
     ipcRenderer.send("scan", {});
   }, 5000);
 
+  const updateSoulmate = (soulmate, attributes) => {
+    let soulmateIndex = soulmates.findIndex((s) => {
+      if (s.type === soulmate.type) return true;
+      if (soulmate.addresses && s.addresses) {
+        if (s.addresses[0] === soulmate.addresses[0]) {
+          return true;
+        }
+      }
+    });
+    let updatedSoulmate = { ...soulmates[soulmateIndex], ...attributes };
+    soulmates.splice(soulmateIndex, 1, updatedSoulmate);
+    setSoulmates(soulmates);
+  };
+
   const flashMultiple = async (
     soulmate,
     sketches,
@@ -70,6 +80,7 @@ const SoulmatesContainer = () => {
     ledType,
     milliamps
   ) => {
+    updateSoulmate(soulmate, { flashing: true });
     const preparedCode = prepareFullCodeWithMultipleSketches(
       sketches,
       rows,
@@ -79,18 +90,13 @@ const SoulmatesContainer = () => {
       milliamps
     );
     const build = await getFullBuild(preparedCode);
-    sendBuildToSoulmate(build, soulmate);
+    await sendBuildToSoulmate(build, soulmate);
+    updateSoulmate(soulmate, { flashing: false });
   };
 
   // Send to USB or Wifi soulmate
   const sendBuildToSoulmate = async (build, soulmate) => {
     if (soulmate.addresses) {
-      let soulmateIndex = soulmates.findIndex(
-        (s) => s.addresses[0] === soulmate.addresses[0]
-      );
-      let updatedSoulmate = { ...soulmates[soulmateIndex], flashing: true };
-      setSoulmate(updatedSoulmate);
-      setSoulmates(soulmates);
       const ip = soulmate.addresses[0];
       const url = `http://${ip}/ota`;
       var body = new FormData();
@@ -104,16 +110,8 @@ const SoulmatesContainer = () => {
           "Content-Length": fs.statSync(build).size,
         },
       });
-
-      soulmateIndex = soulmates.findIndex(
-        (s) => s.addresses[0] === soulmate.addresses[0]
-      );
-      updatedSoulmate = { ...soulmates[soulmateIndex], flashing: false };
-      soulmates[soulmateIndex] = updatedSoulmate;
-      setSoulmate(updatedSoulmate);
-      setSoulmates(soulmates);
     } else {
-      setUsbFlashingPercentage(0);
+      updateSoulmate(soulmate, { usbFlashingPercentage: 0 });
       const dir =
         IS_PROD && isPackaged
           ? path.join(path.dirname(getAppPath()), "..", "./builder")
@@ -151,14 +149,24 @@ const SoulmatesContainer = () => {
               data.toString().split("...")[1].split("(")[1].split(" ")[0]
             );
             number = Math.min(number, 100);
-            setUsbFlashingPercentage(number);
+            updateSoulmate(soulmate, {
+              flashing: true,
+              usbFlashingPercentage: number,
+            });
           }
         } catch (e) {
           // nothing
         }
       });
-      child.on("close", () => {
-        setUsbFlashingPercentage(-1);
+
+      await new Promise((resolve, _reject) => {
+        child.on("close", () => {
+          updateSoulmate(soulmate, {
+            usbFlashingPercentage: -1,
+            flashing: false,
+          });
+          resolve();
+        });
       });
     }
   };
@@ -178,7 +186,6 @@ const SoulmatesContainer = () => {
   };
 
   // Should probably put this on the soulmate itself
-  const [usbFlashingPercentage, setUsbFlashingPercentage] = useState(-1);
   // Don't think we need this any more.
   // We should check ports against soulmates
   const [usbConnected, setUsbConnected] = useState(false);
@@ -199,25 +206,16 @@ const SoulmatesContainer = () => {
 
   useInterval(checkUsb, 2000);
 
-  const flashToUsb = async (
-    sketches,
-    rows,
-    cols,
-    chipType,
-    ledType,
-    milliamps
-  ) => {
-    const preparedCode = prepareFullCodeWithMultipleSketches(
-      sketches,
-      rows,
-      cols,
-      chipType,
-      ledType,
-      milliamps
-    );
-
-    const build = await getFullBuild(preparedCode);
-    sendBuildToSoulmate(soulmate, build);
+  const getSelectedSoulmate = () => {
+    if (!soulmate) return undefined;
+    return soulmates.find((s) => {
+      if (s.type === soulmate.type) return true;
+      if (soulmate.addresses && s.addresses) {
+        if (s.addresses[0] === soulmate.addresses[0]) {
+          return true;
+        }
+      }
+    });
   };
 
   return {
@@ -227,8 +225,7 @@ const SoulmatesContainer = () => {
     flashMultiple,
     saveConfig,
     getConfig,
-    flashToUsb,
-    usbFlashingPercentage,
+    getSelectedSoulmate,
     usbConnected,
   };
 };

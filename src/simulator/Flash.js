@@ -61,13 +61,15 @@ const Flash = ({ id }) => {
     buildSketch,
   } = useContainer(SketchesContainer);
   const {
-    soulmate,
+    // soulmate,
+    getSelectedSoulmate,
     soulmates,
     setSoulmate,
     flashMultiple,
     getConfig,
     saveConfig,
   } = useContainer(SoulmatesContainer);
+  const soulmate = getSelectedSoulmate();
   const config = getConfig(soulmate);
   const { rows, cols, ledType, chipType, milliamps } = config;
 
@@ -150,9 +152,24 @@ const Flash = ({ id }) => {
               className="flashButton button"
             >
               {soulmate.flashing && <Logo className="loader" />}
-              {soulmate.flashing
-                ? `Flashing to ${soulmate.name}...`
-                : `Flash to ${soulmate.name}`}
+
+              {soulmate.usbFlashingPercentage > -1 ? (
+                <>
+                  <progress
+                    className="usb-flash"
+                    value={soulmate.usbFlashingPercentage}
+                    max="100"
+                  >
+                    {soulmate.usbFlashingPercentage}%{" "}
+                  </progress>
+                </>
+              ) : (
+                <>
+                  {soulmate.flashing
+                    ? `Flashing to ${soulmate.name}...`
+                    : `Flash to ${soulmate.name}`}
+                </>
+              )}
             </div>
           )}
         </div>
