@@ -18,7 +18,7 @@ const SoulmatesContainer = () => {
 
   // Web-safe!
   if (!window.ipcRenderer) {
-    return { soulmates, soulmate };
+    return { soulmates, soulmate, getSelectedSoulmate: () => {} };
   }
 
   const childProcess = remote.require("child_process");
