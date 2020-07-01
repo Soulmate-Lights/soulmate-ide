@@ -82,7 +82,7 @@ const PatternEditor = ({ id }) => {
         />
 
         {!flashMode && (
-          <div className="app-contents">
+          <>
             {!selectedSketch && (
               <div className="welcome">
                 <Logo className="loader" />
@@ -95,13 +95,9 @@ const PatternEditor = ({ id }) => {
                 build={build}
               />
             )}
-          </div>
+          </>
         )}
-        {flashMode && (
-          <div className="app-contents">
-            <Flash id={id} />
-          </div>
-        )}
+        {flashMode && <Flash id={id} />}
 
         {selectedSketch && !flashMode && (
           <div className="pixels">
