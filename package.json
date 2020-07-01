@@ -73,7 +73,8 @@
     "build-worker-dev": "parcel build node_modules/monaco-editor/esm/vs/editor/editor.worker.js --no-source-maps",
     "release": "yarn clean && yarn version --patch && yarn react-build && AWS_PROFILE=soulmate-ide-updates yarn electron-build --publish always",
     "clean": "rm -rf ./build ./.cache ./dist",
-    "postinstall": "npx electron-builder install-app-deps"
+    "postinstall": "npx electron-builder install-app-deps",
+    "web": "NODE_ENV=development parcel index.html --open -p 3000"
   },
   "build": {
     "afterSign": "scripts/notarize.js",

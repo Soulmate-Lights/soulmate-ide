@@ -20,7 +20,7 @@ export const ListItemGroup = ({
   selectMode,
 }) => {
   const [open, setOpen] = useState(
-    sketches.map((s) => s.id).includes(selectedSketchId)
+    sketches.map((s) => s.id.toString()).includes(selectedSketchId?.toString())
   );
   return (
     <div>
