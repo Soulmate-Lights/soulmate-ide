@@ -84,14 +84,13 @@ const SoulmatesContainer = () => {
 
   // Send to USB or Wifi soulmate
   const sendBuildToSoulmate = async (build, soulmate) => {
-    let soulmateIndex = soulmates.findIndex(
-      (s) => s.addresses[0] === soulmate.addresses[0]
-    );
-    let updatedSoulmate = { ...soulmates[soulmateIndex], flashing: true };
-    setSoulmate(updatedSoulmate);
-    setSoulmates(soulmates);
-
     if (soulmate.addresses) {
+      let soulmateIndex = soulmates.findIndex(
+        (s) => s.addresses[0] === soulmate.addresses[0]
+      );
+      let updatedSoulmate = { ...soulmates[soulmateIndex], flashing: true };
+      setSoulmate(updatedSoulmate);
+      setSoulmates(soulmates);
       const ip = soulmate.addresses[0];
       const url = `http://${ip}/ota`;
       var body = new FormData();
