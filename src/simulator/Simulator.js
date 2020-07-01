@@ -11,6 +11,7 @@ const cleanError = (error) =>
 
 const Simulator = ({ build, rows, cols, height, width }) => {
   const [paused, setPaused] = useState(false);
+
   const canvas = useRef();
   const runner = useRef();
   const compilerOutputDiv = useRef();
@@ -38,8 +39,9 @@ const Simulator = ({ build, rows, cols, height, width }) => {
   };
 
   useEffect(() => {
-    paused ? stop() : start();
-  }, [paused]);
+    if (!paused) start();
+    return stop;
+  }, [paused, build]);
 
   const stop = () => {
     runner.current?.stop();
@@ -47,8 +49,9 @@ const Simulator = ({ build, rows, cols, height, width }) => {
   };
 
   const start = () => {
-    setSerialOutput("");
     if (!build) return;
+    setSerialOutput("");
+
     runner.current = new AVRRunner(build.hex);
     const matrixController = new WS2812Controller(cols * rows);
 
@@ -94,11 +97,6 @@ const Simulator = ({ build, rows, cols, height, width }) => {
         compilerOutputDiv.current.scrollHeight;
     }
   }, [serialOutput]);
-
-  useEffect(() => {
-    if (!paused) start();
-    return stop;
-  }, [build]);
 
   return (
     <div className="simulator">
