@@ -16,8 +16,8 @@ export const ListItemGroup = ({
   user,
   sketches,
   selectedSketchId,
-  showingAll,
-  flashMode,
+  showControls,
+  selectMode,
 }) => {
   const [open, setOpen] = useState(
     sketches.map((s) => s.id).includes(selectedSketchId)
@@ -37,8 +37,8 @@ export const ListItemGroup = ({
               key={sketch.id}
               sketch={sketch}
               selected={sketch.id === selectedSketchId}
-              showControls={!showingAll}
-              selectMode={flashMode}
+              showControls={showControls}
+              selectMode={selectMode}
             />
           ))}
         </div>

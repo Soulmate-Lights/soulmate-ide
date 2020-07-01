@@ -81,24 +81,29 @@ const PatternEditor = ({ id }) => {
           setFlashMode={setFlashMode}
         />
 
-        <div className="app-container">
-          {!selectedSketch && (
-            <div className="welcome">
-              <Logo className="loader" />
-            </div>
-          )}
-          {selectedSketch && !flashMode && (
-            <Editor
-              key={selectedSketch.id}
-              sketch={selectedSketch}
-              build={build}
-            />
-          )}
+        {!flashMode && (
+          <div className="app-contents">
+            {!selectedSketch && (
+              <div className="welcome">
+                <Logo className="loader" />
+              </div>
+            )}
+            {selectedSketch && !flashMode && (
+              <Editor
+                key={selectedSketch.id}
+                sketch={selectedSketch}
+                build={build}
+              />
+            )}
+          </div>
+        )}
+        {flashMode && (
+          <div className="app-contents">
+            <Flash id={id} />
+          </div>
+        )}
 
-          {flashMode && <Flash id={id} />}
-        </div>
-
-        {selectedSketch && (
+        {selectedSketch && !flashMode && (
           <div className="pixels">
             <Simulator
               key={`${selectedSketch.id}-${rows}-${cols}`}

@@ -17,6 +17,12 @@ module.exports = {
     process: "readonly",
     remote: "readonly",
     __dirname: "readonly",
+    PropTypes: "readonly",
+    React: "readonly",
+    useEffect: "readonly",
+    useRef: "readonly",
+    useState: "readonly",
+    useContext: "readonly",
   },
   parserOptions: {
     ecmaFeatures: {

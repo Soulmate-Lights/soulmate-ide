@@ -1,15 +1,44 @@
-.flash {
-  display: flex;
-  flex-direction: row;
+.flashBackground {
   flex-grow: 1;
   user-select: none;
+  display: flex;
+  flex-direction: row;
+  overflow: hidden;
+  background: url("./so-white.png");
+}
+
+.dark .flashBackground {
+  background: #333 url("./denim.png");
+}
+
+.flash {
+  flex-grow: 1;
+  user-select: none;
+  display: flex;
+  flex-direction: row;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  margin: 40px;
+  overflow: hidden;
+  background: var(--panel-background);
 }
 
 .selectedSketches {
-  width: 50%;
+  width: 240px;
+  flex-shrink: 0;
+  position: relative;
   background: var(--panel-background);
-  min-width: 240px;
   border-right: 1px solid var(--border-color);
+}
+
+.sketchesList {
+  width: 240px;
+  margin: 0 auto;
+  flex-shrink: 0;
+  position: relative;
+  display: block;
+  overflow: hidden;
+  color: var(--text-color);
 }
 
 .selectedSketch {
@@ -18,12 +47,7 @@
   align-items: center;
   padding: 8px;
   border-bottom: 1px solid var(--border-color);
-  color: var(--text-color);
   text-decoration: none;
-}
-
-.selectedSketch.selected {
-  background: var(--selected-background);
 }
 
 .selectedSketch svg:first-child {
@@ -49,14 +73,18 @@
 .selectedSketch video {
   margin-right: 8px;
   border-radius: 8px;
-  width: 24px;
-  height: 24px;
+  overflow: hidden;
+  width: 32px;
+  height: 32px;
   background: black;
 }
 
 .flashConfiguration {
   display: flex;
   flex-direction: column;
+  flex-grow: 1;
+  border: 1px solid var(--border-color);
+  border-left: none;
 }
 
 .chooseSoulmate {

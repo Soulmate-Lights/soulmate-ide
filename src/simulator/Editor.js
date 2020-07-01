@@ -12,6 +12,7 @@ import SoulmatesContainer from "./soulmatesContainer.js";
 import SelectionsContainer from "./selectionContainer";
 import SketchesContainer from "./sketchesContainer.js";
 import { emptyCode } from "./code";
+import Config from "./config";
 
 import jsBeautifier from "js-beautify";
 
@@ -33,22 +34,23 @@ const formatCode = (code) => {
 // });
 
 const Editor = ({ sketch, build }) => {
-  let code = sketch.dirtyCode || sketch.code || emptyCode;
-  if (localStorage.autoFormat === "true") {
-    code = formatCode(sketch.code);
-  }
   const { getSelection, setSelection } = useContainer(SelectionsContainer);
+
   const { save, buildSketch, persistCode, sketchIsMine } = useContainer(
     SketchesContainer
   );
+
   const {
     soulmate,
     flashMultiple,
-    flashToUsb,
     getConfig,
     saveConfig,
     usbFlashingPercentage,
   } = useContainer(SoulmatesContainer);
+
+  let code = sketch.dirtyCode || sketch.code || emptyCode;
+  if (localStorage.autoFormat === "true") code = formatCode(sketch.code);
+
   const formatCheckboxRef = useRef();
   const config = soulmate ? getConfig(soulmate) : sketch.config;
   let monacoInstance = useRef(false);
@@ -214,76 +216,10 @@ const Editor = ({ sketch, build }) => {
         />
       </label>
       {configuring && (
-        <div className="configuration">
-          <p>
-            <label>Columns</label>
-            <input
-              type="number"
-              value={cols}
-              onChange={(e) => {
-                const cols = parseInt(e.target.value);
-                setConfig({ ...config, cols });
-              }}
-            />
-          </p>
-          <p>
-            <label>LEDs</label>
-            <select
-              value={ledType}
-              onChange={(e) => {
-                setConfig({ ...config, ledType: e.target.value });
-              }}
-            >
-              <option value="APA102">APA102</option>
-              <option value="WS2812B">WS2812B</option>
-            </select>
-          </p>
-          <p>
-            <label>Rows</label>
-            <input
-              type="number"
-              value={rows}
-              onChange={(e) => {
-                const rows = parseInt(e.target.value);
-                setConfig({ ...config, rows });
-              }}
-            />
-          </p>
-          <p>
-            <label>Chip type</label>
-            <select
-              value={chipType}
-              onChange={(e) => {
-                setConfig({ ...config, chipType: e.target.value });
-              }}
-            >
-              <option value="atom">M5 Atom</option>
-              <option value="d32">Lolin ESP32</option>
-            </select>
-          </p>
-          <p>
-            <label>Shape</label>
-            <select disabled>
-              <option>Rectangle</option>
-              <option>Cylinder</option>
-              <option>Hexagon</option>
-            </select>
-          </p>
-          <p>
-            <label>Power (mA)</label>
-            <input
-              type="number"
-              step="100"
-              value={milliamps}
-              onChange={(e) => {
-                setConfig({
-                  ...config,
-                  milliamps: parseInt(e.target.value),
-                });
-              }}
-            />
-          </p>
-        </div>
+        <Config
+          config={{ cols, rows, milliamps, ledType, chipType }}
+          setConfig={setConfig}
+        />
       )}
       <div className="toolbar">
         <div

@@ -1,4 +1,3 @@
-import React, { useEffect, useRef, useState } from "react";
 import Logo from "./logo.svg";
 import { BsPlayFill, BsFillPauseFill } from "react-icons/bs";
 import { AVRRunner } from "./compiler/execute";
@@ -11,11 +10,12 @@ const cleanError = (error) =>
     .replace(/Error during build: exit status 1/g, "");
 
 const Simulator = ({ build, rows, cols, height, width }) => {
-  const [paused, setPaused] = useState(false);
+  const [paused, setPaused] = useState(true);
   const canvas = useRef();
   const runner = useRef();
   const compilerOutputDiv = useRef();
   const [serialOutput, setSerialOutput] = useState("");
+  const addSerialOutput = (value) => setSerialOutput(serialOutput + value);
 
   const drawPixels = (pixels) => {
     if (!canvas.current) return;
@@ -37,19 +37,8 @@ const Simulator = ({ build, rows, cols, height, width }) => {
     }
   };
 
-  let text = "";
-
-  const addSerialOutput = (value) => {
-    text += value;
-    setSerialOutput(text);
-  };
-
   useEffect(() => {
-    if (paused) {
-      stop();
-    } else {
-      start();
-    }
+    paused ? stop() : start();
   }, [paused]);
 
   const stop = () => {
@@ -107,7 +96,7 @@ const Simulator = ({ build, rows, cols, height, width }) => {
   }, [serialOutput]);
 
   useEffect(() => {
-    start();
+    if (!paused) start();
     return stop;
   }, [build]);
 
@@ -116,6 +105,7 @@ const Simulator = ({ build, rows, cols, height, width }) => {
       <div onClick={() => setPaused(!paused)} className="pause button">
         {paused ? <BsPlayFill /> : <BsFillPauseFill />}
       </div>
+
       {!build && (
         <div
           style={{
@@ -144,6 +134,7 @@ const Simulator = ({ build, rows, cols, height, width }) => {
           <pre className="serial-output-text">{serialOutput}</pre>
         </div>
       )}
+
       {build?.stderr && (
         <div className="compiler-output">
           <pre className="compiler-output-text">{cleanError(build.stderr)}</pre>

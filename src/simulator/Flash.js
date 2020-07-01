@@ -1,44 +1,57 @@
-import React, { useEffect, useRef } from "react";
 import { SortableContainer, SortableElement } from "react-sortable-hoc";
+import classnames from "classnames";
 import Logo from "./logo.svg";
 import { useContainer } from "unstated-next";
 import SketchesContainer from "./sketchesContainer";
 import SoulmatesContainer from "./soulmatesContainer.js";
 import { FiCheckCircle, FiCircle } from "react-icons/fi";
 import { MdReorder } from "react-icons/md";
+import Config from "./config";
 import arrayMove from "array-move";
 
 import "./flash.css";
 
-const SortableItem = SortableElement(({ value, id }) => {
+const SortableItem = SortableElement(({ value, id, rows, cols }) => {
   const sketch = value;
+  const className = classnames("selectedSketch", {
+    selected: sketch.id === id,
+  });
+
+  const invalidDimensions =
+    sketch.config?.cols !== cols || sketch.config?.rows !== rows;
+
   return (
-    <div
-      className={`selectedSketch ${sketch.id === id ? "selected" : ""}`}
-      key={sketch.id}
-    >
+    <div className={className} key={sketch.id}>
       <MdReorder />
       <video loop src={sketch.video_url} autoPlay muted></video>
       {sketch.name}
+
+      <span className={`dimensions ${invalidDimensions && "invalid"}`}>
+        {sketch.config?.cols} x {sketch.config?.rows}
+      </span>
     </div>
   );
 });
 
-const SortableList = SortableContainer(({ items, toggleSketch, id }) => {
-  return (
-    <div>
-      {items.map((sketch, index) => (
-        <SortableItem
-          key={`item-${sketch.id}`}
-          index={index}
-          value={sketch}
-          id={id}
-          toggleSketch={toggleSketch}
-        />
-      ))}
-    </div>
-  );
-});
+const SortableList = SortableContainer(
+  ({ items, toggleSketch, id, rows, cols }) => {
+    return (
+      <div>
+        {items.map((sketch, index) => (
+          <SortableItem
+            key={`item-${sketch.id}`}
+            index={index}
+            value={sketch}
+            id={id}
+            toggleSketch={toggleSketch}
+            rows={rows}
+            cols={cols}
+          />
+        ))}
+      </div>
+    );
+  }
+);
 
 const Flash = ({ id }) => {
   const {
@@ -75,144 +88,74 @@ const Flash = ({ id }) => {
     );
   };
 
-  const container = useRef();
-
   return (
-    <div className="flash" ref={container}>
-      <div className="selectedSketches">
-        <div className="heading">Sketches selected</div>
+    <div className="flashBackground">
+      <div className="flash">
+        <div className="selectedSketches" id="list">
+          <div className="heading">Sketches selected</div>
 
-        {selectedSketches.length === 0 && (
-          <>
+          {selectedSketches.length === 0 && (
             <p className="empty">No sketches selected</p>
-          </>
-        )}
+          )}
 
-        <SortableList
-          helperContainer={container.current}
-          id={id}
-          toggleSketch={toggleSketch}
-          items={selectedSketches}
-          onSortEnd={({ oldIndex, newIndex }) => {
-            const newSelectedSketches = arrayMove(
-              selectedSketches,
-              oldIndex,
-              newIndex
-            );
-            setSelectedSketches(newSelectedSketches);
-          }}
-        />
-      </div>
-
-      <div className="flashConfiguration">
-        <div className="chooseSoulmate">
-          <div className="heading">Choose a Soulmate</div>
-          {soulmates.map((s) => (
-            <div
-              key={s.addresses ? s.addresses[0] : s.port}
-              className="chooseSoulmateSoulmate"
-              onClick={() => setSoulmate(s)}
-            >
-              {s.name === soulmate?.name ? <FiCheckCircle /> : <FiCircle />}
-              {s.name}
-            </div>
-          ))}
+          <div className="sketchesList">
+            <SortableList
+              rows={rows}
+              cols={cols}
+              key={id}
+              lockToContainerEdges
+              lockAxis="y"
+              toggleSketch={toggleSketch}
+              items={selectedSketches}
+              onSortEnd={({ oldIndex, newIndex }) => {
+                const newSelectedSketches = arrayMove(
+                  selectedSketches,
+                  oldIndex,
+                  newIndex
+                );
+                setSelectedSketches(newSelectedSketches);
+              }}
+            />
+          </div>
         </div>
 
-        {soulmate && (
-          <>
-            <div className="heading">Configuration</div>
-            <div className="configuration">
-              <p>
-                <label>Columns</label>
-                <input
-                  type="number"
-                  value={cols}
-                  onChange={(e) => {
-                    const cols = parseInt(e.target.value);
-                    saveConfig(soulmate, { ...config, cols });
-                  }}
-                />
-              </p>
-              <p>
-                <label>LEDs</label>
-                <select
-                  value={ledType}
-                  onChange={(e) => {
-                    saveConfig(soulmate, {
-                      ...config,
-                      ledType: e.target.value,
-                    });
-                  }}
-                >
-                  <option value="APA102">APA102</option>
-                  <option value="WS2812B">WS2812B</option>
-                </select>
-              </p>
-              <p>
-                <label>Rows</label>
-                <input
-                  type="number"
-                  value={rows}
-                  onChange={(e) => {
-                    const rows = parseInt(e.target.value);
-                    saveConfig(soulmate, { ...config, rows });
-                  }}
-                />
-              </p>
-              <p>
-                <label>Chip type</label>
-                <select
-                  value={chipType}
-                  onChange={(e) => {
-                    saveConfig(soulmate, {
-                      ...config,
-                      chipType: e.target.value,
-                    });
-                  }}
-                >
-                  <option value="atom">M5 Atom</option>
-                  <option value="d32">Lolin ESP32</option>
-                </select>
-              </p>
-              <p>
-                <label>Shape</label>
-                <select disabled>
-                  <option>Rectangle</option>
-                  <option>Cylinder</option>
-                  <option>Hexagon</option>
-                </select>
-              </p>
-              <p>
-                <label>Power (mA)</label>
-                <input
-                  type="number"
-                  step="100"
-                  value={milliamps}
-                  onChange={(e) => {
-                    saveConfig(soulmate, {
-                      ...config,
-                      milliamps: parseInt(e.target.value),
-                    });
-                  }}
-                />
-              </p>
-            </div>
-          </>
-        )}
-
-        {soulmate && (
-          <div
-            onClick={flash}
-            disabled={soulmate.flashing}
-            className="flashButton button"
-          >
-            {soulmate.flashing && <Logo className="loader" />}
-            {soulmate.flashing
-              ? `Flashing to ${soulmate.name}...`
-              : `Flash to ${soulmate.name}`}
+        <div className="flashConfiguration">
+          <div className="chooseSoulmate">
+            <div className="heading">Choose a Soulmate</div>
+            {soulmates.map((s) => (
+              <div
+                key={s.addresses ? s.addresses[0] : s.port}
+                className="chooseSoulmateSoulmate"
+                onClick={() => setSoulmate(s)}
+              >
+                {s.name === soulmate?.name ? <FiCheckCircle /> : <FiCircle />}
+                {s.name}
+              </div>
+            ))}
           </div>
-        )}
+
+          {soulmate && (
+            <Config
+              config={{ rows, cols, ledType, chipType }}
+              setConfig={(config) => {
+                saveConfig(soulmate, config);
+              }}
+            />
+          )}
+
+          {soulmate && (
+            <div
+              onClick={flash}
+              disabled={soulmate.flashing}
+              className="flashButton button"
+            >
+              {soulmate.flashing && <Logo className="loader" />}
+              {soulmate.flashing
+                ? `Flashing to ${soulmate.name}...`
+                : `Flash to ${soulmate.name}`}
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
