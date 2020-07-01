@@ -5,15 +5,7 @@ import { getFullBuild } from "./compiler/compile";
 import { useState, useEffect } from "react";
 import useInterval from "./utils/useInterval";
 
-const childProcess = remote.require("child_process");
-const path = remote.require("path");
-const fs = remote.require("fs");
 import { rootPath } from "electron-root-path";
-const IS_PROD = process.env.NODE_ENV === "production";
-const root = rootPath;
-const { getAppPath } = remote.app;
-const isPackaged =
-  remote.process.mainModule.filename.indexOf("app.asar") !== -1;
 
 import { configs } from "./utils/config";
 
@@ -28,6 +20,15 @@ const SoulmatesContainer = () => {
   if (!window.ipcRenderer) {
     return { soulmates, soulmate };
   }
+
+  const childProcess = remote.require("child_process");
+  const path = remote.require("path");
+  const fs = remote.require("fs");
+  const IS_PROD = process.env.NODE_ENV === "production";
+  const root = rootPath;
+  const { getAppPath } = remote.app;
+  const isPackaged =
+    remote.process.mainModule.filename.indexOf("app.asar") !== -1;
 
   const addSoulmate = (_event, soulmate) => {
     let newSoulmates = [...soulmates, soulmate];
