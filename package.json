@@ -1,7 +1,8 @@
 {
   "name": "Soulmate",
   "browserslist": [
-    "last 1 Chrome versions"
+    "last 1 Chrome versions",
+    "last 1 electron version"
   ],
   "version": "1.0.48",
   "main": "src/electron.js",
@@ -44,6 +45,7 @@
     "v8-compile-cache": "^2.1.1"
   },
   "devDependencies": {
+    "@babel/plugin-proposal-optional-chaining": "^7.10.4",
     "@babel/plugin-transform-runtime": "^7.10.1",
     "@babel/preset-env": "^7.10.2",
     "@babel/preset-react": "^7.10.1",
@@ -73,7 +75,7 @@
     "react-build": "yarn build-worker && parcel build index.html --out-dir build --public-url ./ --no-source-maps",
     "start": "concurrently \"cross-env BROWSER=none yarn react-start\" \"wait-on http://localhost:3000 && electron . \" \"yarn build-worker-dev\"",
     "electron-build": "electron-builder",
-    "build": "yarn build-worker && yarn react-build && yarn electron-build",
+    "build": "yarn react-build && yarn electron-build",
     "build-worker": "parcel build node_modules/monaco-editor/esm/vs/editor/editor.worker.js -d build --no-source-maps",
     "build-simulator-worker": "parcel build src/worker.js -d build --no-source-maps",
     "build-worker-dev": "parcel build node_modules/monaco-editor/esm/vs/editor/editor.worker.js --no-source-maps",
