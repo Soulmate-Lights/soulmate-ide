@@ -2,6 +2,8 @@
 // Based on https://dbaron.org/log/20100309-faster-timeouts
 export type IMicroTaskCallback = () => void;
 
+const Emittery = require("emittery");
+const emitter = new Emittery();
 export class MicroTaskScheduler {
   readonly messageName = "zero-timeout-message";
 
@@ -11,25 +13,25 @@ export class MicroTaskScheduler {
   start() {
     if (this.stopped) {
       this.stopped = false;
-      window.addEventListener("message", this.handleMessage, true);
+      emitter.on(this.messageName, this.handleMessage);
     }
   }
 
   stop() {
     this.stopped = true;
-    window.removeEventListener("message", this.handleMessage, true);
+    this.executionQueue = [];
+    emitter.removeListener(this.messageName, this.handleMessage);
   }
 
   postTask(fn: IMicroTaskCallback) {
     if (!this.stopped) {
       this.executionQueue.push(fn);
-      window.postMessage(this.messageName, "*");
+      emitter.emit(this.messageName, "*");
     }
   }
 
-  private handleMessage = (event: MessageEvent) => {
-    if (event.data === this.messageName) {
-      event.stopPropagation();
+  private handleMessage = (event) => {
+    if (event === "*") {
       const executeJob = this.executionQueue.shift();
       if (executeJob !== undefined) {
         executeJob();

@@ -1,7 +1,7 @@
 import Logo from "./logo.svg";
 import { BsPlayFill, BsFillPauseFill } from "react-icons/bs";
-import { AVRRunner } from "./compiler/execute";
-import { WS2812Controller } from "./compiler/ws2812";
+
+let worker;
 
 const cleanError = (error) =>
   error
@@ -13,10 +13,9 @@ const Simulator = ({ build, rows, cols, height, width }) => {
   const [paused, setPaused] = useState(false);
 
   const canvas = useRef();
-  const runner = useRef();
   const compilerOutputDiv = useRef();
   const [serialOutput, setSerialOutput] = useState("");
-  const addSerialOutput = (value) => setSerialOutput(serialOutput + value);
+  const serialOutputRef = useRef("");
 
   const drawPixels = (pixels) => {
     if (!canvas.current) return;
@@ -44,51 +43,29 @@ const Simulator = ({ build, rows, cols, height, width }) => {
   }, [paused, build]);
 
   const stop = () => {
-    runner.current?.stop();
-    runner.current = null;
+    worker?.terminate();
+    serialOutputRef.current = "";
+  };
+
+  const workerMessage = (e) => {
+    if (e.data.pixels) {
+      drawPixels(e.data.pixels);
+    }
+
+    if (e.data.serialOutput) {
+      setSerialOutput(serialOutput + e.data.serialOutput);
+      serialOutputRef.current = serialOutputRef.current + e.data.serialOutput;
+    }
   };
 
   const start = () => {
+    worker?.terminate();
+    worker = new Worker("./worker.js");
+    worker.addEventListener("message", workerMessage);
+    worker.postMessage({ build, rows, cols });
+
     if (!build) return;
     setSerialOutput("");
-
-    runner.current = new AVRRunner(build.hex);
-    const matrixController = new WS2812Controller(cols * rows);
-
-    const MHZ = 16000000;
-    const cpuNanos = () =>
-      Math.round((runner.current.cpu.cycles / MHZ) * 1000000000);
-
-    runner.current.portB.addListener(() =>
-      matrixController.feedValue(runner.current.portB.pinState(6), cpuNanos())
-    );
-
-    runner.current.usart.onByteTransmit = (value) => {
-      addSerialOutput(String.fromCharCode(value));
-    };
-
-    runner.current.execute((_cpu) => {
-      const pixels = matrixController.update(cpuNanos());
-
-      if (!pixels) return;
-      const pixelsToDraw = [];
-
-      for (let row = 0; row < rows; row++) {
-        for (let col = 0; col < cols; col++) {
-          let value = pixels[row * cols + col];
-
-          pixelsToDraw.push({
-            y: row,
-            x: row % 2 ? cols - col - 1 : col,
-            b: value & 0xff,
-            r: (value >> 8) & 0xff,
-            g: (value >> 16) & 0xff,
-          });
-        }
-      }
-
-      drawPixels(pixelsToDraw);
-    });
   };
 
   useEffect(() => {
@@ -129,7 +106,7 @@ const Simulator = ({ build, rows, cols, height, width }) => {
 
       {serialOutput && (
         <div className="serial-output" ref={compilerOutputDiv}>
-          <pre className="serial-output-text">{serialOutput}</pre>
+          <pre className="serial-output-text">{serialOutputRef.current}</pre>
         </div>
       )}
 
