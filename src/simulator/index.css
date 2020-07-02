@@ -329,6 +329,7 @@ canvas {
   overflow: hidden;
   box-shadow: 0 0 5px #222;
   position: relative;
+  background: black;
 }
 
 .simulator canvas {
