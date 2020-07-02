@@ -1,3 +1,5 @@
+import "regenerator-runtime/runtime";
+
 import ReactDOM from "react-dom";
 import React from "react";
 import Simulator from "./simulator";
