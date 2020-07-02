@@ -19,9 +19,16 @@ export const ListItemGroup = ({
   showControls,
   selectMode,
 }) => {
-  const [open, setOpen] = useState(
-    sketches.map((s) => s.id.toString()).includes(selectedSketchId?.toString())
-  );
+  const includesSelectedSketch = sketches
+    .map((s) => s.id.toString())
+    .includes(selectedSketchId?.toString());
+
+  const [open, setOpen] = useState(includesSelectedSketch);
+
+  useEffect(() => {
+    if (includesSelectedSketch) setOpen(true);
+  }, [selectedSketchId]);
+
   return (
     <div>
       <span className="username" onClick={() => setOpen(!open)}>
