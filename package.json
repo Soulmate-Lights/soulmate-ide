@@ -77,7 +77,6 @@
     "electron-build": "electron-builder",
     "build": "yarn react-build && yarn electron-build",
     "build-worker": "parcel build node_modules/monaco-editor/esm/vs/editor/editor.worker.js -d build --no-source-maps",
-    "build-simulator-worker": "parcel build src/worker.js -d build --no-source-maps",
     "build-worker-dev": "parcel build node_modules/monaco-editor/esm/vs/editor/editor.worker.js --no-source-maps",
     "release": "yarn clean && yarn version --patch && yarn react-build && AWS_PROFILE=soulmate-ide-updates yarn electron-build --publish always",
     "clean": "rm -rf ./build ./.cache ./dist",
