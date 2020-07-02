@@ -27,6 +27,7 @@ function createWindow() {
     backgroundColor: systemPreferences.isDarkMode() ? "#333" : "#fff",
     webPreferences: {
       enableRemoteModule: true,
+      // nodeIntegrationInWorker: true,
       // Removed these June 11th for security
       // nodeIntegration: true,
       // webSecurity: false,
