@@ -1,3 +1,5 @@
+import "regenerator-runtime/runtime";
+
 import { AVRRunner } from "./compiler/execute";
 import { WS2812Controller } from "./compiler/ws2812";
 
