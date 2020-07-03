@@ -327,9 +327,10 @@ canvas {
   align-items: center;
   max-height: 100%;
   overflow: hidden;
-  box-shadow: 0 0 5px #222;
+  box-shadow: 0 0 5px #aaa;
+  border: 15px solid white;
   position: relative;
-  background: black;
+  background: white;
 }
 
 .simulator canvas {
