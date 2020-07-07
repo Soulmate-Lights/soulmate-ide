@@ -60,7 +60,7 @@ const Editor = ({ sketch, build }) => {
   const editor = useRef();
   const { rows, cols, ledType, chipType, milliamps } = config;
   const flashing = soulmate?.flashing;
-  const [configuring, setConfiguring] = useState(!!soulmate);
+  const [configuring, setConfiguring] = useState(false);
 
   // Effect hook for changing variables - need to recreate the event listener
   // for scope. Only do this after first mount.
