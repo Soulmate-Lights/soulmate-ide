@@ -58,15 +58,22 @@ const SoulmatesContainer = () => {
     ipcRenderer.send("scan", {});
   }, 5000);
 
-  const updateSoulmate = (soulmate, attributes) => {
-    let soulmateIndex = soulmates.findIndex((s) => {
-      if (s.type === soulmate.type) return true;
-      if (soulmate.addresses && s.addresses) {
-        if (s.addresses[0] === soulmate.addresses[0]) {
-          return true;
-        }
+  const compareSoulmates = (s1, s2) => {
+    if (s1.type === "usb" && s1.type === s2.type) return true;
+
+    if (s1.addresses && s2.addresses) {
+      if (s1.addresses[0] === s2.addresses[0]) {
+        return true;
       }
-    });
+    }
+
+    return false;
+  };
+
+  const updateSoulmate = (soulmate, attributes) => {
+    let soulmateIndex = soulmates.findIndex((s) =>
+      compareSoulmates(s, soulmate)
+    );
     let updatedSoulmate = { ...soulmates[soulmateIndex], ...attributes };
     soulmates.splice(soulmateIndex, 1, updatedSoulmate);
     setSoulmates(soulmates);
@@ -209,14 +216,7 @@ const SoulmatesContainer = () => {
 
   const getSelectedSoulmate = () => {
     if (!soulmate) return undefined;
-    return soulmates.find((s) => {
-      if (s.type === soulmate.type) return true;
-      if (soulmate.addresses && s.addresses) {
-        if (s.addresses[0] === soulmate.addresses[0]) {
-          return true;
-        }
-      }
-    });
+    return soulmates.find((s) => compareSoulmates(s, soulmate));
   };
 
   return {
