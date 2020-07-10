@@ -27,7 +27,7 @@ const UserContainer = () => {
   useEffect(() => {
     if (localStorage.loginSaved) {
       getTokenOnStartup().then(() => {
-        reset();
+        fetchUser();
       });
     } else if (localStorage.token) {
       fetchUser();
@@ -38,13 +38,13 @@ const UserContainer = () => {
 
   const login = async () => {
     await triggerLogin();
-    reset();
+    fetchUser();
   };
 
   const logout = async () => {
     delete localStorage.loginSaved;
     await triggerLogout();
-    reset();
+    fetchUser();
   };
 
   return { fetchUser, userDetails, login, logout };
