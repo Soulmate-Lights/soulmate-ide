@@ -42,6 +42,15 @@ const Simulator = ({ build, rows, cols, height, width }) => {
     return stop;
   }, [paused, build]);
 
+  useEffect(() => {
+    window.addEventListener("blur", () => {
+      setPaused(true);
+    });
+    window.addEventListener("focus", () => {
+      setPaused(false);
+    });
+  }, []);
+
   const stop = () => {
     worker?.terminate();
     serialOutputRef.current = "";
