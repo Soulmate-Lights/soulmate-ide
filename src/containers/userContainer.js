@@ -28,6 +28,8 @@ const UserContainer = () => {
         fetchUser();
         reset();
       });
+    } else if (localStorage.token) {
+      fetchUser();
     } else {
       reset();
     }
