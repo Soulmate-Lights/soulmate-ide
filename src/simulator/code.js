@@ -1,3 +1,10 @@
+const translation = `
+CRGB* leds = Soulmate.leds;
+#define NUM_LEDS N_LEDS
+#define ROWS LED_ROWS
+#define COLS LED_COLS
+`;
+
 export const preparePreviewCode = (code, rows, cols) =>
   `#define FASTLED_INTERNAL
 #include "FastLED.h"
@@ -18,6 +25,8 @@ class FakeSoulmate {
 };
 
 FakeSoulmate Soulmate;
+
+${translation}
 
 int16_t gridIndexHorizontal(int16_t x, int16_t y) {
   if (y > LED_ROWS) return -1;
@@ -117,6 +126,8 @@ ${
 
 #include <Soulmate.h>
 
+${translation}
+
 ${code}
 
 void setup() {
@@ -135,10 +146,10 @@ export const emptyCode = `void draw() {
   // printed after every loop.
   //
   // Some helpful variables:
-  // LED_COLS: number of columns
-  // LED_ROWS: number of rows
+  // ROWS: number of rows
+  // COLS: number of columns
   // N_LEDS: total number of LEDs (LED_COLS * LED_ROWS)
-  // Soulmate.leds: the LED array to print to
+  // leds: the LED array to print to
   //
   // You can also use:
   // uint16_t gridIndexHorizontal(x, y) - the index of a given x/y coordinate
