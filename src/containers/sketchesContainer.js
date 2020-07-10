@@ -18,9 +18,13 @@ const SketchesContainer = () => {
 
   // Update a sketch locally (don't save)
   const updateSketch = (id, options) => {
-    let sketchIndex = sketches?.findIndex((s) => s.id === id);
-    sketches[sketchIndex] = { ...sketches[sketchIndex], ...options };
-    setSketches([...sketches]);
+    if (sketches) {
+      let sketchIndex = sketches?.findIndex((s) => s.id === id);
+      if (sketchIndex > -1) {
+        sketches[sketchIndex] = { ...sketches[sketchIndex], ...options };
+        setSketches([...sketches]);
+      }
+    }
 
     let allSketchIndex = allSketches?.findIndex((s) => s.id === id);
     if (allSketchIndex > -1) {
