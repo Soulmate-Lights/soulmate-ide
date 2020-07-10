@@ -5,46 +5,51 @@ import SketchesContainer from "./sketchesContainer";
 import { useContainer } from "unstated-next";
 
 import {
-  getTokenOnStartup,
-  tokenProperties,
-  triggerLogin,
-  triggerLogout,
-} from "./utils/auth";
+  signup as authSignup,
+  login as authLogin,
+  autoLogin,
+  logout as authLogout,
+} from "../authenticate";
 
 const UserContainer = () => {
   const { reset } = useContainer(SketchesContainer);
   const [userDetails, setUserDetails] = useState(undefined);
 
+  const signup = async (name, email, password) => {
+    const user = await authSignup({ name, email, password });
+    setUserDetails(user);
+    reset();
+  };
+
   const fetchUser = async () => {
-    const newUserDetails = await tokenProperties();
-    if (newUserDetails) {
-      localStorage.loginSaved = "true";
-    }
-    setUserDetails(newUserDetails);
+    const user = await autoLogin();
+    setUserDetails(user);
     reset();
   };
 
   useEffect(() => {
-    if (localStorage.loginSaved) {
-      getTokenOnStartup().then(() => {
-        fetchUser();
-      });
-    } else if (localStorage.token) {
-      fetchUser();
-    } else {
-      reset();
-    }
+    (async () => {
+      const user = await autoLogin();
+      if (user) {
+        setUserDetails(user);
+        reset();
+      } else {
+        reset();
+      }
+    })();
   }, []);
 
   const login = async () => {
-    await triggerLogin();
+    const user = await authLogin("elliott.kember+test@gmail.com", "testing123");
+    console.log(user);
+    setUserDetails(user);
     fetchUser();
   };
 
   const logout = async () => {
-    delete localStorage.loginSaved;
-    await triggerLogout();
-    fetchUser();
+    authLogout();
+    setUserDetails(false);
+    reset();
   };
 
   return { fetchUser, userDetails, login, logout };

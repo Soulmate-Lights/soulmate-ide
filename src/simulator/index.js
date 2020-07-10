@@ -47,6 +47,8 @@ const PatternEditor = ({ id }) => {
     ${mode === Mode.Dark && "dark"}
     ${focus ? "focus" : "blur"}`;
 
+  const [showLoginForm, setShowLoginForm] = useState(false);
+
   return (
     <div className={`app-wrapper ${appClass}`}>
       <div className="titlebar">
@@ -61,10 +63,33 @@ const PatternEditor = ({ id }) => {
               </a>
             </>
           ) : (
-            <div onClick={login} className="new button">
-              Log in
-            </div>
+            <>
+              {showLoginForm ? (
+                <>
+                  <input placeholder="email" />
+                  <input placeholder="password" />
+                  <div
+                    onClick={() => {
+                      setShowLoginForm(true);
+                    }}
+                    className="new button"
+                  >
+                    Log in
+                  </div>
+                </>
+              ) : (
+                <div
+                  onClick={() => {
+                    setShowLoginForm(true);
+                  }}
+                  className="new button"
+                >
+                  Log in
+                </div>
+              )}
+            </>
           )}
+
           {!isElectron() && (
             <a className="button" href="/download">
               <GoDesktopDownload style={{ fill: "inherit" }} />

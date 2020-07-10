@@ -1,36 +1,37 @@
-const server = "https://editor.soulmatelights.com";
-// const server = "http://localhost:3001";
+// const server = "https://editor.soulmatelights.com";
+const server = "http://localhost:3001";
 
-export const fetchJson = (url, token) => {
-  let headers = {};
-  if (token) {
-    headers = {
-      Authorization: `Bearer ${token}`,
-    };
-  }
+import { authenticationHeaders } from "../../authenticate";
+
+const getHeaders = async () => {
+  const extraHeaders = await authenticationHeaders();
+  return {
+    "Content-Type": "application/json",
+    ...extraHeaders,
+  };
+};
+
+export const fetchJson = async (url) => {
+  const headers = await getHeaders();
   return fetch(server + url, {
     headers,
   }).then((result) => result.json());
 };
 
-export const post = (url, token, body = {}) => {
+export const post = async (url, body = {}) => {
+  const headers = await getHeaders();
   return fetch(server + url, {
     method: "post",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
+    headers,
     body: JSON.stringify({ ...body }),
   }).then((response) => response.json());
 };
 
-export const postDelete = (url, token, body = {}) => {
+export const postDelete = async (url, body = {}) => {
+  const headers = await getHeaders();
   return fetch(server + url, {
     method: "delete",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
+    headers,
     body: JSON.stringify({ ...body }),
   }).then((response) => response.json());
 };

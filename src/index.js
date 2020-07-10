@@ -16,6 +16,22 @@ self.MonacoEnvironment = {
   },
 };
 
+import {
+  signup,
+  login,
+  validate,
+  autoLogin,
+  logout,
+  loggedIn,
+} from "./authenticate";
+
+window.signup = signup;
+window.login = login;
+window.validate = validate;
+window.autoLogin = autoLogin;
+window.logout = logout;
+window.loggedIn = loggedIn;
+
 monaco.editor.createWebWorker({});
 
 ReactDOM.render(<Simulator />, document.getElementById("root"));
