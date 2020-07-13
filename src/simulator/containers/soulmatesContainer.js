@@ -1,13 +1,13 @@
 import { createContainer } from "unstated-next";
 import uniqBy from "lodash/uniqBy";
-import { prepareFullCodeWithMultipleSketches } from "./code";
-import { getFullBuild } from "./compiler/compile";
+import { prepareFullCodeWithMultipleSketches } from "../code";
+import { getFullBuild } from "../compiler/compile";
 import { useState, useEffect } from "react";
-import useInterval from "./utils/useInterval";
+import useInterval from "../utils/useInterval";
 
 import { rootPath } from "electron-root-path";
 
-import { configs } from "./utils/config";
+import { configs } from "../utils/config";
 
 const defaultConfig = configs.Square;
 

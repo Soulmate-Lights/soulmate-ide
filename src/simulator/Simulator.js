@@ -1,4 +1,4 @@
-import Logo from "./logo.svg";
+import Logo from "./images/logo.svg";
 import { BsPlayFill, BsFillPauseFill } from "react-icons/bs";
 
 let worker;

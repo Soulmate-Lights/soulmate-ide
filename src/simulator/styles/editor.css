@@ -1,0 +1,114 @@
+.auto-format-checkbox {
+  display: block;
+  position: absolute;
+  top: 4px;
+  right: 20px;
+  font-size: 10px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  opacity: 0.2;
+  transition: ease opacity 0.4s;
+  user-select: none;
+  cursor: pointer;
+}
+
+.editor {
+  display: flex;
+  position: relative;
+  width: 50%;
+  box-sizing: border-box;
+  flex-direction: column;
+  flex-grow: 1;
+  flex-shrink: 1;
+  overflow: none;
+}
+
+.toolbar {
+  display: flex;
+  padding: 8px;
+  background-color: #efefef;
+  border-top: 1px solid var(--border-color);
+  box-sizing: border-box;
+  width: 100%;
+  font-size: 14px;
+  justify-content: flex-end;
+}
+
+.toolbar .button.configure {
+  margin-right: auto;
+  margin-left: 0;
+}
+
+.toolbar .button {
+  margin-right: 8px;
+}
+
+.toolbar .button:last-child {
+  margin-right: 0;
+}
+
+.toolbar .button .loader {
+  width: 16px;
+  position: relative;
+}
+
+.toolbar .button .loader * {
+  fill: #666;
+}
+
+.dark .toolbar .button .loader * {
+  fill: #dedede;
+}
+
+.dark .toolbar {
+  background: #333;
+  color: white;
+}
+
+.auto-format-checkbox:hover {
+  opacity: 1;
+}
+
+.code-editor-wrapper {
+  display: flex;
+  width: 100%;
+  flex-grow: 1;
+  min-height: 0;
+  max-width: 100%;
+  flex-grow: 1;
+  box-sizing: border-box;
+}
+
+.dark .code-editor-wrapper {
+  background: rgb(29, 29, 29);
+}
+
+.code-editor {
+  display: flex;
+  width: 100%;
+  flex-grow: 1;
+  min-height: 0;
+  max-width: 100%;
+  flex-grow: 1;
+  box-sizing: border-box;
+  overflow: hidden;
+  position: relative;
+}
+
+.usb-flash {
+  background: white;
+  border-radius: 8px;
+  height: 8px;
+}
+
+.usb-flash::-webkit-progress-bar {
+  background: white;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+}
+
+.usb-flash::-webkit-progress-value {
+  background: var(--text-color);
+  border-radius: 8px;
+}

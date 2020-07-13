@@ -6,13 +6,13 @@ import map from "lodash/map";
 import history from "../utils/history";
 import { FiCircle, FiCheckCircle } from "react-icons/fi";
 import { AiOutlinePlusCircle } from "react-icons/ai";
-import Logo from "./logo.svg";
+import Logo from "./images/logo.svg";
 import ListItem, { ListItemGroup } from "./ListItem";
 import { useContainer } from "unstated-next";
-import SketchesContainer from "./sketchesContainer";
-import SoulmatesContainer from "./soulmatesContainer";
+import SketchesContainer from "./containers/sketchesContainer";
+import SoulmatesContainer from "./containers/soulmatesContainer";
 import isElectron from "./utils/isElectron";
-import "./List.css";
+import "./styles/list.css";
 
 const List = ({ selectedSketch, userDetails, flashMode, setFlashMode }) => {
   const { sketches, allSketches, createSketch } = useContainer(

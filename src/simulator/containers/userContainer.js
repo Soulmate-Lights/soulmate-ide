@@ -9,7 +9,7 @@ import {
   tokenProperties,
   triggerLogin,
   triggerLogout,
-} from "./utils/auth";
+} from "../utils/auth";
 
 const UserContainer = () => {
   const { reset } = useContainer(SketchesContainer);

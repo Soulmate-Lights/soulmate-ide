@@ -1,9 +1,9 @@
 import { createContainer } from "unstated-next";
-import { buildHex } from "./compiler/compile";
-import { fetchJson, post, postDelete } from "./utils";
+import { buildHex } from "../compiler/compile";
+import { fetchJson, post, postDelete } from "../utils";
 import { useState } from "react";
-import { preparePreviewCode } from "./code";
-import { getToken, loggedIn } from "./utils/auth";
+import { preparePreviewCode } from "../code";
+import { getToken, loggedIn } from "../utils/auth";
 
 const SketchesContainer = () => {
   const [sketches, setSketches] = useState(undefined);

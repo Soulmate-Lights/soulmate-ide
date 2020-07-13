@@ -1,0 +1,8 @@
+.dark input {
+  background: #666;
+  color: white !important;
+}
+
+.dark input::placeholder {
+  color: #999;
+}

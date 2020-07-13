@@ -4,11 +4,11 @@
   display: flex;
   flex-direction: row;
   overflow: hidden;
-  background: url("./so-white.png");
+  background: url("../images/so-white.png");
 }
 
 .dark .flashBackground {
-  background: #333 url("./denim.png");
+  background: #333 url("../images/denim.png");
 }
 
 .flash {

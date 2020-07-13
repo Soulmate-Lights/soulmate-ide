@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState } from "react";
 import { FiCircle, FiCheckCircle } from "react-icons/fi";
 import { useContainer } from "unstated-next";
-import SketchesContainer from "./sketchesContainer";
+import SketchesContainer from "./containers/sketchesContainer";
 import { FiEdit3 } from "react-icons/fi";
 import { RiDeleteBin2Line } from "react-icons/ri";
 import { Link } from "react-router-dom";
@@ -10,7 +10,7 @@ import { GoChevronDown, GoChevronRight } from "react-icons/go";
 
 import isElectron from "./utils/isElectron";
 import history from "../utils/history";
-import "./List.css";
+import "./styles/list.css";
 
 export const ListItemGroup = ({
   user,
@@ -75,7 +75,7 @@ const ListItem = ({ sketch, selected, showControls, selectMode }) => {
   };
 
   if (isElectron()) {
-    const useContextMenu = require("./useContextMenu").default;
+    const useContextMenu = require("./utils/useContextMenu").default;
     useContextMenu(
       ref,
       {

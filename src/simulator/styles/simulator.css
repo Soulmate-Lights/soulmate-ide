@@ -1,0 +1,68 @@
+.pause.button {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+}
+
+.pause.button svg {
+  margin: 0;
+}
+
+.pixels {
+  display: flex;
+  max-width: 400px;
+  flex-direction: column;
+  border-left: 1px solid #ddd;
+}
+
+.dark .pixels {
+  border-left: 1px solid #000;
+}
+
+.compiler-output,
+.serial-output {
+  background: white;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  overflow: auto;
+  flex-grow: 1;
+  box-sizing: border-box;
+  padding: 8px 12px;
+  margin: 0;
+  font-size: 11px;
+  height: 170px;
+  border-top: 1px solid var(--border-color);
+  flex-grow: 0;
+  overflow: auto;
+  color: darkgreen;
+}
+
+.dark .compiler-output,
+.dark .serial-output {
+  background: #333;
+  border-top: 1px solid #000;
+  color: lightgreen;
+  box-shadow: inset 0px 5px 5px rgba(0, 0, 0, 0.3);
+}
+
+.compiler-output pre,
+.serial-output pre {
+  margin: 0;
+  white-space: pre-line;
+}
+
+.canvas-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-height: 100%;
+  overflow: hidden;
+  box-shadow: 0 0 5px #222;
+  position: relative;
+  background: black;
+}
+
+.simulator canvas {
+  border-radius: 2px;
+}

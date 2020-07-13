@@ -1,15 +1,15 @@
 import { SortableContainer, SortableElement } from "react-sortable-hoc";
 import classnames from "classnames";
-import Logo from "./logo.svg";
 import { useContainer } from "unstated-next";
-import SketchesContainer from "./sketchesContainer";
-import SoulmatesContainer from "./soulmatesContainer.js";
+import SketchesContainer from "./containers/sketchesContainer";
+import SoulmatesContainer from "./containers/soulmatesContainer.js";
 import { FiCheckCircle, FiCircle } from "react-icons/fi";
 import { MdReorder } from "react-icons/md";
-import Config from "./config";
+import Config from "./Configuration";
 import arrayMove from "array-move";
 
-import "./flash.css";
+import Logo from "./images/logo.svg";
+import "./styles/flash.css";
 
 const SortableItem = SortableElement(({ value, id, rows, cols }) => {
   const sketch = value;

@@ -1,5 +1,5 @@
 import { configs } from "./utils/config";
-import "./config.css";
+import "./styles/config.css";
 
 const Configuration = ({ config, setConfig }) => {
   const { cols, rows, milliamps, ledType, chipType } = config;

@@ -1,19 +1,19 @@
 import Simulator from "./Simulator";
 import { GoDesktopDownload } from "react-icons/go";
 import { hot, setConfig } from "react-hot-loader";
-import "./index.css";
+import "./styles/index.css";
 import React, { useState, useEffect } from "react";
 import Editor from "./Editor";
 import { Router, HashRouter, Route, Switch } from "react-router-dom";
 import { Mode, useLightSwitch } from "use-light-switch";
 import List from "./List";
 import history from "../utils/history";
-import Logo from "./logo.svg";
+import Logo from "./images/logo.svg";
 import { useContainer } from "unstated-next";
-import SketchesContainer from "./sketchesContainer";
-import SelectionsContainer from "./selectionContainer";
-import SoulmatesContainer from "./soulmatesContainer";
-import UserContainer from "./userContainer.js";
+import SketchesContainer from "./containers/sketchesContainer";
+import SelectionsContainer from "./containers/selectionContainer";
+import SoulmatesContainer from "./containers/soulmatesContainer";
+import UserContainer from "./containers/userContainer";
 import isElectron from "./utils/isElectron";
 import Flash from "./Flash";
 

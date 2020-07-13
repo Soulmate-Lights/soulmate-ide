@@ -4,15 +4,15 @@ import { BsFillPlayFill } from "react-icons/bs";
 import { MdSettings } from "react-icons/md";
 import { FaUsb } from "react-icons/fa";
 import { IoMdCloudUpload } from "react-icons/io";
-import Logo from "./logo.svg";
+import Logo from "./images/logo.svg";
 import { Mode, useLightSwitch } from "use-light-switch";
 import Monaco from "react-monaco-editor";
 import { useContainer } from "unstated-next";
-import SoulmatesContainer from "./soulmatesContainer.js";
-import SelectionsContainer from "./selectionContainer";
-import SketchesContainer from "./sketchesContainer.js";
+import SoulmatesContainer from "./containers/soulmatesContainer";
+import SelectionsContainer from "./containers/selectionContainer";
+import SketchesContainer from "./containers/sketchesContainer";
 import { emptyCode } from "./code";
-import Config from "./config";
+import Config from "./Configuration";
 
 import jsBeautifier from "js-beautify";
 

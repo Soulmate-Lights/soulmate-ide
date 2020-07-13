@@ -1,0 +1,62 @@
+.button {
+  font-size: 12px;
+  display: flex;
+  text-decoration: none;
+  justify-content: center;
+  align-items: center;
+  background: #dedede;
+  color: #333;
+  text-align: center;
+  padding: 4px 12px 4px 12px;
+  -webkit-app-region: no-drag;
+  border-radius: 4px;
+  box-shadow: 1px 1px 2px #aaa;
+  cursor: pointer;
+  user-select: none;
+}
+
+.button:hover {
+  cursor: pointer;
+}
+
+.blur .button {
+  background: #efefef;
+}
+
+.button svg {
+  position: relative;
+  margin-right: 8px;
+  height: 16px;
+  width: 16px;
+}
+
+.button svg * {
+  fill: currentColor;
+}
+
+.button:active,
+.button.pressed {
+  box-shadow: inset 1px 1px 1px #999;
+  background: #cdcdcd;
+}
+
+.button[disabled] {
+  box-shadow: none;
+  box-shadow: 0 0 1px #666;
+  color: #888;
+}
+
+.dark .button {
+  background: #444;
+  box-shadow: 1px 1px 2px #222;
+  color: #dedede;
+}
+
+.dark .button[disabled] {
+  background: #555;
+}
+
+.dark .button:active,
+.dark .button.pressed {
+  background: #222;
+}
