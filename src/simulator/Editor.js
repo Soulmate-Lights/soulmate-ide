@@ -11,7 +11,7 @@ import { useContainer } from "unstated-next";
 import SoulmatesContainer from "./containers/soulmatesContainer";
 import SelectionsContainer from "./containers/selectionContainer";
 import SketchesContainer from "./containers/sketchesContainer";
-import { emptyCode } from "./code";
+import { emptyCode } from "./utils/code";
 import Config from "./Configuration";
 
 import jsBeautifier from "js-beautify";

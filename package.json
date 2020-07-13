@@ -104,8 +104,6 @@
     },
     "appId": "com.elliottkember.soulmate",
     "files": [
-      "src/icon.icns",
-      "src/icon.png",
       "src/electron.js",
       "src/preload.js",
       "src/auth.js",

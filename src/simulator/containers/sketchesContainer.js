@@ -2,7 +2,7 @@ import { createContainer } from "unstated-next";
 import { buildHex } from "../compiler/compile";
 import { fetchJson, post, postDelete } from "../utils";
 import { useState } from "react";
-import { preparePreviewCode } from "../code";
+import { preparePreviewCode } from "../utils/code";
 import { getToken, loggedIn } from "../utils/auth";
 
 const SketchesContainer = () => {

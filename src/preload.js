@@ -9,5 +9,5 @@ window.fs = electronFs;
 var electron = require("electron");
 window.electron = electron;
 
-const auth = remote.require("./auth");
+const auth = remote.require("./utils/auth");
 window.auth = auth;

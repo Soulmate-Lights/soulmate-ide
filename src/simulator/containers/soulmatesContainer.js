@@ -1,6 +1,6 @@
 import { createContainer } from "unstated-next";
 import uniqBy from "lodash/uniqBy";
-import { prepareFullCodeWithMultipleSketches } from "../code";
+import { prepareFullCodeWithMultipleSketches } from "../utils/code";
 import { getFullBuild } from "../compiler/compile";
 import { useState, useEffect } from "react";
 import useInterval from "../utils/useInterval";
