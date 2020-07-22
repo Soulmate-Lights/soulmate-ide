@@ -6,12 +6,10 @@ import Editor from "./Editor";
 import Flash from "./Flash";
 import List from "./List";
 import Logo from "~/images/logo.svg";
-import SelectionsContainer from "~/containers/selectionContainer";
 import Simulator from "./Simulator";
 import SketchesContainer from "~/containers/sketchesContainer";
 import SoulmatesContainer from "~/containers/soulmatesContainer";
 import UserContainer from "~/containers/userContainer.js";
-import { hot } from "react-hot-loader";
 import { useContainer } from "unstated-next";
 
 const PatternEditor = ({ id }) => {
