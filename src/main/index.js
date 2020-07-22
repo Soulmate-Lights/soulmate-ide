@@ -7,6 +7,7 @@ import SketchesContainer from "~/containers/sketchesContainer";
 import SoulmatesContainer from "~/containers/soulmatesContainer";
 import Titlebar from "./titlebar";
 import UserContainer from "~/containers/userContainer.js";
+import Welcome from "../welcome";
 import history from "../utils/history";
 import { hot } from "react-hot-loader";
 import isElectron from "../simulator/utils/isElectron";
@@ -36,6 +37,11 @@ const Main = () => {
             <Route path="/auth">
               <div></div>
             </Route>
+
+            <Route exact path="/welcome">
+              <Welcome />
+            </Route>
+
             <Route
               path="/:id?"
               render={({

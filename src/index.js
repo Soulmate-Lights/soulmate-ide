@@ -1,11 +1,11 @@
 import "regenerator-runtime/runtime";
-
-import ReactDOM from "react-dom";
-import React from "react";
-import Main from "./main";
 import "regenerator-runtime/runtime";
+
 import * as monaco from "monaco-editor/esm/vs/editor/editor.main.js";
 
+import Main from "./main";
+import React from "react";
+import ReactDOM from "react-dom";
 import { setConfig } from "react-hot-loader";
 
 setConfig({
