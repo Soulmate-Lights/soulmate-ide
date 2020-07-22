@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 
 import { configs } from "~/utils/config";
 import { createContainer } from "unstated-next";
-import { getFullBuild } from "../simulator/compiler/compile";
-import { prepareFullCodeWithMultipleSketches } from "../simulator/code";
+import { getFullBuild } from "~/utils/compiler/compile";
+import { prepareFullCodeWithMultipleSketches } from "~/utils/code";
 import { rootPath } from "electron-root-path";
 import uniqBy from "lodash/uniqBy";
 import useInterval from "~/utils/useInterval";

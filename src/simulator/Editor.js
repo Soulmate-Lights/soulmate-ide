@@ -12,7 +12,7 @@ import SelectionsContainer from "~/containers/selectionContainer";
 import SketchesContainer from "~/containers/sketchesContainer.js";
 import SoulmatesContainer from "~/containers/soulmatesContainer.js";
 import debounce from "lodash/debounce";
-import { emptyCode } from "./code";
+import { emptyCode } from "~/utils/code";
 import jsBeautifier from "js-beautify";
 import { useContainer } from "unstated-next";
 

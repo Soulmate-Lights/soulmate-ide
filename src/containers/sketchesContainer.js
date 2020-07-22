@@ -1,9 +1,9 @@
 import { fetchJson, post, postDelete } from "~/utils";
 import { getToken, loggedIn } from "~/utils/auth";
 
-import { buildHex } from "../simulator/compiler/compile";
+import { buildHex } from "~/utils/compiler/compile";
 import { createContainer } from "unstated-next";
-import { preparePreviewCode } from "../simulator/code";
+import { preparePreviewCode } from "~/utils/code";
 import { useState } from "react";
 
 const SketchesContainer = () => {
