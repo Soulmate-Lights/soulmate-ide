@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import Logo from "../simulator/logo.svg";
 import SketchesContainer from "~/containers/sketchesContainer";
 import UserContainer from "~/containers/userContainer";
+import history from "../utils/history";
 import { useContainer } from "unstated-next";
 
 const Welcome = () => {
@@ -24,9 +25,9 @@ const Welcome = () => {
           Editor
         </Link>
         {userDetails ? (
-          <Link onClick={add} className="button">
+          <a onClick={add} className="button">
             New pattern
-          </Link>
+          </a>
         ) : (
           <Link onClick={login} className="button">
             Log in
