@@ -4,7 +4,7 @@ import { FiCheckCircle, FiCircle } from "react-icons/fi";
 import { SortableContainer, SortableElement } from "react-sortable-hoc";
 
 import Config from "./config";
-import Logo from "./logo.svg";
+import Logo from "~/images/logo.svg";
 import { MdReorder } from "react-icons/md";
 import SketchesContainer from "~/containers/sketchesContainer";
 import SoulmatesContainer from "~/containers/soulmatesContainer.js";

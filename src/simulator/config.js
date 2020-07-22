@@ -1,4 +1,4 @@
-import { configs } from "./utils/config";
+import { configs } from "~/utils/config";
 import "./config.css";
 
 const Configuration = ({ config, setConfig }) => {

@@ -3,7 +3,7 @@ import {
   tokenProperties,
   triggerLogin,
   triggerLogout,
-} from "../simulator/utils/auth";
+} from "~/utils/auth";
 import { useEffect, useState } from "react";
 
 import SketchesContainer from "./sketchesContainer";

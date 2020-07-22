@@ -8,9 +8,9 @@ import SoulmatesContainer from "~/containers/soulmatesContainer";
 import Titlebar from "./titlebar";
 import UserContainer from "~/containers/userContainer";
 import Welcome from "../welcome";
-import history from "../utils/history";
+import history from "~/utils/history";
 import { hot } from "react-hot-loader";
-import isElectron from "../simulator/utils/isElectron";
+import isElectron from "~/utils/isElectron";
 import { useContainer } from "unstated-next";
 
 const SpecificRouter = isElectron() ? HashRouter : Router;

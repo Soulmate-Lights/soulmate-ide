@@ -1,5 +1,5 @@
-import { fetchJson, post, postDelete } from "../simulator/utils";
-import { getToken, loggedIn } from "../simulator/utils/auth";
+import { fetchJson, post, postDelete } from "~/utils";
+import { getToken, loggedIn } from "~/utils/auth";
 
 import { buildHex } from "../simulator/compiler/compile";
 import { createContainer } from "unstated-next";

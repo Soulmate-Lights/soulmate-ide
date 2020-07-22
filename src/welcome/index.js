@@ -1,10 +1,10 @@
 import "./style.css";
 
 import { Link } from "react-router-dom";
-import Logo from "../simulator/logo.svg";
+import Logo from "~/images/logo.svg";
 import SketchesContainer from "~/containers/sketchesContainer";
 import UserContainer from "~/containers/userContainer";
-import history from "../utils/history";
+import history from "~/utils/history";
 import { useContainer } from "unstated-next";
 
 const Welcome = () => {

@@ -5,7 +5,7 @@ import { BsFillPlayFill } from "react-icons/bs";
 import Config from "./config";
 import { FaUsb } from "react-icons/fa";
 import { IoMdCloudUpload } from "react-icons/io";
-import Logo from "./logo.svg";
+import Logo from "~/images/logo.svg";
 import { MdSettings } from "react-icons/md";
 import Monaco from "react-monaco-editor";
 import SelectionsContainer from "~/containers/selectionContainer";

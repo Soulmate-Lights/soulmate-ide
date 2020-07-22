@@ -1,4 +1,4 @@
-import isElectron from "../simulator/utils/isElectron";
+import isElectron from "~/utils/isElectron";
 
 import { createHashHistory, createBrowserHistory } from "history";
 

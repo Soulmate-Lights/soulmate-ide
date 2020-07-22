@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 
-import { configs } from "../simulator/utils/config";
+import { configs } from "~/utils/config";
 import { createContainer } from "unstated-next";
 import { getFullBuild } from "../simulator/compiler/compile";
 import { prepareFullCodeWithMultipleSketches } from "../simulator/code";
 import { rootPath } from "electron-root-path";
 import uniqBy from "lodash/uniqBy";
-import useInterval from "../simulator/utils/useInterval";
+import useInterval from "~/utils/useInterval";
 
 const defaultConfig = configs.Square;
 

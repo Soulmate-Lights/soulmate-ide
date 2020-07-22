@@ -2,7 +2,7 @@ import { AiOutlineHome } from "react-icons/ai";
 import { GoDesktopDownload } from "react-icons/go";
 import { Link } from "react-router-dom";
 import { MdAccountCircle } from "react-icons/md";
-import isElectron from "../simulator/utils/isElectron";
+import isElectron from "~/utils/isElectron";
 
 const Titlebar = ({ userDetails, login, logout }) => (
   <div className="titlebar">

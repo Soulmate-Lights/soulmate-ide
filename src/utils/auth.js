@@ -2,8 +2,8 @@ import "regenerator-runtime/runtime";
 
 import createAuth0Client from "@auth0/auth0-spa-js";
 import jwtDecode from "jwt-decode";
-import history from "../../utils/history";
-import config from "../../auth_config.json";
+import history from "~/utils/history";
+import config from "~/auth_config.json";
 import isElectron from "./isElectron";
 
 let auth0;

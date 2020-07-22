@@ -6,12 +6,12 @@ import React, { useEffect, useState } from "react";
 
 import { AiOutlinePlusCircle } from "react-icons/ai";
 import Emojify from "react-emojione";
-import Logo from "./logo.svg";
+import Logo from "~/images/logo.svg";
 import SketchesContainer from "~/containers/sketchesContainer";
 import SoulmatesContainer from "~/containers/soulmatesContainer";
 import groupBy from "lodash/groupBy";
-import history from "../utils/history";
-import isElectron from "./utils/isElectron";
+import history from "~/utils/history";
+import isElectron from "~/utils/isElectron";
 import keyBy from "lodash/keyBy";
 import map from "lodash/map";
 import { useContainer } from "unstated-next";

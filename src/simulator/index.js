@@ -5,7 +5,7 @@ import React, { useState } from "react";
 import Editor from "./Editor";
 import Flash from "./Flash";
 import List from "./List";
-import Logo from "./logo.svg";
+import Logo from "~/images/logo.svg";
 import SelectionsContainer from "~/containers/selectionContainer";
 import Simulator from "./Simulator";
 import SketchesContainer from "~/containers/sketchesContainer";
