@@ -1,4 +1,7 @@
+import { AiOutlineHome } from "react-icons/ai";
 import { GoDesktopDownload } from "react-icons/go";
+import { Link } from "react-router-dom";
+import { MdAccountCircle } from "react-icons/md";
 import isElectron from "../simulator/utils/isElectron";
 
 const Titlebar = ({ userDetails, login, logout }) => (
@@ -15,9 +18,13 @@ const Titlebar = ({ userDetails, login, logout }) => (
         </>
       ) : (
         <div onClick={login} className="new button">
+          <MdAccountCircle />
           Log in
         </div>
       )}
+      <Link to="/welcome" className="button">
+        <AiOutlineHome /> Home
+      </Link>
       {!isElectron() && (
         <a className="button" href="/download">
           <GoDesktopDownload style={{ fill: "inherit" }} />

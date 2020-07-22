@@ -39,13 +39,13 @@ const List = ({ selectedSketch, userDetails, flashMode, setFlashMode }) => {
   useEffect(() => {
     if (sketchesToShow && allSketches && !selectedSketch) {
       const sketchToShow = sketchesToShow[0];
-      if (sketchToShow) history.push(`/${sketchToShow.id}`);
+      if (sketchToShow) history.replace(`/${sketchToShow.id}`);
     }
 
     if (selectedSketch) {
       if (sketchesToShow?.map((s) => s.id)?.indexOf(selectedSketch?.id) == -1) {
         const sketchToShow = sketchesToShow[0];
-        if (sketchToShow) history.push(`/${sketchToShow.id}`);
+        if (sketchToShow) history.replace(`/${sketchToShow.id}`);
       }
     }
   }, [sketchesToShow, sketches, allSketches, showingAll]);

@@ -28,6 +28,11 @@
             "path": "react",
             "members": ["useState", "useEffect", "useContext", "useRef"]
           },
+          {
+            "default": "unstated",
+            "path": "unstated-next",
+            "members": ["useContainer"]
+          },
           { "default": "PropTypes", "path": "prop-types" }
         ]
       }

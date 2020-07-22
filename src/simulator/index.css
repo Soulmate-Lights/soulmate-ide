@@ -119,7 +119,7 @@ body {
   color: white;
 }
 
-.welcome {
+.editor-loader {
   margin: auto auto;
   text-align: center;
   flex-grow: 1;

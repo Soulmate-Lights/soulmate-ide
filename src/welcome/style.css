@@ -1,0 +1,15 @@
+.welcome {
+  margin: auto auto;
+  text-align: center;
+  flex-grow: 1;
+}
+
+.welcome .get-started {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.welcome .get-started a {
+  margin: 0 8px;
+}

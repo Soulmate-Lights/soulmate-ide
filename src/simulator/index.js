@@ -38,7 +38,7 @@ const PatternEditor = ({ id }) => {
       ) : (
         <>
           {!selectedSketch && (
-            <div className="welcome">
+            <div className="editor-loader">
               <Logo className="loader" />
             </div>
           )}

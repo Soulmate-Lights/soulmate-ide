@@ -6,7 +6,7 @@ import Simulator from "../simulator";
 import SketchesContainer from "~/containers/sketchesContainer";
 import SoulmatesContainer from "~/containers/soulmatesContainer";
 import Titlebar from "./titlebar";
-import UserContainer from "~/containers/userContainer.js";
+import UserContainer from "~/containers/userContainer";
 import Welcome from "../welcome";
 import history from "../utils/history";
 import { hot } from "react-hot-loader";
@@ -30,9 +30,9 @@ const Main = () => {
 
   return (
     <div className={`app-wrapper ${appClass}`}>
-      <Titlebar userDetails={userDetails} login={login} logout={logout} />
-      <div className="frame">
-        <SpecificRouter history={history}>
+      <SpecificRouter history={history}>
+        <Titlebar userDetails={userDetails} login={login} logout={logout} />
+        <div className="frame">
           <Switch>
             <Route path="/auth">
               <div></div>
@@ -51,8 +51,8 @@ const Main = () => {
               }) => <Simulator id={parseInt(id)} />}
             />
           </Switch>
-        </SpecificRouter>
-      </div>
+        </div>
+      </SpecificRouter>
     </div>
   );
 };
