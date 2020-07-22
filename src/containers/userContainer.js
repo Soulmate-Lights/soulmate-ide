@@ -33,7 +33,7 @@ const UserContainer = () => {
     } else {
       reset();
     }
-  }, []);
+  }, [localStorage.loginSaved, localStorage.token]);
 
   const login = async () => {
     await triggerLogin();

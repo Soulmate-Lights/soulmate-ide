@@ -67,16 +67,4 @@ const PatternEditor = ({ id }) => {
   );
 };
 
-const HotPatternEditor = hot(module)((params) => (
-  <SelectionsContainer.Provider>
-    <SketchesContainer.Provider>
-      <UserContainer.Provider>
-        <SoulmatesContainer.Provider>
-          <PatternEditor {...params} />
-        </SoulmatesContainer.Provider>
-      </UserContainer.Provider>
-    </SketchesContainer.Provider>
-  </SelectionsContainer.Provider>
-));
-
-export default HotPatternEditor;
+export default PatternEditor;
