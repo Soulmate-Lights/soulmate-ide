@@ -53,6 +53,7 @@
     "@svgr/parcel-plugin-svgr": "^5.4.0",
     "babel-core": "^7.0.0-bridge.0",
     "babel-eslint": "^10.1.0",
+    "babel-plugin-root-import": "^6.5.0",
     "babel-preset-env": "^1.7.0",
     "concurrently": "^5.2.0",
     "cross-env": "^7.0.2",

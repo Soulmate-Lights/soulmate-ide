@@ -11,6 +11,13 @@
     "@babel/preset-react"
   ],
   "plugins": [
+    [
+      "babel-plugin-root-import",
+      {
+        "rootPathSuffix": "./src/",
+        "rootPathPrefix": "~/"
+      }
+    ],
     "@babel/plugin-proposal-optional-chaining",
     [
       "auto-import",

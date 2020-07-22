@@ -1,20 +1,20 @@
+import { Mode, useLightSwitch } from "use-light-switch";
 import React, { useEffect, useRef, useState } from "react";
-import debounce from "lodash/debounce";
+
 import { BsFillPlayFill } from "react-icons/bs";
-import { MdSettings } from "react-icons/md";
+import Config from "./config";
 import { FaUsb } from "react-icons/fa";
 import { IoMdCloudUpload } from "react-icons/io";
 import Logo from "./logo.svg";
-import { Mode, useLightSwitch } from "use-light-switch";
+import { MdSettings } from "react-icons/md";
 import Monaco from "react-monaco-editor";
-import { useContainer } from "unstated-next";
-import SoulmatesContainer from "./soulmatesContainer.js";
-import SelectionsContainer from "./selectionContainer";
-import SketchesContainer from "./sketchesContainer.js";
+import SelectionsContainer from "~/containers/selectionContainer";
+import SketchesContainer from "~/containers/sketchesContainer.js";
+import SoulmatesContainer from "~/containers/soulmatesContainer.js";
+import debounce from "lodash/debounce";
 import { emptyCode } from "./code";
-import Config from "./config";
-
 import jsBeautifier from "js-beautify";
+import { useContainer } from "unstated-next";
 
 const jsBeautifierConfig = {
   indent_size: 2,

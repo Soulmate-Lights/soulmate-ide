@@ -1,16 +1,16 @@
-import React, { useRef, useEffect, useState } from "react";
-import { FiCircle, FiCheckCircle } from "react-icons/fi";
-import { useContainer } from "unstated-next";
-import SketchesContainer from "./sketchesContainer";
-import { FiEdit3 } from "react-icons/fi";
-import { RiDeleteBin2Line } from "react-icons/ri";
-import { Link } from "react-router-dom";
-
-import { GoChevronDown, GoChevronRight } from "react-icons/go";
-
-import isElectron from "./utils/isElectron";
-import history from "../utils/history";
 import "./List.css";
+
+import { FiCheckCircle, FiCircle } from "react-icons/fi";
+import { GoChevronDown, GoChevronRight } from "react-icons/go";
+import React, { useEffect, useRef, useState } from "react";
+
+import { FiEdit3 } from "react-icons/fi";
+import { Link } from "react-router-dom";
+import { RiDeleteBin2Line } from "react-icons/ri";
+import SketchesContainer from "~/containers/sketchesContainer";
+import history from "../utils/history";
+import isElectron from "./utils/isElectron";
+import { useContainer } from "unstated-next";
 
 export const ListItemGroup = ({
   user,
@@ -27,7 +27,7 @@ export const ListItemGroup = ({
 
   useEffect(() => {
     if (includesSelectedSketch) setOpen(true);
-  }, [selectedSketchId]);
+  }, [includesSelectedSketch]);
 
   return (
     <div>

@@ -1,15 +1,16 @@
-import Simulator from "../simulator/index.js";
-import { hot } from "react-hot-loader";
+import { HashRouter, Route, Router, Switch } from "react-router-dom";
 import { Mode, useLightSwitch } from "use-light-switch";
-import { useContainer } from "unstated-next";
-import SketchesContainer from "../simulator/sketchesContainer";
-import SelectionsContainer from "../simulator/selectionContainer";
-import SoulmatesContainer from "../simulator/soulmatesContainer";
-import UserContainer from "../simulator/userContainer.js";
-import isElectron from "../simulator/utils/isElectron";
-import { Router, HashRouter, Route, Switch } from "react-router-dom";
-import history from "../utils/history";
+
+import SelectionsContainer from "~/containers/selectionContainer";
+import Simulator from "../simulator";
+import SketchesContainer from "~/containers/sketchesContainer";
+import SoulmatesContainer from "~/containers/soulmatesContainer";
 import Titlebar from "./titlebar";
+import UserContainer from "~/containers/userContainer.js";
+import history from "../utils/history";
+import { hot } from "react-hot-loader";
+import isElectron from "../simulator/utils/isElectron";
+import { useContainer } from "unstated-next";
 
 const SpecificRouter = isElectron() ? HashRouter : Router;
 

@@ -1,18 +1,20 @@
-import React, { useState, useEffect } from "react";
-import Emojify from "react-emojione";
-import keyBy from "lodash/keyBy";
-import groupBy from "lodash/groupBy";
-import map from "lodash/map";
-import history from "../utils/history";
-import { FiCircle, FiCheckCircle } from "react-icons/fi";
-import { AiOutlinePlusCircle } from "react-icons/ai";
-import Logo from "./logo.svg";
-import ListItem, { ListItemGroup } from "./ListItem";
-import { useContainer } from "unstated-next";
-import SketchesContainer from "./sketchesContainer";
-import SoulmatesContainer from "./soulmatesContainer";
-import isElectron from "./utils/isElectron";
 import "./List.css";
+
+import { FiCheckCircle, FiCircle } from "react-icons/fi";
+import ListItem, { ListItemGroup } from "./ListItem";
+import React, { useEffect, useState } from "react";
+
+import { AiOutlinePlusCircle } from "react-icons/ai";
+import Emojify from "react-emojione";
+import Logo from "./logo.svg";
+import SketchesContainer from "~/containers/sketchesContainer";
+import SoulmatesContainer from "~/containers/soulmatesContainer";
+import groupBy from "lodash/groupBy";
+import history from "../utils/history";
+import isElectron from "./utils/isElectron";
+import keyBy from "lodash/keyBy";
+import map from "lodash/map";
+import { useContainer } from "unstated-next";
 
 const List = ({ selectedSketch, userDetails, flashMode, setFlashMode }) => {
   const { sketches, allSketches, createSketch } = useContainer(
