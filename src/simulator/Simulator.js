@@ -10,7 +10,7 @@ const cleanError = (error) =>
     .replace(/Error during build: exit status 1/g, "");
 
 const Simulator = ({ build, rows, cols, height, width }) => {
-  const [paused, setPaused] = useState(false);
+  const [paused, setPaused] = useState(!document.hasFocus());
 
   const canvas = useRef();
   const compilerOutputDiv = useRef();
@@ -43,12 +43,8 @@ const Simulator = ({ build, rows, cols, height, width }) => {
   }, [paused, build]);
 
   useEffect(() => {
-    window.addEventListener("blur", () => {
-      setPaused(true);
-    });
-    window.addEventListener("focus", () => {
-      setPaused(false);
-    });
+    window.addEventListener("blur", () => setPaused(true));
+    window.addEventListener("focus", () => setPaused(false));
   }, []);
 
   const stop = () => {
