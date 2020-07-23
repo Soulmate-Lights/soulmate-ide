@@ -1,3 +1,5 @@
+import "./titlebar.css";
+
 import { AiOutlineHome } from "react-icons/ai";
 import { GoDesktopDownload } from "react-icons/go";
 import { Link } from "react-router-dom";
@@ -13,6 +15,7 @@ const Titlebar = ({ userDetails, login, logout }) => (
           <img src={userDetails?.picture} />
           {userDetails?.name}
           <a className="logout button" onClick={logout}>
+            <MdAccountCircle />
             Log out
           </a>
         </>
