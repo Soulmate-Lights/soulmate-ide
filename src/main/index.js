@@ -17,7 +17,9 @@ const SpecificRouter = isElectron() ? HashRouter : Router;
 
 const Main = () => {
   useEffect(() => {
-    window.ipcRenderer?.on("focus", (event, isFocused) => setFocus(isFocused));
+    if (window.ipcRenderer) {
+      window.ipcRenderer.on("focus", (event, isFocused) => setFocus(isFocused));
+    }
   }, []);
 
   const [focus, setFocus] = useState(true);
@@ -57,16 +59,18 @@ const Main = () => {
   );
 };
 
-const HotMain = hot(module)((params) => (
+const HotMain = hot(module)((params) => <Main {...params} />);
+
+const Wrap = (params) => (
   <SelectionsContainer.Provider>
     <SketchesContainer.Provider>
       <UserContainer.Provider>
         <SoulmatesContainer.Provider>
-          <Main {...params} />
+          <HotMain {...params} />
         </SoulmatesContainer.Provider>
       </UserContainer.Provider>
     </SketchesContainer.Provider>
   </SelectionsContainer.Provider>
-));
+);
 
-export default HotMain;
+export default Wrap;
