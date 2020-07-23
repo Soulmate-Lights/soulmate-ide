@@ -1,12 +1,12 @@
 window.ipcRenderer = require("electron").ipcRenderer;
 
-var remote = require("electron").remote;
+const remote = require("electron").remote;
 window.remote = remote;
 
-var electronFs = remote.require("fs");
+const electronFs = remote.require("fs");
 window.fs = electronFs;
 
-var electron = require("electron");
+const electron = require("electron");
 window.electron = electron;
 
 const auth = remote.require("./auth");
