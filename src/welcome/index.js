@@ -7,7 +7,6 @@ import Simulator from "~/simulator/Simulator";
 import UserContainer from "~/containers/userContainer";
 import { buildHex } from "~/utils/compiler/compile";
 import examples from "./examples";
-import history from "~/utils/history";
 import { MdAccountCircle } from "react-icons/md";
 import { preparePreviewCode } from "~/utils/code";
 import { useContainer } from "unstated-next";
@@ -15,7 +14,16 @@ import { useContainer } from "unstated-next";
 const Welcome = () => {
   const { userDetails, login } = useContainer(UserContainer);
   const [index, setIndex] = useState(0);
-  const [build, setBuild] = useState({});
+  const [builds, setBuilds] = useState({});
+
+  const saveBuild = (id, build) => {
+    setBuilds({
+      ...builds,
+      [id]: build,
+    });
+  };
+
+  const build = builds[index];
   const sampleCode = examples[index];
 
   const config = {
@@ -23,20 +31,21 @@ const Welcome = () => {
     cols: 30,
   };
 
-  const save = async (code) => {
-    setBuild(undefined);
+  const save = async (index, code) => {
+    saveBuild(index, undefined);
     const preparedCode = preparePreviewCode(code, config.rows, config.cols);
     const newBuild = await buildHex(preparedCode);
-    setBuild(newBuild);
+    saveBuild(index, newBuild);
   };
 
   useEffect(() => {
-    save(sampleCode);
+    save(index, sampleCode);
   }, []);
 
   useEffect(() => {
-    setBuild(undefined);
-    save(sampleCode);
+    setTimeout(() => {
+      save(index, examples[index]);
+    }, 1);
   }, [index]);
 
   return (
@@ -78,7 +87,9 @@ const Welcome = () => {
           <>
             <Editor
               key={index}
-              onSave={save}
+              onSave={(code) => {
+                save(index, code);
+              }}
               build={build}
               sketch={{
                 config: config,
