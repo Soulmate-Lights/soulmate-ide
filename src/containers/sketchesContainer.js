@@ -78,6 +78,7 @@ const SketchesContainer = () => {
   };
 
   const persistCode = (id, code) => {
+    if (!id) return;
     updateSketch(id, {
       dirtyCode: code,
       dirty: getSketch(id).code !== code,

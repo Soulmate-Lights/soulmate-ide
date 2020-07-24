@@ -2,13 +2,46 @@
   margin: auto auto;
   text-align: center;
   flex-grow: 1;
-  padding: 80px 0 40px 0;
+  padding: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   overflow: auto;
   height: 100%;
+}
+
+.welcome-header {
+  font-size: 11px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 28px;
+}
+
+.welcome-header > div {
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+
+.welcome-header svg {
+  width: 24px;
+  height: 24px;
+  margin-right: 8px;
+}
+
+.welcome-editor {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+  width: 100%;
+  display: flex;
+  flex-grow: 1;
+  flex-direction: row;
+  text-align: left;
 }
 
 .welcome .get-started {
@@ -19,41 +52,4 @@
 
 .welcome .get-started a {
   margin: 0 8px;
-}
-
-.welcome-sketches {
-  display: flex;
-  flex-wrap: wrap;
-  width: 400px;
-  flex-shrink: 1;
-  overflow: auto;
-  margin: 0 auto;
-}
-
-.welcome-sketch {
-  margin: 10px 10px 10px;
-  display: flex;
-  flex-direction: column;
-  font-size: 12px;
-  width: 80px;
-  overflow: hidden;
-  text-decoration: none;
-  color: inherit;
-}
-
-.welcome-sketch video {
-  transform: rotate(180deg);
-  width: 100%;
-  height: 100%;
-}
-
-.welcome-sketch-video-wrapper {
-  width: 72px;
-  height: 72px;
-  border-radius: 10px;
-  overflow: hidden;
-}
-
-.welcome-sketch-by {
-  font-size: 9px;
 }

@@ -11,6 +11,7 @@ self.addEventListener("message", (e) => {
 });
 
 const start = ({ build, rows, cols }) => {
+  if (!build.hex) return;
   if (runner) runner.stop();
   runner = new AVRRunner(build.hex);
   const matrixController = new WS2812Controller(cols * rows);

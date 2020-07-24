@@ -36,7 +36,7 @@ const formatCode = (code) => {
 //   const editorCode = monacoInstance.current.editor.getModel().getValue();
 // });
 
-const Editor = ({ sketch, build }) => {
+const Editor = ({ sketch, build, onSave }) => {
   const { getSelection, setSelection } = useContainer(SelectionsContainer);
 
   const {
@@ -143,8 +143,12 @@ const Editor = ({ sketch, build }) => {
       }
     }
 
-    buildSketch(sketch.id, editorCode, config);
-    if (shouldSave) save(sketch.id, editorCode, config);
+    if (onSave) {
+      onSave(editorCode);
+    } else {
+      buildSketch(sketch.id, editorCode, config);
+      if (shouldSave) save(sketch.id, editorCode, config);
+    }
   };
 
   const setConfig = (config) => {
@@ -232,14 +236,15 @@ const Editor = ({ sketch, build }) => {
         />
       )}
       <div className="toolbar">
-        <div
-          className={`configure button ${configuring && "pressed"}`}
-          onClick={() => setConfiguring(!configuring)}
-        >
-          <MdSettings />
-          Configure {soulmate?.name || sketch.name}
-        </div>
-
+        {sketch.id && (
+          <div
+            className={`configure button ${configuring && "pressed"}`}
+            onClick={() => setConfiguring(!configuring)}
+          >
+            <MdSettings />
+            Configure {soulmate?.name || sketch.name}
+          </div>
+        )}
         {userDetails && !sketchIsMine(sketch) && (
           <div
             className="button"
@@ -261,7 +266,6 @@ const Editor = ({ sketch, build }) => {
           <BsFillPlayFill />
           {sketchIsMine(sketch) ? "Save" : "Preview"} (CMD+S)
         </div>
-
         {soulmate && (
           <div
             className="button"
