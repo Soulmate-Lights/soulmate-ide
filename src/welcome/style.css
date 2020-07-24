@@ -27,7 +27,7 @@
   display: flex;
 }
 
-.welcome-header svg {
+.welcome-header svg.logo {
   width: 24px;
   height: 24px;
   margin-right: 8px;
@@ -52,4 +52,8 @@
 
 .welcome .get-started a {
   margin: 0 8px;
+}
+
+.welcome-navigation .button {
+  margin-left: 8px;
 }
