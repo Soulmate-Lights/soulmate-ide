@@ -1,20 +1,25 @@
 import "./style.css";
 
-import { Link } from "react-router-dom";
+import { Mode, useLightSwitch } from "use-light-switch";
+
 import Editor from "~/simulator/Editor";
+import { Link } from "react-router-dom";
 import Logo from "~/images/logo.svg";
+import { MdAccountCircle } from "react-icons/md";
 import Simulator from "~/simulator/Simulator";
 import UserContainer from "~/containers/userContainer";
 import { buildHex } from "~/utils/compiler/compile";
 import examples from "./examples";
-import { MdAccountCircle } from "react-icons/md";
 import { preparePreviewCode } from "~/utils/code";
+import screenshotDark from "./dark.png";
+import screenshotLight from "./light.png";
 import { useContainer } from "unstated-next";
 
 const Welcome = () => {
   const { userDetails, login } = useContainer(UserContainer);
   const [index, setIndex] = useState(0);
   const [builds, setBuilds] = useState({});
+  const dark = useLightSwitch() === Mode.Dark;
 
   const saveBuild = (id, build) => {
     setBuilds({
@@ -57,27 +62,39 @@ const Welcome = () => {
         </div>
 
         <div className="welcome-navigation">
-          <a
-            disabled={!examples[index - 1]}
-            onClick={() => setIndex(index - 1)}
-            className="button"
-          >
-            Previous example
-          </a>
-          <a
-            disabled={!examples[index]}
-            onClick={() => {
-              setIndex(index + 1);
-            }}
-            className="button"
-          >
-            Next example
-          </a>
+          {index < examples.length ? (
+            <a
+              disabled={!examples[index - 1]}
+              onClick={() => {
+                if (index > 0) setIndex(index - 1);
+              }}
+              className="button"
+            >
+              Previous example
+            </a>
+          ) : (
+            <a
+              onClick={() => {
+                setIndex(0);
+              }}
+              className="button"
+            >
+              Start over
+            </a>
+          )}
 
-          {!examples[index + 1] && userDetails && (
-            <Link to="/" className="button">
-              Close the tutorial
-            </Link>
+          {index < examples.length && (
+            <a
+              disabled={!examples[index]}
+              onClick={() => {
+                if (index !== examples.length) {
+                  setIndex(index + 1);
+                }
+              }}
+              className="button"
+            >
+              {index === examples.length - 1 ? "Done!" : "Next example"}
+            </a>
           )}
         </div>
       </div>
@@ -110,12 +127,17 @@ const Welcome = () => {
           <div className="welcome-finished">
             <Logo />
             <h1>That's it!</h1>
-            <p>You're now ready to get started writing LED patterns.</p>
-            <p>Log in to get started:</p>
-            <a onClick={login} className="button">
-              <MdAccountCircle />
-              Log in
-            </a>
+            <p>
+              You're ready to get started writing LED patterns. Log in to create
+              new patterns, and browse the gallery.
+            </p>
+            <p>
+              <a onClick={login} className="button">
+                <MdAccountCircle />
+                Log in
+              </a>
+            </p>
+            <img src={dark ? screenshotDark : screenshotLight} />
           </div>
         )}
       </div>

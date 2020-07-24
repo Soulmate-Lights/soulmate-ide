@@ -21,7 +21,7 @@
   margin-bottom: 20px;
 }
 
-.welcome-header>div {
+.welcome-header > div {
   justify-content: center;
   align-items: center;
   display: flex;
@@ -66,7 +66,12 @@
   width: 100%;
 }
 
-.welcome-finished>p,
-.welcome-finished>svg {
+.welcome-finished > p,
+.welcome-finished > svg {
   margin: 0 0 20px 0;
+}
+
+.welcome-finished img {
+  max-width: 80%;
+  max-height: 50%;
 }
