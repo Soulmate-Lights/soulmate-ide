@@ -96,8 +96,9 @@ void draw() {
   EVERY_N_MILLISECONDS(20) {
     for (int i = 0; i < numberOfSparkles; i++) {
       int pos = random16(N_LEDS);
-      if (!Soulmate.leds[pos]) {
-        Soulmate.leds[pos] = CHSV(hue + (pos / 10), 255, 255);
+
+      if (!leds[pos]) {
+        leds[pos] = CHSV(hue + (pos / 10), 255, 255);
       }
     }
   }
@@ -106,7 +107,7 @@ void draw() {
     hue -= 1;
   }
 
-  fade_raw(Soulmate.leds, N_LEDS, 4);
+  fade_raw(leds, N_LEDS, 4);
 }`,
   `// OK, you're good to go!
 // Hit the "Log in" to log in and start making new patterns.
@@ -132,9 +133,9 @@ void draw() {
       if (index < 0) break;
 
       float hue = x * beatsin16(10, 1, 10) + offsetY;
-      Soulmate.leds[index] = CHSV(hue, 200, sin8(x * 30 + offsetX));
+      leds[index] = CHSV(hue, 200, sin8(x * 30 + offsetX));
       hue = y * 3 + offsetX;
-      Soulmate.leds[index] += CHSV(hue, 200, sin8(y * 30 + offsetY));
+      leds[index] += CHSV(hue, 200, sin8(y * 30 + offsetY));
     }
   }
 }`,
