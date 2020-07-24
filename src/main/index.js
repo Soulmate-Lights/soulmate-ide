@@ -50,7 +50,7 @@ const Main = () => {
                 },
               }) => (
                 <>
-                  {!userDetails && <Redirect to="/welcome" />}
+                  {userDetails === false && <Redirect to="/welcome" />}
                   <Simulator id={parseInt(id)} />
                 </>
               )}

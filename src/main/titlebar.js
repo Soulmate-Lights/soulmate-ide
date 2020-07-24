@@ -1,5 +1,6 @@
 import "./titlebar.css";
 
+import { Link } from "react-router-dom";
 import { GoDesktopDownload } from "react-icons/go";
 import { MdAccountCircle } from "react-icons/md";
 import isElectron from "~/utils/isElectron";

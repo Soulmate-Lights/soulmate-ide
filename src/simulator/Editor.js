@@ -245,7 +245,7 @@ const Editor = ({ sketch, build, onSave }) => {
             Configure {soulmate?.name || sketch.name}
           </div>
         )}
-        {userDetails && !sketchIsMine(sketch) && (
+        {userDetails && sketch.id && !sketchIsMine(sketch) && (
           <div
             className="button"
             onClick={async () => {

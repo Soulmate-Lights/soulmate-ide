@@ -26,11 +26,16 @@ const UserContainer = () => {
   useEffect(() => {
     if (localStorage.loginSaved) {
       getTokenOnStartup().then(() => {
+        delete localStorage.loginPending;
         fetchUser();
       });
     } else if (localStorage.token) {
+      delete localStorage.loginPending;
       fetchUser();
     } else {
+      if (!localStorage.loginPending) {
+        setUserDetails(false);
+      }
       reset();
     }
   }, [localStorage.loginSaved, localStorage.token]);

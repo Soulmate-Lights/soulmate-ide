@@ -46,8 +46,8 @@
 }
 
 .titlebar .button svg {
-  width: 12px;
-  height: 12px;
+  /* width: 12px; */
+  /* height: 12px; */
 }
 
 .dark .titlebar {

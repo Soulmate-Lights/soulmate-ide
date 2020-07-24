@@ -12,13 +12,13 @@
 }
 
 .welcome-header {
-  font-size: 11px;
+  font-size: 18px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  margin-bottom: 28px;
+  margin-bottom: 20px;
 }
 
 .welcome-header>div {
@@ -56,4 +56,17 @@
 
 .welcome-navigation .button {
   margin-left: 8px;
+}
+
+.welcome-finished {
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.welcome-finished>p,
+.welcome-finished>svg {
+  margin: 0 0 20px 0;
 }

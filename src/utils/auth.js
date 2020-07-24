@@ -18,6 +18,7 @@ if (!isElectron() && !window.auth && !auth0) {
 
     const query = window.location.search;
     if (query.includes("code=") && query.includes("state=")) {
+      localStorage.loginPending = true;
       await auth0.handleRedirectCallback();
 
       const claim = await auth0?.getIdTokenClaims();
@@ -73,8 +74,11 @@ export const tokenProperties = async () => {
 
 export const triggerLogin = async () => {
   if (window.auth) {
-    return await auth.login();
+    // Electron
+    await auth.login();
+    history.push("/");
   } else {
+    // Browser
     await auth0.loginWithRedirect({
       redirect_uri: window.location.origin + "/auth",
     });
