@@ -1,4 +1,4 @@
-import { HashRouter, Route, Router, Switch } from "react-router-dom";
+import { HashRouter, Redirect, Route, Router, Switch } from "react-router-dom";
 import { Mode, useLightSwitch } from "use-light-switch";
 
 import SelectionsContainer from "~/containers/selectionContainer";
@@ -49,7 +49,12 @@ const Main = () => {
                 match: {
                   params: { id },
                 },
-              }) => <Simulator id={parseInt(id)} />}
+              }) => (
+                <>
+                  {!userDetails && <Redirect to="/welcome" />}
+                  <Simulator id={parseInt(id)} />
+                </>
+              )}
             />
           </Switch>
         </div>
