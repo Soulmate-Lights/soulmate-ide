@@ -1,9 +1,7 @@
 import "./style.css";
 
 import Editor from "~/simulator/Editor";
-import { Link } from "react-router-dom";
 import Logo from "~/images/logo.svg";
-import { MdAccountCircle } from "react-icons/md";
 import Simulator from "~/simulator/Simulator";
 import UserContainer from "~/containers/userContainer";
 import { buildHex } from "~/utils/compiler/compile";
@@ -12,10 +10,14 @@ import { preparePreviewCode } from "~/utils/code";
 import { useContainer } from "unstated-next";
 
 const examples = [
-  `void draw() {
-  // N_LEDS: total number of LEDs (LED_COLS * LED_ROWS)
+  `// Welcome to the Soulmate IDE!
+// Let's go through a few easy examples to get started.
+
+// This draw() function is called repeatedly while your Soulmate is on.
+void draw() {
+  // N_LEDS is the total number of LEDs (LED_COLS * LED_ROWS)
   for (int index = 0; index < N_LEDS; index++) {
-    // leds: the LED array
+    // leds is the LED array, and CRGB::Blue is the FastLED color we want
     leds[index] = CRGB::Blue;
   }
 }`,
@@ -57,7 +59,7 @@ void draw() {
 
   for (int x = 0; x < COLS; x++) {
     for (int y = 0; y < ROWS; y++) {
-      // uint16_t gridIndexHorizontal(x, y) gives us the index of a given x/y coordinate
+      // gridIndexHorizontal tells us the index of a given X/Y coordinate
       int index = gridIndexHorizontal(x, y);
 
       // Let's take the X and Y values, and add them together to get the hue
@@ -83,11 +85,32 @@ void draw() {
     }
   }
 }`,
+  `int hue = 50;
+
+void draw() {
+  // 6 beats per minute, between 1 and 10
+  int numberOfSparkles = beatsin16(6, 1, 10);
+
+  EVERY_N_MILLISECONDS(20) {
+    for (int i = 0; i < numberOfSparkles; i++) {
+      int pos = random16(N_LEDS);
+      if (!Soulmate.leds[pos]) {
+        Soulmate.leds[pos] = CHSV(hue + (pos / 10), 255, 255);
+      }
+    }
+  }
+
+  EVERY_N_MILLISECONDS(40) {
+    hue -= 1;
+  }
+
+  fade_raw(Soulmate.leds, N_LEDS, 4);
+}`,
 ];
 
 const Welcome = () => {
   const [index, setIndex] = useState(0);
-  const { userDetails, login } = useContainer(UserContainer);
+  const { userDetails } = useContainer(UserContainer);
   const [build, setBuild] = useState({});
   const sampleCode = examples[index];
 
@@ -96,8 +119,8 @@ const Welcome = () => {
   }
 
   const config = {
-    rows: 20,
-    cols: 20,
+    rows: 30,
+    cols: 30,
   };
 
   const save = async (code) => {
