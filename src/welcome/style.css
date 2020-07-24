@@ -21,7 +21,7 @@
   margin-bottom: 28px;
 }
 
-.welcome-header > div {
+.welcome-header>div {
   justify-content: center;
   align-items: center;
   display: flex;
@@ -34,7 +34,7 @@
 }
 
 .welcome-editor {
-  border: 1px solid #ddd;
+  border: 1px solid var(--outline-color);
   border-radius: 8px;
   overflow: hidden;
   width: 100%;
