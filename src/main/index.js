@@ -27,7 +27,7 @@ const Main = () => {
   const [focus, setFocus] = useState(true);
   const { userDetails, login, logout } = useContainer(UserContainer);
   const blur = !focus;
-  const dark = useLightSwitch() === Mode.dark;
+  const dark = useLightSwitch() === Mode.Dark;
 
   return (
     <div className={classnames("app-wrapper", { dark, focus, blur })}>
