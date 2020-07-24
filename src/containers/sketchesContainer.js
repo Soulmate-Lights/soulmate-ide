@@ -68,6 +68,15 @@ const SketchesContainer = () => {
 
   // Sketch actions
 
+  const cloneSketch = async (sketch) => {
+    const name = `Copy of ${sketch.name}`;
+    const code = sketch.code;
+    const token = await getToken();
+    const newSketch = await post("/sketches/create", token, { name, code });
+    await fetchSketches();
+    return newSketch;
+  };
+
   const persistCode = (id, code) => {
     updateSketch(id, {
       dirtyCode: code,
@@ -135,23 +144,24 @@ const SketchesContainer = () => {
   };
 
   return {
-    sketches,
     allSketches,
-    sketchIsMine,
-    fetchSketches,
+    builds,
+    buildSketch,
+    cloneSketch,
     createSketch,
     deleteSketch,
-    reset,
+    fetchSketches,
+    getBuild,
     getSketch,
-    buildSketch,
-    builds,
-    save,
     persistCode,
     rename,
+    reset,
+    save,
     selectedSketches,
     setSelectedSketches,
+    sketches,
+    sketchIsMine,
     toggleSketch,
-    getBuild,
   };
 };
 

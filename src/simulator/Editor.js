@@ -3,16 +3,19 @@ import React, { useEffect, useRef, useState } from "react";
 
 import { BsFillPlayFill } from "react-icons/bs";
 import Config from "./config";
+import { FaRegClone } from "react-icons/fa";
 import { FaUsb } from "react-icons/fa";
 import { IoMdCloudUpload } from "react-icons/io";
 import Logo from "~/images/logo.svg";
 import { MdSettings } from "react-icons/md";
 import Monaco from "react-monaco-editor";
 import SelectionsContainer from "~/containers/selectionContainer";
-import SketchesContainer from "~/containers/sketchesContainer.js";
-import SoulmatesContainer from "~/containers/soulmatesContainer.js";
+import SketchesContainer from "~/containers/sketchesContainer";
+import SoulmatesContainer from "~/containers/soulmatesContainer";
+import UserContainer from "~/containers/userContainer";
 import debounce from "lodash/debounce";
 import { emptyCode } from "~/utils/code";
+import history from "~/utils/history";
 import jsBeautifier from "js-beautify";
 import { useContainer } from "unstated-next";
 
@@ -36,9 +39,15 @@ const formatCode = (code) => {
 const Editor = ({ sketch, build }) => {
   const { getSelection, setSelection } = useContainer(SelectionsContainer);
 
-  const { save, buildSketch, persistCode, sketchIsMine } = useContainer(
-    SketchesContainer
-  );
+  const {
+    save,
+    buildSketch,
+    persistCode,
+    sketchIsMine,
+    cloneSketch,
+  } = useContainer(SketchesContainer);
+
+  const { userDetails } = useContainer(UserContainer);
 
   const {
     getSelectedSoulmate,
@@ -230,6 +239,20 @@ const Editor = ({ sketch, build }) => {
           <MdSettings />
           Configure {soulmate?.name || sketch.name}
         </div>
+
+        {userDetails && !sketchIsMine(sketch) && (
+          <div
+            className="button"
+            onClick={async () => {
+              const newSketch = await cloneSketch(sketch);
+              history.push(`/${newSketch.id}`);
+            }}
+          >
+            <FaRegClone />
+            Copy sketch
+          </div>
+        )}
+
         <div
           className="button"
           disabled={!build}

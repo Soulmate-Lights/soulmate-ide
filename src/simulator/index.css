@@ -336,8 +336,8 @@ canvas {
 .button svg {
   position: relative;
   margin-right: 8px;
-  height: 16px;
-  width: 16px;
+  max-height: 16px;
+  max-width: 16px;
 }
 
 .button svg * {
