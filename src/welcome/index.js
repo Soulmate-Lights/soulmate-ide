@@ -41,7 +41,9 @@ const Welcome = () => {
       <div className="welcome-sketches">
         {sketches?.map((sketch) => (
           <Link to={`/${sketch.id}`} className="welcome-sketch" key={sketch.id}>
-            <video src={sketch.video_url} autoPlay muted loop />
+            <div className="welcome-sketch-video-wrapper">
+              <video src={sketch.video_url} autoPlay muted loop />
+            </div>
             <span>{sketch.name}</span>
             <span className="welcome-sketch-by">by {sketch.user.name}</span>
           </Link>
