@@ -130,16 +130,15 @@ const Welcome = () => {
               Previous example
             </a>
           )}
-          {examples[index + 1] ? (
-            <a onClick={() => setIndex(index + 1)} className="button">
-              Next example
-            </a>
-          ) : (
-            <Link className="button" onClick={login}>
-              <MdAccountCircle />
-              Log in
-            </Link>
-          )}
+          <a
+            disabled={!examples[index + 1]}
+            onClick={() => {
+              examples[index + 1] && setIndex(index + 1);
+            }}
+            className="button"
+          >
+            Next example
+          </a>
         </div>
       </div>
 
