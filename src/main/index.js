@@ -18,7 +18,6 @@ const SpecificRouter = isElectron() ? HashRouter : Router;
 
 const Main = () => {
   useEffect(() => {
-    console.log(window.ipcRenderer);
     if (window.ipcRenderer) {
       window.ipcRenderer.on("focus", (event, isFocused) => setFocus(isFocused));
     }

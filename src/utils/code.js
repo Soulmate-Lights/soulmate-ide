@@ -48,6 +48,10 @@ int16_t gridIndexHorizontal(int16_t x, int16_t y) {
   }
 }
 
+uint16_t XY(uint8_t x, uint8_t y) {
+  return gridIndexHorizontal(x, y);
+}
+
 void setup() {
   FastLED.addLeds<NEOPIXEL, DATA_PIN>(Soulmate.leds, N_LEDS);
   FastLED.setBrightness(255);
@@ -125,6 +129,10 @@ ${
 }
 
 #include <Soulmate.h>
+
+int16_t XY(int16_t x, int16_t y) {
+  return gridIndexHorizontal(x, y);
+}
 
 ${translation}
 
