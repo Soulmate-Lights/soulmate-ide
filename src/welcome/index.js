@@ -8,7 +8,7 @@ import history from "~/utils/history";
 import { useContainer } from "unstated-next";
 
 const Welcome = () => {
-  const { createSketch } = useContainer(SketchesContainer);
+  const { createSketch, sketches } = useContainer(SketchesContainer);
   const { userDetails, login } = useContainer(UserContainer);
 
   const add = async () => {
@@ -37,6 +37,16 @@ const Welcome = () => {
           Tutorial
         </Link>
       </p>
+
+      <div className="welcome-sketches">
+        {sketches?.map((sketch) => (
+          <Link to={`/${sketch.id}`} className="welcome-sketch" key={sketch.id}>
+            <video src={sketch.video_url} autoPlay muted loop />
+            <span>{sketch.name}</span>
+            <span className="welcome-sketch-by">by {sketch.user.name}</span>
+          </Link>
+        ))}
+      </div>
     </div>
   );
 };

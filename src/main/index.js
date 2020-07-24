@@ -16,8 +16,9 @@ import { useContainer } from "unstated-next";
 
 const SpecificRouter = isElectron() ? HashRouter : Router;
 
-const Main = hot(module)(() => {
+const Main = () => {
   useEffect(() => {
+    console.log(window.ipcRenderer);
     if (window.ipcRenderer) {
       window.ipcRenderer.on("focus", (event, isFocused) => setFocus(isFocused));
     }
@@ -55,14 +56,16 @@ const Main = hot(module)(() => {
       </SpecificRouter>
     </div>
   );
-});
+};
+
+const HotMain = hot(module)((params) => <Main {...params} />);
 
 const Wrap = (params) => (
   <SelectionsContainer.Provider>
     <SketchesContainer.Provider>
       <UserContainer.Provider>
         <SoulmatesContainer.Provider>
-          <Main {...params} />
+          <HotMain {...params} />
         </SoulmatesContainer.Provider>
       </UserContainer.Provider>
     </SketchesContainer.Provider>
