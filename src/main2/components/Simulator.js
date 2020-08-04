@@ -2,7 +2,7 @@ import { BsFillPauseFill, BsPlayFill } from "react-icons/bs";
 
 import Logo from "~/images/logo.svg";
 
-require("./simulator.css");
+// require("./simulator.css");
 
 let worker;
 
@@ -12,7 +12,15 @@ const cleanError = (error) =>
     .replace(/ In function 'void Pattern::draw\(\)':\n/g, "")
     .replace(/Error during build: exit status 1/g, "");
 
-const Simulator = ({ build, rows, cols, height, width, className }) => {
+const Simulator = ({
+  build,
+  rows,
+  cols,
+  height,
+  width,
+  className = "",
+  style,
+}) => {
   const [paused, setPaused] = useState(!document.hasFocus());
 
   const canvas = useRef();
@@ -84,43 +92,50 @@ const Simulator = ({ build, rows, cols, height, width, className }) => {
   }, [serialOutput]);
 
   return (
-    <div className="simulator">
-      <div onClick={() => setPaused(!paused)} className="pause button">
-        {paused ? <BsPlayFill /> : <BsFillPauseFill />}
-      </div>
-
-      {!build && (
-        <div
-          style={{
-            width: cols * 10,
-            justifyContent: "center",
-            display: "flex",
-          }}
-        >
-          <Logo className="loader" />
-        </div>
-      )}
-
-      {build && (
-        <div className="canvas-wrapper">
-          <canvas
-            width={width}
-            height={height}
-            style={{ width, height }}
-            ref={canvas}
+    <div
+      style={style}
+      className={`${className} relative flex flex-grow flex-shrink min-h-0`}
+    >
+      {build ? (
+        <>
+          <span className="inline-flex rounded-md shadow-sm top-4 right-4 absolute">
+            <button
+              onClick={() => setPaused(!paused)}
+              type="button"
+              className="inline-flex items-center px-3 py-2 border border-gray-300 text-sm leading-4 font-medium rounded-md text-gray-700 bg-white hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150"
+            >
+              {paused ? <BsPlayFill /> : <BsFillPauseFill />}
+            </button>
+          </span>
+          <div className="flex justify-center align-center max-h-full p-10">
+            <canvas
+              width={cols * 10}
+              height={rows * 10}
+              // style={{ width: cols * 10, height: rows * 10, maxHeight: "100%" }}
+              ref={canvas}
+            />
+          </div>
+          {serialOutput && (
+            <div className="serial-output" ref={compilerOutputDiv}>
+              <pre className="serial-output-text">
+                {serialOutputRef.current}
+              </pre>
+            </div>
+          )}
+          {build?.stderr && (
+            <div className="compiler-output">
+              <pre className="compiler-output-text">
+                {cleanError(build.stderr)}
+              </pre>
+            </div>
+          )}
+        </>
+      ) : (
+        <div className="justify-center items-center flex flex-grow">
+          <Logo
+            className="animate-spin duration-2000 /animate-spin-slow w-8"
+            style={{ animationDuration: "2s" }}
           />
-        </div>
-      )}
-
-      {serialOutput && (
-        <div className="serial-output" ref={compilerOutputDiv}>
-          <pre className="serial-output-text">{serialOutputRef.current}</pre>
-        </div>
-      )}
-
-      {build?.stderr && (
-        <div className="compiler-output">
-          <pre className="compiler-output-text">{cleanError(build.stderr)}</pre>
         </div>
       )}
     </div>

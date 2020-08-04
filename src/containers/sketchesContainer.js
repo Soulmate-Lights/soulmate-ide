@@ -60,6 +60,7 @@ const SketchesContainer = () => {
   };
 
   const getSketch = (id) => {
+    id = parseInt(id);
     return (
       sketches?.find((s) => s.id === id) ||
       allSketches?.find((s) => s.id === id)

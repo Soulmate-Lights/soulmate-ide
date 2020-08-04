@@ -1,9 +1,6 @@
 import { FiCloud, FiFolder, FiHome, FiSmile } from "react-icons/fi";
 import { Link, NavLink, useLocation } from "react-router-dom";
 
-import classnames from "classnames";
-import history from "~/utils/history";
-
 const iconClass =
   "mr-3 h-6 w-6 text-gray-400 group-hover:text-gray-300 group-focus:text-gray-300 transition ease-in-out duration-150";
 

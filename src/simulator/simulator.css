@@ -1,7 +1,7 @@
 .simulator {
   display: flex;
   position: relative;
-  /* flex-grow: 1; */
+  flex-grow: 1;
   min-width: 300px;
   background: url("./so-white.png");
   flex-direction: row;
