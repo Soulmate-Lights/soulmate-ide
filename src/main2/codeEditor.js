@@ -70,6 +70,7 @@ const codeEditor = ({
   const save = () => {
     // Build for the simulator
     const monacoEditor = monacoInstance.current.editor;
+    if (!monacoEditor) return;
     let editorCode = monacoEditor?.getModel().getValue();
 
     if (formatCheckboxRef.current.checked) {

@@ -18,7 +18,14 @@ const Editor = ({ id }) => {
   const selection = getSelection(id);
   const build = getBuild(sketch, config);
   let code = sketch.dirtyCode || sketch.code || emptyCode;
-  if (!build) buildSketch(sketch.id, code, config);
+  // if (!build) buildSketch(sketch.id, code, config);
+
+  useEffect(() => {
+    if (!build) {
+      buildSketch(sketch.id, code, config);
+    }
+  }, [build]);
+
   const dirty = sketch.dirtyCode !== sketch.code;
 
   return (
@@ -40,9 +47,11 @@ const Editor = ({ id }) => {
       <div className="flex flex-row flex-grow w-full flex-shrink min-h-0">
         <CodeEditor
           selection={selection}
-          onChangeSelection={(selection) => setSelection(sketch.id, selection)}
           className="flex-grow flex-shrink relative min-w-0 bg-white"
           code={code}
+          onChangeSelection={(selection) => {
+            setSelection(sketch.id, selection);
+          }}
           onChange={(code) => {
             persistCode(sketch.id, code);
           }}
