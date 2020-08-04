@@ -58,7 +58,6 @@ const Editor = ({ id }) => {
           rows={14}
           cols={14}
           className="flex flex-col"
-          style={{ maxWidth: 300 }}
         />
       </div>
     </div>

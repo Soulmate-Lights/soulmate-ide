@@ -94,7 +94,7 @@ body {
   overflow: none;
 }
 
-canvas {
+.simulator canvas {
   width: 400px;
   height: 400px;
 }

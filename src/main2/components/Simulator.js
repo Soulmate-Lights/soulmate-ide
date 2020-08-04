@@ -85,7 +85,7 @@ const Simulator = ({ build, rows, cols, className = "", style }) => {
 
   return (
     <div
-      style={style}
+      style={{ ...style, maxWidth: 300 }}
       className={`${className} relative flex flex-grow flex-shrink min-h-0 overflow-auto`}
     >
       {build ? (
@@ -121,8 +121,8 @@ const Simulator = ({ build, rows, cols, className = "", style }) => {
         <div
           className="m-10 justify-center items-center flex flex-grow"
           style={{
-            width: cols * 10,
-            height: rows * 10,
+            maxWidth: cols * 10,
+            maxHeight: rows * 10,
           }}
         >
           <Logo
