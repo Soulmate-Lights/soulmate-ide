@@ -42,7 +42,6 @@ const Menu = () => {
         <NavLink
           to="/my-patterns"
           location={location}
-          exact
           activeClassName={selectedClass}
           className={linkClass}
         >
@@ -51,7 +50,6 @@ const Menu = () => {
         </NavLink>
         <NavLink
           to="/gallery"
-          exact
           location={location}
           activeClassName={selectedClass}
           className={linkClass}
