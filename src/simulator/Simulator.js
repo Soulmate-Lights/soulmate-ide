@@ -1,5 +1,7 @@
+import { BsFillPauseFill, BsPlayFill } from "react-icons/bs";
+
 import Logo from "~/images/logo.svg";
-import { BsPlayFill, BsFillPauseFill } from "react-icons/bs";
+require("./simulator.css");
 
 let worker;
 

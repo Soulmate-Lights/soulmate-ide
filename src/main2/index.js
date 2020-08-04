@@ -1,6 +1,7 @@
 import { HashRouter, Redirect, Route, Router, Switch } from "react-router-dom";
 
 import Dashboard from "./dashboard";
+import Editor from "./editor";
 import Gallery from "./gallery";
 import Menu from "./menu";
 import SelectionsContainer from "~/containers/selectionContainer";
@@ -42,7 +43,14 @@ const Main = () => {
           <Route path="/my-patterns/:id?">
             <Gallery mine />
           </Route>
-          <Route path="/gallery/:id">i am a pattern</Route>
+          <Route
+            path="/gallery/:id"
+            render={({
+              match: {
+                params: { id },
+              },
+            }) => <Editor id={id} />}
+          />
           <Route exact path="/gallery">
             <Gallery />
           </Route>

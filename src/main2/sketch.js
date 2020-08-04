@@ -5,7 +5,7 @@ const Sketch = ({ sketch }) => (
     key={sketch.id}
     className="col-span-1 flex flex-col text-center bg-white rounded-lg shadow"
   >
-    <Link className="flex-1 flex flex-col p-4" to={`/gallery/{sketch.id}`}>
+    <Link className="flex-1 flex flex-col p-4" to={`/gallery/${sketch.id}`}>
       <video
         muted
         loop
