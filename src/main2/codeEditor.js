@@ -54,8 +54,12 @@ const codeEditor = ({
   const resizeEditor = () => {
     const monacoEditor = monacoInstance.current.editor;
     monacoEditor?.layout();
+    setTimeout(() => {
+      const monacoEditor = monacoInstance.current.editor;
+      monacoEditor?.layout();
+    }, 10);
   };
-  const debouncedResize = debounce(resizeEditor, 100);
+  const debouncedResize = debounce(resizeEditor, 10);
 
   useEffect(() => {
     window.addEventListener("resize", debouncedResize);
@@ -156,7 +160,7 @@ const codeEditor = ({
       />
       <label
         htmlFor="auto-format"
-        className="absolute top-4 right-4 text-xs flex flex-row items-center justify-center"
+        className="absolute top-2 right-8 text-xs flex flex-row items-center justify-center"
       >
         Auto-format
         <input
@@ -166,7 +170,7 @@ const codeEditor = ({
           ref={formatCheckboxRef}
           onChange={(e) => {
             localStorage.autoFormat = e.target.checked;
-            buildCode(false);
+            // buildCode(false);
           }}
         />
       </label>

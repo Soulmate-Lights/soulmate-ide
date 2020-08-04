@@ -1,12 +1,13 @@
 import { Link } from "react-router-dom";
+import React from "react";
 import compact from "lodash/compact";
 
 const Header = ({ title, sections, actions }) => (
-  <div className="p-6">
-    <div>
-      <nav className="hidden sm:flex items-center text-sm leading-5 font-medium">
+  <div className="px-4 pt-6 pb-4 border-b flex">
+    <div className="flex flex-col">
+      <nav className="hidden sm:flex items-center text-xs leading-1 font-sm">
         {compact(sections).map(({ title, to }, i) => (
-          <>
+          <React.Fragment key={i}>
             <Link
               key={to}
               to={to}
@@ -27,34 +28,35 @@ const Header = ({ title, sections, actions }) => (
                 />
               </svg>
             )}
-          </>
+          </React.Fragment>
         ))}
       </nav>
-    </div>
-    <div className="mt-2 md:flex md:items-center md:justify-between">
-      <div className="flex-1 min-w-0">
-        <h2 className="text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:leading-9 sm:truncate">
-          {title}
-        </h2>
-      </div>
 
-      {actions && (
-        <div className="mt-4 flex-shrink-0 flex md:mt-0 md:ml-4">
-          {compact(actions).map(({ title, onClick, className, ...rest }) => (
-            <span key={title} className="shadow-sm rounded-md">
-              <button
-                onClick={onClick}
-                type="button"
-                className={`inline-flex items-center px-4 py-2 border border-gray-300 text-sm leading-5 font-medium rounded-md text-gray-700 bg-white hover:text-gray-500 ()):outline-none focus:shadow-outline-blue focus:border-blue-300 active:text-gray-800 active:bg-gray-50 transition duration-150 ease-in-out ${className}`}
-                {...rest}
-              >
-                {title}
-              </button>
-            </span>
-          ))}
+      <div className="md:flex md:items-center md:justify-between">
+        <div className="flex-1 min-w-0">
+          <h2 className="text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:leading-9 sm:truncate">
+            {title}
+          </h2>
         </div>
-      )}
+      </div>
     </div>
+
+    {actions && (
+      <div className="flex flex-shrink-0 ml-auto items-center">
+        {compact(actions).map(({ title, onClick, className, ...rest }) => (
+          <span key={title} className="shadow-sm rounded-md">
+            <button
+              onClick={onClick}
+              type="button"
+              className={`inline-flex items-center px-4 py-2 border border-gray-300 text-sm leading-5 font-medium rounded-md text-gray-700 bg-white hover:text-gray-500 ()):outline-none focus:shadow-outline-blue focus:border-blue-300 active:text-gray-800 active:bg-gray-50 transition duration-150 ease-in-out ${className}`}
+              {...rest}
+            >
+              {title}
+            </button>
+          </span>
+        ))}
+      </div>
+    )}
   </div>
 );
 

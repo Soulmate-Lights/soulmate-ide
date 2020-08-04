@@ -11,27 +11,26 @@ const Editor = ({ id }) => {
   const { getSelection, setSelection } = useContainer(SelectionsContainer);
   const { save, persistCode } = useContainer(SketchesContainer);
 
+  const config = { rows: 14, cols: 14 };
+
   const sketch = getSketch(id);
   if (!sketch) return <>Loading...</>;
   const selection = getSelection(id);
-  const build = getBuild(sketch, sketch.config);
-
+  const build = getBuild(sketch, config);
   let code = sketch.dirtyCode || sketch.code || emptyCode;
-
-  if (!build) {
-    buildSketch(sketch.id, code, sketch.config);
-  }
+  if (!build) buildSketch(sketch.id, code, config);
+  const dirty = sketch.dirtyCode !== sketch.code;
 
   return (
     <div className="flex flex-col flex-grow flex-shrink min-w-0">
       <Header
-        title="Sketch Name"
+        title={sketch.name}
         sections={[
           { title: "Gallery", to: "/gallery" },
           { title: "My patterns", to: "/my-patterns" },
         ]}
         actions={[
-          sketch.dirtyCode && {
+          dirty && {
             title: "Save",
             onClick: () => save(sketch.id, sketch.dirtyCode),
           },
@@ -48,7 +47,7 @@ const Editor = ({ id }) => {
             persistCode(sketch.id, code);
           }}
           onSave={(code) => {
-            // TODO: Combine these two?
+            // TODO: Combine these two into save-and-build in the sketches container?
             save(sketch.id, code);
             buildSketch(sketch.id, code, sketch.config);
           }}
@@ -56,10 +55,10 @@ const Editor = ({ id }) => {
 
         <Simulator
           build={build}
-          rows={70}
-          cols={15}
+          rows={14}
+          cols={14}
           className="flex flex-col"
-          style={{ width: 300 }}
+          style={{ maxWidth: 300 }}
         />
       </div>
     </div>

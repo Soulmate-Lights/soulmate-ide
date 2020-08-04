@@ -13,7 +13,7 @@ const UserDetails = () => {
             <img
               className="inline-block h-9 w-9 rounded-full"
               src={userDetails?.picture}
-              alt
+              alt="avatar"
             />
           </div>
           <div className="ml-3">

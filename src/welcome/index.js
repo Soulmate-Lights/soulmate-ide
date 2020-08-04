@@ -1,4 +1,5 @@
 import "./style.css";
+import "../simulator/index.css";
 
 import { Mode, useLightSwitch } from "use-light-switch";
 

@@ -9,6 +9,7 @@ import SketchesContainer from "~/containers/sketchesContainer";
 import SoulmatesContainer from "~/containers/soulmatesContainer";
 import UserContainer from "~/containers/userContainer";
 import UserDetails from "./userDetails";
+import Welcome from "../welcome";
 import history from "~/utils/history";
 import { hot } from "react-hot-loader";
 import isElectron from "~/utils/isElectron";
@@ -21,7 +22,7 @@ const Main = () => {
       <div className="h-screen flex overflow-hidden bg-gray-100">
         <div
           className="absolute w-full h-8"
-          style={{ "-webkit-app-region": "drag" }}
+          style={{ WebkitAppRegion: "drag" }}
         />
 
         <div className="flex flex-shrink-0">
@@ -38,7 +39,7 @@ const Main = () => {
             <Dashboard />
           </Route>
           <Route exact path="/tutorial">
-            Tutorial
+            <Welcome />
           </Route>
           <Route path="/my-patterns/:id?">
             <Gallery mine />

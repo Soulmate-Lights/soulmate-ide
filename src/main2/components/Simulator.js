@@ -12,15 +12,7 @@ const cleanError = (error) =>
     .replace(/ In function 'void Pattern::draw\(\)':\n/g, "")
     .replace(/Error during build: exit status 1/g, "");
 
-const Simulator = ({
-  build,
-  rows,
-  cols,
-  height,
-  width,
-  className = "",
-  style,
-}) => {
+const Simulator = ({ build, rows, cols, className = "", style }) => {
   const [paused, setPaused] = useState(!document.hasFocus());
 
   const canvas = useRef();
@@ -94,7 +86,7 @@ const Simulator = ({
   return (
     <div
       style={style}
-      className={`${className} relative flex flex-grow flex-shrink min-h-0`}
+      className={`${className} relative flex flex-grow flex-shrink min-h-0 overflow-auto`}
     >
       {build ? (
         <>
@@ -107,13 +99,8 @@ const Simulator = ({
               {paused ? <BsPlayFill /> : <BsFillPauseFill />}
             </button>
           </span>
-          <div className="flex justify-center align-center max-h-full p-10">
-            <canvas
-              width={cols * 10}
-              height={rows * 10}
-              // style={{ width: cols * 10, height: rows * 10, maxHeight: "100%" }}
-              ref={canvas}
-            />
+          <div className="flex justify-center items-center p-10 flex-grow">
+            <canvas width={cols * 10} height={rows * 10} ref={canvas} />
           </div>
           {serialOutput && (
             <div className="serial-output" ref={compilerOutputDiv}>
@@ -131,7 +118,13 @@ const Simulator = ({
           )}
         </>
       ) : (
-        <div className="justify-center items-center flex flex-grow">
+        <div
+          className="m-10 justify-center items-center flex flex-grow"
+          style={{
+            width: cols * 10,
+            height: rows * 10,
+          }}
+        >
           <Logo
             className="animate-spin duration-2000 /animate-spin-slow w-8"
             style={{ animationDuration: "2s" }}
