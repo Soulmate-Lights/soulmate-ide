@@ -4,10 +4,16 @@ import SelectionsContainer from "./containers/selection";
 import Simulator from "./components/Simulator";
 import SketchesContainer from "./containers/sketches";
 import { emptyCode } from "~/utils/code";
+import history from "~/utils/history";
 import BuildsContainer from "./containers/builds";
 
-const Editor = ({ id }) => {
-  const { getSketch, save, persistCode } = SketchesContainer.useContainer();
+const Editor = ({ id, mine }) => {
+  const {
+    getSketch,
+    save,
+    persistCode,
+    deleteSketch,
+  } = SketchesContainer.useContainer();
   const { getSelection, setSelection } = SelectionsContainer.useContainer();
   const { getBuild } = BuildsContainer.useContainer();
 
@@ -17,25 +23,35 @@ const Editor = ({ id }) => {
   const sketch = getSketch(id);
   if (!sketch) return <>Loading...</>;
 
-  const build = getBuild(sketch.code, rows, cols);
+  const build = getBuild(sketch.code || emptyCode, rows, cols);
 
   const selection = getSelection(id);
   const dirty = sketch.dirtyCode !== sketch.code;
 
   let code = sketch.dirtyCode || sketch.code || emptyCode;
 
+  const confirmAndDelete = () => {
+    if (!confirm("Delete this sketch?")) return;
+    setTimeout(() => history.push(`/my-patterns`));
+    deleteSketch(sketch.id);
+  };
+
   return (
     <div className="flex flex-col flex-grow flex-shrink min-w-0">
       <Header
         title={sketch.name}
         sections={[
-          { title: "Gallery", to: "/gallery" },
-          { title: "My patterns", to: "/my-patterns" },
+          !mine && { title: "Gallery", to: "/gallery" },
+          mine && { title: "My patterns", to: "/my-patterns" },
         ]}
         actions={[
           dirty && {
-            title: "Save",
+            title: mine ? "Save" : "Refresh",
             onClick: () => save(sketch.id, sketch.dirtyCode),
+          },
+          mine && {
+            title: "Delete",
+            onClick: confirmAndDelete,
           },
         ]}
       />

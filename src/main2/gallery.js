@@ -3,23 +3,36 @@ import Sketch from "./components/sketch";
 import SketchesContainer from "./containers/sketches";
 
 const Gallery = ({ mine }) => {
-  const { allSketches, sketches } = SketchesContainer.useContainer();
-  const sketchesToShow = mine ? sketches : allSketches;
+  const { allSketches } = SketchesContainer.useContainer();
+  const [search, setSearch] = useState("");
+
+  const filteredSketches = allSketches?.filter((s) =>
+    s.name.toLowerCase().includes(search.toLowerCase())
+  );
 
   return (
     <div className="flex flex-col">
       <Header
-        title="Sketch Name"
-        sections={[
-          { title: "Gallery", to: "/gallery" },
-          { title: "My patterns", to: "/my-patterns" },
+        title="Gallery"
+        actions={[
+          <input
+            key="search"
+            autoFocus
+            onChange={(e) => setSearch(e.target.value)}
+            placeholder="Search"
+            className="form-input block w-full sm:text-sm sm:leading-5"
+          />,
         ]}
       />
 
       <div className="px-4 py-4 overflow-auto flex-shrink">
-        <ul className="grid grid-cols-1 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
-          {sketchesToShow?.map((sketch) => (
-            <Sketch key={sketch.id} sketch={sketch} />
+        <ul className="grid grid-cols-1 gap-4 sm:grid-cols-3 md:grid-cols-6 lg:grid-cols-8">
+          {filteredSketches?.map((sketch) => (
+            <Sketch
+              key={sketch.id}
+              sketch={sketch}
+              to={mine ? `/my-patterns/${sketch.id}` : `/gallery/${sketch.id}`}
+            />
           ))}
         </ul>
       </div>

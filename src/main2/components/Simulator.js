@@ -83,6 +83,15 @@ const Simulator = ({ build, rows, cols, className = "", style }) => {
     }
   }, [serialOutput]);
 
+  let width = cols * 10;
+  let height = rows * 10;
+
+  if (width < 250) {
+    let ratio = width / height;
+    width = 250;
+    height = width * ratio;
+  }
+
   return (
     <div
       style={{ ...style, maxWidth: 300, minWidth: 300 }}
@@ -101,8 +110,8 @@ const Simulator = ({ build, rows, cols, className = "", style }) => {
           </span>
           <div className="flex justify-center items-center p-10 flex-grow">
             <canvas
-              width={cols * 10}
-              height={rows * 10}
+              width={width}
+              height={height}
               ref={canvas}
               className="bg-black"
             />

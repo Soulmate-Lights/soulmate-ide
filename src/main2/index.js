@@ -3,6 +3,7 @@ import { HashRouter, Redirect, Route, Router, Switch } from "react-router-dom";
 import Dashboard from "./dashboard";
 import Editor from "./editor";
 import Gallery from "./gallery";
+import MySketches from "./mySketches";
 import Menu from "./menu";
 import SelectionsContainer from "./containers/selection";
 import BuildsContainer from "./containers/builds";
@@ -22,7 +23,7 @@ const Main = () => {
     <SpecificRouter history={history}>
       <div className="h-screen flex overflow-hidden bg-gray-100">
         <div
-          className="absolute w-full h-8"
+          className="absolute w-full h-4"
           style={{ WebkitAppRegion: "drag" }}
         />
 
@@ -42,9 +43,17 @@ const Main = () => {
           <Route exact path="/tutorial">
             <Welcome />
           </Route>
-          <Route path="/my-patterns/:id?">
-            <Gallery mine />
+          <Route exact path="/my-patterns">
+            <MySketches />
           </Route>
+          <Route
+            path="/my-patterns/:id"
+            render={({
+              match: {
+                params: { id },
+              },
+            }) => <Editor id={id} mine />}
+          />
           <Route
             path="/gallery/:id"
             render={({
