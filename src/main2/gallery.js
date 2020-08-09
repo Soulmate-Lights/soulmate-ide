@@ -1,10 +1,9 @@
 import Header from "./components/Header";
-import Sketch from "./sketch";
+import Sketch from "./components/sketch";
 import SketchesContainer from "./containers/sketches";
-import { useContainer } from "unstated-next";
 
 const Gallery = ({ mine }) => {
-  const { allSketches, sketches } = useContainer(SketchesContainer);
+  const { allSketches, sketches } = SketchesContainer.useContainer();
   const sketchesToShow = mine ? sketches : allSketches;
 
   return (

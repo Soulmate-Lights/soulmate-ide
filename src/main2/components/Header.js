@@ -44,7 +44,7 @@ const Header = ({ title, sections, actions }) => (
     {actions && (
       <div className="flex flex-shrink-0 ml-auto items-center">
         {compact(actions).map(({ title, onClick, className, ...rest }) => (
-          <span key={title} className="shadow-sm rounded-md">
+          <span key={title} className="shadow-sm rounded-md ml-2">
             <button
               onClick={onClick}
               type="button"

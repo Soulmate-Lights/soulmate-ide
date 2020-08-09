@@ -1,4 +1,4 @@
-import CodeEditor from "./codeEditor";
+import CodeEditor from "./components/codeEditor";
 import Header from "./components/Header";
 import SelectionsContainer from "./containers/selection";
 import Simulator from "./components/Simulator";

@@ -121,9 +121,11 @@ const codeEditor = ({
       save();
     });
 
-    monacoEditor?.onDidChangeCursorSelection(({ selection }) => {
-      onChangeSelection(selection);
-    });
+    if (onChangeSelection) {
+      monacoEditor?.onDidChangeCursorSelection(({ selection }) => {
+        onChangeSelection(selection);
+      });
+    }
   }, []);
 
   useEffect(() => {

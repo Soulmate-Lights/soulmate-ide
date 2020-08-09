@@ -1,9 +1,8 @@
 import { FiLogOut } from "react-icons/fi";
 import UserContainer from "./containers/user";
-import { useContainer } from "unstated-next";
 
 const UserDetails = () => {
-  const { userDetails, login, logout } = useContainer(UserContainer);
+  const { userDetails, logout } = UserContainer.useContainer();
 
   return (
     <div className="flex-shrink-0 flex bg-gray-700 p-4">

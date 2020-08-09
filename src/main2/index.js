@@ -10,7 +10,7 @@ import SketchesContainer from "./containers/sketches";
 import SoulmatesContainer from "./containers/soulmates";
 import UserContainer from "./containers/user";
 import UserDetails from "./userDetails";
-import Welcome from "../welcome";
+import Welcome from "./welcome";
 import history from "~/utils/history";
 import { hot } from "react-hot-loader";
 import isElectron from "~/utils/isElectron";
