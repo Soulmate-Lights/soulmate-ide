@@ -118,25 +118,19 @@ const codeEditor = ({
     const cmdS = monaco.KeyMod.CtrlCmd | monaco.KeyCode.KEY_S;
 
     monacoEditor?.addCommand(cmdS, () => {
-      // onSave();
       save();
     });
 
     monacoEditor?.onDidChangeCursorSelection(({ selection }) => {
-      // setSelection(sketch.id, selection);
       onChangeSelection(selection);
     });
-
-    // if (!build) buildCode();
-
-    // if (getSelection(sketch.id)) {
-    //   monacoEditor.setSelection(getSelection(sketch.id));
-    // }
   }, []);
 
-  if (selection) {
-    monacoInstance.current.editor.setSelection(selection);
-  }
+  useEffect(() => {
+    if (selection) {
+      monacoInstance.current.editor?.setSelection(selection);
+    }
+  }, [selection]);
 
   return (
     <div className={className}>

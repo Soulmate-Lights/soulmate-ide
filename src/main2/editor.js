@@ -1,32 +1,28 @@
 import CodeEditor from "./codeEditor";
 import Header from "./components/Header";
-import SelectionsContainer from "~/containers/selectionContainer";
+import SelectionsContainer from "./containers/selection";
 import Simulator from "./components/Simulator";
-import SketchesContainer from "~/containers/sketchesContainer";
+import SketchesContainer from "./containers/sketches";
 import { emptyCode } from "~/utils/code";
-import { useContainer } from "unstated-next";
+import BuildsContainer from "./containers/builds";
 
 const Editor = ({ id }) => {
-  const { getSketch, buildSketch, getBuild } = useContainer(SketchesContainer);
-  const { getSelection, setSelection } = useContainer(SelectionsContainer);
-  const { save, persistCode } = useContainer(SketchesContainer);
+  const { getSketch, save, persistCode } = SketchesContainer.useContainer();
+  const { getSelection, setSelection } = SelectionsContainer.useContainer();
+  const { getBuild } = BuildsContainer.useContainer();
 
   const config = { rows: 14, cols: 14 };
+  const { rows, cols } = config;
 
   const sketch = getSketch(id);
   if (!sketch) return <>Loading...</>;
+
+  const build = getBuild(sketch.code, rows, cols);
+
   const selection = getSelection(id);
-  const build = getBuild(sketch, config);
-  let code = sketch.dirtyCode || sketch.code || emptyCode;
-  // if (!build) buildSketch(sketch.id, code, config);
-
-  useEffect(() => {
-    if (!build) {
-      buildSketch(sketch.id, code, config);
-    }
-  }, [build]);
-
   const dirty = sketch.dirtyCode !== sketch.code;
+
+  let code = sketch.dirtyCode || sketch.code || emptyCode;
 
   return (
     <div className="flex flex-col flex-grow flex-shrink min-w-0">
@@ -58,7 +54,6 @@ const Editor = ({ id }) => {
           onSave={(code) => {
             // TODO: Combine these two into save-and-build in the sketches container?
             save(sketch.id, code);
-            buildSketch(sketch.id, code, sketch.config);
           }}
         />
 

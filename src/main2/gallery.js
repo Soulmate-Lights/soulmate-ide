@@ -1,6 +1,6 @@
 import Header from "./components/Header";
 import Sketch from "./sketch";
-import SketchesContainer from "~/containers/sketchesContainer";
+import SketchesContainer from "./containers/sketches";
 import { useContainer } from "unstated-next";
 
 const Gallery = ({ mine }) => {

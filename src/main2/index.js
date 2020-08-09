@@ -4,10 +4,11 @@ import Dashboard from "./dashboard";
 import Editor from "./editor";
 import Gallery from "./gallery";
 import Menu from "./menu";
-import SelectionsContainer from "~/containers/selectionContainer";
-import SketchesContainer from "~/containers/sketchesContainer";
-import SoulmatesContainer from "~/containers/soulmatesContainer";
-import UserContainer from "~/containers/userContainer";
+import SelectionsContainer from "./containers/selection";
+import BuildsContainer from "./containers/builds";
+import SketchesContainer from "./containers/sketches";
+import SoulmatesContainer from "./containers/soulmates";
+import UserContainer from "./containers/user";
 import UserDetails from "./userDetails";
 import Welcome from "../welcome";
 import history from "~/utils/history";
@@ -65,13 +66,15 @@ const HotMain = hot(module)((params) => <Main {...params} />);
 
 const WrappedHotMain = (params) => (
   <SelectionsContainer.Provider>
-    <SketchesContainer.Provider>
-      <UserContainer.Provider>
-        <SoulmatesContainer.Provider>
-          <HotMain {...params} />
-        </SoulmatesContainer.Provider>
-      </UserContainer.Provider>
-    </SketchesContainer.Provider>
+    <BuildsContainer.Provider>
+      <SketchesContainer.Provider>
+        <UserContainer.Provider>
+          <SoulmatesContainer.Provider>
+            <HotMain {...params} />
+          </SoulmatesContainer.Provider>
+        </UserContainer.Provider>
+      </SketchesContainer.Provider>
+    </BuildsContainer.Provider>
   </SelectionsContainer.Provider>
 );
 

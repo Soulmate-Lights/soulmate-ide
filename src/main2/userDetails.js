@@ -1,5 +1,5 @@
 import { FiLogOut } from "react-icons/fi";
-import UserContainer from "~/containers/userContainer";
+import UserContainer from "./containers/user";
 import { useContainer } from "unstated-next";
 
 const UserDetails = () => {
