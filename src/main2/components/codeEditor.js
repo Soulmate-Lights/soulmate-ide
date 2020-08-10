@@ -38,13 +38,11 @@ const codeEditor = ({
   className,
   selection,
 }) => {
-  const mode = useLightSwitch();
-  const dark = mode === Mode.Dark;
   let monacoInstance = useRef(false);
 
+  const mode = useLightSwitch();
+  const dark = mode === Mode.Dark;
   const formatCheckboxRef = useRef();
-
-  // if (localStorage.autoFormat === "true") code = autoFormat(code);
 
   useEffect(() => {
     const monacoEditor = monacoInstance.current.editor;
@@ -167,7 +165,8 @@ const codeEditor = ({
           ref={formatCheckboxRef}
           onChange={(e) => {
             localStorage.autoFormat = e.target.checked;
-            // buildCode(false);
+
+            save();
           }}
         />
       </label>

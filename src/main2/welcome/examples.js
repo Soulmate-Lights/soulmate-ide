@@ -35,7 +35,7 @@ void draw() {
   }
 }`,
   `// That was a bit fast! Let's slow it down a bit.
-  int hue = 0;
+int hue = 0;
 
 void draw() {
   // The EVERY_N_MILLISECONDS block runs its code every N milliseconds

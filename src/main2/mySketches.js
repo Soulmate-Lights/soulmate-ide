@@ -41,8 +41,8 @@ const MySketches = () => {
         ]}
       />
 
-      <div className="px-4 py-4 overflow-auto flex-shrink">
-        <ul className="grid grid-cols-1 gap-3 grid-cols-8">
+      <div className="px-4 py-4 overflow-auto flex flex-col flex-shrink">
+        <ul className="grid flex-grow grid-cols-1 gap-4 sm:grid-cols-5 md:grid-cols-7 lg:grid-cols-8">
           {sketches?.map((sketch) => (
             <Link key={sketch.id} to={`/my-patterns/${sketch.id}`}>
               <Sketch sketch={sketch} />

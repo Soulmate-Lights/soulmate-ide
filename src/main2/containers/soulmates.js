@@ -209,6 +209,7 @@ const SoulmatesContainer = () => {
       setUsbSoulmate(usbSoulmate);
     } else if (!port) {
       setSoulmates(soulmates.filter((soulmate) => soulmate.type !== "usb"));
+      setUsbSoulmate(undefined);
     }
 
     setUsbConnected(!!port);

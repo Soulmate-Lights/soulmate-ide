@@ -107,7 +107,7 @@ const Flash = () => {
             ))}
           </div>
 
-          <div className="flex flex-row border-t p-4">
+          <div className="flex flex-row border-t py-4 px-2">
             <div className="bottom-0 flex flex-row flex-wrap px-4 py-1 flex-shrink">
               {selectedSketches.length === 0 && (
                 <>Choose up to 20 patterns to upload to your Soulmate.</>
@@ -117,7 +117,7 @@ const Flash = () => {
                 <Sketch
                   sketch={sketch}
                   key={sketch.id}
-                  className="w-8 h-8 mr-2 my-1"
+                  className="w-14 h-14 mr-2 my-1"
                   onClick={() => toggle(sketch)}
                 />
               ))}
@@ -128,7 +128,7 @@ const Flash = () => {
                 disabled={disableFlashButton}
                 type="button"
                 className={classnames(
-                  "inline-flex items-center px-4 py-1 border border-gray-300 text-sm leading-5 font-medium rounded-md text-gray-700 bg-white hover:text-gray-500 ()):outline-none focus:shadow-outline-blue focus:border-blue-300 active:text-gray-800 active:bg-gray-50 transition duration-150 ease-in-out flex-shrink-0",
+                  "inline-flex items-center px-4 py-2 border border-gray-300 text-sm leading-5 font-medium rounded-md text-gray-700 bg-white hover:text-gray-500 ()):outline-none focus:shadow-outline-blue focus:border-blue-300 active:text-gray-800 active:bg-gray-50 transition duration-150 ease-in-out flex-shrink-0",
                   {
                     "opacity-50": disableFlashButton,
                     "cursor-auto": disableFlashButton,

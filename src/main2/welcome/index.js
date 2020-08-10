@@ -46,7 +46,10 @@ const Welcome = () => {
   const cols = 30;
   const [code, setCode] = useState(examples[index]);
   const build = getBuild(code, rows, cols);
-  useEffect(() => setCode(examples[index]), [index]);
+
+  useEffect(() => {
+    setCode(examples[index]);
+  }, [index]);
 
   const actions = [];
   if (index > 0) {
@@ -71,18 +74,20 @@ const Welcome = () => {
   return (
     <div className="flex flex-col flex-grow flex-shrink min-w-0">
       <Header title="Tutorial" actions={actions} />
-
       <div className="flex flex-row flex-grow flex-shrink flex-shrink min-w-0 min-h-0 ">
         {!examples[index] ? (
           <Finished />
         ) : (
           <>
-            <CodeEditor
-              className="flex-grow flex-shrink relative min-w-0 bg-white w-7/12"
-              key={index}
-              code={code}
-              onSave={setCode}
-            />
+            {code && (
+              <CodeEditor
+                className="flex-grow flex-shrink relative min-w-0 bg-white w-7/12"
+                key={index}
+                code={code}
+                onSave={setCode}
+              />
+            )}
+
             <Simulator
               className="flex flex-col flex-shrink w-5/12"
               build={build}
