@@ -1,15 +1,12 @@
 import { fetchJson, post, postDelete } from "~/utils";
 import { getToken, loggedIn } from "~/utils/auth";
 
-import { buildHex } from "~/utils/compiler/compile";
 import { createContainer } from "unstated-next";
-import { preparePreviewCode } from "~/utils/code";
 import { useState } from "react";
 
 const SketchesContainer = () => {
   const [sketches, setSketches] = useState(undefined);
   const [allSketches, setAllSketches] = useState(undefined);
-  const [builds, setBuilds] = useState({});
   const [selectedSketches, setSelectedSketches] = useState([]);
 
   const sketchIsMine = (sketch) => {
@@ -124,36 +121,12 @@ const SketchesContainer = () => {
     fetchSketches();
   };
 
-  // Builds
-
-  const getBuild = (sketch, config) => {
-    if (!sketch) return;
-    const key = `${sketch.id}-${config.rows}-${config.cols}`;
-    return builds[key];
-  };
-
-  const buildSketch = async (id, code, config) => {
-    if (!id) return;
-    const sketch = getSketch(id);
-    if (!sketch) return;
-
-    const key = `${sketch.id}-${config.rows}-${config.cols}`;
-    setBuilds({ ...builds, [key]: undefined });
-    const { rows = 14, cols = 14 } = config;
-    const preparedCode = preparePreviewCode(code || sketch.code, rows, cols);
-    const newBuild = await buildHex(preparedCode);
-    setBuilds({ ...builds, [key]: newBuild });
-  };
-
   return {
     allSketches,
-    builds,
-    buildSketch,
     cloneSketch,
     createSketch,
     deleteSketch,
     fetchSketches,
-    getBuild,
     getSketch,
     persistCode,
     rename,

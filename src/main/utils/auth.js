@@ -1,9 +1,11 @@
 import "regenerator-runtime/runtime";
-
-import config from "~/auth_config.json";
-import createAuth0Client from "@auth0/auth0-spa-js";
+const config = {
+  domain: "yellow-boat-0900.auth0.com",
+  clientId: "OsKmsunrgzhFv2znzUHpd9JsFSsOl46o",
+};
 import history from "~/utils/history";
 import isElectron from "./isElectron";
+import createAuth0Client from "@auth0/auth0-spa-js";
 import jwtDecode from "jwt-decode";
 
 let auth0;

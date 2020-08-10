@@ -3,13 +3,13 @@ import {
   AVRTimer,
   CPU,
   timer0Config,
-  timer1Config,
-  timer2Config,
+  // timer1Config,
+  // timer2Config,
   AVRIOPort,
   AVRUSART,
   portBConfig,
-  portCConfig,
-  portDConfig,
+  // portCConfig,
+  // portDConfig,
   usart0Config,
 } from "avr8js";
 import { loadHex } from "./intelhex";

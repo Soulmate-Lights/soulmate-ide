@@ -6,12 +6,11 @@ import {
 } from "~/utils/auth";
 import { useEffect, useState } from "react";
 
-import SketchesContainer from "./sketchesContainer";
+import SketchesContainer from "./sketches";
 import { createContainer } from "unstated-next";
-import { useContainer } from "unstated-next";
 
 const UserContainer = () => {
-  const { reset } = useContainer(SketchesContainer);
+  const { reset } = SketchesContainer.useContainer();
   const [userDetails, setUserDetails] = useState(undefined);
 
   const fetchUser = async () => {

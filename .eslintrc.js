@@ -31,7 +31,7 @@ module.exports = {
     ecmaVersion: 2018,
     sourceType: "module",
   },
-  plugins: ["react"],
+  plugins: ["react", "react-hooks", "simple-import-sort"],
   parser: "babel-eslint",
   rules: {
     strict: 0,
