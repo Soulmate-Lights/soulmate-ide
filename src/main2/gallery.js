@@ -3,8 +3,10 @@ import { Link } from "react-router-dom";
 import Header from "./components/Header";
 import Sketch from "./components/sketch";
 import SketchesContainer from "./containers/sketches";
+import UserContainer from "./containers/user";
 
 const Gallery = ({ mine }) => {
+  const { userDetails } = UserContainer.useContainer();
   const { allSketches } = SketchesContainer.useContainer();
   const [search, setSearch] = useState("");
 
@@ -18,6 +20,8 @@ const Gallery = ({ mine }) => {
     filteredSketches?.map((sketch) => sketch.user),
     (user) => user.id
   );
+
+  users = users.filter((u) => u.uid !== userDetails.sub);
 
   users = users?.map((u) => ({
     ...u,

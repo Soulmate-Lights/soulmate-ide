@@ -21,8 +21,8 @@ const Flash = () => {
     s.name.toLowerCase().includes(search.toLowerCase())
   );
 
-  const selectedSketches = allSketches.filter(({ id }) =>
-    selected.includes(id)
+  const selectedSketches = selected.map((id) =>
+    allSketches.find((s) => s.id === id)
   );
 
   const disableFlashButton =
