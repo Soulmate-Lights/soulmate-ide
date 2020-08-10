@@ -11,6 +11,7 @@ import useInterval from "~/utils/useInterval";
 const defaultConfig = configs.Square;
 
 const SoulmatesContainer = () => {
+  const [usbSoulmate, setUsbSoulmate] = useState();
   const [soulmates, setSoulmates] = useState([]);
   const [soulmate, setSoulmate] = useState(undefined);
   const [configs, setConfigs] = useState({});
@@ -76,6 +77,7 @@ const SoulmatesContainer = () => {
     let updatedSoulmate = { ...soulmates[soulmateIndex], ...attributes };
     soulmates.splice(soulmateIndex, 1, updatedSoulmate);
     setSoulmates(soulmates);
+    setUsbSoulmate(soulmates?.find((s) => s.type === "usb"));
   };
 
   const flashMultiple = async (
@@ -169,7 +171,7 @@ const SoulmatesContainer = () => {
       await new Promise((resolve, _reject) => {
         child.on("close", () => {
           updateSoulmate(soulmate, {
-            usbFlashingPercentage: -1,
+            usbFlashingPercentage: undefined,
             flashing: false,
           });
           resolve();
@@ -204,6 +206,7 @@ const SoulmatesContainer = () => {
     if (port && !usbConnected) {
       const usbSoulmate = { port, type: "usb", name: "USB Soulmate" };
       setSoulmates([...soulmates, usbSoulmate]);
+      setUsbSoulmate(usbSoulmate);
     } else if (!port) {
       setSoulmates(soulmates.filter((soulmate) => soulmate.type !== "usb"));
     }
@@ -227,6 +230,7 @@ const SoulmatesContainer = () => {
     getConfig,
     getSelectedSoulmate,
     usbConnected,
+    usbSoulmate,
   };
 };
 

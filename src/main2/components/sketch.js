@@ -18,7 +18,7 @@ const Sketch = ({ sketch, className, autoPlay, ...rest }) => {
       )}
       {...rest}
     >
-      <div className="flex-1 flex flex-col ">
+      <div className="flex-1 flex flex-col">
         <video
           ref={videoRef}
           style={{ transform: "rotate(180deg)" }}

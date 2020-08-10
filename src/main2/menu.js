@@ -1,4 +1,6 @@
 import { FiCloud, FiFolder, FiHome, FiSmile } from "react-icons/fi";
+import { FaUsb } from "react-icons/fa";
+import classnames from "classnames";
 import { Link, NavLink, useLocation } from "react-router-dom";
 
 const iconClass =
@@ -54,14 +56,16 @@ const Menu = () => {
           <FiCloud className={iconClass} />
           Gallery
         </NavLink>
+
         <NavLink
           to="/flash"
+          disabled
           location={location}
           activeClassName={selectedClass}
-          className={linkClass}
+          className={classnames(linkClass, "bg-grey-0")}
         >
-          <FiCloud className={iconClass} />
-          Flash
+          <FaUsb className={iconClass} />
+          Upload
         </NavLink>
       </nav>
     </div>
