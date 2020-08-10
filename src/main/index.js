@@ -1,79 +1,97 @@
-import { HashRouter, Redirect, Route, Router, Switch } from "react-router-dom";
-import { Mode, useLightSwitch } from "use-light-switch";
+import { HashRouter, Route, Router, Switch } from "react-router-dom";
 
-import SelectionsContainer from "~/containers/selectionContainer";
-import Simulator from "../simulator";
-import SketchesContainer from "~/containers/sketchesContainer";
-import SoulmatesContainer from "~/containers/soulmatesContainer";
-import Titlebar from "./titlebar";
-import UserContainer from "~/containers/userContainer";
-import Welcome from "../welcome";
-import classnames from "classnames";
+import Dashboard from "./dashboard";
+import Editor from "./editor";
+import Gallery from "./gallery";
+import Flash from "./flash";
+import MySketches from "./mySketches";
+import Menu from "./menu";
+import SelectionsContainer from "./containers/selection";
+import BuildsContainer from "./containers/builds";
+import SketchesContainer from "./containers/sketches";
+import SoulmatesContainer from "./containers/soulmates";
+import UserContainer from "./containers/user";
+import UserDetails from "./userDetails";
+import Welcome from "./welcome";
 import history from "~/utils/history";
 import { hot } from "react-hot-loader";
 import isElectron from "~/utils/isElectron";
-import { useContainer } from "unstated-next";
 
 const SpecificRouter = isElectron() ? HashRouter : Router;
 
 const Main = () => {
-  useEffect(() => {
-    if (window.ipcRenderer) {
-      window.ipcRenderer.on("focus", (event, isFocused) => setFocus(isFocused));
-    }
-  }, []);
-
-  const [focus, setFocus] = useState(true);
-  const { userDetails, login, logout } = useContainer(UserContainer);
-  const blur = !focus;
-  const dark = useLightSwitch() === Mode.Dark;
-
   return (
-    <div className={classnames("app-wrapper", { dark, focus, blur })}>
-      <SpecificRouter history={history}>
-        <Titlebar userDetails={userDetails} login={login} logout={logout} />
-        <div className="frame">
-          <Switch>
-            <Route path="/auth">
-              <div />
-            </Route>
+    <SpecificRouter history={history}>
+      <div
+        className="h-screen flex overflow-hidden bg-gray-100"
+        style={{ webkitUserSelect: "none" }}
+      >
+        <div
+          className="absolute w-full h-5"
+          style={{ WebkitAppRegion: "drag" }}
+        />
 
-            <Route exact path="/welcome">
-              <Welcome />
-            </Route>
-
-            <Route
-              path="/:id?"
-              render={({
-                match: {
-                  params: { id },
-                },
-              }) => (
-                <>
-                  {userDetails === false && <Redirect to="/welcome" />}
-                  <Simulator id={parseInt(id)} />
-                </>
-              )}
-            />
-          </Switch>
+        <div className="flex flex-shrink-0">
+          <div className="flex flex-col w-64">
+            <div className="flex flex-col h-0 flex-1 bg-gray-800">
+              <Menu />
+              <UserDetails />
+            </div>
+          </div>
         </div>
-      </SpecificRouter>
-    </div>
+
+        <Switch>
+          <Route exact path="/">
+            <Dashboard />
+          </Route>
+          <Route exact path="/tutorial">
+            <Welcome />
+          </Route>
+          <Route exact path="/my-patterns">
+            <MySketches />
+          </Route>
+          <Route
+            path="/my-patterns/:id"
+            render={({
+              match: {
+                params: { id },
+              },
+            }) => <Editor id={id} mine />}
+          />
+          <Route exact path="/gallery">
+            <Gallery />
+          </Route>
+          <Route exact path="/flash">
+            <Flash />
+          </Route>
+          <Route
+            path="/gallery/:id"
+            render={({
+              match: {
+                params: { id },
+              },
+            }) => <Editor id={id} />}
+          />
+        </Switch>
+      </div>
+    </SpecificRouter>
   );
 };
 
 const HotMain = hot(module)((params) => <Main {...params} />);
 
-const Wrap = (params) => (
+const WrappedHotMain = (params) => (
   <SelectionsContainer.Provider>
-    <SketchesContainer.Provider>
-      <UserContainer.Provider>
-        <SoulmatesContainer.Provider>
-          <HotMain {...params} />
-        </SoulmatesContainer.Provider>
-      </UserContainer.Provider>
-    </SketchesContainer.Provider>
+    <BuildsContainer.Provider>
+      <SketchesContainer.Provider>
+        <UserContainer.Provider>
+          <SoulmatesContainer.Provider>
+            <HotMain {...params} />
+          </SoulmatesContainer.Provider>
+        </UserContainer.Provider>
+      </SketchesContainer.Provider>
+    </BuildsContainer.Provider>
   </SelectionsContainer.Provider>
 );
 
-export default Wrap;
+export default WrappedHotMain;
