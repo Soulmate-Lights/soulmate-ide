@@ -23,9 +23,6 @@ const Sketch = ({ sketch, to }) => (
         <h3 className="text-gray-900 text-sm leading-5 font-medium truncate">
           {sketch.name}
         </h3>
-        <dl className="flex-grow flex flex-col justify-between text-gray-500 text-xs leading-5 truncate">
-          {sketch.user.name}
-        </dl>
       </div>
     </Link>
   </li>

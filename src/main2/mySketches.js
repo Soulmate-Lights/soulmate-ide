@@ -41,7 +41,7 @@ const MySketches = ({ mine }) => {
       />
 
       <div className="px-4 py-4 overflow-auto flex-shrink">
-        <ul className="grid grid-cols-1 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
+        <ul className="grid grid-cols-1 gap-3 grid-cols-8">
           {sketches?.map((sketch) => (
             <Sketch
               key={sketch.id}

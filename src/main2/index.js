@@ -21,9 +21,12 @@ const SpecificRouter = isElectron() ? HashRouter : Router;
 const Main = () => {
   return (
     <SpecificRouter history={history}>
-      <div className="h-screen flex overflow-hidden bg-gray-100">
+      <div
+        className="h-screen flex overflow-hidden bg-gray-100"
+        style={{ webkitUserSelect: "none" }}
+      >
         <div
-          className="absolute w-full h-4"
+          className="absolute w-full h-5"
           style={{ WebkitAppRegion: "drag" }}
         />
 
@@ -54,6 +57,9 @@ const Main = () => {
               },
             }) => <Editor id={id} mine />}
           />
+          <Route exact path="/gallery">
+            <Gallery />
+          </Route>
           <Route
             path="/gallery/:id"
             render={({
@@ -62,9 +68,6 @@ const Main = () => {
               },
             }) => <Editor id={id} />}
           />
-          <Route exact path="/gallery">
-            <Gallery />
-          </Route>
         </Switch>
       </div>
     </SpecificRouter>
