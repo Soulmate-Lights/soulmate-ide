@@ -3,6 +3,7 @@ import { HashRouter, Redirect, Route, Router, Switch } from "react-router-dom";
 import Dashboard from "./dashboard";
 import Editor from "./editor";
 import Gallery from "./gallery";
+import Flash from "./flash";
 import MySketches from "./mySketches";
 import Menu from "./menu";
 import SelectionsContainer from "./containers/selection";
@@ -59,6 +60,9 @@ const Main = () => {
           />
           <Route exact path="/gallery">
             <Gallery />
+          </Route>
+          <Route exact path="/flash">
+            <Flash />
           </Route>
           <Route
             path="/gallery/:id"

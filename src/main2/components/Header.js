@@ -2,8 +2,8 @@ import { Link } from "react-router-dom";
 import React from "react";
 import compact from "lodash/compact";
 
-const Header = ({ title, sections, actions }) => (
-  <div className="px-4 py-2 border-b flex">
+const Header = ({ title, sections, subtitle, actions }) => (
+  <div className="px-4 py-4 border-b flex">
     <div className="flex flex-col">
       <nav className="hidden sm:flex items-center text-xs leading-1 font-sm"></nav>
 
@@ -38,6 +38,8 @@ const Header = ({ title, sections, actions }) => (
             ))}
             {title}
           </h2>
+
+          <h3>{subtitle}</h3>
         </div>
       </div>
     </div>

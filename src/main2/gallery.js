@@ -1,4 +1,5 @@
 import uniqBy from "lodash/uniqBy";
+import { Link } from "react-router-dom";
 import Header from "./components/Header";
 import Sketch from "./components/sketch";
 import SketchesContainer from "./containers/sketches";
@@ -33,7 +34,7 @@ const Gallery = ({ mine }) => {
             autoFocus
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search"
-            className="form-input block w-full sm:text-sm sm:leading-5"
+            className="form-input block w-full sm:text-sm sm:leading-3"
           />,
         ]}
       />
@@ -44,13 +45,14 @@ const Gallery = ({ mine }) => {
             <h3 className="mb-2 text-lg">{user.name}</h3>
             <ul className="grid flex-grow grid-cols-1 gap-4 sm:grid-cols-5 md:grid-cols-7 lg:grid-cols-8">
               {user.sketches?.map((sketch) => (
-                <Sketch
+                <Link
                   key={sketch.id}
-                  sketch={sketch}
                   to={
                     mine ? `/my-patterns/${sketch.id}` : `/gallery/${sketch.id}`
                   }
-                />
+                >
+                  <Sketch sketch={sketch} />
+                </Link>
               ))}
             </ul>
           </div>

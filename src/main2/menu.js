@@ -54,6 +54,15 @@ const Menu = () => {
           <FiCloud className={iconClass} />
           Gallery
         </NavLink>
+        <NavLink
+          to="/flash"
+          location={location}
+          activeClassName={selectedClass}
+          className={linkClass}
+        >
+          <FiCloud className={iconClass} />
+          Flash
+        </NavLink>
       </nav>
     </div>
   );

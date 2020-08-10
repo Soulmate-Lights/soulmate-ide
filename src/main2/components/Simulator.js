@@ -92,6 +92,12 @@ const Simulator = ({ build, rows, cols, className = "", style }) => {
     height = width * ratio;
   }
 
+  if (width > 240) {
+    let ratio = width / height;
+    width = 240;
+    height = width * ratio;
+  }
+
   return (
     <div
       style={{ ...style, maxWidth: 300, minWidth: 300 }}
