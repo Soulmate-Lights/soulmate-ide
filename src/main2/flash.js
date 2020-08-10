@@ -77,21 +77,20 @@ const Flash = () => {
         ))}
       </div>
       {selectedSketches.length > 0 && (
-        <div className="bottom-0 w-full flex flex-row p-2 border-t">
+        <div className="bottom-0 w-full flex flex-row border-t flex-wrap pt-2 px-2">
           {selectedSketches.map((sketch) => (
             <Sketch
               sketch={sketch}
               key={sketch.id}
-              className="w-20 h-20 mr-2"
+              className="w-20 h-20 m-2 mt-0 ml-0"
               onClick={() => toggle(sketch)}
             />
           ))}
 
-          <div className="block ml-auto items-center align-center flex">
+          <div className="block ml-auto items-center align-center flex ml-auto mb-2 mr-2">
             <button
-              // onClick={onClick}
               type="button"
-              className="inline-flex items-center px-4 py-1 border border-gray-300 text-sm leading-5 font-medium rounded-md text-gray-700 bg-white hover:text-gray-500 ()):outline-none focus:shadow-outline-blue focus:border-blue-300 active:text-gray-800 active:bg-gray-50 transition duration-150 ease-in-out ml-auto"
+              className="inline-flex items-center px-4 py-1 border border-gray-300 text-sm leading-5 font-medium rounded-md text-gray-700 bg-white hover:text-gray-500 ()):outline-none focus:shadow-outline-blue focus:border-blue-300 active:text-gray-800 active:bg-gray-50 transition duration-150 ease-in-out"
             >
               Flash to USB Soulmate
             </button>
