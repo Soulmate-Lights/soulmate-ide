@@ -77,7 +77,7 @@ const Flash = () => {
         ))}
       </div>
       {selectedSketches.length > 0 && (
-        <div className="bottom-0 w-full flex flex-row p-2 b-top">
+        <div className="bottom-0 w-full flex flex-row p-2 border-t">
           {selectedSketches.map((sketch) => (
             <Sketch
               sketch={sketch}
@@ -87,13 +87,15 @@ const Flash = () => {
             />
           ))}
 
-          <button
-            // onClick={onClick}
-            type="button"
-            className={`inline-flex items-center px-4 py-1 border border-gray-300 text-sm leading-5 font-medium rounded-md text-gray-700 bg-white hover:text-gray-500 ()):outline-none focus:shadow-outline-blue focus:border-blue-300 active:text-gray-800 active:bg-gray-50 transition duration-150 ease-in-out ml-auto`}
-          >
-            Flash to USB Soulmate
-          </button>
+          <div className="block ml-auto items-center align-center flex">
+            <button
+              // onClick={onClick}
+              type="button"
+              className="inline-flex items-center px-4 py-1 border border-gray-300 text-sm leading-5 font-medium rounded-md text-gray-700 bg-white hover:text-gray-500 ()):outline-none focus:shadow-outline-blue focus:border-blue-300 active:text-gray-800 active:bg-gray-50 transition duration-150 ease-in-out ml-auto"
+            >
+              Flash to USB Soulmate
+            </button>
+          </div>
         </div>
       )}
     </div>
