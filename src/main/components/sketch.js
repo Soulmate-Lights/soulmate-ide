@@ -2,7 +2,6 @@ import classnames from "classnames";
 
 const Sketch = ({ sketch, className, autoPlay, ...rest }) => {
   const videoRef = useRef();
-  let resizeRef;
 
   useEffect(() => {
     if (autoPlay) {

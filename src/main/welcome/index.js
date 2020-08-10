@@ -18,8 +18,7 @@ const Finished = () => {
     <div className="items-center justify-center flex flex-col flex-grow width-full mx-20 my-10">
       <Logo className="mb-4" />
       <p className="mb-4">
-        You're ready to get started writing LED patterns. Log in to create new
-        patterns, and browse the gallery.
+        {"You're ready to get started writing LED patterns!"}
       </p>
       <p className="mb-4">
         <button
