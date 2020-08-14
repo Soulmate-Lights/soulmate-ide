@@ -14,7 +14,8 @@ const Sketch = ({ sketch, className, autoPlay, ...rest }) => {
       className={classnames(
         className,
         "col-span-1 flex flex-col text-center bg-white rounded-lg shadow overflow-hidden",
-        "w-32"
+        "w-32",
+        "dark-mode:border dark-mode:border-gray-800"
       )}
       {...rest}
     >
@@ -34,8 +35,8 @@ const Sketch = ({ sketch, className, autoPlay, ...rest }) => {
           />
         </video>
       </div>
-      <div className="p-1">
-        <h3 className="text-gray-900 text-sm leading-5 font-medium truncate">
+      <div className="p-1 dark-mode:bg-gray-800 text-gray-900 dark-mode:text-white">
+        <h3 className="text-sm leading-5 font-medium truncate">
           {sketch.name}
         </h3>
       </div>

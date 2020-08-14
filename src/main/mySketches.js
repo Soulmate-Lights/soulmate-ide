@@ -98,7 +98,7 @@ const MySketches = () => {
       )}
 
       {userDetails && (
-        <div className="px-4 py-4 overflow-auto flex flex-col flex-shrink bg-white">
+        <div className="px-4 py-4 overflow-auto flex flex-col flex-shrink bg-white dark-mode:bg-gray-900 dark-mode:text-white">
           {_.map(Object.keys(groupedSketches).sort(), (key) => {
             const sketches = groupedSketches[key];
             return (
