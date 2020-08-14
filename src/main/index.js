@@ -20,14 +20,14 @@ import isElectron from "~/utils/isElectron";
 const SpecificRouter = isElectron() ? HashRouter : Router;
 
 const Main = () => {
-  useEffect(() => {
-    if (window.ipcRenderer) {
-      window.ipcRenderer.on("focus", (event, isFocused) => setFocus(isFocused));
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (window.ipcRenderer) {
+  //     window.ipcRenderer.on("focus", (event, isFocused) => setFocus(isFocused));
+  //   }
+  // }, []);
 
-  const [focus, setFocus] = useState(true);
-  const blur = !focus;
+  // const [focus, setFocus] = useState(true);
+  const blur = false; // !focus;
 
   return (
     <SpecificRouter history={isElectron() ? undefined : history}>

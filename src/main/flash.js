@@ -1,13 +1,15 @@
 import "./progress.pcss";
-import uniqBy from "lodash/uniqBy";
-import classnames from "classnames";
-import { GiSquare } from "react-icons/gi";
+
 import { AiFillCheckCircle, AiOutlineUsb } from "react-icons/ai";
-import compact from "lodash/compact";
+
+import { GiSquare } from "react-icons/gi";
 import Header from "~/components/Header";
 import Sketch from "~/components/sketch";
 import SketchesContainer from "~/containers/sketches";
 import Soulmates from "~/containers/soulmates";
+import classnames from "classnames";
+import compact from "lodash/compact";
+import uniqBy from "lodash/uniqBy";
 
 const Flash = () => {
   const { usbSoulmate, flashMultiple } = Soulmates.useContainer();
@@ -39,6 +41,8 @@ const Flash = () => {
   }));
 
   const toggle = (sketch) => {
+    if (usbSoulmate.flashing) return;
+
     if (selected.includes(sketch.id)) {
       setSelected(compact(selected.filter((i) => i !== sketch.id)));
     } else {
@@ -89,12 +93,12 @@ const Flash = () => {
             {users?.map((user) => (
               <div className="pb-4" key={user.id}>
                 <h3 className="mb-2 text-lg">{user.name}</h3>
-                <ul className="grid flex-grow grid-cols-1 gap-4 sm:grid-cols-5 md:grid-cols-7 lg:grid-cols-8">
+                <div className="flex flex-row flex-wrap">
                   {user.sketches?.map((sketch) => (
                     <div
                       onClick={() => toggle(sketch)}
                       key={sketch.id}
-                      className="relative"
+                      className="relative mr-4 mb-4"
                     >
                       <Sketch sketch={sketch} />
 
@@ -103,55 +107,71 @@ const Flash = () => {
                       )}
                     </div>
                   ))}
-                </ul>
+                </div>
               </div>
             ))}
           </div>
 
-          <div className="flex flex-row border-t py-4 px-2">
-            <div className="bottom-0 flex flex-row flex-wrap px-4 py-1 flex-shrink">
+          <div className="flex flex-row border-t pt-4 pr-8 bg-gray-300 border-gray-400">
+            <div className="bottom-0 flex flex-col flex-wrap px-4 py-1 flex-shrink">
               {selectedSketches.length === 0 && (
                 <>Choose up to 20 patterns to upload to your Soulmate.</>
               )}
 
-              {selectedSketches.map((sketch) => (
-                <Sketch
-                  sketch={sketch}
-                  key={sketch.id}
-                  className="w-14 h-14 mr-2 my-1"
-                  onClick={() => toggle(sketch)}
-                />
-              ))}
+              {selectedSketches.length > 0 && (
+                <div className="bottom-0 flex flex-row flex-wrap leading-none flex-shrink items-center pb-2">
+                  Sketches to upload
+                  <span className="bg-gray-400 rounded-full text-white inline px-2 py-1 ml-1 text-xs">
+                    {selectedSketches.length}
+                  </span>
+                </div>
+              )}
+
+              <div className="bottom-0 flex flex-row flex-wrap flex-shrink max-h-48 overflow-auto">
+                {selectedSketches.map((sketch) => (
+                  <div className="relative mr-4 mb-4" key={sketch.id}>
+                    <Sketch
+                      sketch={sketch}
+                      key={sketch.id}
+                      onClick={() => toggle(sketch)}
+                    />
+                    <AiFillCheckCircle className="text-lg absolute top-2 right-2 text-white" />
+                  </div>
+                ))}
+              </div>
             </div>
-            <div className="flex items-center align-center flex ml-auto mr-2 flex-shrink-0">
-              <button
-                onClick={flash}
-                disabled={disableFlashButton}
-                type="button"
-                className={classnames(
-                  "inline-flex items-center px-4 py-2 border border-gray-300 text-sm leading-5 font-medium rounded-md text-gray-700 bg-white hover:text-gray-500 ()):outline-none focus:shadow-outline-blue focus:border-blue-300 active:text-gray-800 active:bg-gray-50 transition duration-150 ease-in-out flex-shrink-0",
-                  {
-                    "opacity-50": disableFlashButton,
-                    "cursor-auto": disableFlashButton,
-                  }
-                )}
-              >
-                {usbSoulmate.flashing &&
-                  usbSoulmate.usbFlashingPercentage === undefined &&
-                  "Building, please wait..."}
 
-                {usbSoulmate.usbFlashingPercentage >= 0 && (
-                  <progress
-                    className="usb-flash my-2"
-                    value={usbSoulmate.usbFlashingPercentage}
-                    max="100"
-                  >
-                    {usbSoulmate.usbFlashingPercentage}%{" "}
-                  </progress>
-                )}
+            <div className="flex items-center align-center ml-auto mr-2 flex-shrink-0">
+              <span className="inline-flex rounded-md shadow-sm">
+                <button
+                  onClick={flash}
+                  disabled={disableFlashButton}
+                  type="button"
+                  className={classnames(
+                    "inline-flex items-center px-6 py-3 border border-transparent text-base leading-6 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition ease-in-out duration-150",
+                    {
+                      "opacity-50": disableFlashButton,
+                      "cursor-auto": disableFlashButton,
+                    }
+                  )}
+                >
+                  {usbSoulmate.flashing &&
+                    usbSoulmate.usbFlashingPercentage === undefined &&
+                    "Building, please wait..."}
 
-                {!usbSoulmate?.flashing && <>Flash to USB Soulmate</>}
-              </button>
+                  {usbSoulmate.usbFlashingPercentage >= 0 && (
+                    <progress
+                      className="usb-flash my-2"
+                      value={usbSoulmate.usbFlashingPercentage}
+                      max="100"
+                    >
+                      {usbSoulmate.usbFlashingPercentage}%{" "}
+                    </progress>
+                  )}
+
+                  {!usbSoulmate?.flashing && <>Flash to USB Soulmate</>}
+                </button>
+              </span>
             </div>
           </div>
         </>

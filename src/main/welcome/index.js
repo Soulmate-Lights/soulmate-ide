@@ -1,15 +1,16 @@
-import { MdAccountCircle } from "react-icons/md";
-import Logo from "~/images/logo.svg";
-import Header from "~/components/Header";
-import CodeEditor from "~/components/codeEditor";
-import Simulator from "~/components/Simulator";
 import { Mode, useLightSwitch } from "use-light-switch";
-import UserContainer from "~/containers/user";
+
 import BuildsContainer from "~/containers/builds";
+import CodeEditor from "~/components/codeEditor";
+import Header from "~/components/Header";
+import Logo from "~/images/logo.svg";
+import { MdAccountCircle } from "react-icons/md";
+import Simulator from "~/components/Simulator";
+import UserContainer from "~/containers/user";
 import examples from "./examples";
-import { useContainer } from "unstated-next";
 import screenshotDark from "./dark.png";
 import screenshotLight from "./light.png";
+import { useContainer } from "unstated-next";
 
 const Finished = () => {
   const { login } = useContainer(UserContainer);
