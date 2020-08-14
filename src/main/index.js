@@ -33,10 +33,9 @@ const Main = () => {
     <SpecificRouter history={isElectron() ? undefined : history}>
       <div
         className={classnames(
-          "h-screen flex overflow-hidden bg-gray-100 dark-mode:bg-gray-300",
-          { blur }
+          "h-screen flex overflow-hidden bg-gray-100 dark-mode:bg-gray-300"
         )}
-        style={{ WebkitUserSelect: "none" }}
+        style={{ WebkitUserSelect: "none", opacity: blur ? "0.9" : 1 }}
       >
         <div
           className="absolute w-full h-5"
