@@ -33,7 +33,8 @@
             "path": "unstated-next",
             "members": ["useContainer"]
           },
-          { "default": "PropTypes", "path": "prop-types" }
+          { "default": "PropTypes", "path": "prop-types" },
+          { "default": "classnames", "path": "classnames" }
         ]
       }
     ],

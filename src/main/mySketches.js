@@ -1,14 +1,35 @@
 import Header from "~/components/Header";
+import _ from "lodash";
+import moment from "moment";
 import { Link } from "react-router-dom";
 import history from "~/utils/history";
 import Sketch from "~/components/sketch";
 import SketchesContainer from "~/containers/sketches";
 
 const MySketches = () => {
-  const { sketches, createSketch } = SketchesContainer.useContainer();
+  const {
+    sketches,
+    createSketch,
+    fetchSketches,
+  } = SketchesContainer.useContainer();
   const [newSketchName, setNewSketchName] = useState("");
-
   const [creating, setCreating] = useState(false);
+
+  let groupedSketches = _.groupBy(sketches, (sketch) => {
+    return moment(sketch.updated_at).startOf("week").toDate();
+  });
+
+  const sortObjectKeys = (obj) =>
+    _.sortBy(Object.keys(obj), (key) => -moment(key)).reduce((acc, key) => {
+      acc[key] = obj[key];
+      return acc;
+    }, {});
+
+  groupedSketches = sortObjectKeys(groupedSketches);
+
+  useEffect(() => {
+    fetchSketches();
+  }, []);
 
   return (
     <div className="flex flex-col flex-grow">
@@ -42,13 +63,23 @@ const MySketches = () => {
       />
 
       <div className="px-4 py-4 overflow-auto flex flex-col flex-shrink">
-        <ul className="grid flex-grow grid-cols-1 gap-4 sm:grid-cols-5 md:grid-cols-7 lg:grid-cols-8">
-          {sketches?.map((sketch) => (
-            <Link key={sketch.id} to={`/my-patterns/${sketch.id}`}>
-              <Sketch sketch={sketch} />
-            </Link>
-          ))}
-        </ul>
+        {_.map(Object.keys(groupedSketches).sort(), (key) => {
+          const sketches = groupedSketches[key];
+          return (
+            <div key={key}>
+              <h3 className="mb-2 text-lg">
+                {moment(sketches[0].updated_at).fromNow()}
+              </h3>
+              <div className="flex flex-row flex-wrap">
+                {sketches?.map((sketch) => (
+                  <Link key={sketch.id} to={`/my-patterns/${sketch.id}`}>
+                    <Sketch sketch={sketch} className="mr-4 mb-4" />
+                  </Link>
+                ))}
+              </div>
+            </div>
+          );
+        })}
       </div>
     </div>
   );

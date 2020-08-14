@@ -1,11 +1,16 @@
 import { FiLogOut, FiLogIn } from "react-icons/fi";
 import UserContainer from "~/containers/user";
 
-const UserDetails = () => {
+const UserDetails = ({ className }) => {
   const { userDetails, logout, login } = UserContainer.useContainer();
 
   return (
-    <div className="flex-shrink-0 flex bg-gray-700 px-4 py-2">
+    <div
+      className={classnames(
+        "flex-shrink-0 flex bg-gray-700 px-4 py-2",
+        className
+      )}
+    >
       <div className="flex-shrink-0 group flex-grow">
         {!userDetails && (
           <div className="flex items-center text-white flex-grow py-2">

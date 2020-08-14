@@ -62,15 +62,16 @@ const Flash = () => {
     <div className="flex flex-col flex-grow relative">
       <Header
         title="Flash"
-        subtitle="Choose some patterns to flash to your Soulmate."
         actions={[
-          <input
-            key="search"
-            autoFocus
-            onChange={(e) => setSearch(e.target.value)}
-            placeholder="Search"
-            className="form-input block w-full sm:text-sm sm:leading-3"
-          />,
+          usbSoulmate && (
+            <input
+              key="search"
+              autoFocus
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder="Search"
+              className="form-input block w-full sm:text-sm sm:leading-3"
+            />
+          ),
         ]}
       />
 

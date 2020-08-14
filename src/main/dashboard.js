@@ -7,7 +7,7 @@ const Dashboard = () => {
 
   return (
     <div className="flex-grow flex flex-col w-full">
-      <div className="relative bg-purple-0 overflow-hidden flex-grow p-6 items-center flex flex-col justify-center">
+      <div className="relative overflow-hidden flex-grow p-6 items-center flex flex-col justify-center bg-white dark-mode:bg-gray-800">
         <nav className="absolute top-0 pt-5 px-5 flex items-center justify-between justify-center flex-row w-full p-2">
           <Logo className="h-8 w-auto sm:h-10" />
 
@@ -24,7 +24,7 @@ const Dashboard = () => {
         </nav>
         <main className="mx-auto max-w-screen-xl px-4">
           <div className="text-center">
-            <h2 className="text-4xl tracking-tight leading-10 font-extrabold text-purple-900 sm:text-5xl sm:leading-none md:text-6xl">
+            <h2 className="text-4xl tracking-tight leading-10 font-extrabold text-purple-900 dark-mode:text-purple-400 sm:text-5xl sm:leading-none md:text-6xl">
               Soulmate
               <br className="xl:hidden" />
               <span className="text-purple-600">LED firmware</span>

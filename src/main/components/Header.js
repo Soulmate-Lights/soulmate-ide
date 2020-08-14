@@ -3,13 +3,13 @@ import React from "react";
 import compact from "lodash/compact";
 
 const Header = ({ title, sections, subtitle, actions }) => (
-  <div className="px-4 py-4 flex dark-mode:bg-gray-800 dark-mode:text-white">
+  <div className="px-4 py-4 flex dark-mode:bg-gray-800 dark-mode:text-white border-b dark-mode:border-gray-700">
     <div className="flex flex-col">
       <nav className="hidden sm:flex items-center text-xs leading-1 font-sm"></nav>
 
       <div className="md:flex md:items-center md:justify-between">
         <div className="flex-1 min-w-0">
-          <h2 className="text-xl font-bold leading-7 text-gray-900 dark-mode:text-white sm:leading-9 sm:truncate flex flex-row items-center">
+          <span className="text-xl leading-7 text-gray-900 dark-mode:text-white sm:leading-9 sm:truncate flex flex-row items-center">
             {compact(sections).map(({ title, to }, i) => (
               <React.Fragment key={i}>
                 <Link
@@ -37,7 +37,7 @@ const Header = ({ title, sections, subtitle, actions }) => (
               </React.Fragment>
             ))}
             {title}
-          </h2>
+          </span>
 
           <h3 className="dark-mode:text-white">{subtitle}</h3>
         </div>

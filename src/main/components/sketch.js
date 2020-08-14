@@ -13,11 +13,12 @@ const Sketch = ({ sketch, className, autoPlay, ...rest }) => {
     <div
       className={classnames(
         className,
-        "col-span-1 flex flex-col text-center bg-white rounded-lg shadow overflow-hidden"
+        "col-span-1 flex flex-col text-center bg-white rounded-lg shadow overflow-hidden",
+        "w-32"
       )}
       {...rest}
     >
-      <div className="flex-1 flex flex-col">
+      <div className="block w-32 h-32 bg-black">
         <video
           ref={videoRef}
           style={{ transform: "rotate(180deg)" }}

@@ -23,6 +23,7 @@ module.exports = {
     useRef: "readonly",
     useState: "readonly",
     useContext: "readonly",
+    classnames: "readonly",
   },
   parserOptions: {
     ecmaFeatures: {
@@ -31,7 +32,7 @@ module.exports = {
     ecmaVersion: 2018,
     sourceType: "module",
   },
-  plugins: ["react", "react-hooks", "simple-import-sort"],
+  plugins: ["react", "react-hooks", "simple-import-sort", "auto-import"],
   parser: "babel-eslint",
   rules: {
     strict: 0,

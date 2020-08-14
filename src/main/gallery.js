@@ -47,7 +47,7 @@ const Gallery = ({ mine }) => {
         {users?.map((user) => (
           <div className="pb-4" key={user.id}>
             <h3 className="mb-2 text-lg">{user.name}</h3>
-            <ul className="grid flex-grow grid-cols-1 gap-4 sm:grid-cols-5 md:grid-cols-7 lg:grid-cols-8">
+            <ul className="flex flex-row flex-wrap">
               {user.sketches?.map((sketch) => (
                 <Link
                   key={sketch.id}
@@ -55,7 +55,7 @@ const Gallery = ({ mine }) => {
                     mine ? `/my-patterns/${sketch.id}` : `/gallery/${sketch.id}`
                   }
                 >
-                  <Sketch sketch={sketch} />
+                  <Sketch sketch={sketch} className="mr-4 mb-4" />
                 </Link>
               ))}
             </ul>
