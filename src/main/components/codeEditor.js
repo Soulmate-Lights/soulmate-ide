@@ -1,4 +1,5 @@
 import { Mode, useLightSwitch } from "use-light-switch";
+import classnames from "classnames";
 
 import Monaco from "react-monaco-editor";
 import debounce from "lodash/debounce";
@@ -133,7 +134,7 @@ const codeEditor = ({
   }, [selection]);
 
   return (
-    <div className={className}>
+    <div className={classnames(className, "dark-mode:bg-gray-900")}>
       <Monaco
         key={dark ? "dark" : "light"}
         ref={monacoInstance}
@@ -155,7 +156,7 @@ const codeEditor = ({
       />
       <label
         htmlFor="auto-format"
-        className="absolute top-2 right-8 text-xs flex flex-row items-center justify-center"
+        className="absolute top-2 right-8 text-xs flex flex-row items-center justify-center dark-mode:text-white"
       >
         Auto-format
         <input

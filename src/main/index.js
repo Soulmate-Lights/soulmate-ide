@@ -21,10 +21,10 @@ const SpecificRouter = isElectron() ? HashRouter : Router;
 
 const Main = () => {
   return (
-    <SpecificRouter history={history}>
+    <SpecificRouter history={isElectron() ? undefined : history}>
       <div
-        className="h-screen flex overflow-hidden bg-gray-100"
-        style={{ webkitUserSelect: "none" }}
+        className="h-screen flex overflow-hidden bg-gray-100  dark-mode:bg-gray-300"
+        style={{ WebkitUserSelect: "none" }}
       >
         <div
           className="absolute w-full h-5"
@@ -33,7 +33,7 @@ const Main = () => {
 
         <div className="flex flex-shrink-0">
           <div className="flex flex-col w-64">
-            <div className="flex flex-col h-0 flex-1 bg-gray-800">
+            <div className="flex flex-col h-0 flex-1">
               <Menu />
               <UserDetails />
             </div>

@@ -15,8 +15,8 @@ const Menu = () => {
   const location = useLocation();
 
   return (
-    <div className="flex-1 flex flex-col pt-5 pb-4 overflow-y-auto">
-      <nav className="mt-5 flex-1 px-2 bg-gray-800 space-y-1">
+    <div className="flex-1 flex flex-col pt-5 pb-4 overflow-y-auto bg-gray-800 dark-mode:bg-gray-800">
+      <nav className="mt-5 flex-1 px-2 space-y-1">
         <NavLink
           to="/"
           location={location}

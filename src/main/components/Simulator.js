@@ -101,7 +101,7 @@ const Simulator = ({ build, rows, cols, className = "", style }) => {
   return (
     <div
       style={{ ...style, maxWidth: 300, minWidth: 300 }}
-      className={`${className} relative flex flex-grow flex-shrink min-h-0 overflow-auto`}
+      className={`${className} relative flex flex-grow flex-shrink min-h-0 overflow-auto dark-mode:bg-gray-600`}
     >
       {build ? (
         <>

@@ -52,7 +52,7 @@ const Editor = ({ id, mine }) => {
           mine && {
             title: "Delete",
             onClick: confirmAndDelete,
-            className: "bg-red-500 text-white",
+            className: "bg-red-500 text-white border-red-800",
           },
         ]}
       />

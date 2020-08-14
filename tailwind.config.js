@@ -3,6 +3,10 @@ const defaultTheme = require("tailwindcss/defaultTheme");
 module.exports = {
   theme: {
     extend: {
+      screens: {
+        "light-mode": { raw: "(prefers-color-scheme: light)" },
+        "dark-mode": { raw: "(prefers-color-scheme: dark)" },
+      },
       fontFamily: {
         sans: ["Inter var", ...defaultTheme.fontFamily.sans],
       },

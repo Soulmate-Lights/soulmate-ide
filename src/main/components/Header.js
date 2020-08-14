@@ -3,19 +3,19 @@ import React from "react";
 import compact from "lodash/compact";
 
 const Header = ({ title, sections, subtitle, actions }) => (
-  <div className="px-4 py-4 border-b flex">
+  <div className="px-4 py-4 flex dark-mode:bg-gray-800 dark-mode:text-white">
     <div className="flex flex-col">
       <nav className="hidden sm:flex items-center text-xs leading-1 font-sm"></nav>
 
       <div className="md:flex md:items-center md:justify-between">
         <div className="flex-1 min-w-0">
-          <h2 className="text-xl font-bold leading-7 text-gray-900 sm:leading-9 sm:truncate flex flex-row items-center">
+          <h2 className="text-xl font-bold leading-7 text-gray-900 dark-mode:text-white sm:leading-9 sm:truncate flex flex-row items-center">
             {compact(sections).map(({ title, to }, i) => (
               <React.Fragment key={i}>
                 <Link
                   key={to}
                   to={to}
-                  className="text-gray-500 hover:text-gray-700 transition duration-150 ease-in-out"
+                  className="text-gray-500 dark-mode:text-white hover:text-gray-700 transition duration-150 ease-in-out"
                 >
                   {title}
                 </Link>
@@ -39,7 +39,7 @@ const Header = ({ title, sections, subtitle, actions }) => (
             {title}
           </h2>
 
-          <h3>{subtitle}</h3>
+          <h3 className="dark-mode:text-white">{subtitle}</h3>
         </div>
       </div>
     </div>
@@ -56,7 +56,7 @@ const Header = ({ title, sections, subtitle, actions }) => (
               <button
                 onClick={onClick}
                 type="button"
-                className={`inline-flex items-center px-4 py-1 border border-gray-300 text-sm leading-5 font-medium rounded-md bg-white hover:text-gray-500 ()):outline-none focus:shadow-outline-blue focus:border-blue-300 active:text-gray-800 active:bg-gray-50 transition duration-150 ease-in-out ${className}`}
+                className={`inline-flex items-center px-4 py-1 border border-gray-300 text-sm leading-5 font-medium rounded-md bg-white hover:text-gray-500 ()):outline-none focus:shadow-outline-blue focus:border-blue-300 active:text-gray-800 text-gray-800 active:bg-gray-50 transition duration-150 ease-in-out ${className}`}
                 {...rest}
               >
                 {title}
