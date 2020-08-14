@@ -80,7 +80,7 @@ const Flash = () => {
       />
 
       {!usbSoulmate && (
-        <div className="px-4 py-4 overflow-auto flex flex-col flex-grow flex-shrink items-center justify-center">
+        <div className="p-8 overflow-auto flex flex-col flex-grow flex-shrink items-center justify-center">
           <GiSquare className="w-20 h-20 text-gray-500 mb-5" />
           <AiOutlineUsb className="w-10 h-10 text-gray-500 mb-5" />
           Plug in your Soulmate with a USB cable to upload patterns to it.
@@ -89,7 +89,7 @@ const Flash = () => {
 
       {usbSoulmate && (
         <>
-          <div className="px-4 py-4 overflow-auto flex flex-col flex-grow flex-shrink">
+          <div className="p-8 overflow-auto flex flex-col flex-grow flex-shrink">
             {users?.map((user) => (
               <div className="pb-4" key={user.id}>
                 <h3 className="mb-2 text-lg">{user.name}</h3>
@@ -98,7 +98,7 @@ const Flash = () => {
                     <div
                       onClick={() => toggle(sketch)}
                       key={sketch.id}
-                      className="relative mr-4 mb-4"
+                      className="relative mr-4 mb-4 cursor-pointer"
                     >
                       <Sketch sketch={sketch} />
 
@@ -112,8 +112,8 @@ const Flash = () => {
             ))}
           </div>
 
-          <div className="flex flex-row border-t pt-4 pr-8 bg-gray-300 border-gray-400">
-            <div className="bottom-0 flex flex-col flex-wrap px-4 py-1 flex-shrink">
+          <div className="flex flex-row border-t py-4 px-8 bg-gray-300 border-gray-400 items-center">
+            <div className="bottom-0 flex flex-col flex-wrap pr-4 flex-shrink">
               {selectedSketches.length === 0 && (
                 <>Choose up to 20 patterns to upload to your Soulmate.</>
               )}
@@ -129,7 +129,10 @@ const Flash = () => {
 
               <div className="bottom-0 flex flex-row flex-wrap flex-shrink max-h-48 overflow-auto">
                 {selectedSketches.map((sketch) => (
-                  <div className="relative mr-4 mb-4" key={sketch.id}>
+                  <div
+                    className="cursor-pointer relative mr-4 mb-4"
+                    key={sketch.id}
+                  >
                     <Sketch
                       sketch={sketch}
                       key={sketch.id}

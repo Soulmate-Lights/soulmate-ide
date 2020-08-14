@@ -4,6 +4,9 @@ const IS_DEVELOPMENT = process.env.NODE_ENV === "development";
 
 const plugins = [];
 plugins.push(tailwindcss("./tailwind.config.js"));
+
+plugins.push(require("autoprefixer"));
+
 // plugins.push(tailwindcss('tailwind.config.js'))
 // This is if you want to include your custom config
 

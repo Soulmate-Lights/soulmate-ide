@@ -43,7 +43,7 @@ const Gallery = ({ mine }) => {
         ]}
       />
 
-      <div className="px-4 py-4 overflow-auto flex flex-col flex-grow flex-shrink bg-white dark-mode:bg-gray-900 dark-mode:text-white">
+      <div className="p-8 overflow-auto flex flex-col flex-grow flex-shrink bg-white dark-mode:bg-gray-900 dark-mode:text-white">
         {users?.map((user) => (
           <div className="pb-4" key={user.id}>
             <h3 className="mb-2 text-lg">{user.name}</h3>

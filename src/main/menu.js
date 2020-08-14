@@ -1,4 +1,4 @@
-import { FiCloud, FiFolder, FiHome, FiSmile } from "react-icons/fi";
+import { FiCloud, FiFolder, FiHome, FiSettings, FiSmile } from "react-icons/fi";
 import { Link, NavLink, useLocation } from "react-router-dom";
 
 import { FaUsb } from "react-icons/fa";
@@ -78,6 +78,17 @@ const Menu = () => {
               >
                 <FaUsb className={iconClass} />
                 USB Upload
+              </NavLink>
+
+              <NavLink
+                to="/config"
+                disabled
+                location={location}
+                activeClassName={activeLinkClass}
+                className={linkClass}
+              >
+                <FiSettings className={iconClass} />
+                Config
               </NavLink>
             </nav>
           </div>

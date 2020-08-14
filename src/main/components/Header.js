@@ -11,7 +11,7 @@ const Header = ({ title, sections, subtitle, actions, className }) => {
       )}
     >
       <div
-        className="flex flex-col flex-grow px-4 py-4"
+        className="flex flex-col flex-grow px-8 py-4"
         style={{ WebkitAppRegion: "drag" }}
       >
         <div className="md:flex md:items-center md:justify-between">
@@ -51,7 +51,7 @@ const Header = ({ title, sections, subtitle, actions, className }) => {
         </div>
       </div>
       {actions && (
-        <div className="flex flex-shrink-0 ml-auto items-center px-4 py-4">
+        <div className="flex flex-shrink-0 ml-auto items-center pr-8">
           {compact(actions).map((action) => {
             const { title, onClick, className, ...rest } = action;
 

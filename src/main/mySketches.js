@@ -73,7 +73,7 @@ const MySketches = () => {
       />
 
       {!userDetails && (
-        <div className="relative overflow-hidden flex-grow p-6 items-center flex flex-col justify-center text-center">
+        <div className="relative overflow-hidden flex-grow p-8 items-center flex flex-col justify-center text-center">
           <Logo className="h-24 w-auto mb-10" />
 
           <h2 className="text-4xl tracking-tight leading-10 font-extrabold text-purple-900 dark-mode:text-purple-400 sm:text-5xl sm:leading-none md:text-6xl">
@@ -98,7 +98,7 @@ const MySketches = () => {
       )}
 
       {userDetails && (
-        <div className="px-4 py-4 overflow-auto flex flex-col flex-shrink bg-white dark-mode:bg-gray-900 dark-mode:text-white">
+        <div className="p-8 overflow-auto flex flex-col flex-shrink bg-white dark-mode:bg-gray-900 dark-mode:text-white">
           {_.map(Object.keys(groupedSketches).sort(), (key) => {
             const sketches = groupedSketches[key];
             return (
