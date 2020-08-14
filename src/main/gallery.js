@@ -1,9 +1,9 @@
-import uniqBy from "lodash/uniqBy";
-import { Link } from "react-router-dom";
 import Header from "~/components/Header";
+import { Link } from "react-router-dom";
 import Sketch from "~/components/sketch";
 import SketchesContainer from "~/containers/sketches";
 import UserContainer from "~/containers/user";
+import uniqBy from "lodash/uniqBy";
 
 const Gallery = ({ mine }) => {
   const { userDetails } = UserContainer.useContainer();
@@ -43,7 +43,7 @@ const Gallery = ({ mine }) => {
         ]}
       />
 
-      <div className="px-4 py-4 overflow-auto flex flex-col flex-grow flex-shrink">
+      <div className="px-4 py-4 overflow-auto flex flex-col flex-grow flex-shrink bg-white">
         {users?.map((user) => (
           <div className="pb-4" key={user.id}>
             <h3 className="mb-2 text-lg">{user.name}</h3>
