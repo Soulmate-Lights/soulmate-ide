@@ -2,11 +2,17 @@ import { Link } from "react-router-dom";
 import React from "react";
 import compact from "lodash/compact";
 
-const Header = ({ title, sections, subtitle, actions }) => (
-  <div className="px-4 py-4 flex dark-mode:bg-gray-800 dark-mode:text-white border-b dark-mode:border-gray-700">
-    <div className="flex flex-col">
-      <nav className="hidden sm:flex items-center text-xs leading-1 font-sm"></nav>
-
+const Header = ({ title, sections, subtitle, actions, className }) => (
+  <div
+    className={classnames(
+      "flex dark-mode:bg-gray-800 dark-mode:text-white border-b dark-mode:border-gray-700 flex-row",
+      className
+    )}
+  >
+    <div
+      className="flex flex-col flex-grow px-4 py-4"
+      style={{ WebkitAppRegion: "drag" }}
+    >
       <div className="md:flex md:items-center md:justify-between">
         <div className="flex-1 min-w-0">
           <span className="text-xl leading-7 text-gray-900 dark-mode:text-white sm:leading-9 sm:truncate flex flex-row items-center">
@@ -43,9 +49,8 @@ const Header = ({ title, sections, subtitle, actions }) => (
         </div>
       </div>
     </div>
-
     {actions && (
-      <div className="flex flex-shrink-0 ml-auto items-center">
+      <div className="flex flex-shrink-0 ml-auto items-center px-4 py-4">
         {compact(actions).map((action) => {
           const { title, onClick, className, ...rest } = action;
 

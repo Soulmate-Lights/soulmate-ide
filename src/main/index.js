@@ -1,19 +1,18 @@
 import { HashRouter, Route, Router, Switch } from "react-router-dom";
-import classnames from "classnames";
 
+import BuildsContainer from "~/containers/builds";
 import Dashboard from "./dashboard";
 import Editor from "./editor";
-import Gallery from "./gallery";
 import Flash from "./flash";
-import MySketches from "./mySketches";
+import Gallery from "./gallery";
 import Menu from "./menu";
+import MySketches from "./mySketches";
 import SelectionsContainer from "~/containers/selection";
-import BuildsContainer from "~/containers/builds";
 import SketchesContainer from "~/containers/sketches";
 import SoulmatesContainer from "~/containers/soulmates";
 import UserContainer from "~/containers/user";
-
 import Welcome from "./welcome";
+import classnames from "classnames";
 import history from "~/utils/history";
 import { hot } from "react-hot-loader";
 import isElectron from "~/utils/isElectron";

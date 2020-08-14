@@ -1,8 +1,9 @@
 import { FiCloud, FiFolder, FiHome, FiSmile } from "react-icons/fi";
-import { FaUsb } from "react-icons/fa";
-import classnames from "classnames";
 import { Link, NavLink, useLocation } from "react-router-dom";
+
+import { FaUsb } from "react-icons/fa";
 import UserDetails from "./userDetails";
+import classnames from "classnames";
 
 const iconClass =
   "mr-3 h-6 w-6 text-gray-400 group-hover:text-gray-300 group-focus:text-gray-300 transition ease-in-out duration-150";
@@ -35,6 +36,19 @@ const Menu = () => {
                 <FiHome className={iconClass} />
                 Home
               </NavLink>
+
+              <NavLink
+                tag={Link}
+                to="/tutorial"
+                location={location}
+                exact
+                activeClassName={activeLinkClass}
+                className={linkClass}
+              >
+                <FiSmile className={iconClass} />
+                Tutorial
+              </NavLink>
+
               <NavLink
                 to="/my-patterns"
                 location={location}
@@ -44,6 +58,7 @@ const Menu = () => {
                 <FiFolder className={iconClass} />
                 My Patterns
               </NavLink>
+
               <NavLink
                 to="/gallery"
                 location={location}
@@ -62,21 +77,9 @@ const Menu = () => {
                 className={linkClass}
               >
                 <FaUsb className={iconClass} />
-                Upload
+                USB Upload
               </NavLink>
             </nav>
-
-            <NavLink
-              tag={Link}
-              to="/tutorial"
-              location={location}
-              exact
-              activeClassName={activeLinkClass}
-              className={linkClass}
-            >
-              <FiSmile className={iconClass} />
-              Tutorial
-            </NavLink>
           </div>
 
           <UserDetails />
