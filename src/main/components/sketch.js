@@ -1,6 +1,6 @@
 import classnames from "classnames";
 
-const Sketch = ({ sketch, className, autoPlay, ...rest }) => {
+const Sketch = ({ sketch, className, autoPlay, width = 24, ...rest }) => {
   const videoRef = useRef();
 
   useEffect(() => {
@@ -14,12 +14,12 @@ const Sketch = ({ sketch, className, autoPlay, ...rest }) => {
       className={classnames(
         className,
         "col-span-1 flex flex-col text-center bg-white rounded-lg shadow overflow-hidden",
-        "w-32",
+        `w-${width}`,
         "dark-mode:border dark-mode:border-gray-800"
       )}
       {...rest}
     >
-      <div className="block w-32 h-32 bg-black">
+      <div className={`block w-${width} h-${width} bg-black`}>
         <video
           ref={videoRef}
           style={{ transform: "rotate(180deg)" }}
@@ -36,7 +36,7 @@ const Sketch = ({ sketch, className, autoPlay, ...rest }) => {
         </video>
       </div>
       <div className="p-1 dark-mode:bg-gray-800 text-gray-900 dark-mode:text-white">
-        <h3 className="text-sm leading-5 font-medium truncate">
+        <h3 className="text-xs leading-5 font-medium truncate">
           {sketch.name}
         </h3>
       </div>

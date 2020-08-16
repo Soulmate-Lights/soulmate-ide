@@ -2,6 +2,7 @@ import { HashRouter, Route, Router, Switch } from "react-router-dom";
 
 import BuildsContainer from "~/containers/builds";
 import Config from "./config";
+import ConfigContainer from "~/containers/config";
 import Dashboard from "./dashboard";
 import Editor from "./editor";
 import Flash from "./flash";
@@ -95,17 +96,19 @@ const Main = () => {
 const HotMain = hot(module)((params) => <Main {...params} />);
 
 const WrappedHotMain = (params) => (
-  <SelectionsContainer.Provider>
-    <BuildsContainer.Provider>
-      <SketchesContainer.Provider>
-        <UserContainer.Provider>
-          <SoulmatesContainer.Provider>
-            <HotMain {...params} />
-          </SoulmatesContainer.Provider>
-        </UserContainer.Provider>
-      </SketchesContainer.Provider>
-    </BuildsContainer.Provider>
-  </SelectionsContainer.Provider>
+  <ConfigContainer.Provider>
+    <SelectionsContainer.Provider>
+      <BuildsContainer.Provider>
+        <SketchesContainer.Provider>
+          <UserContainer.Provider>
+            <SoulmatesContainer.Provider>
+              <HotMain {...params} />
+            </SoulmatesContainer.Provider>
+          </UserContainer.Provider>
+        </SketchesContainer.Provider>
+      </BuildsContainer.Provider>
+    </SelectionsContainer.Provider>
+  </ConfigContainer.Provider>
 );
 
 export default WrappedHotMain;

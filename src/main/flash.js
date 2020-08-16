@@ -2,16 +2,20 @@ import "./progress.pcss";
 
 import { AiFillCheckCircle, AiOutlineUsb } from "react-icons/ai";
 
+import ConfigContainer from "~/containers/config";
 import { GiSquare } from "react-icons/gi";
 import Header from "~/components/Header";
+import { Link } from "react-router-dom";
 import Sketch from "~/components/sketch";
 import SketchesContainer from "~/containers/sketches";
 import Soulmates from "~/containers/soulmates";
 import classnames from "classnames";
 import compact from "lodash/compact";
+import startCase from "lodash/startCase";
 import uniqBy from "lodash/uniqBy";
 
 const Flash = () => {
+  const { type, config } = ConfigContainer.useContainer();
   const { usbSoulmate, flashMultiple } = Soulmates.useContainer();
   const { allSketches } = SketchesContainer.useContainer();
   const [search, setSearch] = useState("");
@@ -112,14 +116,14 @@ const Flash = () => {
             ))}
           </div>
 
-          <div className="flex flex-row border-t py-4 px-8 bg-gray-300 border-gray-400 items-center">
+          <div className="flex flex-row border-t py-4 px-4 bg-gray-300 border-gray-400 items-center">
             <div className="bottom-0 flex flex-col flex-wrap pr-4 flex-shrink">
               {selectedSketches.length === 0 && (
                 <>Choose up to 20 patterns to upload to your Soulmate.</>
               )}
 
               {selectedSketches.length > 0 && (
-                <div className="bottom-0 flex flex-row flex-wrap leading-none flex-shrink items-center pb-2">
+                <div className="bottom-0 flex flex-row flex-wrap leading-none flex-shrink items-center ">
                   Sketches to upload
                   <span className="bg-gray-400 rounded-full text-white inline px-2 py-1 ml-1 text-xs">
                     {selectedSketches.length}
@@ -130,10 +134,11 @@ const Flash = () => {
               <div className="bottom-0 flex flex-row flex-wrap flex-shrink max-h-48 overflow-auto">
                 {selectedSketches.map((sketch) => (
                   <div
-                    className="cursor-pointer relative mr-4 mb-4"
+                    className="cursor-pointer relative mr-4 mt-4 text-xs"
                     key={sketch.id}
                   >
                     <Sketch
+                      width={16}
                       sketch={sketch}
                       key={sketch.id}
                       onClick={() => toggle(sketch)}
@@ -144,14 +149,26 @@ const Flash = () => {
               </div>
             </div>
 
-            <div className="flex items-center align-center ml-auto mr-2 flex-shrink-0">
-              <span className="inline-flex rounded-md shadow-sm">
+            <div className="flex align-end ml-auto flex-shrink-0 h-full items-end">
+              <Link
+                to="/config"
+                className="text-center py-0 px-6 flex flex-col
+               items-center border border-transparent leading-6 rounded-md rounded-r-none text-white bg-gray-800 focus:outline-none focus:border-gray-700 focus:shadow-outline-gray active:bg-gray-700 transition ease-in-out duration-150 text-xs items-center justify-center leading-snug h-15
+              "
+              >
+                <span>{startCase(type)}</span>
+                <span>
+                  {config.rows} x {config.cols}
+                </span>
+              </Link>
+
+              <span className="inline-flex">
                 <button
                   onClick={flash}
                   disabled={disableFlashButton}
                   type="button"
                   className={classnames(
-                    "inline-flex items-center px-6 py-3 border border-transparent text-base leading-6 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition ease-in-out duration-150",
+                    "inline-flex items-center px-6 py-3 border border-transparent text-base leading-6 font-medium rounded-md rounded-l-none text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition ease-in-out duration-150 h-15",
                     {
                       "opacity-50": disableFlashButton,
                       "cursor-auto": disableFlashButton,
