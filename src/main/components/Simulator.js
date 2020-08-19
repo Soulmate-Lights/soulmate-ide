@@ -45,7 +45,15 @@ const Simulator = ({ build, rows, cols, className = "", style }) => {
     return stop;
   }, [paused, build]);
 
+  let stopResizeTimeout;
+
   useEffect(() => {
+    window.addEventListener("resize", () => {
+      clearTimeout(stopResizeTimeout);
+      stopResizeTimeout = setTimeout(() => {
+        setPaused(false);
+      }, 400);
+    });
     window.addEventListener("blur", () => setPaused(true));
     window.addEventListener("focus", () => setPaused(false));
   }, []);
