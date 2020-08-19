@@ -1,7 +1,7 @@
 import { Mode, useLightSwitch } from "use-light-switch";
-import classnames from "classnames";
 
 import Monaco from "react-monaco-editor";
+import classnames from "classnames";
 import debounce from "lodash/debounce";
 import jsBeautifier from "js-beautify";
 
@@ -23,9 +23,9 @@ const editorConfig = {
   scrollBeyondLastLine: false,
   tabSize: 2,
   lineNumbers: false,
-  showFoldingControls: false,
+  showFoldingControls: true,
+  folding: true,
   glyphMargin: false,
-  folding: false,
   minimap: {
     enabled: false,
   },

@@ -11,7 +11,7 @@ const Header = ({ title, sections, subtitle, actions, className }) => {
       )}
     >
       <div
-        className="flex flex-col flex-grow px-8 py-4"
+        className="flex flex-col flex-grow px-6 py-4"
         style={{ WebkitAppRegion: "drag" }}
       >
         <div className="md:flex md:items-center md:justify-between">
