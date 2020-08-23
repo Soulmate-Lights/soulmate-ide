@@ -2,19 +2,10 @@ import { BsFillPauseFill, BsPlayFill } from "react-icons/bs";
 
 import Logo from "~/images/logo.svg";
 
-// require("./simulator.css");
-
 let worker;
-
-const cleanError = (error) =>
-  error
-    .replace(/\/home\/ec2-user\/wokwi-hexi\/\/sketch\/sketch\.ino:/g, "")
-    .replace(/ In function 'void Pattern::draw\(\)':\n/g, "")
-    .replace(/Error during build: exit status 1/g, "");
 
 const Simulator = ({ build, rows, cols, className = "", style }) => {
   const [paused, setPaused] = useState(!document.hasFocus());
-
   const canvas = useRef();
   const compilerOutputDiv = useRef();
   const [serialOutput, setSerialOutput] = useState("");
@@ -131,18 +122,13 @@ const Simulator = ({ build, rows, cols, className = "", style }) => {
             />
           </div>
           {serialOutput && (
-            <div className="serial-output" ref={compilerOutputDiv}>
-              <pre className="serial-output-text">
-                {serialOutputRef.current}
-              </pre>
-            </div>
-          )}
-          {build?.stderr && (
-            <div className="compiler-output">
-              <pre className="compiler-output-text">
-                {cleanError(build.stderr)}
-              </pre>
-            </div>
+            <pre
+              className="bg-gray-800 text-white p-4 text-xs break-all"
+              style={{ fontSize: 10 }}
+              ref={compilerOutputDiv}
+            >
+              {serialOutputRef.current}
+            </pre>
           )}
         </>
       ) : (

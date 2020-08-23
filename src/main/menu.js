@@ -16,7 +16,7 @@ const Menu = () => {
   const location = useLocation();
 
   return (
-    <div className="flex flex-shrink-0 border-r dark-mode:border-gray-700">
+    <div className="flex flex-shrink-0 dark-mode:border-gray-700">
       <div className="flex flex-col w-64">
         <div className="flex flex-col h-0 flex-1">
           <div

@@ -1402,6 +1402,11 @@
   dependencies:
     "@types/yargs-parser" "*"
 
+"@wokwi/gcc-output-parser@^0.2.1":
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/@wokwi/gcc-output-parser/-/gcc-output-parser-0.2.1.tgz#564d6b05b6655895ea31a57cb1e4720cc50a9f5f"
+  integrity sha512-v0LAOjB/ZcgmB4eLiNQ35IfaScQhRkhXZ7HDMrYwPsXgFsc+lHPqBFFt84ZEwdZFbq59u4fkRZPLg++JU6Xquw==
+
 abab@^2.0.0:
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/abab/-/abab-2.0.3.tgz#623e2075e02eb2d3f2475e49f99c91846467907a"

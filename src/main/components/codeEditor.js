@@ -4,6 +4,8 @@ import Monaco from "react-monaco-editor";
 import classnames from "classnames";
 import debounce from "lodash/debounce";
 import jsBeautifier from "js-beautify";
+import parser from "@wokwi/gcc-output-parser";
+import startCase from "lodash/startCase";
 
 const jsBeautifierConfig = {
   indent_size: 2,
@@ -32,6 +34,7 @@ const editorConfig = {
 };
 
 const codeEditor = ({
+  build,
   code,
   onChange,
   onSave,
@@ -100,13 +103,6 @@ const codeEditor = ({
     }
 
     onSave(editorCode);
-
-    // if (onSave) {
-    //   onSave(editorCode);
-    // } else {
-    //   buildSketch(sketch.id, editorCode, config);
-    //   if (shouldSave) save(sketch.id, editorCode, config);
-    // }
   };
 
   // // Effect hook for changing variables - need to recreate the event listener
@@ -136,6 +132,7 @@ const codeEditor = ({
   return (
     <div className={classnames(className, "dark-mode:bg-gray-900")}>
       <Monaco
+        className="h-8"
         key={dark ? "dark" : "light"}
         ref={monacoInstance}
         onChange={onChange}
@@ -154,6 +151,20 @@ const codeEditor = ({
           theme: dark ? "vs-dark" : "vs-light",
         }}
       />
+
+      {build?.stderr && (
+        <pre className="bg-red-200 text-red-800 py-3 px-6 text-sm break-all absolute bottom-0 left-0 right-0 border-t border-red-800">
+          {parser.parseString(build.stderr).map(
+            ({ line, text, type }) =>
+              type === "error" && (
+                <p key={line} className="py-1">
+                  <strong>{startCase(type)}:</strong> Line {line - 58}: {text}
+                </p>
+              )
+          )}
+        </pre>
+      )}
+
       <label
         htmlFor="auto-format"
         className="absolute top-2 right-8 text-xs flex flex-row items-center justify-center dark-mode:text-white"

@@ -1,3 +1,4 @@
+import BuildsContainer from "~/containers/builds";
 import CodeEditor from "~/components/codeEditor";
 import Header from "~/components/Header";
 import SelectionsContainer from "~/containers/selection";
@@ -5,7 +6,6 @@ import Simulator from "~/components/Simulator";
 import SketchesContainer from "~/containers/sketches";
 import { emptyCode } from "~/utils/code";
 import history from "~/utils/history";
-import BuildsContainer from "~/containers/builds";
 
 const Editor = ({ id, mine }) => {
   const {
@@ -59,6 +59,7 @@ const Editor = ({ id, mine }) => {
 
       <div className="flex flex-row flex-grow w-full flex-shrink min-h-0">
         <CodeEditor
+          build={build}
           selection={selection}
           className="flex-grow flex-shrink relative min-w-0 bg-white"
           code={code}
