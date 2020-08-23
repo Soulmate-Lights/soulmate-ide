@@ -123,7 +123,7 @@ const Simulator = ({ build, rows, cols, className = "", style }) => {
           </div>
           {serialOutput && (
             <pre
-              className="bg-gray-800 text-white p-4 text-xs break-all"
+              className="bg-gray-800 text-white p-4 text-xs break-all overflow-scroll absolute bottom-0 left-0 right-0 max-h-40"
               style={{ fontSize: 10 }}
               ref={compilerOutputDiv}
             >
