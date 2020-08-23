@@ -12,6 +12,7 @@ import MySketches from "./mySketches";
 import SelectionsContainer from "~/containers/selection";
 import SketchesContainer from "~/containers/sketches";
 import SoulmatesContainer from "~/containers/soulmates";
+import User from "./user";
 import UserContainer from "~/containers/user";
 import Welcome from "./welcome";
 import classnames from "classnames";
@@ -79,6 +80,16 @@ const Main = () => {
               },
             }) => <Editor id={id} />}
           />
+
+          <Route
+            path="/user/:id"
+            render={({
+              match: {
+                params: { id },
+              },
+            }) => <User id={id} />}
+          />
+
           <Route
             path="/my-patterns/:id"
             render={({

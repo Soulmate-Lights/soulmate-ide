@@ -1,6 +1,13 @@
 import classnames from "classnames";
 
-const Sketch = ({ sketch, className, autoPlay, width = 24, ...rest }) => {
+const Sketch = ({
+  sketch,
+  className,
+  autoPlay,
+  width = 24,
+  hideTitle,
+  ...rest
+}) => {
   const videoRef = useRef();
 
   useEffect(() => {
@@ -13,7 +20,7 @@ const Sketch = ({ sketch, className, autoPlay, width = 24, ...rest }) => {
     <div
       className={classnames(
         className,
-        "col-span-1 flex flex-col text-center bg-white rounded-lg shadow overflow-hidden",
+        "flex flex-col text-center bg-white rounded-lg shadow overflow-hidden",
         `w-${width}`,
         "dark-mode:border dark-mode:border-gray-800"
       )}
@@ -35,11 +42,13 @@ const Sketch = ({ sketch, className, autoPlay, width = 24, ...rest }) => {
           />
         </video>
       </div>
-      <div className="p-1 dark-mode:bg-gray-800 text-gray-900 dark-mode:text-white">
-        <h3 className="text-xs leading-5 font-medium truncate">
-          {sketch.name}
-        </h3>
-      </div>
+      {!hideTitle && (
+        <div className="p-1 dark-mode:bg-gray-800 text-gray-900 dark-mode:text-white">
+          <h3 className="text-xs leading-5 font-medium truncate">
+            {sketch.name}
+          </h3>
+        </div>
+      )}
     </div>
   );
 };

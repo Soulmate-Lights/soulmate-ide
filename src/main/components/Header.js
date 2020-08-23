@@ -26,7 +26,7 @@ const Header = ({ title, sections, subtitle, actions, className }) => {
                   >
                     {title}
                   </Link>
-                  {i < sections.length - 1 && (
+                  {i < sections.length && (
                     <svg
                       className="flex-shrink-0 h-5 w-5 text-gray-400"
                       viewBox="0 0 20 20"
