@@ -45,14 +45,14 @@ const Editor = ({ id, mine }) => {
           mine && { title: "My patterns", to: "/my-patterns" },
         ]}
         actions={[
-          dirty && {
-            title: mine ? "Save" : "Refresh",
-            onClick: () => save(sketch.id, sketch.dirtyCode),
-          },
           mine && {
             title: "Delete",
             onClick: confirmAndDelete,
             className: "bg-red-500 text-white border-red-800",
+          },
+          dirty && {
+            title: mine ? "Save" : "Refresh",
+            onClick: () => save(sketch.id, sketch.dirtyCode),
           },
         ]}
       />
