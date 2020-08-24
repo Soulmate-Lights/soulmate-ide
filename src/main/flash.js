@@ -58,9 +58,9 @@ const Flash = () => {
     flashMultiple(
       usbSoulmate,
       selectedSketches,
-      14,
-      14,
-      "ESP32",
+      config.rows,
+      config.cols,
+      "atom",
       "APA102",
       4000
     );

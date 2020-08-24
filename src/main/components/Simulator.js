@@ -85,13 +85,13 @@ const Simulator = ({ build, rows, cols, className = "", style }) => {
   let width = cols * 10;
   let height = rows * 10;
 
-  if (width < 250) {
+  if (width < 250 && height < 250) {
     let ratio = width / height;
     width = 250;
     height = width * ratio;
   }
 
-  if (width > 240) {
+  if (width > 240 && height > 240) {
     let ratio = width / height;
     width = 240;
     height = width * ratio;

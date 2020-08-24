@@ -27,9 +27,11 @@ const Dashboard = () => {
         </nav>
         <main className="mx-auto max-w-screen-xl px-4">
           <div className="text-center">
-            <h2 className="text-4xl tracking-tight leading-10 font-extrabold text-purple-900 dark-mode:text-purple-400 sm:text-5xl sm:leading-none md:text-6xl flex lg:flex-row sm:flex-col">
+            <h2 className="text-4xl tracking-tight leading-20 font-extrabold text-purple-900 dark-mode:text-purple-400 sm:text-5xl sm:leading-none md:text-6xl flex lg:flex-row sm:flex-col">
               <span className="lg:mr-4">Soulmate</span>
-              <span className="text-purple-600">LED firmware</span>
+              <span className="text-5xl lg:text-6xl text-purple-600">
+                LED firmware
+              </span>
             </h2>
             <p className="mt-3 max-w-md mx-auto text-base text-purple-500 sm:text-lg md:mt-5 md:text-xl md:max-w-3xl">
               {"Making LED art easy and fun. Let's get started."}

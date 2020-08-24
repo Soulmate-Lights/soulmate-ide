@@ -1,4 +1,6 @@
 import BuildsContainer from "~/containers/builds";
+import ConfigContainer from "~/containers/config";
+import Logo from "~/images/logo.svg";
 import CodeEditor from "~/components/codeEditor";
 import Header from "~/components/Header";
 import SelectionsContainer from "~/containers/selection";
@@ -17,11 +19,16 @@ const Editor = ({ id, mine }) => {
   const { getSelection, setSelection } = SelectionsContainer.useContainer();
   const { getBuild } = BuildsContainer.useContainer();
 
-  const config = { rows: 14, cols: 14 };
+  const { config } = ConfigContainer.useContainer();
   const { rows, cols } = config;
 
   const sketch = getSketch(id);
-  if (!sketch) return <>Loading...</>;
+  if (!sketch)
+    return (
+      <div>
+        <Logo />
+      </div>
+    );
 
   const build = getBuild(sketch.code || emptyCode, rows, cols);
 
@@ -42,6 +49,18 @@ const Editor = ({ id, mine }) => {
         title={sketch.name}
         sections={[
           !mine && { title: "Gallery", to: "/gallery" },
+          !mine && {
+            title: (
+              <>
+                <img
+                  className="w-8 h-8 rounded-full mr-2"
+                  src={sketch.user.image}
+                />
+                {sketch.user.name}
+              </>
+            ),
+            to: `/user/${sketch.user.id}`,
+          },
           mine && { title: "My patterns", to: "/my-patterns" },
         ]}
         actions={[
@@ -77,8 +96,8 @@ const Editor = ({ id, mine }) => {
 
         <Simulator
           build={build}
-          rows={14}
-          cols={14}
+          rows={rows}
+          cols={cols}
           className="flex flex-col"
         />
       </div>

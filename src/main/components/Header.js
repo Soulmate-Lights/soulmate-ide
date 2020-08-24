@@ -22,7 +22,7 @@ const Header = ({ title, sections, subtitle, actions, className }) => {
                   <Link
                     key={to}
                     to={to}
-                    className="text-gray-500 dark-mode:text-white hover:text-gray-700 transition duration-150 ease-in-out"
+                    className="text-gray-500 dark-mode:text-white hover:text-gray-700 transition duration-150 ease-in-out flex flex-row items-center"
                   >
                     {title}
                   </Link>
@@ -62,7 +62,7 @@ const Header = ({ title, sections, subtitle, actions, className }) => {
                 <button
                   onClick={onClick}
                   type="button"
-                  className={`inline-flex items-center px-4 py-1 border border-gray-300 text-sm leading-5 font-medium rounded-md bg-white hover:text-gray-500 ()):outline-none focus:shadow-outline-blue focus:border-blue-300 active:text-gray-800 text-gray-800 active:bg-gray-50 transition duration-150 ease-in-out ${className}`}
+                  className={`inline-flex items-center px-4 py-1 border border-gray-300 text-sm leading-5 font-medium rounded-md bg-white hover:text-gray-800 hover:bg-indigo-50 ()):outline-none focus:shadow-outline-blue focus:border-blue-300 active:text-gray-800 text-gray-800 active:bg-gray-50 transition duration-150 ease-in-out ${className}`}
                   {...rest}
                 >
                   {title}

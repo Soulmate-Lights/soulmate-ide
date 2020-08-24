@@ -2,7 +2,6 @@ import Header from "~/components/Header";
 import { Link } from "react-router-dom";
 import Sketch from "~/components/sketch";
 import SketchesContainer from "~/containers/sketches";
-import _ from "lodash";
 import uniqBy from "lodash/uniqBy";
 
 const User = ({ id }) => {

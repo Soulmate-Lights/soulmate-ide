@@ -24,7 +24,7 @@ const editorConfig = {
   language: "cpp",
   scrollBeyondLastLine: false,
   tabSize: 2,
-  lineNumbers: false,
+  lineNumbers: true,
   showFoldingControls: true,
   folding: true,
   glyphMargin: false,

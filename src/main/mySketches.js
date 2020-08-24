@@ -49,9 +49,6 @@ const MySketches = () => {
               <input
                 autoFocus
                 onChange={(e) => setNewSketchName(e.target.value)}
-                onBlur={() => {
-                  setCreating(false);
-                }}
                 onKeyDown={(e) => e.key === "Escape" && e.target.blur()}
                 placeholder="Give your sketch a name"
                 className="form-input block w-full text-sm py-2 rounded-r-none h-8 focus:z-10"
