@@ -40,16 +40,13 @@ const Finished = () => {
 };
 
 const Welcome = () => {
+  const [savedCodes, setSavedCodes] = useState({});
   const { getBuild } = useContainer(BuildsContainer);
   const [index, setIndex] = useState(0);
   const rows = 30;
   const cols = 30;
-  const [code, setCode] = useState(examples[index]);
+  const code = savedCodes[index] || examples[index];
   const build = getBuild(code, rows, cols);
-
-  useEffect(() => {
-    setCode(examples[index]);
-  }, [index]);
 
   const actions = [];
   if (index > 0) {
@@ -59,9 +56,14 @@ const Welcome = () => {
       title: "Previous example",
     });
   }
-  if (index < examples.length) {
+  if (index < examples.length - 1) {
     actions.push({
       title: "Next example",
+      onClick: () => setIndex(index + 1),
+    });
+  } else if (index === examples.length - 1) {
+    actions.push({
+      title: "Done!",
       onClick: () => setIndex(index + 1),
     });
   } else {
@@ -84,7 +86,9 @@ const Welcome = () => {
                 className="flex-grow flex-shrink relative min-w-0 bg-white w-7/12"
                 key={index}
                 code={code}
-                onSave={setCode}
+                onSave={(code) =>
+                  setSavedCodes({ ...savedCodes, [index]: code })
+                }
               />
             )}
 
