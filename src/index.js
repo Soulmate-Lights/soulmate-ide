@@ -9,7 +9,6 @@ import ReactDOM from "react-dom";
 
 require("./index.pcss");
 require("@tailwindcss/ui");
-require("v8-compile-cache");
 
 self.MonacoEnvironment = {
   getWorker: function (_moduleId, _label) {
