@@ -40,6 +40,7 @@ const UserContainer = () => {
   }, [localStorage.loginSaved, localStorage.token]);
 
   const login = async () => {
+    console.log("login");
     await triggerLogin();
     fetchUser();
   };
