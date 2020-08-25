@@ -3,7 +3,7 @@ import Logo from "~/images/logo.svg";
 import UserContainer from "~/containers/user";
 
 const Dashboard = () => {
-  const { userDetails } = UserContainer.useContainer();
+  const { userDetails, login } = UserContainer.useContainer();
 
   return (
     <div
@@ -16,12 +16,13 @@ const Dashboard = () => {
 
           {!userDetails && (
             <span className="inline-flex rounded-md shadow">
-              <a
+              <button
+                onClick={login}
                 href="#"
                 className="inline-flex items-center px-4 py-2 border border-transparent text-base leading-6 font-medium rounded-md text-purple-600 bg-white hover:text-purple-500 focus:outline-none focus:border-purple-300 focus:shadow-outline-gray active:bg-purple-50 active:text-purple-700 transition duration-150 ease-in-out"
               >
                 Log in
-              </a>
+              </button>
             </span>
           )}
         </nav>

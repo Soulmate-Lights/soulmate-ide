@@ -27,7 +27,7 @@ const Main = () => {
     if (window.ipcRenderer) {
       window.ipcRenderer.on("focus", (event, isFocused) => setFocus(isFocused));
     }
-  }, []);
+  }, [window, window.ipcRenderer]);
 
   const [focus, setFocus] = useState(true);
   const blur = !focus;
@@ -104,9 +104,9 @@ const Main = () => {
   );
 };
 
-const HotMain = hot(module)((params) => <Main {...params} />);
+const HotMain = (params) => <Main {...params} />;
 
-const WrappedHotMain = (params) => (
+const WrappedHotMain = hot(module)((params) => (
   <ConfigContainer.Provider>
     <SelectionsContainer.Provider>
       <BuildsContainer.Provider>
@@ -120,6 +120,6 @@ const WrappedHotMain = (params) => (
       </BuildsContainer.Provider>
     </SelectionsContainer.Provider>
   </ConfigContainer.Provider>
-);
+));
 
 export default WrappedHotMain;
