@@ -54,7 +54,7 @@ const Gallery = () => {
             <li key={user.id} className="border-b dark-mode:border-gray-800">
               <Link
                 to={`/user/${user.id}`}
-                className="block hover:bg-gray-50 dark-mode:hover:bg-gray-800 focus:outline-none focus:bg-gray-50 transition duration-150 ease-in-out"
+                className="block hover:bg-gray-50 dark-mode:hover:bg-gray-700 rounded focus:outline-none focus:bg-gray-50 transition duration-150 ease-in-out"
               >
                 <div className="flex items-center px-4 py-4 sm:px-6">
                   <div className="min-w-0 flex-1 flex items-center">
