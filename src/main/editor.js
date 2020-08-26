@@ -25,7 +25,7 @@ const Editor = ({ id, mine }) => {
   const sketch = getSketch(id);
   if (!sketch)
     return (
-      <div>
+      <div className="flex flex-grow">
         <Logo className="loading-spinner" />
       </div>
     );
