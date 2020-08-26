@@ -23,7 +23,7 @@ function createWindow() {
     width: 1400,
     height: 800,
     show: false,
-    titleBarStyle: "hiddenInset",
+    titleBarStyle: "hidden",
     backgroundColor: systemPreferences.isDarkMode() ? "#333" : "#fff",
     webPreferences: {
       enableRemoteModule: true,
