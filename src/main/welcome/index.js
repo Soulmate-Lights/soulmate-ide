@@ -15,7 +15,7 @@ const Finished = () => {
   const { login } = useContainer(UserContainer);
   const dark = useLightSwitch() === Mode.Dark;
   return (
-    <div className="items-center justify-center flex flex-col flex-grow width-full px-20 py-10 dark-mode:bg-gray-900 dark-mode:text-white space-y-8">
+    <div className="items-center justify-center flex flex-col flex-grow width-full px-20 py-10 space-y-8">
       <Logo />
       <span className="items-center flex flex-col">
         <span className="font-thin text-5xl">All set!</span>

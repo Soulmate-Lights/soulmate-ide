@@ -49,58 +49,60 @@ const Main = () => {
 
           <Menu />
 
-          <Switch>
-            <Route exact path="/">
-              <Dashboard />
-            </Route>
+          <div className="flex flex-grow bg-gray-100 dark-mode:bg-gray-800 dark-mode:text-white">
+            <Switch>
+              <Route exact path="/">
+                <Dashboard />
+              </Route>
 
-            <Route exact path="/tutorial">
-              <Welcome />
-            </Route>
+              <Route exact path="/tutorial">
+                <Welcome />
+              </Route>
 
-            <Route exact path="/my-patterns">
-              <MySketches />
-            </Route>
+              <Route exact path="/my-patterns">
+                <MySketches />
+              </Route>
 
-            <Route exact path="/gallery">
-              <Gallery />
-            </Route>
+              <Route exact path="/gallery">
+                <Gallery />
+              </Route>
 
-            <Route exact path="/flash">
-              <Flash />
-            </Route>
+              <Route exact path="/flash">
+                <Flash />
+              </Route>
 
-            <Route exact path="/config">
-              <Config />
-            </Route>
+              <Route exact path="/config">
+                <Config />
+              </Route>
 
-            <Route
-              path="/gallery/:id"
-              render={({
-                match: {
-                  params: { id },
-                },
-              }) => <Editor id={id} />}
-            />
+              <Route
+                path="/gallery/:id"
+                render={({
+                  match: {
+                    params: { id },
+                  },
+                }) => <Editor id={id} />}
+              />
 
-            <Route
-              path="/user/:id"
-              render={({
-                match: {
-                  params: { id },
-                },
-              }) => <User id={id} />}
-            />
+              <Route
+                path="/user/:id"
+                render={({
+                  match: {
+                    params: { id },
+                  },
+                }) => <User id={id} />}
+              />
 
-            <Route
-              path="/my-patterns/:id"
-              render={({
-                match: {
-                  params: { id },
-                },
-              }) => <Editor id={id} mine />}
-            />
-          </Switch>
+              <Route
+                path="/my-patterns/:id"
+                render={({
+                  match: {
+                    params: { id },
+                  },
+                }) => <Editor id={id} mine />}
+              />
+            </Switch>
+          </div>
         </div>
       </LastLocationProvider>
     </SpecificRouter>

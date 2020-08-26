@@ -10,7 +10,7 @@ const Dashboard = () => {
       className="flex-grow flex flex-col w-full"
       style={{ WebkitAppRegion: "drag" }}
     >
-      <div className="relative overflow-hidden flex-grow p-6 items-center flex flex-col justify-center bg-white dark-mode:bg-gray-800 dark-mode:text-white">
+      <div className="relative overflow-hidden flex-grow p-6 items-center flex flex-col justify-center">
         <nav className="absolute top-0 pt-5 px-5 flex items-center justify-between justify-center flex-row w-full p-2">
           <span className="inline-flex rounded-md w-full">
             {!userDetails && (
