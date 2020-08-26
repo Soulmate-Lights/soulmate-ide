@@ -65,8 +65,8 @@ const Gallery = () => {
                         alt
                       />
                     </div>
-                    <div className="min-w-0 flex-1 px-4 md:grid md:grid-cols-2 md:gap-4">
-                      <div className="flex flex-col justify-center">
+                    <div className="min-w-0 flex-1 px-4 md:grid md:grid-cols-3 md:gap-4">
+                      <div className="flex flex-col justify-center max-w-10">
                         <div className="text-sm leading-5 font-medium text-gray-800 dark-mode:text-white truncate">
                           {user.name}
                         </div>
@@ -77,7 +77,7 @@ const Gallery = () => {
                           </span>
                         </div>
                       </div>
-                      <div className="hidden md:flex flex-row overflow-auto">
+                      <div className="hidden md:flex flex-row overflow-auto col-span-2">
                         {user.sketches?.map((sketch) => (
                           <Sketch
                             key={sketch.id}
