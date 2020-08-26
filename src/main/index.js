@@ -38,7 +38,7 @@ const Main = () => {
       <LastLocationProvider>
         <div
           className={classnames(
-            "h-screen flex overflow-hidden bg-gray-100 dark-mode:bg-gray-300 font-light"
+            "h-screen flex overflow-hidden bg-gray-100 dark-mode:bg-gray-300 font-medium"
           )}
           style={{ WebkitUserSelect: "none", opacity: blur ? "0.9" : 1 }}
         >
@@ -49,7 +49,7 @@ const Main = () => {
 
           <Menu />
 
-          <div className="flex flex-grow flex-shrink w-full bg-gray-100 dark-mode:bg-gray-800 dark-mode:text-white">
+          <div className="flex flex-row flex-grow  min-w-0 flex-shrink w-full bg-gray-100 dark-mode:bg-gray-800 dark-mode:text-white">
             <Switch>
               <Route exact path="/">
                 <Dashboard />

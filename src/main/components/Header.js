@@ -10,12 +10,13 @@ const Header = ({ title, sections, subtitle, actions, className }) => {
   return (
     <div
       className={classnames(
-        "flex dark-mode:bg-gray-800 dark-mode:text-white border-b dark-mode:border-gray-700 flex-row",
+        "flex dark-mode:bg-gray-800 dark-mode:text-white flex-row",
+        "h-24 border-b dark-mode:border-gray-700",
         className
       )}
     >
       <div
-        className="flex flex-col flex-grow px-6 py-4"
+        className="flex flex-col justify-center flex-grow px-6 py-5 "
         style={{ WebkitAppRegion: "drag" }}
       >
         <div className="md:flex md:items-center md:justify-between">
