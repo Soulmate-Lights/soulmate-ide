@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import isElectron from "~/utils/isElectron";
 import Logo from "~/images/logo.svg";
 import UserContainer from "~/containers/user";
 
@@ -14,8 +15,8 @@ const Dashboard = () => {
         <nav className="absolute top-0 pt-5 px-5 flex items-center justify-between justify-center flex-row w-full p-2">
           <Logo className="h-8 w-auto sm:h-10" />
 
-          {!userDetails && (
-            <span className="inline-flex rounded-md shadow">
+          <span className="inline-flex rounded-md shadow">
+            {!userDetails && (
               <button
                 onClick={login}
                 href="#"
@@ -23,8 +24,17 @@ const Dashboard = () => {
               >
                 Log in
               </button>
-            </span>
-          )}
+            )}
+
+            {!isElectron() && (
+              <a
+                href="https://editor.soulmatelights.com/download"
+                className="inline-flex items-center px-4 py-2 border border-transparent text-base leading-6 font-medium rounded-md text-purple-600 bg-white hover:text-purple-500 focus:outline-none focus:border-purple-300 focus:shadow-outline-gray active:bg-purple-50 active:text-purple-700 transition duration-150 ease-in-out ml-4"
+              >
+                Download the desktop app
+              </a>
+            )}
+          </span>
         </nav>
         <main className="mx-auto max-w-screen-xl px-4">
           <div className="text-center">
