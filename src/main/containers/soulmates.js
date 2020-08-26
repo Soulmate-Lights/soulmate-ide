@@ -201,7 +201,9 @@ const SoulmatesContainer = () => {
 
   const checkUsb = () => {
     const ports = fs.readdirSync("/dev");
-    const port = ports.filter((p) => p.includes("tty.usbserial"))[0];
+    const port = ports.filter(
+      (p) => p.includes("tty.usbserial") || p.includes("cu.SLAB_USBtoUART")
+    )[0];
 
     if (port && !usbConnected) {
       const usbSoulmate = { port, type: "usb", name: "USB Soulmate" };
