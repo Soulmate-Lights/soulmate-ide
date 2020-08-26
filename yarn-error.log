@@ -1,8 +1,8 @@
 Arguments: 
-  /Users/elliott/.nvm/versions/node/v13.14.0/bin/node /usr/local/Cellar/yarn/1.22.4/libexec/bin/yarn.js add react-router-dom;
+  /Users/elliott/.nvm/versions/node/v13.14.0/bin/node /usr/local/Cellar/yarn/1.22.4/libexec/bin/yarn.js react-build
 
 PATH: 
-  /var/folders/vx/6cq64y3d30dgs9fglm2456rr0000gn/T/yarn--1596432204195-0.574469332356587:/Users/elliott/Sites/soulmate/soulmate-ide/node_modules/.bin:/Users/elliott/.config/yarn/link/node_modules/.bin:/Users/elliott/.nvm/versions/node/v13.14.0/libexec/lib/node_modules/npm/bin/node-gyp-bin:/Users/elliott/.nvm/versions/node/v13.14.0/lib/node_modules/npm/bin/node-gyp-bin:/Users/elliott/.nvm/versions/node/v13.14.0/bin/node_modules/npm/bin/node-gyp-bin:/var/folders/vx/6cq64y3d30dgs9fglm2456rr0000gn/T/yarn--1596432203519-0.5459916287963953:/Users/elliott/Sites/soulmate/soulmate-ide/node_modules/.bin:/Users/elliott/.config/yarn/link/node_modules/.bin:/Users/elliott/.nvm/versions/node/v13.14.0/libexec/lib/node_modules/npm/bin/node-gyp-bin:/Users/elliott/.nvm/versions/node/v13.14.0/lib/node_modules/npm/bin/node-gyp-bin:/Users/elliott/.nvm/versions/node/v13.14.0/bin/node_modules/npm/bin/node-gyp-bin:/Users/elliott/.nvm/versions/node/v13.14.0/bin:/Users/elliott/esp/xtensa-esp32-elf/bin:/usr/local/opt/rbenv/shims:/usr/local/heroku/bin:/usr/local/opt/rbenv/shims:/usr/local/opt/rbenv/bin:/usr/local/share/npm/bin:/usr/local/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Apple/usr/bin:/opt/local/bin:/usr/local/bin:/usr/local/sbin:/usr/local/mysql/bin:/usr/local/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Apple/usr/bin:/opt/local/bin:/usr/local/share/npm/bin:/usr/local/arcanist/bin:/Users/elliott/esp/xtensa-esp32-elf/bin:/Users/elliott/Library/Android/sdk/platform-tools/
+  /Users/elliott/.fastlane/bin:/Users/elliott/esp/xtensa-esp32-elf/bin:/Users/elliott/.nvm/versions/node/v13.14.0/bin:/Users/elliott/.rbenv/shims:/usr/local/opt/openssl@1.1/bin:/Users/elliott/.fastlane/bin:/Users/elliott/esp/xtensa-esp32-elf/bin:/Users/elliott/.nvm/versions/node/v13.14.0/bin:/Users/elliott/.rbenv/shims:/usr/local/opt/openssl@1.1/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Apple/usr/bin
 
 Yarn version: 
   1.22.4
@@ -14,17 +14,12 @@ Platform:
   darwin x64
 
 Trace: 
-  Error: https://registry.yarnpkg.com/react-router-dom;: Not found
-      at Request.params.callback [as _callback] (/usr/local/Cellar/yarn/1.22.4/libexec/lib/cli.js:66987:18)
-      at Request.self.callback (/usr/local/Cellar/yarn/1.22.4/libexec/lib/cli.js:140748:22)
-      at Request.emit (events.js:315:20)
-      at Request.<anonymous> (/usr/local/Cellar/yarn/1.22.4/libexec/lib/cli.js:141720:10)
-      at Request.emit (events.js:315:20)
-      at IncomingMessage.<anonymous> (/usr/local/Cellar/yarn/1.22.4/libexec/lib/cli.js:141642:12)
-      at Object.onceWrapper (events.js:421:28)
-      at IncomingMessage.emit (events.js:327:22)
-      at endReadableNT (_stream_readable.js:1201:12)
-      at processTicksAndRejections (internal/process/task_queues.js:84:21)
+  SyntaxError: /Users/elliott/Sites/soulmate/soulmate-ide/package.json: Unexpected token / in JSON at position 3651
+      at JSON.parse (<anonymous>)
+      at /usr/local/Cellar/yarn/1.22.4/libexec/lib/cli.js:1625:59
+      at Generator.next (<anonymous>)
+      at step (/usr/local/Cellar/yarn/1.22.4/libexec/lib/cli.js:310:30)
+      at /usr/local/Cellar/yarn/1.22.4/libexec/lib/cli.js:321:13
 
 npm manifest: 
   {
@@ -33,7 +28,7 @@ npm manifest:
       "last 1 Chrome versions",
       "last 1 electron version"
     ],
-    "version": "1.0.55",
+    "version": "2.0.0",
     "main": "src/electron.js",
     "license": "MIT",
     "dependencies": {
@@ -41,7 +36,9 @@ npm manifest:
       "@fullhuman/postcss-purgecss": "^2.3.0",
       "@hot-loader/react-dom": "^16.13.0",
       "@tailwindcss/ui": "^0.5.0",
+      "@wokwi/gcc-output-parser": "^0.2.1",
       "array-move": "^2.2.2",
+      "autoprefixer": "^9.8.6",
       "avr8js": "^0.9.1",
       "babel-plugin-auto-import": "^1.0.5",
       "bonjour": "^3.5.0",
@@ -54,11 +51,16 @@ npm manifest:
       "electron-root-path": "^1.0.16",
       "electron-updater": "^4.3.1",
       "emittery": "^0.7.1",
+      "eslint-plugin-auto-import": "^0.1.0",
+      "eslint-plugin-babel": "^5.3.1",
+      "eslint-plugin-react-hooks": "^4.0.8",
+      "eslint-plugin-simple-import-sort": "^5.0.3",
       "history": "^4.10.1",
       "js-beautify": "^1.11.0",
       "jwt-decode": "^2.2.0",
       "keytar": "^5.0.0",
       "lodash": "^4.17.15",
+      "moment": "^2.27.0",
       "postcss-modules": "^3.2.0",
       "prop-types": "^15.7.2",
       "react": "^16",
@@ -91,7 +93,7 @@ npm manifest:
       "babel-preset-env": "^1.7.0",
       "concurrently": "^5.2.0",
       "cross-env": "^7.0.2",
-      "electron": "^9.0.0",
+      "electron": "^10.0.0",
       "electron-builder": "^22.7.0",
       "eslint": "^7.2.0",
       "eslint-plugin-react": "^7.20.0",
@@ -119,7 +121,7 @@ npm manifest:
       "web": "NODE_ENV=development parcel index.html --open -p 3000"
     },
     "build": {
-      "afterSign": "scripts/notarize.js",
+      // "afterSign": "scripts/notarize.js",
       "mac": {
         "publish": {
           "provider": "s3",
@@ -1560,6 +1562,11 @@ Lockfile:
     dependencies:
       "@types/yargs-parser" "*"
   
+  "@wokwi/gcc-output-parser@^0.2.1":
+    version "0.2.1"
+    resolved "https://registry.yarnpkg.com/@wokwi/gcc-output-parser/-/gcc-output-parser-0.2.1.tgz#564d6b05b6655895ea31a57cb1e4720cc50a9f5f"
+    integrity sha512-v0LAOjB/ZcgmB4eLiNQ35IfaScQhRkhXZ7HDMrYwPsXgFsc+lHPqBFFt84ZEwdZFbq59u4fkRZPLg++JU6Xquw==
+  
   abab@^2.0.0:
     version "2.0.3"
     resolved "https://registry.yarnpkg.com/abab/-/abab-2.0.3.tgz#623e2075e02eb2d3f2475e49f99c91846467907a"
@@ -1887,7 +1894,7 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/atob/-/atob-2.1.2.tgz#6d9517eb9e030d2436666651e86bd9f6f13533c9"
     integrity sha512-Wm6ukoaOGJi/73p/cl2GvLjTI5JM1k/O14isD73YML8StrH/7/lRFgmg8nICZgD3bZZvjwCGxtMOD3wWNAu8cg==
   
-  autoprefixer@^9.4.5:
+  autoprefixer@^9.4.5, autoprefixer@^9.8.6:
     version "9.8.6"
     resolved "https://registry.yarnpkg.com/autoprefixer/-/autoprefixer-9.8.6.tgz#3b73594ca1bf9266320c5acf1588d74dea74210f"
     integrity sha512-XrvP4VVHdRBCdX1S3WXVD8+RyG9qeb1D5Sn1DeLiG2xfSpzellk5k54xbUERJ3M5DggQxes39UGOTP8CFrEGbg==
@@ -3989,10 +3996,10 @@ Lockfile:
       lodash.isequal "^4.5.0"
       semver "^7.1.3"
   
-  electron@^9.0.0:
-    version "9.0.0"
-    resolved "https://registry.yarnpkg.com/electron/-/electron-9.0.0.tgz#335cd426a8a542ad8d4c96c0c40a8668ab5527b8"
-    integrity sha512-JsaSQNPh+XDYkLj8APtVKTtvpb86KIG57W5OOss4TNrn8L3isC9LsCITwfnVmGIXHhvX6oY/weCtN5hAAytjVg==
+  electron@^10.0.0:
+    version "10.0.0"
+    resolved "https://registry.yarnpkg.com/electron/-/electron-10.0.0.tgz#4e777612ead76b39bc7241c7749bf6b0ece47889"
+    integrity sha512-0XX/LqYAHHCSbfLjUk9VRDPOeYjDPEzA9i7F50AqpEpFIWR2bp++0S0beRANUpPdkvtBDp+0R6vHV3iXPvuKyA==
     dependencies:
       "@electron/get" "^1.0.1"
       "@types/node" "^12.0.12"
@@ -4150,6 +4157,25 @@ Lockfile:
     optionalDependencies:
       source-map "~0.6.1"
   
+  eslint-plugin-auto-import@^0.1.0:
+    version "0.1.0"
+    resolved "https://registry.yarnpkg.com/eslint-plugin-auto-import/-/eslint-plugin-auto-import-0.1.0.tgz#e54ddc5593360646698ba6c4acb906cc04434496"
+    integrity sha1-5U3cVZM2BkZpi6bErLkGzARDRJY=
+    dependencies:
+      requireindex "~1.1.0"
+  
+  eslint-plugin-babel@^5.3.1:
+    version "5.3.1"
+    resolved "https://registry.yarnpkg.com/eslint-plugin-babel/-/eslint-plugin-babel-5.3.1.tgz#75a2413ffbf17e7be57458301c60291f2cfbf560"
+    integrity sha512-VsQEr6NH3dj664+EyxJwO4FCYm/00JhYb3Sk3ft8o+fpKuIfQ9TaW6uVUfvwMXHcf/lsnRIoyFPsLMyiWCSL/g==
+    dependencies:
+      eslint-rule-composer "^0.3.0"
+  
+  eslint-plugin-react-hooks@^4.0.8:
+    version "4.0.8"
+    resolved "https://registry.yarnpkg.com/eslint-plugin-react-hooks/-/eslint-plugin-react-hooks-4.0.8.tgz#a9b1e3d57475ccd18276882eff3d6cba00da7a56"
+    integrity sha512-6SSb5AiMCPd8FDJrzah+Z4F44P2CdOaK026cXFV+o/xSRzfOiV1FNFeLl2z6xm3yqWOQEZ5OfVgiec90qV2xrQ==
+  
   eslint-plugin-react@^7.20.0:
     version "7.20.0"
     resolved "https://registry.yarnpkg.com/eslint-plugin-react/-/eslint-plugin-react-7.20.0.tgz#f98712f0a5e57dfd3e5542ef0604b8739cd47be3"
@@ -4166,6 +4192,16 @@ Lockfile:
       resolve "^1.15.1"
       string.prototype.matchall "^4.0.2"
       xregexp "^4.3.0"
+  
+  eslint-plugin-simple-import-sort@^5.0.3:
+    version "5.0.3"
+    resolved "https://registry.yarnpkg.com/eslint-plugin-simple-import-sort/-/eslint-plugin-simple-import-sort-5.0.3.tgz#9ae258ddada6efffc55e47a134afbd279eb31fc6"
+    integrity sha512-1rf3AWiHeWNCQdAq0iXNnlccnH1UDnelGgrPbjBBHE8d2hXVtOudcmy0vTF4hri3iJ0MKz8jBhmH6lJ0ZWZLHQ==
+  
+  eslint-rule-composer@^0.3.0:
+    version "0.3.0"
+    resolved "https://registry.yarnpkg.com/eslint-rule-composer/-/eslint-rule-composer-0.3.0.tgz#79320c927b0c5c0d3d3d2b76c8b4a488f25bbaf9"
+    integrity sha512-bt+Sh8CtDmn2OajxvNO+BX7Wn4CIWMpTRm3MaiKPCQcnnlm0CS2mhui6QaoeQugs+3Kj2ESKEEGJUdVafwhiCg==
   
   eslint-scope@^5.1.0:
     version "5.1.0"
@@ -6118,6 +6154,11 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/modify-filename/-/modify-filename-1.1.0.tgz#9a2dec83806fbb2d975f22beec859ca26b393aa1"
     integrity sha1-mi3sg4Bvuy2XXyK+7IWcoms5OqE=
   
+  moment@^2.27.0:
+    version "2.27.0"
+    resolved "https://registry.yarnpkg.com/moment/-/moment-2.27.0.tgz#8bff4e3e26a236220dfe3e36de756b6ebaa0105d"
+    integrity sha512-al0MUK7cpIcglMv3YF13qSgdAIqxHTO7brRtaz3DlSULbqfazqkc5kEjNrLDOM7fsjshoFIihnU8snrP7zUvhQ==
+  
   monaco-editor@*:
     version "0.20.0"
     resolved "https://registry.yarnpkg.com/monaco-editor/-/monaco-editor-0.20.0.tgz#5d5009343a550124426cb4d965a4d27a348b4dea"
@@ -7848,6 +7889,11 @@ Lockfile:
     version "2.0.0"
     resolved "https://registry.yarnpkg.com/require-main-filename/-/require-main-filename-2.0.0.tgz#d0b329ecc7cc0f61649f62215be69af54aa8989b"
     integrity sha512-NKN5kMDylKuldxYLSUfrbo5Tuzh4hd+2E8NPPX02mZtn1VuREQToYe/ZdlJy+J3uCpfaiGF05e7B8W0iXbQHmg==
+  
+  requireindex@~1.1.0:
+    version "1.1.0"
+    resolved "https://registry.yarnpkg.com/requireindex/-/requireindex-1.1.0.tgz#e5404b81557ef75db6e49c5a72004893fe03e162"
+    integrity sha1-5UBLgVV+91225JxacgBIk/4D4WI=
   
   resolve-from@^3.0.0:
     version "3.0.0"

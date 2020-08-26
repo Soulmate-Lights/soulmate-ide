@@ -37,6 +37,7 @@
     "keytar": "^5.0.0",
     "lodash": "^4.17.15",
     "moment": "^2.27.0",
+    "node-abi": "^2.19.1",
     "postcss-modules": "^3.2.0",
     "prop-types": "^15.7.2",
     "react": "^16",
