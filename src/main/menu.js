@@ -1,4 +1,5 @@
 import { FiCloud, FiFolder, FiHome, FiSettings, FiSmile } from "react-icons/fi";
+import isElectron from "~/utils/isElectron";
 import Logo from "~/images/Logo.svg";
 import { Link, NavLink, useLocation } from "react-router-dom";
 
@@ -22,7 +23,8 @@ const Menu = () => {
         <div className="flex flex-col h-0 flex-1">
           <div
             className={classnames(
-              "flex-1 flex flex-col pt-5 pb-4 px-2 overflow-y-auto",
+              "flex-1 flex flex-col pb-4 px-2 overflow-y-auto",
+              { "pt-5": isElectron() },
               menuBackgroundClass
             )}
           >
