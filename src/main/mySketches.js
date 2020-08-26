@@ -41,7 +41,7 @@ const MySketches = () => {
         title="My patterns"
         actions={[
           !creating && {
-            title: "New sketch",
+            title: "New pattern",
             onClick: () => setCreating(true),
           },
           creating && (
@@ -50,7 +50,7 @@ const MySketches = () => {
                 autoFocus
                 onChange={(e) => setNewSketchName(e.target.value)}
                 onKeyDown={(e) => e.key === "Escape" && e.target.blur()}
-                placeholder="Give your sketch a name"
+                placeholder="Give your pattern a name"
                 className="form-input block w-full text-sm py-2 rounded-r-none h-8 focus:z-10"
               />
               <button

@@ -75,7 +75,7 @@ const Dashboard = () => {
                 >
                   Download the desktop app
                 </a>
-                to upload your sketches right to your Soulmate.
+                to upload your patterns right to your Soulmate.
               </div>
             )}
           </div>
