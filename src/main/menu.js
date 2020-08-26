@@ -82,16 +82,18 @@ const Menu = () => {
                 Gallery
               </NavLink>
 
-              <NavLink
-                to="/flash"
-                disabled
-                location={location}
-                activeClassName={activeLinkClass}
-                className={linkClass}
-              >
-                <FaUsb className={iconClass} />
-                USB Upload
-              </NavLink>
+              {isElectron() && (
+                <NavLink
+                  to="/flash"
+                  disabled
+                  location={location}
+                  activeClassName={activeLinkClass}
+                  className={linkClass}
+                >
+                  <FaUsb className={iconClass} />
+                  USB Upload
+                </NavLink>
+              )}
 
               <NavLink
                 to="/config"

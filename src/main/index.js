@@ -49,7 +49,7 @@ const Main = () => {
 
           <Menu />
 
-          <div className="flex flex-grow bg-gray-100 dark-mode:bg-gray-800 dark-mode:text-white">
+          <div className="flex flex-grow flex-shrink w-full bg-gray-100 dark-mode:bg-gray-800 dark-mode:text-white">
             <Switch>
               <Route exact path="/">
                 <Dashboard />
