@@ -1,4 +1,5 @@
 import Header from "~/components/Header";
+import Logo from "~/images/logo.svg";
 import { Link } from "react-router-dom";
 import Sketch from "~/components/sketch";
 import SketchesContainer from "~/containers/sketches";
@@ -46,13 +47,14 @@ const Gallery = () => {
         ]}
       />
 
-      <div className="p-8 overflow-auto">
+      <div className="p-8 overflow-auto dark-mode:bg-gray-900 dark-mode:text-white">
         <ul>
+          {!users && <Logo className="loading-spinner" />}
           {users.map((user) => (
-            <li key={user.id} className="border-b">
+            <li key={user.id} className="border-b dark-mode:border-gray-800">
               <Link
                 to={`/user/${user.id}`}
-                className="block hover:bg-gray-50 focus:outline-none focus:bg-gray-50 transition duration-150 ease-in-out"
+                className="block hover:bg-gray-50 dark-mode:hover:bg-gray-800 focus:outline-none focus:bg-gray-50 transition duration-150 ease-in-out"
               >
                 <div className="flex items-center px-4 py-4 sm:px-6">
                   <div className="min-w-0 flex-1 flex items-center">
@@ -65,7 +67,7 @@ const Gallery = () => {
                     </div>
                     <div className="min-w-0 flex-1 px-4 md:grid md:grid-cols-2 md:gap-4">
                       <div className="flex flex-col justify-center">
-                        <div className="text-sm leading-5 font-medium text-gray-800 truncate">
+                        <div className="text-sm leading-5 font-medium text-gray-800 dark-mode:text-white truncate">
                           {user.name}
                         </div>
                         <div className="mt-2 flex items-center text-sm leading-5 text-gray-500">
@@ -107,30 +109,6 @@ const Gallery = () => {
           ))}
         </ul>
       </div>
-
-      {/* <div className="p-8 overflow-auto flex flex-col flex-grow flex-shrink bg-white dark-mode:bg-gray-900 dark-mode:text-white">
-        {users?.map((user) => (
-          <div className="pb-4" key={user.id}>
-            <h3 className="mb-2 text-lg flex flex-row items-center">
-              <img className="mr-2 w-10 h-10 rounded-full" src={user.image} />
-              {user.name}
-            </h3>
-            <ul className="flex flex-row flex-wrap">
-              {user.sketches?.map((sketch) => (
-                <Link
-                  key={sketch.id}
-                  to={
-                    // mine ? `/my-patterns/${sketch.id}` : `/gallery/${sketch.id}`
-                    `/user/${user.id}`
-                  }
-                >
-                  <Sketch sketch={sketch} width={14} className="mr-4 mb-4" />
-                </Link>
-              ))}
-            </ul>
-          </div>
-        ))}
-      </div> */}
     </div>
   );
 };

@@ -20,7 +20,7 @@ const Sketch = ({
     <div
       className={classnames(
         className,
-        "flex flex-col text-center bg-white rounded-lg shadow overflow-hidden",
+        "flex flex-col text-center bg-white shadow overflow-hidden",
         `w-${width}`,
         "dark-mode:border dark-mode:border-gray-800"
       )}

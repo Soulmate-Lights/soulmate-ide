@@ -95,7 +95,8 @@ const MySketches = () => {
       )}
 
       {userDetails && (
-        <div className="p-8 overflow-auto flex flex-col flex-shrink bg-white dark-mode:bg-gray-900 dark-mode:text-white">
+        <div className="p-8 overflow-auto flex flex-grow flex-col flex-shrink bg-white dark-mode:bg-gray-900 dark-mode:text-white">
+          {!sketches && <Logo className="loading-spinner" />}
           {_.map(Object.keys(groupedSketches).sort(), (key) => {
             const sketches = groupedSketches[key];
             return (

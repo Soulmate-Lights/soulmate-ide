@@ -19,6 +19,7 @@ import classnames from "classnames";
 import history from "~/utils/history";
 import { hot } from "react-hot-loader";
 import isElectron from "~/utils/isElectron";
+import { LastLocationProvider } from "react-router-last-location";
 
 const SpecificRouter = isElectron() ? HashRouter : Router;
 
@@ -34,72 +35,74 @@ const Main = () => {
 
   return (
     <SpecificRouter history={isElectron() ? undefined : history}>
-      <div
-        className={classnames(
-          "h-screen flex overflow-hidden bg-gray-100 dark-mode:bg-gray-300"
-        )}
-        style={{ WebkitUserSelect: "none", opacity: blur ? "0.9" : 1 }}
-      >
+      <LastLocationProvider>
         <div
-          className="absolute w-full h-5"
-          style={{ WebkitAppRegion: "drag" }}
-        />
-
-        <Menu />
-
-        <Switch>
-          <Route exact path="/">
-            <Dashboard />
-          </Route>
-
-          <Route exact path="/tutorial">
-            <Welcome />
-          </Route>
-
-          <Route exact path="/my-patterns">
-            <MySketches />
-          </Route>
-
-          <Route exact path="/gallery">
-            <Gallery />
-          </Route>
-
-          <Route exact path="/flash">
-            <Flash />
-          </Route>
-
-          <Route exact path="/config">
-            <Config />
-          </Route>
-
-          <Route
-            path="/gallery/:id"
-            render={({
-              match: {
-                params: { id },
-              },
-            }) => <Editor id={id} />}
+          className={classnames(
+            "h-screen flex overflow-hidden bg-gray-100 dark-mode:bg-gray-300"
+          )}
+          style={{ WebkitUserSelect: "none", opacity: blur ? "0.9" : 1 }}
+        >
+          <div
+            className="absolute w-full h-5"
+            style={{ WebkitAppRegion: "drag" }}
           />
 
-          <Route
-            path="/user/:id"
-            render={({
-              match: {
-                params: { id },
-              },
-            }) => <User id={id} />}
-          />
+          <Menu />
 
-          <Route
-            path="/my-patterns/:id"
-            render={({
-              match: {
-                params: { id },
-              },
-            }) => <Editor id={id} mine />}
-          />
-        </Switch>
-      </div>
+          <Switch>
+            <Route exact path="/">
+              <Dashboard />
+            </Route>
+
+            <Route exact path="/tutorial">
+              <Welcome />
+            </Route>
+
+            <Route exact path="/my-patterns">
+              <MySketches />
+            </Route>
+
+            <Route exact path="/gallery">
+              <Gallery />
+            </Route>
+
+            <Route exact path="/flash">
+              <Flash />
+            </Route>
+
+            <Route exact path="/config">
+              <Config />
+            </Route>
+
+            <Route
+              path="/gallery/:id"
+              render={({
+                match: {
+                  params: { id },
+                },
+              }) => <Editor id={id} />}
+            />
+
+            <Route
+              path="/user/:id"
+              render={({
+                match: {
+                  params: { id },
+                },
+              }) => <User id={id} />}
+            />
+
+            <Route
+              path="/my-patterns/:id"
+              render={({
+                match: {
+                  params: { id },
+                },
+              }) => <Editor id={id} mine />}
+            />
+          </Switch>
+        </div>
+      </LastLocationProvider>
     </SpecificRouter>
   );
 };
