@@ -4,7 +4,6 @@ import BuildsContainer from "~/containers/builds";
 import CodeEditor from "~/components/codeEditor";
 import Header from "~/components/Header";
 import Logo from "~/images/logo.svg";
-import { MdAccountCircle } from "react-icons/md";
 import Simulator from "~/components/Simulator";
 import UserContainer from "~/containers/user";
 import examples from "./examples";
@@ -16,20 +15,28 @@ const Finished = () => {
   const { login } = useContainer(UserContainer);
   const dark = useLightSwitch() === Mode.Dark;
   return (
-    <div className="items-center justify-center flex flex-col flex-grow width-full mx-20 my-10">
-      <Logo className="mb-4" />
-      <p className="mb-4">
-        {"You're ready to get started writing LED patterns!"}
-      </p>
-      <p className="mb-4">
+    <div className="items-center justify-center flex flex-col flex-grow width-full px-20 py-10 dark-mode:bg-gray-900 dark-mode:text-white space-y-8">
+      <Logo />
+      <span className="items-center flex flex-col">
+        <span className="font-thin text-5xl">All set!</span>
+        <p>You're ready to get started writing LED patterns!</p>
+      </span>
+      <p className=" space-x-4">
         <button
           onClick={login}
           type="button"
           className="inline-flex items-center px-6 py-3 border border-transparent text-base leading-6 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition ease-in-out duration-150"
         >
-          <MdAccountCircle className="mr-2" />
           Log in
         </button>
+
+        <a
+          href="/gallery"
+          type="button"
+          className="inline-flex items-center px-6 py-3 border border-transparent text-base leading-6 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition ease-in-out duration-150"
+        >
+          Gallery
+        </a>
       </p>
       <img
         style={{ maxWidth: "80%", maxHeight: "50%" }}

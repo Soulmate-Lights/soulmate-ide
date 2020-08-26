@@ -38,7 +38,7 @@ const Main = () => {
       <LastLocationProvider>
         <div
           className={classnames(
-            "h-screen flex overflow-hidden bg-gray-100 dark-mode:bg-gray-300"
+            "h-screen flex overflow-hidden bg-gray-100 dark-mode:bg-gray-300 font-light"
           )}
           style={{ WebkitUserSelect: "none", opacity: blur ? "0.9" : 1 }}
         >

@@ -13,8 +13,6 @@ const Dashboard = () => {
     >
       <div className="relative overflow-hidden flex-grow p-6 items-center flex flex-col justify-center bg-white dark-mode:bg-gray-800">
         <nav className="absolute top-0 pt-5 px-5 flex items-center justify-between justify-center flex-row w-full p-2">
-          <Logo className="h-8 w-auto sm:h-10" />
-
           <span className="inline-flex rounded-md shadow">
             {!userDetails && (
               <button

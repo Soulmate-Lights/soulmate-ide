@@ -1,4 +1,5 @@
 import { FiCloud, FiFolder, FiHome, FiSettings, FiSmile } from "react-icons/fi";
+import Logo from "~/images/Logo.svg";
 import { Link, NavLink, useLocation } from "react-router-dom";
 
 import { FaUsb } from "react-icons/fa";
@@ -16,8 +17,8 @@ const Menu = () => {
   const location = useLocation();
 
   return (
-    <div className="flex flex-shrink-0 dark-mode:border-gray-700">
-      <div className="flex flex-col w-64">
+    <div className="flex flex-shrink-0 dark-mode:border-gray-700 border-r">
+      <div className="flex flex-col w-72">
         <div className="flex flex-col h-0 flex-1">
           <div
             className={classnames(
@@ -25,6 +26,16 @@ const Menu = () => {
               menuBackgroundClass
             )}
           >
+            <div className="flex flex-row dark-mode:text-white items-center px-2 mt-4">
+              <Logo className="w-10 h-10 mr-4" />
+
+              <span className="flex flex-col">
+                <span>
+                  Soulmate&nbsp;<span className="opacity-50">IDE</span>
+                </span>
+                <span className="opacity-25 text-sm">FastLED Emulator</span>
+              </span>
+            </div>
             <nav className="mt-5 flex-1 space-y-1">
               <NavLink
                 to="/"
