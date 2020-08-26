@@ -26,7 +26,7 @@ const Editor = ({ id, mine }) => {
   if (!sketch)
     return (
       <div>
-        <Logo />
+        <Logo className="loading-spinner" />
       </div>
     );
 
