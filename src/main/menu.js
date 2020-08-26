@@ -32,9 +32,7 @@ const Menu = () => {
       <div className="flex flex-col w-72">
         <div className="flex flex-col h-0 flex-1">
           <div
-            className={classnames("flex-1 flex flex-col pb-4 overflow-y-auto", {
-              "pt-5": isElectron(),
-            })}
+            className={classnames("flex-1 flex flex-col pb-4 overflow-y-auto")}
           >
             <div className="flex flex-row items-center px-6 py-4 border-b dark-mode:border-gray-600 h-24">
               <Logo className="w-10 h-10 mr-4" />
