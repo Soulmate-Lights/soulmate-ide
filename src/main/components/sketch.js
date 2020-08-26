@@ -22,7 +22,7 @@ const Sketch = ({
         className,
         "flex flex-col text-center bg-white shadow overflow-hidden",
         `w-${width}`,
-        "dark-mode:border dark-mode:border-gray-800"
+        "border border-transparent dark-mode:border-gray-800"
       )}
       {...rest}
     >
@@ -43,7 +43,7 @@ const Sketch = ({
         </video>
       </div>
       {!hideTitle && (
-        <div className="p-1 dark-mode:bg-gray-800 text-gray-900 dark-mode:text-white">
+        <div className="p-1 dark-mode:bg-gray-700 text-gray-900 dark-mode:text-white">
           <h3 className="text-xs leading-5 font-medium truncate">
             {sketch.name}
           </h3>
