@@ -130,10 +130,6 @@ ${
 
 #include <Soulmate.h>
 
-int16_t XY(int16_t x, int16_t y) {
-  return gridIndexHorizontal(x, y);
-}
-
 ${translation}
 
 ${code}
