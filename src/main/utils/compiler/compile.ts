@@ -32,6 +32,8 @@ export async function getFullBuild(source: string) {
     body: JSON.stringify({ sketch: source }),
   });
 
+  if (!res.ok) return false;
+
   const path = electron.remote.app.getPath("temp");
   const filename = parseInt(Math.random() * 10000000);
   const filePath = `${path}${filename}.bin`;

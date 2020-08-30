@@ -14,6 +14,8 @@ import compact from "lodash/compact";
 import startCase from "lodash/startCase";
 import uniqBy from "lodash/uniqBy";
 
+const { dialog } = remote;
+
 const Flash = () => {
   const { type, config } = ConfigContainer.useContainer();
   const { usbSoulmate, flashMultiple } = Soulmates.useContainer();
@@ -54,8 +56,8 @@ const Flash = () => {
     }
   };
 
-  const flash = () => {
-    flashMultiple(
+  const flash = async () => {
+    const result = await flashMultiple(
       usbSoulmate,
       selectedSketches,
       config.rows,
@@ -64,6 +66,20 @@ const Flash = () => {
       "APA102",
       4000
     );
+
+    if (!result) {
+      const options = {
+        type: "error",
+        buttons: ["OK"],
+        defaultId: 2,
+        title: "Oops",
+        message: "There was an error building these patterns.",
+        detail:
+          "We couldn't compile all these patterns. One of them might be broken! Please try again with a different selection.",
+      };
+
+      dialog.showMessageBox(null, options);
+    }
   };
 
   return (

@@ -99,8 +99,15 @@ const SoulmatesContainer = () => {
       milliamps
     );
     const build = await getFullBuild(preparedCode);
+
+    if (!build) {
+      updateSoulmate(soulmate, { flashing: false });
+      return false;
+    }
+
     await sendBuildToSoulmate(build, soulmate);
     updateSoulmate(soulmate, { flashing: false });
+    return true;
   };
 
   // Send to USB or Wifi soulmate
