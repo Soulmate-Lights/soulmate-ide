@@ -1,12 +1,8 @@
 import { Link } from "react-router-dom";
-import history from "~/utils/history";
 import React from "react";
 import compact from "lodash/compact";
-import { useLastLocation } from "react-router-last-location";
 
 const Header = ({ title, sections, subtitle, actions, className }) => {
-  const lastLocation = useLastLocation();
-
   return (
     <div
       className={classnames(
