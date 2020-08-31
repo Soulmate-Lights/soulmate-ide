@@ -68,14 +68,19 @@ void loop() {
 }
 `.trim();
 
-export const prepareFullCodeWithMultipleSketches = (
-  sketches,
-  rows = 70,
-  cols = 15,
-  chipType = "atom",
-  ledType = "APA102",
-  milliamps = 700
-) => {
+export const prepareFullCodeWithMultipleSketches = (sketches, config) => {
+  const {
+    rows = 70,
+    cols = 15,
+    ledType = "APA102",
+    milliamps = 700,
+    button,
+    data,
+    clock,
+  } = config;
+
+  console.log(config);
+
   const sanitizedSketchName = (name) => {
     return name.replace(/"/g, "");
   };
@@ -106,7 +111,7 @@ export const prepareFullCodeWithMultipleSketches = (
 // The number of parallel strips
 #define LED_ROWS ${rows}
 // Normally LED_COLS * LED_ROWS
-// #define N_LEDS 1050
+// #define N_LEDS ${cols * rows}
 // If you're using WS2812B LED strips, uncomment this line
 
 // How long should we spend in each pattern?
@@ -118,15 +123,11 @@ export const prepareFullCodeWithMultipleSketches = (
 
 ${ledType === "WS2812B" ? `#define USE_WS2812B true` : ""}
 
-${
-  chipType === "atom"
-    ? `
 #define BUTTON_ON_VALUE LOW
-#define SOULMATE_BUTTON_PIN 39
-#define SOULMATE_DATA_PIN 32
-#define SOULMATE_CLOCK_PIN 26`
-    : ""
-}
+#define SOULMATE_BUTTON_PIN ${button}
+#define SOULMATE_DATA_PIN ${data}
+#define SOULMATE_CLOCK_PIN ${clock}
+#define SOULMATE_LED_TYPE ${ledType}
 
 #include <Soulmate.h>
 

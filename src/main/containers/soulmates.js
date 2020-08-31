@@ -80,24 +80,9 @@ const SoulmatesContainer = () => {
     setUsbSoulmate(soulmates?.find((s) => s.type === "usb"));
   };
 
-  const flashMultiple = async (
-    soulmate,
-    sketches,
-    rows,
-    cols,
-    chipType,
-    ledType,
-    milliamps
-  ) => {
+  const flashMultiple = async (soulmate, sketches, config) => {
     updateSoulmate(soulmate, { flashing: true });
-    const preparedCode = prepareFullCodeWithMultipleSketches(
-      sketches,
-      rows,
-      cols,
-      chipType,
-      ledType,
-      milliamps
-    );
+    const preparedCode = prepareFullCodeWithMultipleSketches(sketches, config);
     const build = await getFullBuild(preparedCode);
 
     if (!build) {

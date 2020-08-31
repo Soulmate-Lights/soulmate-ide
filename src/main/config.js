@@ -65,7 +65,7 @@ const Config = () => {
                             >
                               Pins
                             </label>
-                            <div className="mt-1 flex w-full">
+                            <div className="mt-1 flex w-full space-x-4">
                               <div className="flex flex-row items-center w-6/12">
                                 <span className="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 h-10">
                                   Data
@@ -79,7 +79,7 @@ const Config = () => {
                                     })
                                   }
                                   value={config.data}
-                                  className="w-24 h-10 mr-8 form-input flex-1 block rounded-none rounded-r-md transition duration-150 ease-in-out sm:text-sm"
+                                  className="w-24 h-10 form-input flex-1 block rounded-none rounded-r-md transition duration-150 ease-in-out sm:text-sm"
                                 />
                               </div>
                               <div className="flex flex-row items-center w-6/12">
@@ -95,6 +95,22 @@ const Config = () => {
                                     })
                                   }
                                   value={config.clock}
+                                  className="w-24 h-10 form-input flex-1 block rounded-none rounded-r-md transition duration-150 ease-in-out sm:text-sm"
+                                />
+                              </div>
+                              <div className="flex flex-row items-center w-6/12">
+                                <span className="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 h-10">
+                                  Button
+                                </span>
+                                <input
+                                  disabled={disableCustom}
+                                  onChange={(e) =>
+                                    setConfig({
+                                      ...config,
+                                      button: parseInt(e.target.value),
+                                    })
+                                  }
+                                  value={config.button}
                                   className="w-24 h-10 form-input flex-1 block rounded-none rounded-r-md transition duration-150 ease-in-out sm:text-sm"
                                 />
                               </div>

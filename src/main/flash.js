@@ -57,15 +57,7 @@ const Flash = () => {
   };
 
   const flash = async () => {
-    const result = await flashMultiple(
-      usbSoulmate,
-      selectedSketches,
-      config.rows,
-      config.cols,
-      "atom",
-      "APA102",
-      4000
-    );
+    const result = await flashMultiple(usbSoulmate, selectedSketches, config);
 
     if (!result) {
       const options = {
