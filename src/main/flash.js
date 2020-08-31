@@ -16,6 +16,18 @@ import uniqBy from "lodash/uniqBy";
 
 const { dialog } = remote;
 
+const showErrorMessage = () => {
+  dialog.showMessageBox(null, {
+    type: "error",
+    buttons: ["OK"],
+    defaultId: 2,
+    title: "Oops",
+    message: "There was an error building these patterns.",
+    detail:
+      "We couldn't compile all these patterns. One of them might be broken! Please try again with a different selection.",
+  });
+};
+
 const Flash = () => {
   const { type, config } = ConfigContainer.useContainer();
   const { usbSoulmate, flashMultiple } = Soulmates.useContainer();
@@ -58,18 +70,7 @@ const Flash = () => {
 
   const flash = async () => {
     const result = await flashMultiple(usbSoulmate, selectedSketches, config);
-
-    if (!result) {
-      dialog.showMessageBox(null, {
-        type: "error",
-        buttons: ["OK"],
-        defaultId: 2,
-        title: "Oops",
-        message: "There was an error building these patterns.",
-        detail:
-          "We couldn't compile all these patterns. One of them might be broken! Please try again with a different selection.",
-      });
-    }
+    if (!result) showErrorMessage();
   };
 
   return (
