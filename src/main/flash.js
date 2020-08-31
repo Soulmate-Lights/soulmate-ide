@@ -60,7 +60,7 @@ const Flash = () => {
     const result = await flashMultiple(usbSoulmate, selectedSketches, config);
 
     if (!result) {
-      const options = {
+      dialog.showMessageBox(null, {
         type: "error",
         buttons: ["OK"],
         defaultId: 2,
@@ -68,9 +68,7 @@ const Flash = () => {
         message: "There was an error building these patterns.",
         detail:
           "We couldn't compile all these patterns. One of them might be broken! Please try again with a different selection.",
-      };
-
-      dialog.showMessageBox(null, options);
+      });
     }
   };
 
