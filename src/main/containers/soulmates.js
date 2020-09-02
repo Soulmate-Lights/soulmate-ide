@@ -10,6 +10,20 @@ import useInterval from "~/utils/useInterval";
 
 const defaultConfig = configs.Square;
 
+const getPort = () => {
+  let ports = [];
+  const os = require("os");
+  if (os.platform() === "win32") {
+    ports = [];
+  } else if (os.platform() === "darwin") {
+    ports = fs.readdirSync("/dev");
+  }
+
+  return ports.filter(
+    (p) => p.includes("tty.usbserial") || p.includes("cu.SLAB_USBtoUART")
+  )[0];
+};
+
 const SoulmatesContainer = () => {
   const [usbSoulmate, setUsbSoulmate] = useState();
   const [soulmates, setSoulmates] = useState([]);
@@ -117,8 +131,8 @@ const SoulmatesContainer = () => {
         IS_PROD && isPackaged
           ? path.join(path.dirname(getAppPath()), "..", "./builder")
           : path.join(root, "builder");
-      const ports = fs.readdirSync("/dev");
-      const port = ports.filter((p) => p.includes("tty.usbserial"))[0];
+
+      const port = getPort();
       const home = remote.require("os").homedir();
 
       if (!fs.existsSync(`${home}/Library/Python/2.7/bin/pip`)) {
@@ -192,10 +206,7 @@ const SoulmatesContainer = () => {
   const [usbConnected, setUsbConnected] = useState(false);
 
   const checkUsb = () => {
-    const ports = fs.readdirSync("/dev");
-    const port = ports.filter(
-      (p) => p.includes("tty.usbserial") || p.includes("cu.SLAB_USBtoUART")
-    )[0];
+    const port = getPort();
 
     if (port && !usbConnected) {
       const usbSoulmate = { port, type: "usb", name: "USB Soulmate" };
