@@ -12,7 +12,7 @@ const defaultConfig = configs.Square;
 
 const getPort = () => {
   let ports = [];
-  const os = require("os");
+  const os = remote.require("os");
   if (os.platform() === "win32") {
     ports = [];
   } else if (os.platform() === "darwin") {
