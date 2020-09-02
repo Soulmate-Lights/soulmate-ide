@@ -10,18 +10,20 @@ import useInterval from "~/utils/useInterval";
 
 const defaultConfig = configs.Square;
 
-const getPort = () => {
-  let ports = [];
-  const os = remote.require("os");
-  if (os.platform() === "win32") {
-    ports = [];
-  } else if (os.platform() === "darwin") {
-    ports = fs.readdirSync("/dev");
-  }
+const getPort = async () => {
+  const serialport = remote.require("serialport");
+  const results = await serialport.list();
+  const port = results.find((result) => result.vendorId === "0403");
+  return port.comName;
 
-  return ports.filter(
-    (p) => p.includes("tty.usbserial") || p.includes("cu.SLAB_USBtoUART")
-  )[0];
+  // if (os.platform() === "win32") {
+  //   ports = [];
+  // } else if (os.platform() === "darwin") {
+  //   ports = fs.readdirSync("/dev");
+  // }
+  // return ports.filter(
+  //   (p) => p.includes("tty.usbserial") || p.includes("cu.SLAB_USBtoUART")
+  // )[0];
 };
 
 const SoulmatesContainer = () => {
@@ -132,7 +134,7 @@ const SoulmatesContainer = () => {
           ? path.join(path.dirname(getAppPath()), "..", "./builder")
           : path.join(root, "builder");
 
-      const port = getPort();
+      const port = await getPort();
       const home = remote.require("os").homedir();
 
       if (!fs.existsSync(`${home}/Library/Python/2.7/bin/pip`)) {
@@ -205,8 +207,8 @@ const SoulmatesContainer = () => {
   // We should check ports against soulmates
   const [usbConnected, setUsbConnected] = useState(false);
 
-  const checkUsb = () => {
-    const port = getPort();
+  const checkUsb = async () => {
+    const port = await getPort();
 
     if (port && !usbConnected) {
       const usbSoulmate = { port, type: "usb", name: "USB Soulmate" };

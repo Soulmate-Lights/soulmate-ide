@@ -52,6 +52,7 @@
     "request": "^2.88.2",
     "request-promise-native": "^1.0.8",
     "semantic-ui-css": "^2.4.1",
+    "serialport": "^9.0.1",
     "tailwindcss": "^1.5.1",
     "unstated": "^2.1.1",
     "unstated-next": "^1.1.0",
