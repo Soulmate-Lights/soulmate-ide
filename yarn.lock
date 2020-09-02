@@ -3733,10 +3733,10 @@ ejs@^3.1.3:
   dependencies:
     jake "^10.6.1"
 
-electron-auth0-login@^1.3.0:
-  version "1.3.0"
-  resolved "https://registry.yarnpkg.com/electron-auth0-login/-/electron-auth0-login-1.3.0.tgz#0e06c13d8033a310aa8b7fc00cafb9453d239bbc"
-  integrity sha512-ucGnUWom87Uz2BXXh+k1PGp1zFa9lsoGLcyJRtyYpgJv6zZs3DYP0mBHsMGKwwAaR38cDcFyIbEfQek3QeJgWw==
+electron-auth0-login@^1.3.1:
+  version "1.3.1"
+  resolved "https://registry.yarnpkg.com/electron-auth0-login/-/electron-auth0-login-1.3.1.tgz#733466c9a9d96a41e97b6dbb34c6d1cb545c6ecb"
+  integrity sha512-HK+q6tWbiarvbeJOWHAzdS8lHkSJSYAqjwaqBIS/fZ+PCjUmYFqvyLKvAHWqwjz/k80EI4NWnjLWn0EDBZYiAA==
   dependencies:
     codependency "2.1.0"
     qs "6.5.2"
@@ -3836,10 +3836,10 @@ electron-updater@^4.3.1:
     lodash.isequal "^4.5.0"
     semver "^7.1.3"
 
-electron@^10.0.0:
-  version "10.0.0"
-  resolved "https://registry.yarnpkg.com/electron/-/electron-10.0.0.tgz#4e777612ead76b39bc7241c7749bf6b0ece47889"
-  integrity sha512-0XX/LqYAHHCSbfLjUk9VRDPOeYjDPEzA9i7F50AqpEpFIWR2bp++0S0beRANUpPdkvtBDp+0R6vHV3iXPvuKyA==
+electron@^9.0.0:
+  version "9.2.1"
+  resolved "https://registry.yarnpkg.com/electron/-/electron-9.2.1.tgz#54ef574e1af4ae967b5efa94312f1b6458d44a02"
+  integrity sha512-ZsetaQjXB8+9/EFW1FnfK4ukpkwXCxMEaiKiUZhZ0ZLFlLnFCpe0Bg4vdDf7e4boWGcnlgN1jAJpBw7w0eXuqA==
   dependencies:
     "@electron/get" "^1.0.1"
     "@types/node" "^12.0.12"
