@@ -4,7 +4,6 @@ import { configs } from "~/utils/config";
 import { createContainer } from "unstated-next";
 import { getFullBuild } from "~/utils/compiler/compile";
 import { prepareFullCodeWithMultipleSketches } from "~/utils/code";
-import { rootPath } from "electron-root-path";
 import uniqBy from "lodash/uniqBy";
 import useInterval from "~/utils/useInterval";
 
@@ -32,7 +31,6 @@ const SoulmatesContainer = () => {
   const path = remote.require("path");
   const fs = remote.require("fs");
   const IS_PROD = process.env.NODE_ENV === "production";
-  const root = rootPath;
   const { getAppPath } = remote.app;
   const isPackaged =
     remote.process.mainModule.filename.indexOf("app.asar") !== -1;
@@ -120,27 +118,31 @@ const SoulmatesContainer = () => {
       });
     } else {
       updateSoulmate(soulmate, { usbFlashingPercentage: 0 });
+      const rootPath = remote.require("electron-root-path").rootPath;
       const dir =
         IS_PROD && isPackaged
           ? path.join(path.dirname(getAppPath()), "..", "./builder")
-          : path.join(root, "builder");
+          : path.join(rootPath, "builder");
 
       const port = await getPort();
-      const home = remote.require("os").homedir();
 
-      if (!fs.existsSync(`${home}/Library/Python/2.7/bin/pip`)) {
-        childProcess.execSync(`cd "${dir}" && python ./get-pip.py`);
+      if (remote.require("os").platform() === "darwin") {
+        const home = remote.require("os").homedir();
+        if (!fs.existsSync(`${home}/Library/Python/2.7/bin/pip`)) {
+          childProcess.execSync(`cd "${dir}" && python ./get-pip.py`);
+        }
+
+        childProcess.execSync(
+          `"${home}/Library/Python/2.7/bin/pip" install pyserial`
+        );
       }
 
-      childProcess.execSync(
-        `"${home}/Library/Python/2.7/bin/pip" install pyserial`
-      );
+      const cmd = `python ./esptool.py --chip esp32 --port ${port} --baud 1500000 --before default_reset --after hard_reset write_flash -z --flash_mode dio --flash_freq 80m --flash_size detect 0xe000 ./ota_data_initial.bin 0x1000 ./bootloader.bin 0x10000 ${build} 0x8000 ./partitions.bin`;
 
-      const cmd = `
-    cd "${dir}" &&
-    python ./esptool.py --chip esp32 --port /dev/${port} --baud 1500000 --before default_reset --after hard_reset write_flash -z --flash_mode dio --flash_freq 80m --flash_size detect 0xe000 ./ota_data_initial.bin 0x1000 ./bootloader.bin 0x10000 ${build} 0x8000 ./partitions.bin`;
+      var child = childProcess.exec(cmd, {
+        cwd: dir,
+      });
 
-      var child = childProcess.exec(cmd);
       child.on("error", console.log);
       child.stderr.on("data", console.log);
       child.stdout.on("data", (data) => {
@@ -169,6 +171,7 @@ const SoulmatesContainer = () => {
 
       await new Promise((resolve, _reject) => {
         child.on("close", () => {
+          console.log("done");
           updateSoulmate(soulmate, {
             usbFlashingPercentage: undefined,
             flashing: false,
