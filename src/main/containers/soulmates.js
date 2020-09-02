@@ -15,15 +15,6 @@ const getPort = async () => {
   const results = await serialport.list();
   const port = results.find((result) => result.vendorId === "0403");
   return port.comName;
-
-  // if (os.platform() === "win32") {
-  //   ports = [];
-  // } else if (os.platform() === "darwin") {
-  //   ports = fs.readdirSync("/dev");
-  // }
-  // return ports.filter(
-  //   (p) => p.includes("tty.usbserial") || p.includes("cu.SLAB_USBtoUART")
-  // )[0];
 };
 
 const SoulmatesContainer = () => {
