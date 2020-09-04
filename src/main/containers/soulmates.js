@@ -1,9 +1,5 @@
 import { useEffect, useState } from "react";
-import {
-  flashbuildToWifiSoulmate,
-  flashBuildtoUSBSoulmate,
-} from "~/utils/build";
-
+import { flashBuildtoUSBSoulmate } from "~/utils/build";
 import { configs } from "~/utils/config";
 import { createContainer } from "unstated-next";
 import { getFullBuild } from "~/utils/compiler/compile";
@@ -94,14 +90,6 @@ const SoulmatesContainer = () => {
   const sendBuildToSoulmate = async (build, soulmate) => {
     updateSoulmate(soulmate, { usbFlashingPercentage: 1, flashing: true });
 
-    // if (soulmate.addresses) {
-    //   const ip = soulmate.addresses[0];
-    //   flashbuildToWifiSoulmate(ip, build, (progress) => {
-    //     const flashing = progress !== 100;
-    //     updateSoulmate(soulmate, { usbFlashingPercentage: progress, flashing });
-    //   });
-    // }
-
     flashBuildtoUSBSoulmate(soulmate.port, build, (progress) => {
       if (progress < 100) {
         updateSoulmate(soulmate, {
@@ -172,7 +160,4 @@ const SoulmatesContainer = () => {
 };
 
 const container = createContainer(SoulmatesContainer);
-
-window.soulmatesContainer = container;
-
 export default container;
