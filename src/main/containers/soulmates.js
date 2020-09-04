@@ -1,13 +1,14 @@
+import uniqBy from "lodash/uniqBy";
 import { useEffect, useState } from "react";
+import { createContainer } from "unstated-next";
+
 import ConfigContainer from "~/containers/config";
 import { flashBuildtoUSBSoulmate } from "~/utils/build";
-import { configs } from "~/utils/config";
-import { createContainer } from "unstated-next";
-import { getFullBuild } from "~/utils/compiler/compile";
 import { prepareFullCodeWithMultipleSketches } from "~/utils/code";
-import uniqBy from "lodash/uniqBy";
+import { getFullBuild } from "~/utils/compiler/compile";
+import { configs } from "~/utils/config";
+import { getPort, readPort } from "~/utils/ports";
 import useInterval from "~/utils/useInterval";
-import { readPort, getPort } from "~/utils/ports";
 
 const defaultConfig = configs.Square;
 

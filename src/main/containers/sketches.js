@@ -1,8 +1,8 @@
+import { useState } from "react";
+import { createContainer } from "unstated-next";
+
 import { fetchJson, post, postDelete } from "~/utils";
 import { getToken, loggedIn } from "~/utils/auth";
-
-import { createContainer } from "unstated-next";
-import { useState } from "react";
 
 const SketchesContainer = () => {
   const [sketches, setSketches] = useState(undefined);

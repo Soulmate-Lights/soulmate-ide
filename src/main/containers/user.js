@@ -1,13 +1,14 @@
+import { useEffect, useState } from "react";
+import { createContainer } from "unstated-next";
+
 import {
   getTokenOnStartup,
   tokenProperties,
   triggerLogin,
   triggerLogout,
 } from "~/utils/auth";
-import { useEffect, useState } from "react";
 
 import SketchesContainer from "./sketches";
-import { createContainer } from "unstated-next";
 
 const UserContainer = () => {
   const { reset } = SketchesContainer.useContainer();
