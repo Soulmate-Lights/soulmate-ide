@@ -16,6 +16,31 @@ const getPort = async () => {
   return port.comName;
 };
 
+const path = remote.require("path");
+const fs = remote.require("fs");
+const IS_PROD = process.env.NODE_ENV === "production";
+const { getAppPath } = remote.app;
+const isPackaged =
+  remote.process.mainModule.filename.indexOf("app.asar") !== -1;
+const rootPath = remote.require("electron-root-path").rootPath;
+
+const getDir = () => {
+  return IS_PROD && isPackaged
+          ? path.join(path.dirname(getAppPath()), "..", "./builder")
+          : path.join(rootPath, "builder");
+}
+
+const installDependencies = () => {
+  const childProcess = remote.require("child_process");
+  if (remote.require("os").platform() === "darwin") {
+    // Ensure pyserial is installed before flashing
+    if (!fs.existsSync(`/usr/local/bin/pip`)) {
+      childProcess.execSync("python ./get-pip.py", { cwd: dir });
+    }
+    childProcess.execSync(`/usr/local/bin/pip" install pyserial`);
+  }
+}
+
 const SoulmatesContainer = () => {
   const [usbSoulmate, setUsbSoulmate] = useState();
   const [soulmates, setSoulmates] = useState([]);
@@ -28,12 +53,6 @@ const SoulmatesContainer = () => {
   }
 
   const childProcess = remote.require("child_process");
-  const path = remote.require("path");
-  const fs = remote.require("fs");
-  const IS_PROD = process.env.NODE_ENV === "production";
-  const { getAppPath } = remote.app;
-  const isPackaged =
-    remote.process.mainModule.filename.indexOf("app.asar") !== -1;
 
   const addSoulmate = (_event, soulmate) => {
     let newSoulmates = [...soulmates, soulmate];
@@ -119,30 +138,17 @@ const SoulmatesContainer = () => {
         },
       });
     } else {
+      installDependencies();
       updateSoulmate(soulmate, { usbFlashingPercentage: 0 });
-      const rootPath = remote.require("electron-root-path").rootPath;
-      const dir =
-        IS_PROD && isPackaged
-          ? path.join(path.dirname(getAppPath()), "..", "./builder")
-          : path.join(rootPath, "builder");
-
+      const dir = getDir();
       const port = await getPort();
-
-      if (remote.require("os").platform() === "darwin") {
-        if (!fs.existsSync(`/usr/local/bin/pip`)) {
-          childProcess.execSync(`cd "${dir}" && python ./get-pip.py`);
-        }
-
-        childProcess.execSync(
-          `/usr/local/bin/pip" install pyserial`
-        );
-      }
-
       const cmd = `python ./esptool.py --chip esp32 --port ${port} --baud 1500000 --before default_reset --after hard_reset write_flash -z --flash_mode dio --flash_freq 80m --flash_size detect 0xe000 ./ota_data_initial.bin 0x1000 ./bootloader.bin 0x10000 ${build} 0x8000 ./partitions.bin`;
 
-      var child = childProcess.exec(cmd, {
-        cwd: dir,
-      });
+      console.log(`Port: ${port}`);
+      console.log(`Build: ${build}`);
+      console.log(`Command: ${cmd}`);
+
+      var child = childProcess.exec(cmd, { cwd: dir });
 
       child.on("error", console.log);
       child.stderr.on("data", console.log);
