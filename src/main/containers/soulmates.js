@@ -92,20 +92,29 @@ const SoulmatesContainer = () => {
 
   // Send to USB or Wifi soulmate
   const sendBuildToSoulmate = async (build, soulmate) => {
-    updateSoulmate(soulmate, { usbFlashingPercentage: 0 });
+    updateSoulmate(soulmate, { usbFlashingPercentage: 1, flashing: true });
 
-    if (soulmate.addresses) {
-      const ip = soulmate.addresses[0];
-      flashbuildToWifiSoulmate(ip, build, (progress) => {
-        const flashing = progress !== 100;
-        updateSoulmate(soulmate, { usbFlashingPercentage: progress, flashing });
-      });
-    } else {
-      flashBuildtoUSBSoulmate(soulmate.port, build, (progress) => {
-        const flashing = progress !== 100;
-        updateSoulmate(soulmate, { usbFlashingPercentage: progress, flashing });
-      });
-    }
+    // if (soulmate.addresses) {
+    //   const ip = soulmate.addresses[0];
+    //   flashbuildToWifiSoulmate(ip, build, (progress) => {
+    //     const flashing = progress !== 100;
+    //     updateSoulmate(soulmate, { usbFlashingPercentage: progress, flashing });
+    //   });
+    // }
+
+    flashBuildtoUSBSoulmate(soulmate.port, build, (progress) => {
+      if (progress < 100) {
+        updateSoulmate(soulmate, {
+          usbFlashingPercentage: progress,
+          flashing: true,
+        });
+      } else {
+        updateSoulmate(soulmate, {
+          usbFlashingPercentage: undefined,
+          flashing: false,
+        });
+      }
+    });
   };
 
   // Config stuff

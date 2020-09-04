@@ -20,7 +20,7 @@ const installDependencies = () => {
     if (!fs.existsSync(`/usr/local/bin/pip`)) {
       childProcess.execSync("python ./get-pip.py", { cwd: dir });
     }
-    childProcess.execSync(`/usr/local/bin/pip" install pyserial`);
+    childProcess.execSync(`/usr/local/bin/pip install pyserial`);
   }
 };
 
@@ -84,6 +84,7 @@ export const flashBuildtoUSBSoulmate = async (
       // nothing
     }
   });
+
   await new Promise((resolve, _reject) => {
     child.on("close", () => {
       progressCallback(100);
