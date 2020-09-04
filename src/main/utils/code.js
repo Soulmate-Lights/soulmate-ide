@@ -79,8 +79,6 @@ export const prepareFullCodeWithMultipleSketches = (sketches, config) => {
     clock,
   } = config;
 
-  console.log(config);
-
   const sanitizedSketchName = (name) => {
     return name.replace(/"/g, "");
   };

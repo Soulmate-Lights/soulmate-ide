@@ -7,6 +7,7 @@ import Dashboard from "./dashboard";
 import Editor from "./editor";
 import Flash from "./flash";
 import Gallery from "./gallery";
+import { LastLocationProvider } from "react-router-last-location";
 import Menu from "./menu";
 import MySketches from "./mySketches";
 import SelectionsContainer from "~/containers/selection";
@@ -19,7 +20,6 @@ import classnames from "classnames";
 import history from "~/utils/history";
 import { hot } from "react-hot-loader";
 import isElectron from "~/utils/isElectron";
-import { LastLocationProvider } from "react-router-last-location";
 
 const SpecificRouter = isElectron() ? HashRouter : Router;
 
@@ -109,20 +109,22 @@ const Main = () => {
   );
 };
 
-const WrappedHotMain = hot(module)((params) => (
+const HotMain = hot(module)((params) => <Main {...params} />);
+
+const WrappedHotMain = (params) => (
   <ConfigContainer.Provider>
     <SelectionsContainer.Provider>
       <BuildsContainer.Provider>
         <SketchesContainer.Provider>
           <UserContainer.Provider>
             <SoulmatesContainer.Provider>
-              <Main {...params} />
+              <HotMain {...params} />
             </SoulmatesContainer.Provider>
           </UserContainer.Provider>
         </SketchesContainer.Provider>
       </BuildsContainer.Provider>
     </SelectionsContainer.Provider>
   </ConfigContainer.Provider>
-));
+);
 
 export default WrappedHotMain;

@@ -83,6 +83,14 @@ const SketchesContainer = () => {
     });
   };
 
+  const togglePublic = async (id) => {
+    const sketch = sketches.find((s) => s.id === id);
+    const isPublic = !sketch.public;
+    updateSketch(id, { public: isPublic });
+    const token = await getToken();
+    await post("/sketches/save", token, { id, public: isPublic });
+  };
+
   const save = async (id, code, config) => {
     updateSketch(id, { code, dirtyCode: undefined, config, dirty: false });
 
@@ -136,6 +144,7 @@ const SketchesContainer = () => {
     setSelectedSketches,
     sketches,
     sketchIsMine,
+    togglePublic,
     toggleSketch,
   };
 };
