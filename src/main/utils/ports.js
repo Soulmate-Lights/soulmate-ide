@@ -16,6 +16,7 @@ export const readPort = async (path) => {
     port.write('{ "status": true }\n');
 
     setTimeout(() => {
+      resolve(false);
       if (port.isOpen) port.close();
     }, 20000);
   });
