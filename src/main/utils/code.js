@@ -77,6 +77,7 @@ export const prepareFullCodeWithMultipleSketches = (sketches, config) => {
     button,
     data,
     clock,
+    serpentine,
   } = config;
 
   const sanitizedSketchName = (name) => {
@@ -126,6 +127,8 @@ ${ledType === "WS2812B" ? `#define USE_WS2812B true` : ""}
 #define SOULMATE_DATA_PIN ${data}
 #define SOULMATE_CLOCK_PIN ${clock}
 #define SOULMATE_LED_TYPE ${ledType}
+
+#define SOULMATE_SERPENTINE ${serpentine ? "true" : "false"}
 
 #include <Soulmate.h>
 
