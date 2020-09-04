@@ -1,11 +1,11 @@
 import { FiCloud, FiFolder, FiHome, FiSettings, FiSmile } from "react-icons/fi";
-import isElectron from "~/utils/isElectron";
-import Logo from "~/images/Logo.svg";
 import { Link, NavLink, useLocation } from "react-router-dom";
 
 import { FaUsb } from "react-icons/fa";
+import Logo from "~/images/Logo.svg";
 import UserDetails from "./userDetails";
 import classnames from "classnames";
+import isElectron from "~/utils/isElectron";
 
 const iconClass = "mr-3 h-6 w-6 transition ease-in-out duration-150";
 const linkClass = `group flex items-center px-4 py-2 text-sm leading-5 font-medium rounded-md

@@ -35,6 +35,21 @@ const Flash = () => {
   const [search, setSearch] = useState("");
   const [selected, setSelected] = useState([]);
 
+  useEffect(() => {
+    if (localStorage.selected) {
+      try {
+        const ids = JSON.parse(localStorage["selected"]);
+        setSelected(ids);
+      } catch (e) {
+        delete localStorage["selected"];
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage["selected"] = JSON.stringify(selected);
+  }, [selected]);
+
   if (!allSketches) return <></>;
 
   const filteredSketches = allSketches?.filter((s) =>
@@ -46,7 +61,7 @@ const Flash = () => {
   );
 
   const disableFlashButton =
-    selectedSketches.length === 0 || usbSoulmate.flashing;
+    selectedSketches.length === 0 || usbSoulmate?.flashing;
 
   let users = uniqBy(
     filteredSketches?.map((sketch) => sketch.user),

@@ -1,14 +1,21 @@
 import { useEffect, useState } from "react";
-
+import { flashBuildtoUSBSoulmate } from "~/utils/build";
 import { configs } from "~/utils/config";
 import { createContainer } from "unstated-next";
 import { getFullBuild } from "~/utils/compiler/compile";
 import { prepareFullCodeWithMultipleSketches } from "~/utils/code";
-import { rootPath } from "electron-root-path";
 import uniqBy from "lodash/uniqBy";
 import useInterval from "~/utils/useInterval";
 
 const defaultConfig = configs.Square;
+
+const getPort = async () => {
+  const serialport = remote.require("serialport");
+  const results = await serialport.list();
+  const port = results.find((result) => result.vendorId === "0403");
+  if (!port) return false;
+  return port.comName;
+};
 
 const SoulmatesContainer = () => {
   const [usbSoulmate, setUsbSoulmate] = useState();
@@ -20,15 +27,6 @@ const SoulmatesContainer = () => {
   if (!window.ipcRenderer) {
     return { soulmates, soulmate, getSelectedSoulmate: () => {} };
   }
-
-  const childProcess = remote.require("child_process");
-  const path = remote.require("path");
-  const fs = remote.require("fs");
-  const IS_PROD = process.env.NODE_ENV === "production";
-  const root = rootPath;
-  const { getAppPath } = remote.app;
-  const isPackaged =
-    remote.process.mainModule.filename.indexOf("app.asar") !== -1;
 
   const addSoulmate = (_event, soulmate) => {
     let newSoulmates = [...soulmates, soulmate];
@@ -60,14 +58,7 @@ const SoulmatesContainer = () => {
 
   const compareSoulmates = (s1, s2) => {
     if (s1.type === "usb" && s1.type === s2.type) return true;
-
-    if (s1.addresses && s2.addresses) {
-      if (s1.addresses[0] === s2.addresses[0]) {
-        return true;
-      }
-    }
-
-    return false;
+    return s1.addresses && s2.addresses && s1.addresses[0] === s2.addresses[0];
   };
 
   const updateSoulmate = (soulmate, attributes) => {
@@ -97,79 +88,21 @@ const SoulmatesContainer = () => {
 
   // Send to USB or Wifi soulmate
   const sendBuildToSoulmate = async (build, soulmate) => {
-    if (soulmate.addresses) {
-      const ip = soulmate.addresses[0];
-      const url = `http://${ip}/ota`;
-      var body = new FormData();
-      const contents = fs.readFileSync(build);
-      body.append("image", new Blob([contents]), "firmware.bin");
-      await fetch(url, {
-        method: "POST",
-        body: body,
-        mode: "no-cors",
-        headers: {
-          "Content-Length": fs.statSync(build).size,
-        },
-      });
-    } else {
-      updateSoulmate(soulmate, { usbFlashingPercentage: 0 });
-      const dir =
-        IS_PROD && isPackaged
-          ? path.join(path.dirname(getAppPath()), "..", "./builder")
-          : path.join(root, "builder");
-      const ports = fs.readdirSync("/dev");
-      const port = ports.filter((p) => p.includes("tty.usbserial"))[0];
-      const home = remote.require("os").homedir();
+    updateSoulmate(soulmate, { usbFlashingPercentage: 1, flashing: true });
 
-      if (!fs.existsSync(`${home}/Library/Python/2.7/bin/pip`)) {
-        childProcess.execSync(`cd "${dir}" && python ./get-pip.py`);
-      }
-
-      childProcess.execSync(
-        `"${home}/Library/Python/2.7/bin/pip" install pyserial`
-      );
-
-      const cmd = `
-    cd "${dir}" &&
-    python ./esptool.py --chip esp32 --port /dev/${port} --baud 1500000 --before default_reset --after hard_reset write_flash -z --flash_mode dio --flash_freq 80m --flash_size detect 0xe000 ./ota_data_initial.bin 0x1000 ./bootloader.bin 0x10000 ${build} 0x8000 ./partitions.bin`;
-
-      var child = childProcess.exec(cmd);
-      child.on("error", console.log);
-      child.stderr.on("data", console.log);
-      child.stdout.on("data", (data) => {
-        const text = data.toString().trim();
-
-        try {
-          if (
-            text.includes("Writing at 0x0000e000") ||
-            text.includes("Writing at 0x00001000")
-          ) {
-            return;
-          } else {
-            let number = parseInt(
-              data.toString().split("...")[1].split("(")[1].split(" ")[0]
-            );
-            number = Math.min(number, 100);
-            updateSoulmate(soulmate, {
-              flashing: true,
-              usbFlashingPercentage: number,
-            });
-          }
-        } catch (e) {
-          // nothing
-        }
-      });
-
-      await new Promise((resolve, _reject) => {
-        child.on("close", () => {
-          updateSoulmate(soulmate, {
-            usbFlashingPercentage: undefined,
-            flashing: false,
-          });
-          resolve();
+    await flashBuildtoUSBSoulmate(soulmate.port, build, (progress) => {
+      if (progress < 100) {
+        updateSoulmate(soulmate, {
+          usbFlashingPercentage: progress,
+          flashing: true,
         });
-      });
-    }
+      } else {
+        updateSoulmate(soulmate, {
+          usbFlashingPercentage: undefined,
+          flashing: false,
+        });
+      }
+    });
   };
 
   // Config stuff
@@ -191,11 +124,8 @@ const SoulmatesContainer = () => {
   // We should check ports against soulmates
   const [usbConnected, setUsbConnected] = useState(false);
 
-  const checkUsb = () => {
-    const ports = fs.readdirSync("/dev");
-    const port = ports.filter(
-      (p) => p.includes("tty.usbserial") || p.includes("cu.SLAB_USBtoUART")
-    )[0];
+  const checkUsb = async () => {
+    const port = await getPort();
 
     if (port && !usbConnected) {
       const usbSoulmate = { port, type: "usb", name: "USB Soulmate" };
@@ -230,7 +160,4 @@ const SoulmatesContainer = () => {
 };
 
 const container = createContainer(SoulmatesContainer);
-
-window.soulmatesContainer = container;
-
 export default container;

@@ -1,8 +1,8 @@
 import BuildsContainer from "~/containers/builds";
-import ConfigContainer from "~/containers/config";
-import Logo from "~/images/logo.svg";
 import CodeEditor from "~/components/codeEditor";
+import ConfigContainer from "~/containers/config";
 import Header from "~/components/Header";
+import Logo from "~/images/logo.svg";
 import SelectionsContainer from "~/containers/selection";
 import Simulator from "~/components/Simulator";
 import SketchesContainer from "~/containers/sketches";
@@ -13,6 +13,7 @@ const Editor = ({ id, mine }) => {
   const {
     getSketch,
     save,
+    togglePublic,
     persistCode,
     deleteSketch,
   } = SketchesContainer.useContainer();
@@ -22,15 +23,17 @@ const Editor = ({ id, mine }) => {
   const { rows, cols } = config;
 
   const sketch = getSketch(id);
-  if (!sketch)
+
+  if (!sketch) {
     return (
       <div className="flex flex-grow">
         <Logo className="loading-spinner" />
       </div>
     );
+  }
 
+  const build = getBuild(sketch.code || emptyCode, rows, cols);
   let code = sketch.dirtyCode || sketch.code || emptyCode;
-  const build = getBuild(code, rows, cols);
   const selection = getSelection(id);
   const dirty = sketch.dirtyCode !== sketch.code;
 
@@ -87,6 +90,15 @@ const Editor = ({ id, mine }) => {
             aria-labelledby="options-menu"
           >
             <div className="py-1">
+              <button
+                onClick={() => togglePublic(sketch.id)}
+                className="block px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:bg-gray-100 focus:text-gray-900 flex-grow w-full text-left"
+                role="menuitem"
+              >
+                {sketch.public ? "Make private" : "Make public"}
+              </button>
+            </div>
+            <div className="py-1">
               <a
                 onClick={confirmAndDelete}
                 href="#"
@@ -105,7 +117,16 @@ const Editor = ({ id, mine }) => {
   return (
     <div className="flex flex-col flex-grow flex-shrink min-w-0">
       <Header
-        title={sketch.name}
+        title={
+          <>
+            {sketch.name}{" "}
+            {sketch.public && (
+              <div className="border rounded-full mx-2 text-xs px-2 py-1 leading-snug">
+                Public
+              </div>
+            )}
+          </>
+        }
         sections={[
           !mine && { title: "Gallery", to: "/gallery" },
           !mine && {

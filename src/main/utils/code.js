@@ -77,9 +77,8 @@ export const prepareFullCodeWithMultipleSketches = (sketches, config) => {
     button,
     data,
     clock,
+    serpentine,
   } = config;
-
-  console.log(config);
 
   const sanitizedSketchName = (name) => {
     return name.replace(/"/g, "");
@@ -112,7 +111,6 @@ export const prepareFullCodeWithMultipleSketches = (sketches, config) => {
 #define LED_ROWS ${rows}
 // Normally LED_COLS * LED_ROWS
 // #define N_LEDS ${cols * rows}
-// If you're using WS2812B LED strips, uncomment this line
 
 // How long should we spend in each pattern?
 #define CYCLE_LENGTH_IN_MS 120000
@@ -122,12 +120,15 @@ export const prepareFullCodeWithMultipleSketches = (sketches, config) => {
 #define SOULMATE_MILLIAMPS ${milliamps}
 
 ${ledType === "WS2812B" ? `#define USE_WS2812B true` : ""}
+${ledType === "WS2812B" ? "#define SOULMATE_COLOR_ORDER GRB" : ""}
 
 #define BUTTON_ON_VALUE LOW
 #define SOULMATE_BUTTON_PIN ${button}
 #define SOULMATE_DATA_PIN ${data}
 #define SOULMATE_CLOCK_PIN ${clock}
 #define SOULMATE_LED_TYPE ${ledType}
+
+#define SOULMATE_SERPENTINE ${serpentine ? "true" : "false"}
 
 #include <Soulmate.h>
 
