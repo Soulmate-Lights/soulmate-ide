@@ -4,11 +4,17 @@ import { configs } from "~/utils/config";
 import { createContainer } from "unstated-next";
 import { getFullBuild } from "~/utils/compiler/compile";
 import { prepareFullCodeWithMultipleSketches } from "~/utils/code";
-import { rootPath } from "electron-root-path";
 import uniqBy from "lodash/uniqBy";
 import useInterval from "~/utils/useInterval";
 
 const defaultConfig = configs.Square;
+
+const getPort = async () => {
+  const serialport = remote.require("serialport");
+  const results = await serialport.list();
+  const port = results.find((result) => result.vendorId === "0403");
+  return port.comName;
+};
 
 const SoulmatesContainer = () => {
   const [usbSoulmate, setUsbSoulmate] = useState();
@@ -25,7 +31,6 @@ const SoulmatesContainer = () => {
   const path = remote.require("path");
   const fs = remote.require("fs");
   const IS_PROD = process.env.NODE_ENV === "production";
-  const root = rootPath;
   const { getAppPath } = remote.app;
   const isPackaged =
     remote.process.mainModule.filename.indexOf("app.asar") !== -1;
@@ -113,27 +118,31 @@ const SoulmatesContainer = () => {
       });
     } else {
       updateSoulmate(soulmate, { usbFlashingPercentage: 0 });
+      const rootPath = remote.require("electron-root-path").rootPath;
       const dir =
         IS_PROD && isPackaged
           ? path.join(path.dirname(getAppPath()), "..", "./builder")
-          : path.join(root, "builder");
-      const ports = fs.readdirSync("/dev");
-      const port = ports.filter((p) => p.includes("tty.usbserial"))[0];
-      const home = remote.require("os").homedir();
+          : path.join(rootPath, "builder");
 
-      if (!fs.existsSync(`${home}/Library/Python/2.7/bin/pip`)) {
-        childProcess.execSync(`cd "${dir}" && python ./get-pip.py`);
+      const port = await getPort();
+
+      if (remote.require("os").platform() === "darwin") {
+        const home = remote.require("os").homedir();
+        if (!fs.existsSync(`${home}/Library/Python/2.7/bin/pip`)) {
+          childProcess.execSync(`cd "${dir}" && python ./get-pip.py`);
+        }
+
+        childProcess.execSync(
+          `"${home}/Library/Python/2.7/bin/pip" install pyserial`
+        );
       }
 
-      childProcess.execSync(
-        `"${home}/Library/Python/2.7/bin/pip" install pyserial`
-      );
+      const cmd = `python ./esptool.py --chip esp32 --port ${port} --baud 1500000 --before default_reset --after hard_reset write_flash -z --flash_mode dio --flash_freq 80m --flash_size detect 0xe000 ./ota_data_initial.bin 0x1000 ./bootloader.bin 0x10000 ${build} 0x8000 ./partitions.bin`;
 
-      const cmd = `
-    cd "${dir}" &&
-    python ./esptool.py --chip esp32 --port /dev/${port} --baud 1500000 --before default_reset --after hard_reset write_flash -z --flash_mode dio --flash_freq 80m --flash_size detect 0xe000 ./ota_data_initial.bin 0x1000 ./bootloader.bin 0x10000 ${build} 0x8000 ./partitions.bin`;
+      var child = childProcess.exec(cmd, {
+        cwd: dir,
+      });
 
-      var child = childProcess.exec(cmd);
       child.on("error", console.log);
       child.stderr.on("data", console.log);
       child.stdout.on("data", (data) => {
@@ -162,6 +171,7 @@ const SoulmatesContainer = () => {
 
       await new Promise((resolve, _reject) => {
         child.on("close", () => {
+          console.log("done");
           updateSoulmate(soulmate, {
             usbFlashingPercentage: undefined,
             flashing: false,
@@ -191,11 +201,8 @@ const SoulmatesContainer = () => {
   // We should check ports against soulmates
   const [usbConnected, setUsbConnected] = useState(false);
 
-  const checkUsb = () => {
-    const ports = fs.readdirSync("/dev");
-    const port = ports.filter(
-      (p) => p.includes("tty.usbserial") || p.includes("cu.SLAB_USBtoUART")
-    )[0];
+  const checkUsb = async () => {
+    const port = await getPort();
 
     if (port && !usbConnected) {
       const usbSoulmate = { port, type: "usb", name: "USB Soulmate" };
