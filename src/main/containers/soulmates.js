@@ -90,7 +90,7 @@ const SoulmatesContainer = () => {
   const sendBuildToSoulmate = async (build, soulmate) => {
     updateSoulmate(soulmate, { usbFlashingPercentage: 1, flashing: true });
 
-    flashBuildtoUSBSoulmate(soulmate.port, build, (progress) => {
+    await flashBuildtoUSBSoulmate(soulmate.port, build, (progress) => {
       if (progress < 100) {
         updateSoulmate(soulmate, {
           usbFlashingPercentage: progress,
