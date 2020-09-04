@@ -117,8 +117,6 @@ const SoulmatesContainer = () => {
   // Don't think we need this any more.
   // We should check ports against soulmates
   const [usbConnected, setUsbConnected] = useState(false);
-  const [usbPort, setUsbPort] = useState(false);
-  const [usbPortData, setUsbPortData] = useState(false);
 
   const configContainer = ConfigContainer.useContainer();
 
@@ -126,11 +124,7 @@ const SoulmatesContainer = () => {
     const port = await getPort();
 
     if (port && !usbConnected) {
-      setUsbPort(port);
-
       readPort(port).then((data) => {
-        setUsbPortData(data);
-        console.log(data);
         configContainer.setType("custom");
         configContainer.setConfig({
           rows: data.rows,
@@ -148,8 +142,6 @@ const SoulmatesContainer = () => {
       setSoulmates([...soulmates, usbSoulmate]);
       setUsbSoulmate(usbSoulmate);
     } else if (!port) {
-      setUsbPort(false);
-      setUsbPortData(false);
       setSoulmates(soulmates.filter((soulmate) => soulmate.type !== "usb"));
       setUsbSoulmate(undefined);
     }

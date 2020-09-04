@@ -38,6 +38,7 @@ export default createContainer(() => {
         cols: 14,
         milliamps: 4000,
         ledType: "APA102",
+        serpentine: true,
       },
     },
     {
@@ -51,6 +52,22 @@ export default createContainer(() => {
         cols: 15,
         milliamps: 8000,
         ledType: "APA102",
+        serpentine: true,
+      },
+    },
+    {
+      label: "Soulmate Mini",
+      value: "mini",
+      config: {
+        rows: 5,
+        cols: 5,
+        button: 39,
+        data: 27,
+        clock: 26,
+        milliamps: 200,
+        chipType: "atom",
+        ledType: "WS2812B",
+        serpentine: false,
       },
     },
     {
