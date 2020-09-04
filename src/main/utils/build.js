@@ -93,7 +93,6 @@ export const flashBuildtoUSBSoulmate = async (
 };
 
 export const flashbuildToWifiSoulmate = async (ip, build, progressCallback) => {
-  // const ip = soulmate.addresses[0];
   const url = `http://${ip}/ota`;
   var body = new FormData();
   const contents = fs.readFileSync(build);

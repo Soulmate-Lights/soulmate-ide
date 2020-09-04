@@ -1,36 +1,27 @@
 const url = "https://editor.soulmatelights.com/sketches/build";
 import streamWithProgress from "~/utils/streamWithProgress";
 
-// export interface IHexiResult {
-//   stdout: string;
-//   stderr: string;
-//   hex: string;
-// }
+const options = {
+  method: "POST",
+  mode: "cors",
+  credentials: "same-origin",
+  cache: "no-cache",
+  headers: {
+    "Content-Type": "application/json",
+  },
+};
 
 export async function buildHex(source) {
-  const resp = await fetch(url, {
-    method: "POST",
-    mode: "cors",
-    credentials: "same-origin",
-    cache: "no-cache",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ sketch: source, board: "mega" }),
-  });
+  const body = JSON.stringify({ sketch: source, board: "mega" });
+  const resp = await fetch(url, { ...options, body });
   return await resp.json();
 }
 
 export async function getFullBuild(source) {
+  const body = JSON.stringify({ sketch: source });
   const res = await window.fetch("http://54.243.44.4:8081/build", {
-    method: "POST",
-    mode: "cors",
-    credentials: "same-origin",
-    cache: "no-cache",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ sketch: source }),
+    ...options,
+    body,
   });
 
   if (!res.ok) return false;

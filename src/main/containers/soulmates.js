@@ -17,6 +17,7 @@ const getPort = async () => {
   const serialport = remote.require("serialport");
   const results = await serialport.list();
   const port = results.find((result) => result.vendorId === "0403");
+  if (!port) return false;
   return port.comName;
 };
 
@@ -94,7 +95,8 @@ const SoulmatesContainer = () => {
     updateSoulmate(soulmate, { usbFlashingPercentage: 0 });
 
     if (soulmate.addresses) {
-      flashbuildToWifiSoulmate(soulmate.addresses[0], build, (progress) => {
+      const ip = soulmate.addresses[0];
+      flashbuildToWifiSoulmate(ip, build, (progress) => {
         const flashing = progress !== 100;
         updateSoulmate(soulmate, { usbFlashingPercentage: progress, flashing });
       });
