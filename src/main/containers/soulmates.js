@@ -129,13 +129,12 @@ const SoulmatesContainer = () => {
       const port = await getPort();
 
       if (remote.require("os").platform() === "darwin") {
-        const home = remote.require("os").homedir();
-        if (!fs.existsSync(`${home}/Library/Python/2.7/bin/pip`)) {
+        if (!fs.existsSync(`/usr/local/bin/pip`)) {
           childProcess.execSync(`cd "${dir}" && python ./get-pip.py`);
         }
 
         childProcess.execSync(
-          `"${home}/Library/Python/2.7/bin/pip" install pyserial`
+          `/usr/local/bin/pip" install pyserial`
         );
       }
 
