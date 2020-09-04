@@ -87,7 +87,9 @@ const SoulmatesContainer = () => {
 
   const flashMultiple = async (soulmate, sketches, config) => {
     updateSoulmate(soulmate, { flashing: true });
+    console.log(config);
     const preparedCode = prepareFullCodeWithMultipleSketches(sketches, config);
+    console.log(preparedCode);
     const build = await getFullBuild(preparedCode);
 
     if (!build) {
