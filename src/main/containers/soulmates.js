@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import ConfigContainer from "~/containers/config";
 import { flashBuildtoUSBSoulmate } from "~/utils/build";
 import { configs } from "~/utils/config";
 import { createContainer } from "unstated-next";
@@ -6,16 +7,9 @@ import { getFullBuild } from "~/utils/compiler/compile";
 import { prepareFullCodeWithMultipleSketches } from "~/utils/code";
 import uniqBy from "lodash/uniqBy";
 import useInterval from "~/utils/useInterval";
+import { readPort, getPort } from "~/utils/ports";
 
 const defaultConfig = configs.Square;
-
-const getPort = async () => {
-  const serialport = remote.require("serialport");
-  const results = await serialport.list();
-  const port = results.find((result) => result.vendorId === "0403");
-  if (!port) return false;
-  return port.comName;
-};
 
 const SoulmatesContainer = () => {
   const [usbSoulmate, setUsbSoulmate] = useState();
@@ -123,15 +117,39 @@ const SoulmatesContainer = () => {
   // Don't think we need this any more.
   // We should check ports against soulmates
   const [usbConnected, setUsbConnected] = useState(false);
+  const [usbPort, setUsbPort] = useState(false);
+  const [usbPortData, setUsbPortData] = useState(false);
+
+  const configContainer = ConfigContainer.useContainer();
 
   const checkUsb = async () => {
     const port = await getPort();
 
     if (port && !usbConnected) {
+      setUsbPort(port);
+
+      readPort(port).then((data) => {
+        setUsbPortData(data);
+        console.log(data);
+        configContainer.setType("custom");
+        configContainer.setConfig({
+          rows: data.rows,
+          cols: data.cols,
+          button: data.button,
+          clock: data.clock,
+          data: data.data,
+          ledType: data.ledType,
+          serpentine: data.serpentine,
+          milliamps: data.milliamps,
+        });
+      });
+
       const usbSoulmate = { port, type: "usb", name: "USB Soulmate" };
       setSoulmates([...soulmates, usbSoulmate]);
       setUsbSoulmate(usbSoulmate);
     } else if (!port) {
+      setUsbPort(false);
+      setUsbPortData(false);
       setSoulmates(soulmates.filter((soulmate) => soulmate.type !== "usb"));
       setUsbSoulmate(undefined);
     }
