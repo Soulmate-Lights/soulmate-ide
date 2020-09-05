@@ -1,15 +1,16 @@
+import { useContainer } from "unstated-next";
 import { Mode, useLightSwitch } from "use-light-switch";
 
-import BuildsContainer from "~/containers/builds";
 import CodeEditor from "~/components/codeEditor";
 import Header from "~/components/Header";
-import Logo from "~/images/logo.svg";
 import Simulator from "~/components/Simulator";
+import BuildsContainer from "~/containers/builds";
 import UserContainer from "~/containers/user";
-import examples from "./examples";
+import Logo from "~/images/logo.svg";
+
 import screenshotDark from "./dark.png";
+import examples from "./examples";
 import screenshotLight from "./light.png";
-import { useContainer } from "unstated-next";
 
 const Finished = () => {
   const { login } = useContainer(UserContainer);
