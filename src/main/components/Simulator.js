@@ -4,14 +4,8 @@ import Logo from "~/images/logo.svg";
 
 let worker;
 
-const Simulator = ({
-  build,
-  rows,
-  cols,
-  className = "",
-  style,
-  serpentine,
-}) => {
+const Simulator = ({ className = "", build, config }) => {
+  const { rows, cols, style, serpentine } = config;
   const [paused, setPaused] = useState(!document.hasFocus());
   const canvas = useRef();
   const compilerOutputDiv = useRef();

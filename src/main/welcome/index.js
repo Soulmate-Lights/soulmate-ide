@@ -103,8 +103,7 @@ const Welcome = () => {
             <Simulator
               className="flex flex-col flex-shrink w-5/12"
               build={build}
-              rows={rows}
-              cols={cols}
+              config={{ rows, cols }}
             />
           </>
         )}

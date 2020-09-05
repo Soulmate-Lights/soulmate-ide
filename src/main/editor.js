@@ -21,7 +21,6 @@ const Editor = ({ id, mine }) => {
   const { getSelection, setSelection } = SelectionsContainer.useContainer();
   const { getBuild } = BuildsContainer.useContainer();
   const { config } = ConfigContainer.useContainer();
-  const { rows, cols, serpentine } = config;
 
   const sketch = getSketch(id);
 
@@ -176,13 +175,7 @@ const Editor = ({ id, mine }) => {
           }}
         />
 
-        <Simulator
-          build={build}
-          rows={rows}
-          cols={cols}
-          serpentine={serpentine}
-          className="flex flex-col"
-        />
+        <Simulator build={build} config={config} className="flex flex-col" />
       </div>
     </div>
   );
