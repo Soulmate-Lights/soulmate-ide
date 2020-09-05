@@ -12,7 +12,7 @@ import Menu from "./menu";
 import MySketches from "./mySketches";
 import SelectionsContainer from "~/containers/selection";
 import SketchesContainer from "~/containers/sketches";
-import SoulmatesContainer from "~/containers/soulmates";
+import SoulmateContainer from "~/containers/soulmates";
 import User from "./user";
 import UserContainer from "~/containers/user";
 import Welcome from "./welcome";
@@ -117,9 +117,9 @@ const WrappedHotMain = (params) => (
       <BuildsContainer.Provider>
         <SketchesContainer.Provider>
           <UserContainer.Provider>
-            <SoulmatesContainer.Provider>
+            <SoulmateContainer.Provider>
               <HotMain {...params} />
-            </SoulmatesContainer.Provider>
+            </SoulmateContainer.Provider>
           </UserContainer.Provider>
         </SketchesContainer.Provider>
       </BuildsContainer.Provider>

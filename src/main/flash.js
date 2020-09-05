@@ -10,6 +10,7 @@ import ConfigContainer from "~/containers/config";
 import SketchesContainer from "~/containers/sketches";
 import Soulmates from "~/containers/soulmates";
 import UserContainer from "~/containers/user";
+import Logo from "~/images/logo.svg";
 
 import FlashButton from "./components/flashButton";
 
@@ -30,9 +31,12 @@ const showErrorMessage = () => {
 const Flash = () => {
   const { type, config } = ConfigContainer.useContainer();
   const {
-    usbSoulmate,
     flashSketches,
     soulmateLoading,
+    flashing,
+    name,
+    usbFlashingPercentage,
+    port,
   } = Soulmates.useContainer();
   const { userDetails } = UserContainer.useContainer();
   const { allSketches, sketches } = SketchesContainer.useContainer();
@@ -54,7 +58,7 @@ const Flash = () => {
     localStorage["selected"] = JSON.stringify(selected);
   }, [selected]);
 
-  if (!allSketches) return <></>;
+  if (!allSketches) return <Logo className="loading-spinner" />;
 
   const filteredSketches = allSketches?.filter((s) =>
     s.name.toLowerCase().includes(search.toLowerCase())
@@ -77,7 +81,7 @@ const Flash = () => {
     .filter((u) => u.uid !== userDetails.sub);
 
   const toggle = (sketch) => {
-    if (usbSoulmate.flashing) return;
+    if (flashing) return;
 
     if (selected.includes(sketch.id)) {
       setSelected(compact(selected.filter((i) => i !== sketch.id)));
@@ -96,15 +100,13 @@ const Flash = () => {
       <Header
         title="Flash"
         actions={[
-          usbSoulmate && (
-            <input
-              key="search"
-              autoFocus
-              onChange={(e) => setSearch(e.target.value)}
-              placeholder="Search"
-              className="form-input block w-full sm:text-sm sm:leading-3"
-            />
-          ),
+          <input
+            key="search"
+            autoFocus
+            onChange={(e) => setSearch(e.target.value)}
+            placeholder="Search"
+            className="form-input block w-full sm:text-sm sm:leading-3"
+          />,
         ]}
       />
 
@@ -183,12 +185,15 @@ const Flash = () => {
         </div>
 
         <FlashButton
-          usbSoulmate={usbSoulmate}
+          enabled={!!port}
           soulmateLoading={soulmateLoading}
           config={config}
+          name={name}
           type={type}
           selectedSketches={selectedSketches}
           onClickFlash={flash}
+          flashing={flashing}
+          usbFlashingPercentage={usbFlashingPercentage}
         />
       </div>
     </div>

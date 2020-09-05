@@ -56,8 +56,8 @@ const Editor = ({ id, mine }) => {
 
   const flash = async () => {
     const { config } = ConfigContainer.useContainer();
-    const { usbSoulmate, flashSketches } = Soulmates.useContainer();
-    const result = await flashSketches(usbSoulmate, sketch, config);
+    const { soulmate, flashSketches } = Soulmates.useContainer();
+    const result = await flashSketches(soulmate, sketch, config);
   };
 
   const menu = (

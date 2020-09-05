@@ -3,77 +3,55 @@ import { createContainer } from "unstated-next";
 
 import ConfigContainer from "~/containers/config";
 import { getFullBuild, prepareSketches } from "~/utils/code";
-import { configs } from "~/utils/config";
-import { flashBuildtoUSBSoulmate } from "~/utils/flash";
+import { flashBuild } from "~/utils/flash";
 import { getPort, readPort } from "~/utils/ports";
 import useInterval from "~/utils/useInterval";
 
-const defaultConfig = configs.Square;
-
-const SoulmatesContainer = () => {
+const SoulmateContainer = () => {
   const configContainer = ConfigContainer.useContainer();
-  const [usbSoulmate, setUsbSoulmate] = useState();
-  const [configs, setConfigs] = useState({});
-  const [usbConnected, setUsbConnected] = useState(false);
   const [soulmateLoading, setSoulmateLoading] = useState(false);
+  const [port, setPort] = useState();
+  const [name, setName] = useState();
+  const [usbFlashingPercentage, setUsbFlashingPercentage] = useState();
+  const [flashing, setFlashing] = useState(false);
 
   // Web-safe!
-  if (!window.ipcRenderer) {
-    return { usbSoulmate, getSelectedSoulmate: () => {} };
-  }
-
-  const updateSoulmate = (attributes) => {
-    setUsbSoulmate({ ...usbSoulmate, attributes });
-  };
+  if (!window.ipcRenderer) return {};
 
   const flashSketches = async (sketches, config) => {
-    updateSoulmate({ flashing: true });
+    setFlashing(true);
 
     const preparedCode = prepareSketches(sketches, config);
     const build = await getFullBuild(preparedCode);
 
     if (!build) {
-      updateSoulmate({ flashing: false });
+      setFlashing(false);
       return false;
     }
 
-    await flashBuildtoUSBSoulmate(usbSoulmate.port, build, (progress) => {
-      updateSoulmate({
-        usbFlashingPercentage: progress,
-        flashing: progress < 100,
-      });
+    await flashBuild(port, build, (progress) => {
+      setUsbFlashingPercentage(progress);
+      setFlashing(progress < 100);
     });
 
-    updateSoulmate(usbSoulmate, {
-      usbFlashingPercentage: undefined,
-      flashing: false,
-    });
+    setUsbFlashingPercentage(undefined);
+    setFlashing(false);
     return true;
   };
 
   // Config stuff
 
-  const saveConfig = (soulmate, config) => {
-    if (!soulmate) return;
-    localStorage[soulmate.name] = JSON.stringify(config);
-    const key = soulmate.name;
-    setConfigs({ ...configs, [key]: config });
-  };
-
-  const getConfig = (soulmate) => {
-    const key = soulmate?.name;
-    return configs[key] || defaultConfig;
-  };
-
   const checkUsb = async () => {
-    const port = await getPort();
+    const newPort = await getPort();
 
-    if (port && !usbConnected) {
+    if (newPort && !port) {
+      setPort(newPort);
       setSoulmateLoading(true);
-      readPort(port).then((data) => {
+      readPort(newPort).then((data) => {
         setSoulmateLoading(false);
 
         if (data) {
+          console.log(data);
           configContainer.setType("custom");
           configContainer.setConfig({
             rows: data.rows,
@@ -87,27 +65,26 @@ const SoulmatesContainer = () => {
           });
         }
 
-        const usbSoulmate = { port, name: data.name || "USB Soulmate" };
-        setUsbSoulmate(usbSoulmate);
+        console.log(data);
+        setName(data.name || "USB Soulmate");
       });
-    } else if (!port) {
-      setUsbSoulmate(undefined);
+    } else if (!newPort) {
+      setPort(undefined);
     }
-
-    setUsbConnected(!!port);
   };
 
   useInterval(checkUsb, 2000);
+  useEffect(() => checkUsb(), []);
 
   return {
     flashSketches,
-    saveConfig,
-    getConfig,
     soulmateLoading,
-    usbConnected,
-    usbSoulmate,
+    port,
+    name,
+    usbFlashingPercentage,
+    flashing,
   };
 };
 
-const container = createContainer(SoulmatesContainer);
+const container = createContainer(SoulmateContainer);
 export default container;

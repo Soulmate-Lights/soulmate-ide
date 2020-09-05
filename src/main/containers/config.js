@@ -1,5 +1,5 @@
-import { createContainer } from "unstated-next";
 import isEmpty from "lodash/isEmpty";
+import { createContainer } from "unstated-next";
 
 export default createContainer(() => {
   let [type, setType] = useState(localStorage["type"] || "square");
