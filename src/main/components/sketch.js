@@ -33,7 +33,7 @@ const Sketch = ({
           onMouseEnter={(e) => e.target.play()}
           onMouseLeave={(e) => e.target.pause()}
           ref={videoRef}
-          style={{ transform: "scale(-1, 1)" }}
+          style={{ transform: "rotate(180deg)" }}
         >
           <source
             id="media-source"

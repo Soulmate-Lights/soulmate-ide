@@ -26,11 +26,11 @@ const Simulator = ({ className = "", build, config, maxWidth, minWidth }) => {
 
       if (!serpentine) {
         if (pixel.y % 2 == 1) {
-          x = (cols - 1) * pixelWidth - pixel.x * pixelWidth;
-        } else {
           x = pixel.x * pixelWidth;
+        } else {
+          x = (cols - 1) * pixelWidth - pixel.x * pixelWidth;
         }
-        y = pixel.y * pixelHeight;
+        y = (rows - 1) * pixelHeight - pixel.y * pixelHeight;
       } else {
         x = (cols - 1) * pixelWidth - pixel.x * pixelWidth;
         y = (rows - 1) * pixelHeight - pixel.y * pixelHeight;
