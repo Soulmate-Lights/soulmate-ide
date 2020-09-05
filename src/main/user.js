@@ -26,22 +26,22 @@ const User = ({ id }) => {
   return (
     <div className="flex flex-col flex-grow ">
       <Header
+        sections={[{ title: "Gallery", to: "/gallery" }]}
         title={
           <>
             <img className="w-8 h-8 mr-2 rounded-full" src={user.image} />
             {user.name}
           </>
         }
-        sections={[{ title: "Gallery", to: "/gallery" }]}
       />
 
       <div className="flex-grow overflow-auto bg-white dark-mode:bg-gray-900 dark-mode:text-white">
         <div className="flex flex-row flex-wrap items-start p-8 overflow-auto bg-white dark-mode:bg-gray-900 dark-mode:text-white">
           {user.sketches.map((sketch) => (
             <Link
-              to={`/gallery/${sketch.id}`}
-              key={sketch.id}
               className="mb-4 mr-4"
+              key={sketch.id}
+              to={`/gallery/${sketch.id}`}
             >
               <Sketch sketch={sketch} width={32} />
             </Link>

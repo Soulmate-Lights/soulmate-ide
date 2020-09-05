@@ -7,17 +7,25 @@ const Notifications = () => {
   return (
     <CSSTransitionGroup
       className="absolute z-50 top-10 right-10 space-y-4"
-      transitionName="toast"
       transitionEnterTimeout={500}
       transitionLeaveTimeout={300}
+      transitionName="toast"
     >
-      {notificationsContainer.notifications.map((notification) => (
+      {notificationsContainer.notifications.map(({ text, type }) => (
         <div
-          className="p-4 border border-green-400 rounded-md bg-green-50"
-          key={notification}
+          className={classnames("p-4 border rounded-md", {
+            ["border-green-400 bg-green-50"]: type === "notice",
+            ["border-red-400 bg-red-50"]: type === "error",
+          })}
+          key={text}
         >
-          <p className="flex mx-3 text-sm font-medium text-green-800 leading-5">
-            {notification}
+          <p
+            className={classnames("flex mx-3 text-sm font-medium leading-5", {
+              ["text-green-800"]: type === "notice",
+              ["text-red-800"]: type === "error",
+            })}
+          >
+            {text}
           </p>
         </div>
       ))}

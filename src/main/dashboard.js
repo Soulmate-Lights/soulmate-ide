@@ -16,9 +16,9 @@ const Dashboard = () => {
           <span className="inline-flex w-full rounded-md">
             {!userDetails && (
               <button
-                onClick={login}
-                href="#"
                 className="inline-flex items-center px-4 py-2 ml-auto text-base font-medium text-purple-600 bg-white border border-transparent leading-6 rounded-md hover:text-purple-500 focus:outline-none focus:border-purple-300 focus:shadow-outline-gray active:bg-purple-50 active:text-purple-700 transition duration-150 ease-in-out"
+                href="#"
+                onClick={login}
               >
                 Log in
               </button>
@@ -40,8 +40,8 @@ const Dashboard = () => {
               {!userDetails && (
                 <div className="shadow rounded-md">
                   <Link
-                    to="/tutorial"
                     className="flex items-center justify-center w-full px-8 py-3 text-base font-medium text-white bg-purple-600 border border-transparent leading-6 rounded-md hover:bg-purple-500 focus:outline-none focus:border-purple-700 focus:shadow-outline-gray transition duration-150 ease-in-out md:py-4 md:text-lg md:px-10"
+                    to="/tutorial"
                   >
                     Tutorial
                   </Link>
@@ -49,8 +49,8 @@ const Dashboard = () => {
               )}
               <div className="mt-3 shadow rounded-md sm:mt-0 sm:ml-3">
                 <Link
-                  to="/gallery"
                   className="flex items-center justify-center w-full px-8 py-3 text-base font-medium text-purple-600 bg-white border border-transparent leading-6 rounded-md hover:text-purple-500 focus:outline-none focus:border-purple-300 focus:shadow-outline-gray transition duration-150 ease-in-out md:py-4 md:text-lg md:px-10"
+                  to="/gallery"
                 >
                   Gallery
                 </Link>
@@ -59,8 +59,8 @@ const Dashboard = () => {
               {userDetails && (
                 <div className="mt-3 shadow rounded-md sm:mt-0 sm:ml-3">
                   <Link
-                    to="/my-patterns"
                     className="flex items-center justify-center w-full px-8 py-3 text-base font-medium text-white bg-purple-600 border border-transparent leading-6 rounded-md hover:bg-purple-500 focus:outline-none focus:border-purple-700 focus:shadow-outline-gray transition duration-150 ease-in-out md:py-4 md:text-lg md:px-10"
+                    to="/my-patterns"
                   >
                     My Patterns
                   </Link>
@@ -71,8 +71,8 @@ const Dashboard = () => {
             {!isElectron() && (
               <div className="absolute opacity-25 bottom-8 hover:opacity-100 transition-opacity duration-500">
                 <a
-                  href="https://editor.soulmatelights.com/download"
                   className="inline-flex items-center px-4 py-2 mx-4 text-base font-medium text-purple-600 bg-white border border-transparent leading-6 rounded-md hover:text-purple-500 focus:outline-none focus:border-purple-300 focus:shadow-outline-gray active:bg-purple-50 active:text-purple-700 transition duration-150 ease-in-out"
+                  href="https://editor.soulmatelights.com/download"
                 >
                   Download the desktop app
                 </a>

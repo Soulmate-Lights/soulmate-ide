@@ -31,16 +31,16 @@ const SoulmatesMenu = ({ className }) => {
       >
         <div className="bg-white rounded-md shadow-xs">
           <div
+            aria-labelledby="options-menu"
+            aria-orientation="vertical"
             className="py-1"
             role="menu"
-            aria-orientation="vertical"
-            aria-labelledby="options-menu"
           >
             {soulmates.map(({ name }) => (
               <span
-                key={name}
-                href="#"
                 className="block px-4 py-2 text-sm text-gray-700 leading-5 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:bg-gray-100 focus:text-gray-900"
+                href="#"
+                key={name}
                 role="menuitem"
               >
                 {name}
@@ -53,12 +53,12 @@ const SoulmatesMenu = ({ className }) => {
       <div>
         <span className="rounded-md shadow-sm">
           <button
-            onClick={() => setOpen(!open)}
-            type="button"
+            aria-expanded="true"
+            aria-haspopup="true"
             className="inline-flex w-full px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md leading-5 hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-50 active:text-gray-800 transition ease-in-out duration-150"
             id="options-menu"
-            aria-haspopup="true"
-            aria-expanded="true"
+            onClick={() => setOpen(!open)}
+            type="button"
           >
             Soulmates
           </button>

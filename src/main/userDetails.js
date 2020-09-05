@@ -13,8 +13,8 @@ const UserDetails = ({ className }) => {
             <button onClick={login}>Log in</button>
 
             <button
-              onClick={login}
               className="flex items-center justify-center h-full ml-auto"
+              onClick={login}
             >
               <FiLogIn />
             </button>
@@ -24,9 +24,9 @@ const UserDetails = ({ className }) => {
           <div className="flex items-center">
             <div>
               <img
+                alt="avatar"
                 className="inline-block rounded-full h-9 w-9"
                 src={userDetails?.picture}
-                alt="avatar"
               />
             </div>
             <div className="ml-3">

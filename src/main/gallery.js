@@ -36,16 +36,16 @@ const Gallery = () => {
   return (
     <div className="flex flex-col flex-grow">
       <Header
-        title="Gallery"
         actions={[
           <input
-            key="search"
             autoFocus
+            className="block w-full form-input sm:text-sm sm:leading-3"
+            key="search"
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search"
-            className="block w-full form-input sm:text-sm sm:leading-3"
           />,
         ]}
+        title="Gallery"
       />
 
       {!users && <Logo className="loading-spinner" />}
@@ -53,18 +53,18 @@ const Gallery = () => {
       <div className="p-8 overflow-auto">
         <ul>
           {users.map((user) => (
-            <li key={user.id} className="border-b dark-mode:border-gray-800">
+            <li className="border-b dark-mode:border-gray-800" key={user.id}>
               <Link
-                to={`/user/${user.id}`}
                 className="block rounded hover:bg-gray-50 dark-mode:hover:bg-gray-700 focus:outline-none focus:bg-gray-50 transition duration-150 ease-in-out"
+                to={`/user/${user.id}`}
               >
                 <div className="flex items-center px-4 py-4 sm:px-6">
                   <div className="flex items-center flex-1 min-w-0">
                     <div className="flex-shrink-0">
                       <img
+                        alt
                         className="w-12 h-12 rounded-full"
                         src={user.image}
-                        alt
                       />
                     </div>
                     <div className="flex-1 min-w-0 px-4 md:grid md:grid-cols-3 md:gap-4">
@@ -82,11 +82,11 @@ const Gallery = () => {
                       <div className="flex-row hidden overflow-auto md:flex col-span-2">
                         {user.sketches?.map((sketch) => (
                           <Sketch
+                            className="flex-shrink-0 mr-4"
+                            hideTitle
                             key={sketch.id}
                             sketch={sketch}
                             width={14}
-                            className="flex-shrink-0 mr-4"
-                            hideTitle
                           />
                         ))}
                       </div>
@@ -95,13 +95,13 @@ const Gallery = () => {
                   <div>
                     <svg
                       className="w-5 h-5 text-gray-400"
-                      viewBox="0 0 20 20"
                       fill="currentColor"
+                      viewBox="0 0 20 20"
                     >
                       <path
-                        fillRule="evenodd"
-                        d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
                         clipRule="evenodd"
+                        d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                        fillRule="evenodd"
                       />
                     </svg>
                   </div>

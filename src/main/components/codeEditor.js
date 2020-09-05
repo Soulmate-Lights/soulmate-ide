@@ -141,9 +141,6 @@ const codeEditor = ({
     >
       <div className="flex flex-grow flex-shrink min-h-0 overflow-hidden">
         <Monaco
-          key={dark ? "dark" : "light"}
-          ref={monacoInstance}
-          onChange={onChange}
           editorDidMount={(editor) => {
             editor.changeViewZones((accessor) => {
               accessor.addZone({
@@ -153,11 +150,14 @@ const codeEditor = ({
               });
             });
           }}
+          key={dark ? "dark" : "light"}
+          onChange={onChange}
           options={{
             ...editorConfig,
             value: code,
             theme: dark ? "vs-dark" : "vs-light",
           }}
+          ref={monacoInstance}
         />
       </div>
 
@@ -166,7 +166,7 @@ const codeEditor = ({
           {parser.parseString(build.stderr).map(
             ({ line, text, type }) =>
               type === "error" && (
-                <p key={line} className="py-1">
+                <p className="py-1" key={line}>
                   <strong>{startCase(type)}:</strong> Line {line - 65}: {text}
                 </p>
               )
@@ -175,20 +175,20 @@ const codeEditor = ({
       )}
 
       <label
-        htmlFor="auto-format"
         className="absolute flex flex-row items-center justify-center text-xs top-2 right-8 dark-mode:text-white"
+        htmlFor="auto-format"
       >
         Auto-format
         <input
           className="ml-2"
           defaultChecked={localStorage.autoFormat === "true"}
-          type="checkbox"
-          ref={formatCheckboxRef}
           onChange={(e) => {
             localStorage.autoFormat = e.target.checked;
 
             save();
           }}
+          ref={formatCheckboxRef}
+          type="checkbox"
         />
       </label>
     </div>

@@ -39,7 +39,6 @@ const MySketches = () => {
   return (
     <div className="flex flex-col flex-grow">
       <Header
-        title="My patterns"
         actions={[
           !creating && {
             title: "New pattern",
@@ -49,10 +48,10 @@ const MySketches = () => {
             <span className="flex flex-row group">
               <input
                 autoFocus
+                className="block w-full h-8 py-2 text-sm rounded-r-none form-input focus:z-10"
                 onChange={(e) => setNewSketchName(e.target.value)}
                 onKeyDown={(e) => e.key === "Escape" && e.target.blur()}
                 placeholder="Give your pattern a name"
-                className="block w-full h-8 py-2 text-sm rounded-r-none form-input focus:z-10"
               />
               <button
                 className="relative inline-flex items-center h-8 px-4 py-2 -ml-px text-sm font-medium text-gray-700 border border-gray-300 outline-none leading-5 rounded-r-md bg-gray-50 hover:text-gray-500 hover:bg-white focus:outline-none focus:shadow-outline-blue focus:border-blue-300 active:bg-gray-100 active:text-gray-700 transition ease-in-out duration-150 group-focus:shadow-outline-blue"
@@ -66,6 +65,7 @@ const MySketches = () => {
             </span>
           ),
         ]}
+        title="My patterns"
       />
 
       {!userDetails && (
@@ -82,9 +82,9 @@ const MySketches = () => {
           <div className="max-w-md mx-auto mt-5 sm:flex sm:justify-center md:mt-8">
             <span className="inline-flex shadow rounded-md">
               <a
+                className="inline-flex items-center px-4 py-2 text-base font-medium text-purple-600 bg-white border border-transparent leading-6 rounded-md hover:text-purple-500 focus:outline-none focus:border-purple-300 focus:shadow-outline-gray active:bg-purple-50 active:text-purple-700 transition duration-150 ease-in-out"
                 href="#none"
                 onClick={login}
-                className="inline-flex items-center px-4 py-2 text-base font-medium text-purple-600 bg-white border border-transparent leading-6 rounded-md hover:text-purple-500 focus:outline-none focus:border-purple-300 focus:shadow-outline-gray active:bg-purple-50 active:text-purple-700 transition duration-150 ease-in-out"
               >
                 Log in
               </a>
@@ -106,7 +106,7 @@ const MySketches = () => {
                 <div className="flex flex-row flex-wrap">
                   {sketches?.map((sketch) => (
                     <Link key={sketch.id} to={`/my-patterns/${sketch.id}`}>
-                      <Sketch sketch={sketch} className="mb-4 mr-4" />
+                      <Sketch className="mb-4 mr-4" sketch={sketch} />
                     </Link>
                   ))}
                 </div>

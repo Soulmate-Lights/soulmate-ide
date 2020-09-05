@@ -48,43 +48,43 @@ const Menu = () => {
 
             <nav className="flex-1 mx-2 mt-4 space-y-1">
               <NavLink
-                to="/"
-                location={location}
-                exact
                 activeClassName={activeLinkClass}
                 className={linkClass}
+                exact
+                location={location}
+                to="/"
               >
                 <FiHome className={iconClass} />
                 Home
               </NavLink>
 
               <NavLink
-                tag={Link}
-                to="/tutorial"
-                location={location}
-                exact
                 activeClassName={activeLinkClass}
                 className={linkClass}
+                exact
+                location={location}
+                tag={Link}
+                to="/tutorial"
               >
                 <FiSmile className={iconClass} />
                 Tutorial
               </NavLink>
 
               <NavLink
-                to="/my-patterns"
-                location={location}
                 activeClassName={activeLinkClass}
                 className={linkClass}
+                location={location}
+                to="/my-patterns"
               >
                 <FiFolder className={iconClass} />
                 My Patterns
               </NavLink>
 
               <NavLink
-                to="/gallery"
-                location={location}
                 activeClassName={activeLinkClass}
                 className={linkClass}
+                location={location}
+                to="/gallery"
               >
                 <FiCloud className={iconClass} />
                 Gallery
@@ -92,11 +92,11 @@ const Menu = () => {
 
               {isElectron() && (
                 <NavLink
-                  to="/flash"
-                  disabled
-                  location={location}
                   activeClassName={activeLinkClass}
                   className={linkClass}
+                  disabled
+                  location={location}
+                  to="/flash"
                 >
                   <FaUsb className={iconClass} />
                   USB Upload
@@ -104,11 +104,11 @@ const Menu = () => {
               )}
 
               <NavLink
-                to="/config"
-                disabled
-                location={location}
                 activeClassName={activeLinkClass}
                 className={linkClass}
+                disabled
+                location={location}
+                to="/config"
               >
                 <FiSettings className={iconClass} />
                 Config

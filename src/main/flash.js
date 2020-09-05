@@ -14,23 +14,8 @@ import Logo from "~/images/logo.svg";
 
 import FlashButton from "./components/flashButton";
 
-const { dialog } = remote;
-
-const showErrorMessage = () => {
-  dialog.showMessageBox(null, {
-    type: "error",
-    buttons: ["OK"],
-    defaultId: 2,
-    title: "Oops",
-    message: "There was an error building these patterns.",
-    detail:
-      "We couldn't compile all these patterns. One of them might be broken! Please try again with a different selection.",
-  });
-};
-
 const Flash = () => {
-  const { config } = ConfigContainer.useContainer();
-  const { flashSketches, flashing } = Soulmates.useContainer();
+  const { flashing } = Soulmates.useContainer();
   const { userDetails } = UserContainer.useContainer();
   const { allSketches, sketches } = SketchesContainer.useContainer();
   const [search, setSearch] = useState("");
@@ -81,11 +66,6 @@ const Flash = () => {
     } else {
       setSelected([...selected, sketch.id]);
     }
-  };
-
-  const flash = async () => {
-    const result = await flashSketches(selectedSketches, config);
-    if (!result) showErrorMessage();
   };
 
   return (

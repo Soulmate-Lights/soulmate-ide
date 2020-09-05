@@ -12,13 +12,13 @@ const configButtonClassName =
 const flashButtonClassName =
   "inline-flex items-center px-6 py-3 border border-transparent text-base leading-6 font-medium rounded-md text-white bg-indigo-600  focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition ease-in-out duration-150 h-15 flex-grow justify-center";
 
-const FlashButton = ({ selectedSketches, className }) => {
+const FlashButton = ({ selectedSketches, disabled = false, className }) => {
   const notificationsContainer = NotificationsContainer.useContainer();
 
   const flash = async () => {
     const result = await flashSketches(selectedSketches, config);
     if (!result) {
-      notificationsContainer.notify("Error flashing!");
+      notificationsContainer.notify("Error flashing!", "error");
     }
   };
 
@@ -32,15 +32,14 @@ const FlashButton = ({ selectedSketches, className }) => {
     port,
   } = Soulmates.useContainer();
 
-  const enabled = !!port;
   const disableFlashButton =
-    selectedSketches.length === 0 || flashing || soulmateLoading;
+    selectedSketches.length === 0 || flashing || soulmateLoading || disabled;
   const showConfigButton = !soulmateLoading && !flashing;
 
   let text;
   if (soulmateLoading) {
     text = "Loading...";
-  } else if (!enabled) {
+  } else if (!port) {
     text = "Connect your Soulmate to flash it";
   } else if (usbFlashingPercentage >= 0) {
     text = (
@@ -64,7 +63,11 @@ const FlashButton = ({ selectedSketches, className }) => {
   }
 
   return (
-    <div className={classnames(className, "flex")}>
+    <div
+      className={classnames(className, "flex", {
+        "opacity-50": disableFlashButton,
+      })}
+    >
       {showConfigButton && (
         <Link className={configButtonClassName} to="/config">
           {soulmateLoading ? (

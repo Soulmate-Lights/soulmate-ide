@@ -170,10 +170,15 @@ const Editor = ({ id, mine }) => {
             build={build}
             className="flex flex-col flex-grow"
             config={config}
+            minWidth={320}
           />
 
           {isElectron() && (
-            <FlashButton className="mx-4 my-4" selectedSketches={[sketch]} />
+            <FlashButton
+              className="mx-4 my-4"
+              disabled={!build || build?.stderr}
+              selectedSketches={[sketch]}
+            />
           )}
         </div>
       </div>

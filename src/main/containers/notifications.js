@@ -4,12 +4,12 @@ function Notifications() {
   const [notifications, setNotifications] = useState([]);
   const notificationsRef = useRef(notifications);
 
-  function notify(text) {
-    setNotifications([...notifications, text]);
+  function notify(text, type = "notice") {
+    setNotifications([...notifications, { text, type }]);
 
     setTimeout(() => {
       const newNotifications = notificationsRef.current.filter(
-        (t) => t !== text
+        (t) => t.text !== text
       );
       setNotifications(newNotifications);
     }, 2000);

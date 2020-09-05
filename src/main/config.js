@@ -39,16 +39,16 @@ const Config = () => {
                   <div className="px-4 py-5 text-gray-800 bg-white sm:p-6">
                     <div className="col-span-6 sm:col-span-3">
                       <label
-                        htmlFor="country"
                         className="block text-sm font-medium text-gray-700 leading-5"
+                        htmlFor="country"
                       >
                         Soulmate type
                       </label>
                       <select
-                        value={type}
-                        onChange={(e) => setType(e.target.value)}
-                        id="country"
                         className="block w-full px-3 py-2 mt-1 bg-white border border-gray-300 form-select rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5"
+                        id="country"
+                        onChange={(e) => setType(e.target.value)}
+                        value={type}
                       >
                         {types.map((type) => (
                           <option key={type.value} value={type.value}>
@@ -62,8 +62,8 @@ const Config = () => {
                       <div className="grid grid-cols-2 gap-6">
                         <div className="flex-grow w-full col-span-2 sm:col-span-2">
                           <label
-                            htmlFor="company_website"
                             className="block text-sm font-medium text-gray-700 leading-5"
+                            htmlFor="company_website"
                           >
                             Pins
                           </label>
@@ -73,6 +73,7 @@ const Config = () => {
                                 Data
                               </span>
                               <input
+                                className={`w-24 h-10 form-input flex-1 block rounded-none rounded-r-md transition duration-150 ease-in-out sm:text-sm ${disableClass}`}
                                 disabled={disableCustom}
                                 onChange={(e) =>
                                   setConfig({
@@ -81,7 +82,6 @@ const Config = () => {
                                   })
                                 }
                                 value={config.data}
-                                className={`w-24 h-10 form-input flex-1 block rounded-none rounded-r-md transition duration-150 ease-in-out sm:text-sm ${disableClass}`}
                               />
                             </div>
                             <div className="flex flex-row items-center w-6/12">
@@ -89,6 +89,7 @@ const Config = () => {
                                 Clock
                               </span>
                               <input
+                                className={`w-24 h-10 form-input flex-1 block rounded-none rounded-r-md transition duration-150 ease-in-out sm:text-sm ${disableClass}`}
                                 disabled={disableCustom}
                                 onChange={(e) =>
                                   setConfig({
@@ -97,7 +98,6 @@ const Config = () => {
                                   })
                                 }
                                 value={config.clock}
-                                className={`w-24 h-10 form-input flex-1 block rounded-none rounded-r-md transition duration-150 ease-in-out sm:text-sm ${disableClass}`}
                               />
                             </div>
                             <div className="flex flex-row items-center w-6/12">
@@ -105,6 +105,7 @@ const Config = () => {
                                 Button
                               </span>
                               <input
+                                className={`w-24 h-10 form-input flex-1 block rounded-none rounded-r-md transition duration-150 ease-in-out sm:text-sm ${disableClass}`}
                                 disabled={disableCustom}
                                 onChange={(e) =>
                                   setConfig({
@@ -113,15 +114,14 @@ const Config = () => {
                                   })
                                 }
                                 value={config.button}
-                                className={`w-24 h-10 form-input flex-1 block rounded-none rounded-r-md transition duration-150 ease-in-out sm:text-sm ${disableClass}`}
                               />
                             </div>
                           </div>
                         </div>
                         <div className="flex-grow w-full col-span-2 sm:col-span-2">
                           <label
-                            htmlFor="company_website"
                             className="block text-sm font-medium text-gray-700 leading-5"
+                            htmlFor="company_website"
                           >
                             Dimensions
                           </label>
@@ -131,6 +131,7 @@ const Config = () => {
                                 Rows
                               </span>
                               <input
+                                className={`w-24 h-10 mr-8 form-input flex-1 block rounded-none rounded-r-md transition duration-150 ease-in-out sm:text-sm ${disableClass}`}
                                 disabled={disableCustom}
                                 onChange={(e) =>
                                   setConfig({
@@ -139,7 +140,6 @@ const Config = () => {
                                   })
                                 }
                                 value={config.rows}
-                                className={`w-24 h-10 mr-8 form-input flex-1 block rounded-none rounded-r-md transition duration-150 ease-in-out sm:text-sm ${disableClass}`}
                               />
                             </div>
                             <div className="flex flex-row items-center w-6/12">
@@ -147,6 +147,7 @@ const Config = () => {
                                 Cols
                               </span>
                               <input
+                                className={`w-24 h-10 form-input flex-1 block rounded-none rounded-r-md transition duration-150 ease-in-out sm:text-sm ${disableClass}`}
                                 disabled={disableCustom}
                                 onChange={(e) =>
                                   setConfig({
@@ -155,7 +156,6 @@ const Config = () => {
                                   })
                                 }
                                 value={config.cols}
-                                className={`w-24 h-10 form-input flex-1 block rounded-none rounded-r-md transition duration-150 ease-in-out sm:text-sm ${disableClass}`}
                               />
                             </div>
                           </div>
@@ -165,22 +165,22 @@ const Config = () => {
                       <div className="mt-6">
                         <div className="col-span-6 sm:col-span-3">
                           <label
-                            htmlFor="first_name"
                             className="block text-sm font-medium text-gray-700 leading-5"
+                            htmlFor="first_name"
                           >
                             Power (milliamps)
                           </label>
                           <input
-                            value={config.milliamps}
+                            className={`mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5 ${disableClass}`}
                             disabled={disableCustom}
+                            id="first_name"
                             onChange={(e) => {
                               setConfig({
                                 ...config,
                                 milliamps: parseInt(e.target.value),
                               });
                             }}
-                            id="first_name"
-                            className={`mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5 ${disableClass}`}
+                            value={config.milliamps}
                           />
                         </div>
                       </div>
@@ -188,22 +188,22 @@ const Config = () => {
                       <div className="mt-6">
                         <div className="col-span-6 sm:col-span-3">
                           <label
-                            htmlFor="first_name"
                             className="block text-sm font-medium text-gray-700 leading-5"
+                            htmlFor="first_name"
                           >
                             Serpentine layout (left-right-left)
                           </label>
                           <input
-                            type="checkbox"
                             checked={config.serpentine}
                             disabled={disableCustom}
+                            id="serpentine"
                             onChange={(e) => {
                               setConfig({
                                 ...config,
                                 serpentine: e.target.checked,
                               });
                             }}
-                            id="serpentine"
+                            type="checkbox"
                             // className="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5"
                           />
                         </div>
@@ -211,22 +211,22 @@ const Config = () => {
 
                       <div className="mt-6 col-span-6 sm:col-span-3">
                         <label
-                          htmlFor="country"
                           className="block text-sm font-medium text-gray-700 leading-5"
+                          htmlFor="country"
                         >
                           LED type
                         </label>
                         <select
+                          className={`mt-1 block form-select w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5 ${disableClass}`}
                           disabled={disableCustom}
-                          value={config.ledType}
+                          id="country"
                           onChange={(e) => {
                             setConfig({
                               ...config,
                               ledType: e.target.value,
                             });
                           }}
-                          id="country"
-                          className={`mt-1 block form-select w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5 ${disableClass}`}
+                          value={config.ledType}
                         >
                           {["APA102", "WS2812B"].map((type) => (
                             <option key={type} value={type}>
@@ -240,8 +240,8 @@ const Config = () => {
                 </div>
                 <div className="py-3 mt-4 text-right">
                   <Link
-                    to="/flash"
                     className="px-8 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-500 focus:outline-none focus:shadow-outline-blue focus:bg-indigo-500 active:bg-indigo-600 transition duration-150 ease-in-out"
+                    to="/flash"
                   >
                     Save
                   </Link>
