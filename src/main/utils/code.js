@@ -8,8 +8,6 @@ CRGB* leds = Soulmate.leds;
 export const preparePreviewCode = (code, config) => {
   const { rows, cols, serpentine } = config;
 
-  console.log({ serpentine });
-
   return `#define FASTLED_INTERNAL
 #include "FastLED.h"
 

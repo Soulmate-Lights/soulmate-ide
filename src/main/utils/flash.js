@@ -1,17 +1,23 @@
+if (!window.remote) {
+  console.log("fake remote");
+  window.remote = undefined;
+  console.log(remote?.require);
+}
+
 import { prepareSketches } from "~/utils/code";
 import streamWithProgress from "~/utils/streamWithProgress";
-const path = remote.require("path");
-const fs = remote.require("fs");
+const path = remote?.require("path");
+const fs = remote?.require("fs");
 const IS_PROD = process.env.NODE_ENV === "production";
-const { getAppPath } = remote.app;
+const getAppPath = remote?.app.getAppPath;
 const isPackaged =
-  remote.process.mainModule.filename.indexOf("app.asar") !== -1;
-const rootPath = remote.require("electron-root-path").rootPath;
-const childProcess = remote.require("child_process");
+  remote?.process.mainModule.filename.indexOf("app.asar") !== -1;
+const rootPath = remote?.require("electron-root-path").rootPath;
+const childProcess = remote?.require("child_process");
 const dir =
   IS_PROD && isPackaged
-    ? path.join(path.dirname(getAppPath()), "..", "./builder")
-    : path.join(rootPath, "builder");
+    ? path?.join(path.dirname(getAppPath()), "..", "./builder")
+    : path?.join(rootPath, "builder");
 
 // Fetching
 

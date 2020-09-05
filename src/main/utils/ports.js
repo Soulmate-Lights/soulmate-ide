@@ -1,4 +1,4 @@
-const serialport = remote.require("serialport");
+const serialport = remote?.require("serialport");
 
 export const readPort = async (path) => {
   return await new Promise((resolve, _reject) => {
