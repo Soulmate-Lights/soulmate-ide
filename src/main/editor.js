@@ -21,7 +21,7 @@ const Editor = ({ id, mine }) => {
   const { getSelection, setSelection } = SelectionsContainer.useContainer();
   const { getBuild } = BuildsContainer.useContainer();
   const { config } = ConfigContainer.useContainer();
-  const { rows, cols } = config;
+  const { rows, cols, serpentine } = config;
 
   const sketch = getSketch(id);
 
@@ -33,7 +33,7 @@ const Editor = ({ id, mine }) => {
     );
   }
 
-  const build = getBuild(sketch.code || emptyCode, rows, cols);
+  const build = getBuild(sketch.code || emptyCode, config);
   let code = sketch.dirtyCode || sketch.code || emptyCode;
   const selection = getSelection(id);
   const dirty = sketch.dirtyCode !== sketch.code;
@@ -180,6 +180,7 @@ const Editor = ({ id, mine }) => {
           build={build}
           rows={rows}
           cols={cols}
+          serpentine={serpentine}
           className="flex flex-col"
         />
       </div>

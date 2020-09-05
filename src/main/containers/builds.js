@@ -6,14 +6,14 @@ function Builds() {
   let [builds, setBuilds] = useState({});
   let [building, setBuilding] = useState({});
 
-  function getBuild(code, rows, cols) {
-    const key = JSON.stringify({ code, rows, cols });
+  function getBuild(code, config) {
+    const key = JSON.stringify({ code, config });
 
     if (building[key]) return false;
 
     if (builds[key]) return builds[key];
 
-    const preparedCode = preparePreviewCode(code, rows, cols);
+    const preparedCode = preparePreviewCode(code, config);
     setBuilding({ ...building, [key]: true });
     buildHex(preparedCode).then((build) => {
       setBuilds({ ...builds, [key]: build });

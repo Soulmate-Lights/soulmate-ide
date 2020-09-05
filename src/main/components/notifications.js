@@ -17,7 +17,7 @@ const Notifications = () => {
           key={notification}
         >
           <div className="flex">
-            <div className="flex-shrink-0">
+            {/* <div className="flex-shrink-0">
               <svg
                 className="h-5 w-5 text-green-400"
                 viewBox="0 0 20 20"
@@ -29,13 +29,13 @@ const Notifications = () => {
                   clipRule="evenodd"
                 />
               </svg>
-            </div>
-            <div className="ml-3">
+            </div> */}
+            <div className="mx-3">
               <p className="text-sm leading-5 font-medium text-green-800">
                 {notification}
               </p>
             </div>
-            <div className="ml-auto pl-3">
+            {/* <div className="ml-auto pl-3">
               <div className="-mx-1.5 -my-1.5">
                 <button
                   className="inline-flex rounded-md p-1.5 text-green-500 hover:bg-green-100 focus:outline-none focus:bg-green-100 transition ease-in-out duration-150"
@@ -54,7 +54,7 @@ const Notifications = () => {
                   </svg>
                 </button>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       ))}

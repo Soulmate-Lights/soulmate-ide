@@ -43,7 +43,7 @@ const FlashButton = ({
   } else if (flashing && usbFlashingPercentage === undefined) {
     text = (
       <span className="flex flex-row items-center">
-        <Logo className="spinner w-8 h-8 mr-4" />
+        <Logo className="spinner w-4 h-4 mr-4" />
         Building, please wait...
       </span>
     );

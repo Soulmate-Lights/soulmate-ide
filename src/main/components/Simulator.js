@@ -4,7 +4,14 @@ import Logo from "~/images/logo.svg";
 
 let worker;
 
-const Simulator = ({ build, rows, cols, className = "", style }) => {
+const Simulator = ({
+  build,
+  rows,
+  cols,
+  className = "",
+  style,
+  serpentine,
+}) => {
   const [paused, setPaused] = useState(!document.hasFocus());
   const canvas = useRef();
   const compilerOutputDiv = useRef();
@@ -20,8 +27,20 @@ const Simulator = ({ build, rows, cols, className = "", style }) => {
     const pixelHeight = canvas.current.height / rows;
 
     for (let pixel of pixels) {
-      const x = (cols - 1) * pixelWidth - pixel.x * pixelWidth;
-      const y = (rows - 1) * pixelHeight - pixel.y * pixelHeight;
+      let x;
+      let y;
+
+      if (!serpentine) {
+        if (pixel.y % 2 == 1) {
+          x = (cols - 1) * pixelWidth - pixel.x * pixelWidth;
+        } else {
+          x = pixel.x * pixelWidth;
+        }
+        y = pixel.y * pixelHeight;
+      } else {
+        x = (cols - 1) * pixelWidth - pixel.x * pixelWidth;
+        y = (rows - 1) * pixelHeight - pixel.y * pixelHeight;
+      }
 
       ctx.beginPath();
       ctx.rect(x, y, pixelWidth, pixelHeight);

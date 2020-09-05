@@ -1,11 +1,10 @@
-import { Mode, useLightSwitch } from "use-light-switch";
-
-import Monaco from "react-monaco-editor";
-import classnames from "classnames";
-import debounce from "lodash/debounce";
-import jsBeautifier from "js-beautify";
 import parser from "@wokwi/gcc-output-parser";
+import classnames from "classnames";
+import jsBeautifier from "js-beautify";
+import debounce from "lodash/debounce";
 import startCase from "lodash/startCase";
+import Monaco from "react-monaco-editor";
+import { Mode, useLightSwitch } from "use-light-switch";
 
 const jsBeautifierConfig = {
   indent_size: 2,
@@ -69,6 +68,10 @@ const codeEditor = ({
     return () => window.removeEventListener("resize", debouncedResize);
   }, []);
 
+  useEffect(() => {
+    debouncedResize();
+  }, [build?.stderr]);
+
   const save = () => {
     // Build for the simulator
     const monacoEditor = monacoInstance.current.editor;
@@ -130,35 +133,41 @@ const codeEditor = ({
   }, [selection]);
 
   return (
-    <div className={classnames(className, "dark-mode:bg-gray-900")}>
-      <Monaco
-        className="h-8"
-        key={dark ? "dark" : "light"}
-        ref={monacoInstance}
-        onChange={onChange}
-        editorDidMount={(editor) => {
-          editor.changeViewZones((accessor) => {
-            accessor.addZone({
-              afterLineNumber: 0,
-              heightInPx: 8,
-              domNode: document.createElement("SPAN"),
+    <div
+      className={classnames(
+        className,
+        "dark-mode:bg-gray-900 flex flex-col min-h-0"
+      )}
+    >
+      <div className="flex flex-shrink flex-grow overflow-hidden min-h-0">
+        <Monaco
+          key={dark ? "dark" : "light"}
+          ref={monacoInstance}
+          onChange={onChange}
+          editorDidMount={(editor) => {
+            editor.changeViewZones((accessor) => {
+              accessor.addZone({
+                afterLineNumber: 0,
+                heightInPx: 8,
+                domNode: document.createElement("SPAN"),
+              });
             });
-          });
-        }}
-        options={{
-          ...editorConfig,
-          value: code,
-          theme: dark ? "vs-dark" : "vs-light",
-        }}
-      />
+          }}
+          options={{
+            ...editorConfig,
+            value: code,
+            theme: dark ? "vs-dark" : "vs-light",
+          }}
+        />
+      </div>
 
       {build?.stderr && (
-        <pre className="bg-red-200 text-red-800 py-3 px-6 text-sm break-all absolute bottom-0 left-0 right-0 border-t border-red-800">
+        <pre className="bg-red-200 text-red-800 py-3 px-6 text-sm break-all  bottom-0 left-0 right-0 border-t border-red-800 flex-shrink-0 z-10 overflow-auto">
           {parser.parseString(build.stderr).map(
             ({ line, text, type }) =>
               type === "error" && (
                 <p key={line} className="py-1">
-                  <strong>{startCase(type)}:</strong> Line {line - 58}: {text}
+                  <strong>{startCase(type)}:</strong> Line {line - 65}: {text}
                 </p>
               )
           )}
