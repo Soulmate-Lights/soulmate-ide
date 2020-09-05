@@ -60,9 +60,9 @@ const FlashButton = ({
     >
       {showConfigButton && (
         <Link to="/config" className={configButtonClassName}>
-          {soulmateLoading && "Loading..."}
-
-          {!soulmateLoading && (
+          {soulmateLoading ? (
+            "Loading..."
+          ) : (
             <>
               <span>{startCase(type)}</span>
               <span>

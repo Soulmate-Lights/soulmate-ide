@@ -39,37 +39,22 @@ const SoulmateContainer = () => {
     return true;
   };
 
-  // Config stuff
-
   const checkUsb = async () => {
     const newPort = await getPort();
 
     if (newPort && !port) {
       setPort(newPort);
       setSoulmateLoading(true);
-      readPort(newPort).then((data) => {
-        setSoulmateLoading(false);
+      const data = await readPort(newPort);
+      setSoulmateLoading(false);
 
-        if (data) {
-          console.log(data);
-          configContainer.setType("custom");
-          configContainer.setConfig({
-            rows: data.rows,
-            cols: data.cols,
-            button: data.button,
-            clock: data.clock,
-            data: data.data,
-            ledType: data.ledType,
-            serpentine: data.serpentine,
-            milliamps: data.milliamps,
-          });
-        }
-
-        console.log(data);
-        setName(data.name || "USB Soulmate");
-      });
+      if (data) {
+        configContainer.setConfigFromSoulmateData(data);
+      }
+      setName(data?.name || "USB Soulmate");
     } else if (!newPort) {
       setPort(undefined);
+      setName(undefined);
     }
   };
 
