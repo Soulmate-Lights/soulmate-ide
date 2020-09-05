@@ -2,12 +2,14 @@ import { useState } from "react";
 import { createContainer } from "unstated-next";
 
 import ConfigContainer from "~/containers/config";
+import NotificationsContainer from "~/containers/notifications";
 import { getFullBuild, prepareSketches } from "~/utils/code";
 import { flashBuild } from "~/utils/flash";
 import { getPort, readPort } from "~/utils/ports";
 import useInterval from "~/utils/useInterval";
 
 const SoulmateContainer = () => {
+  const notificationsContainer = NotificationsContainer.useContainer();
   const configContainer = ConfigContainer.useContainer();
   const [soulmateLoading, setSoulmateLoading] = useState(false);
   const [port, setPort] = useState();
@@ -43,6 +45,7 @@ const SoulmateContainer = () => {
     const newPort = await getPort();
 
     if (newPort && !port) {
+      notificationsContainer.notify(`Detecting Soulmate...`);
       setPort(newPort);
       setSoulmateLoading(true);
       const data = await readPort(newPort);
@@ -57,6 +60,12 @@ const SoulmateContainer = () => {
       setName(undefined);
     }
   };
+
+  useEffect(() => {
+    if (name) {
+      notificationsContainer.notify(`${name} connected!`);
+    }
+  }, [name]);
 
   useInterval(checkUsb, 2000);
   useEffect(() => checkUsb(), []);
