@@ -31,7 +31,7 @@ const Flash = () => {
   const { type, config } = ConfigContainer.useContainer();
   const {
     usbSoulmate,
-    flashMultiple,
+    flashSketches,
     soulmateLoading,
   } = Soulmates.useContainer();
   const { userDetails } = UserContainer.useContainer();
@@ -87,7 +87,7 @@ const Flash = () => {
   };
 
   const flash = async () => {
-    const result = await flashMultiple(usbSoulmate, selectedSketches, config);
+    const result = await flashSketches(selectedSketches, config);
     if (!result) showErrorMessage();
   };
 

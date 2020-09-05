@@ -43,7 +43,7 @@ const FlashButton = ({
   } else if (flashing && usbFlashingPercentage === undefined) {
     text = "Building, please wait...";
   } else {
-    text = "Flash to USB Soulmate";
+    text = `Flash to ${usbSoulmate.name}`;
   }
 
   return (

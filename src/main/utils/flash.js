@@ -1,4 +1,4 @@
-import { prepareFullCodeWithMultipleSketches } from "~/utils/code";
+import { prepareSketches } from "~/utils/code";
 import streamWithProgress from "~/utils/streamWithProgress";
 const path = remote.require("path");
 const fs = remote.require("fs");
@@ -16,7 +16,7 @@ const dir =
 // Fetching
 
 export const getBuild = async (sketches, config) => {
-  const source = prepareFullCodeWithMultipleSketches(sketches, config);
+  const source = prepareSketches(sketches, config);
 
   const res = await window.fetch("http://54.243.44.4:8081/build", {
     method: "POST",

@@ -1,11 +1,12 @@
-import BuildsContainer from "~/containers/builds";
 import CodeEditor from "~/components/codeEditor";
-import ConfigContainer from "~/containers/config";
 import Header from "~/components/Header";
-import Logo from "~/images/logo.svg";
-import SelectionsContainer from "~/containers/selection";
 import Simulator from "~/components/Simulator";
+import BuildsContainer from "~/containers/builds";
+import ConfigContainer from "~/containers/config";
+import SelectionsContainer from "~/containers/selection";
 import SketchesContainer from "~/containers/sketches";
+import Soulmates from "~/containers/soulmates";
+import Logo from "~/images/logo.svg";
 import { emptyCode } from "~/utils/code";
 import history from "~/utils/history";
 
@@ -52,6 +53,12 @@ const Editor = ({ id, mine }) => {
     document.addEventListener("click", closeMenu);
     return () => document.removeEventListener("click", closeMenu);
   }, []);
+
+  const flash = async () => {
+    const { config } = ConfigContainer.useContainer();
+    const { usbSoulmate, flashSketches } = Soulmates.useContainer();
+    const result = await flashSketches(usbSoulmate, sketch, config);
+  };
 
   const menu = (
     <div className="relative inline-block text-left" ref={menuRef}>
