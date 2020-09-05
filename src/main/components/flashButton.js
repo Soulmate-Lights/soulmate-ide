@@ -33,7 +33,7 @@ const FlashButton = ({
   } else if (usbFlashingPercentage >= 0) {
     text = (
       <progress
-        className="usb-flash my-2"
+        className="my-2 usb-flash"
         value={usbFlashingPercentage}
         max="100"
       >
@@ -43,7 +43,7 @@ const FlashButton = ({
   } else if (flashing && usbFlashingPercentage === undefined) {
     text = (
       <span className="flex flex-row items-center">
-        <Logo className="spinner w-4 h-4 mr-4" />
+        <Logo className="w-4 h-4 mr-4 spinner" />
         Building, please wait...
       </span>
     );

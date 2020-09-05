@@ -1,11 +1,12 @@
+import classnames from "classnames";
+import { FaUsb } from "react-icons/fa";
 import { FiCloud, FiFolder, FiHome, FiSettings, FiSmile } from "react-icons/fi";
 import { Link, NavLink, useLocation } from "react-router-dom";
 
-import { FaUsb } from "react-icons/fa";
 import Logo from "~/images/Logo.svg";
-import UserDetails from "./userDetails";
-import classnames from "classnames";
 import isElectron from "~/utils/isElectron";
+
+import UserDetails from "./userDetails";
 
 const iconClass = "mr-3 h-6 w-6 transition ease-in-out duration-150";
 const linkClass = `group flex items-center px-4 py-2 text-sm leading-5 font-medium rounded-md
@@ -30,22 +31,22 @@ const Menu = () => {
       )}
     >
       <div className="flex flex-col w-72">
-        <div className="flex flex-col h-0 flex-1">
+        <div className="flex flex-col flex-1 h-0">
           <div
             className={classnames("flex-1 flex flex-col pb-4 overflow-y-auto")}
           >
-            <div className="flex flex-row items-center px-6 py-4 border-b dark-mode:border-gray-600 h-24">
+            <div className="flex flex-row items-center h-24 px-6 py-4 border-b dark-mode:border-gray-600">
               <Logo className="w-10 h-10 mr-4" />
 
               <span className="flex flex-col">
                 <span>
                   Soulmate&nbsp;<span className="opacity-50">IDE</span>
                 </span>
-                <span className="opacity-50 text-sm">FastLED Emulator</span>
+                <span className="text-sm opacity-50">FastLED Emulator</span>
               </span>
             </div>
 
-            <nav className="mt-4 mx-2 flex-1 space-y-1">
+            <nav className="flex-1 mx-2 mt-4 space-y-1">
               <NavLink
                 to="/"
                 location={location}

@@ -117,16 +117,16 @@ const Simulator = ({ className = "", build, config }) => {
     >
       {build ? (
         <>
-          <span className="inline-flex rounded-md shadow-sm top-4 right-4 absolute">
+          <span className="absolute inline-flex rounded-md shadow-sm top-4 right-4">
             <button
               onClick={() => setPaused(!paused)}
               type="button"
-              className="inline-flex items-center px-3 py-2 border border-gray-300 text-sm leading-4 font-medium rounded-md text-gray-700 bg-white hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150"
+              className="inline-flex items-center px-3 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 leading-4 rounded-md hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150"
             >
               {paused ? <BsPlayFill /> : <BsFillPauseFill />}
             </button>
           </span>
-          <div className="flex justify-center items-center p-10 flex-grow">
+          <div className="flex items-center justify-center flex-grow p-10">
             <canvas
               width={width}
               height={height}
@@ -136,7 +136,7 @@ const Simulator = ({ className = "", build, config }) => {
           </div>
           {serialOutput && (
             <pre
-              className="bg-gray-800 text-white p-4 text-xs break-all overflow-scroll absolute bottom-0 left-0 right-0 max-h-40"
+              className="absolute bottom-0 left-0 right-0 p-4 overflow-scroll text-xs text-white break-all bg-gray-800 max-h-40"
               style={{ fontSize: 10 }}
               ref={compilerOutputDiv}
             >
@@ -145,9 +145,9 @@ const Simulator = ({ className = "", build, config }) => {
           )}
         </>
       ) : (
-        <div className="justify-center items-center flex flex-grow">
+        <div className="flex items-center justify-center flex-grow">
           <Logo
-            className="animate-spin duration-2000 /animate-spin-slow w-8"
+            className="w-8 animate-spin duration-2000 /animate-spin-slow"
             style={{ animationDuration: "2s" }}
           />
         </div>

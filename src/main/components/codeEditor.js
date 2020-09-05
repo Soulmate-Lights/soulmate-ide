@@ -139,7 +139,7 @@ const codeEditor = ({
         "dark-mode:bg-gray-900 flex flex-col min-h-0"
       )}
     >
-      <div className="flex flex-shrink flex-grow overflow-hidden min-h-0">
+      <div className="flex flex-grow flex-shrink min-h-0 overflow-hidden">
         <Monaco
           key={dark ? "dark" : "light"}
           ref={monacoInstance}
@@ -162,7 +162,7 @@ const codeEditor = ({
       </div>
 
       {build?.stderr && (
-        <pre className="bg-red-200 text-red-800 py-3 px-6 text-sm break-all  bottom-0 left-0 right-0 border-t border-red-800 flex-shrink-0 z-10 overflow-auto">
+        <pre className="bottom-0 left-0 right-0 z-10 flex-shrink-0 px-6 py-3 overflow-auto text-sm text-red-800 break-all bg-red-200 border-t border-red-800">
           {parser.parseString(build.stderr).map(
             ({ line, text, type }) =>
               type === "error" && (
@@ -176,7 +176,7 @@ const codeEditor = ({
 
       <label
         htmlFor="auto-format"
-        className="absolute top-2 right-8 text-xs flex flex-row items-center justify-center dark-mode:text-white"
+        className="absolute flex flex-row items-center justify-center text-xs top-2 right-8 dark-mode:text-white"
       >
         Auto-format
         <input

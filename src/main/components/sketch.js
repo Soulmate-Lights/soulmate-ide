@@ -43,8 +43,8 @@ const Sketch = ({
         </video>
       </div>
       {!hideTitle && (
-        <div className="p-1 dark-mode:bg-gray-700 text-gray-900 dark-mode:text-white">
-          <h3 className="text-xs leading-5 font-medium truncate">
+        <div className="p-1 text-gray-900 dark-mode:bg-gray-700 dark-mode:text-white">
+          <h3 className="text-xs font-medium truncate leading-5">
             {sketch.name}
           </h3>
         </div>

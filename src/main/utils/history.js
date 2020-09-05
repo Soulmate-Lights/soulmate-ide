@@ -1,6 +1,6 @@
-import isElectron from "~/utils/isElectron";
+import { createBrowserHistory,createHashHistory } from "history";
 
-import { createHashHistory, createBrowserHistory } from "history";
+import isElectron from "~/utils/isElectron";
 
 let history;
 if (isElectron()) {

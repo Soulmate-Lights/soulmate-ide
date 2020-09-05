@@ -54,7 +54,7 @@ const Main = () => {
 
           <Notifications />
 
-          <div className="flex flex-row flex-grow  min-w-0 flex-shrink w-full bg-gray-100 dark-mode:bg-gray-800 dark-mode:text-white">
+          <div className="flex flex-row flex-grow flex-shrink w-full min-w-0 bg-gray-100 dark-mode:bg-gray-800 dark-mode:text-white">
             <Switch>
               <Route exact path="/">
                 <Dashboard />

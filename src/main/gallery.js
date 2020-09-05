@@ -1,11 +1,12 @@
-import Header from "~/components/Header";
-import Logo from "~/images/logo.svg";
+import _ from "lodash";
+import uniqBy from "lodash/uniqBy";
 import { Link } from "react-router-dom";
+
+import Header from "~/components/Header";
 import Sketch from "~/components/sketch";
 import SketchesContainer from "~/containers/sketches";
 import UserContainer from "~/containers/user";
-import _ from "lodash";
-import uniqBy from "lodash/uniqBy";
+import Logo from "~/images/logo.svg";
 
 const Gallery = () => {
   const { userDetails } = UserContainer.useContainer();
@@ -42,7 +43,7 @@ const Gallery = () => {
             autoFocus
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search"
-            className="form-input block w-full sm:text-sm sm:leading-3"
+            className="block w-full form-input sm:text-sm sm:leading-3"
           />,
         ]}
       />
@@ -55,36 +56,36 @@ const Gallery = () => {
             <li key={user.id} className="border-b dark-mode:border-gray-800">
               <Link
                 to={`/user/${user.id}`}
-                className="block hover:bg-gray-50 dark-mode:hover:bg-gray-700 rounded focus:outline-none focus:bg-gray-50 transition duration-150 ease-in-out"
+                className="block rounded hover:bg-gray-50 dark-mode:hover:bg-gray-700 focus:outline-none focus:bg-gray-50 transition duration-150 ease-in-out"
               >
                 <div className="flex items-center px-4 py-4 sm:px-6">
-                  <div className="min-w-0 flex-1 flex items-center">
+                  <div className="flex items-center flex-1 min-w-0">
                     <div className="flex-shrink-0">
                       <img
-                        className="h-12 w-12 rounded-full"
+                        className="w-12 h-12 rounded-full"
                         src={user.image}
                         alt
                       />
                     </div>
-                    <div className="min-w-0 flex-1 px-4 md:grid md:grid-cols-3 md:gap-4">
+                    <div className="flex-1 min-w-0 px-4 md:grid md:grid-cols-3 md:gap-4">
                       <div className="flex flex-col justify-center max-w-10">
-                        <div className="text-sm leading-5 font-medium text-gray-800 dark-mode:text-white truncate">
+                        <div className="text-sm font-medium text-gray-800 truncate leading-5 dark-mode:text-white">
                           {user.name}
                         </div>
-                        <div className="mt-2 flex items-center text-sm leading-5 text-gray-500">
+                        <div className="flex items-center mt-2 text-sm text-gray-500 leading-5">
                           <span className="truncate">
                             {user.sketches.length} pattern
                             {user.sketches.length !== 1 ? "s" : ""}
                           </span>
                         </div>
                       </div>
-                      <div className="hidden md:flex flex-row overflow-auto col-span-2">
+                      <div className="flex-row hidden overflow-auto md:flex col-span-2">
                         {user.sketches?.map((sketch) => (
                           <Sketch
                             key={sketch.id}
                             sketch={sketch}
                             width={14}
-                            className="mr-4 flex-shrink-0"
+                            className="flex-shrink-0 mr-4"
                             hideTitle
                           />
                         ))}
@@ -93,7 +94,7 @@ const Gallery = () => {
                   </div>
                   <div>
                     <svg
-                      className="h-5 w-5 text-gray-400"
+                      className="w-5 h-5 text-gray-400"
                       viewBox="0 0 20 20"
                       fill="currentColor"
                     >

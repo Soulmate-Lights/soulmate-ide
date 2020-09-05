@@ -16,32 +16,32 @@ const Finished = () => {
   const { login } = useContainer(UserContainer);
   const dark = useLightSwitch() === Mode.Dark;
   return (
-    <div className="items-center justify-center flex flex-col flex-grow width-full px-20 py-10 space-y-8">
+    <div className="flex flex-col items-center justify-center flex-grow px-20 py-10 width-full space-y-8">
       <Logo />
-      <span className="items-center flex flex-col">
-        <span className="font-thin text-5xl">All set!</span>
-        <p>You're ready to get started writing LED patterns!</p>
+      <span className="flex flex-col items-center">
+        <span className="text-5xl font-thin">All set!</span>
+        <p>You&apos;re ready to get started writing LED patterns!</p>
       </span>
       <p className=" space-x-4">
         <button
+          className="inline-flex items-center px-6 py-3 text-base font-medium text-white bg-indigo-600 border border-transparent leading-6 rounded-md hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition ease-in-out duration-150"
           onClick={login}
           type="button"
-          className="inline-flex items-center px-6 py-3 border border-transparent text-base leading-6 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition ease-in-out duration-150"
         >
           Log in
         </button>
 
         <a
+          className="inline-flex items-center px-6 py-3 text-base font-medium text-white bg-indigo-600 border border-transparent leading-6 rounded-md hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition ease-in-out duration-150"
           href="/gallery"
           type="button"
-          className="inline-flex items-center px-6 py-3 border border-transparent text-base leading-6 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition ease-in-out duration-150"
         >
           Gallery
         </a>
       </p>
       <img
-        style={{ maxWidth: "80%", maxHeight: "50%" }}
         src={dark ? screenshotDark : screenshotLight}
+        style={{ maxWidth: "80%", maxHeight: "50%" }}
       />
     </div>
   );
@@ -51,10 +51,9 @@ const Welcome = () => {
   const [savedCodes, setSavedCodes] = useState({});
   const { getBuild } = useContainer(BuildsContainer);
   const [index, setIndex] = useState(0);
-  const rows = 30;
-  const cols = 30;
+  const config = { rows: 30, cols: 30 };
   const code = savedCodes[index] || examples[index];
-  const build = getBuild(code, rows, cols);
+  const build = getBuild(code, config);
 
   const actions = [];
   if (index > 0) {
@@ -64,6 +63,7 @@ const Welcome = () => {
       title: "Previous example",
     });
   }
+
   if (index < examples.length - 1) {
     actions.push({
       title: "Next example",
@@ -81,29 +81,29 @@ const Welcome = () => {
     });
   }
 
+  const save = (code) => {
+    setSavedCodes({ ...savedCodes, [index]: code });
+  };
+
   return (
     <div className="flex flex-col flex-grow flex-shrink min-w-0">
-      <Header title="Tutorial" actions={actions} />
-      <div className="flex flex-row flex-grow flex-shrink flex-shrink min-w-0 min-h-0 ">
+      <Header actions={actions} title="Tutorial" />
+      <div className="flex flex-row flex-grow flex-shrink min-w-0 min-h-0">
         {!examples[index] ? (
           <Finished />
         ) : (
           <>
-            {code && (
-              <CodeEditor
-                className="flex-grow flex-shrink relative min-w-0 bg-white w-7/12"
-                key={index}
-                code={code}
-                onSave={(code) =>
-                  setSavedCodes({ ...savedCodes, [index]: code })
-                }
-              />
-            )}
+            <CodeEditor
+              className="relative flex-grow flex-shrink w-7/12 min-w-0 bg-white"
+              code={code}
+              key={index}
+              onSave={save}
+            />
 
             <Simulator
-              className="flex flex-col flex-shrink w-5/12"
               build={build}
-              config={{ rows, cols }}
+              className="flex flex-col flex-shrink w-5/12"
+              config={config}
             />
           </>
         )}

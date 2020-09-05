@@ -96,34 +96,34 @@ const Flash = () => {
   };
 
   return (
-    <div className="flex flex-col flex-grow relative">
+    <div className="relative flex flex-col flex-grow">
       <Header
-        title="Flash"
         actions={[
           <input
-            key="search"
             autoFocus
+            className="block w-full form-input sm:text-sm sm:leading-3"
+            key="search"
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search"
-            className="form-input block w-full sm:text-sm sm:leading-3"
           />,
         ]}
+        title="Flash"
       />
 
-      <div className="p-8 overflow-auto flex flex-col flex-grow flex-shrink">
+      <div className="flex flex-col flex-grow flex-shrink p-8 overflow-auto">
         <h3 className="mb-2 text-lg">My Sketches</h3>
 
         <div className="flex flex-row flex-wrap">
           {sketches?.map((sketch) => (
             <div
-              onClick={() => toggle(sketch)}
+              className="relative mb-4 mr-4 cursor-pointer"
               key={sketch.id}
-              className="relative mr-4 mb-4 cursor-pointer"
+              onClick={() => toggle(sketch)}
             >
               <Sketch sketch={sketch} />
 
               {selected.includes(sketch.id) && (
-                <AiFillCheckCircle className="text-lg absolute top-2 right-2 text-white" />
+                <AiFillCheckCircle className="absolute text-lg text-white top-2 right-2" />
               )}
             </div>
           ))}
@@ -135,14 +135,14 @@ const Flash = () => {
             <div className="flex flex-row flex-wrap">
               {user.sketches?.map((sketch) => (
                 <div
-                  onClick={() => toggle(sketch)}
+                  className="relative mb-4 mr-4 cursor-pointer"
                   key={sketch.id}
-                  className="relative mr-4 mb-4 cursor-pointer"
+                  onClick={() => toggle(sketch)}
                 >
                   <Sketch sketch={sketch} />
 
                   {selected.includes(sketch.id) && (
-                    <AiFillCheckCircle className="text-lg absolute top-2 right-2 text-white" />
+                    <AiFillCheckCircle className="absolute text-lg text-white top-2 right-2" />
                   )}
                 </div>
               ))}
@@ -151,48 +151,48 @@ const Flash = () => {
         ))}
       </div>
 
-      <div className="flex flex-row border-t py-4 px-4 bg-gray-300 border-gray-400 items-center">
-        <div className="bottom-0 flex flex-col flex-wrap pr-4 flex-shrink">
+      <div className="flex flex-row items-center px-4 py-4 bg-gray-300 border-t border-gray-400">
+        <div className="bottom-0 flex flex-col flex-wrap flex-shrink pr-4">
           {selectedSketches.length === 0 && (
             <>Choose up to 20 patterns to upload to your Soulmate.</>
           )}
 
           {selectedSketches.length > 0 && (
-            <div className="bottom-0 flex flex-row flex-wrap leading-none flex-shrink items-center ">
+            <div className="bottom-0 flex flex-row flex-wrap items-center flex-shrink leading-none">
               Sketches to upload
-              <span className="bg-gray-400 rounded-full text-white inline px-2 py-1 ml-1 text-xs">
+              <span className="inline px-2 py-1 ml-1 text-xs text-white bg-gray-400 rounded-full">
                 {selectedSketches.length}
               </span>
             </div>
           )}
 
-          <div className="bottom-0 flex flex-row flex-wrap flex-shrink max-h-48 overflow-auto">
+          <div className="bottom-0 flex flex-row flex-wrap flex-shrink overflow-auto max-h-48">
             {selectedSketches.map((sketch) => (
               <div
-                className="cursor-pointer relative mr-4 mt-4 text-xs"
+                className="relative mt-4 mr-4 text-xs cursor-pointer"
                 key={sketch.id}
               >
                 <Sketch
-                  width={16}
-                  sketch={sketch}
                   key={sketch.id}
                   onClick={() => toggle(sketch)}
+                  sketch={sketch}
+                  width={16}
                 />
-                <AiFillCheckCircle className="text-lg absolute top-2 right-2 text-white" />
+                <AiFillCheckCircle className="absolute text-lg text-white top-2 right-2" />
               </div>
             ))}
           </div>
         </div>
 
         <FlashButton
-          enabled={!!port}
-          soulmateLoading={soulmateLoading}
           config={config}
-          name={name}
-          type={type}
-          selectedSketches={selectedSketches}
-          onClickFlash={flash}
+          enabled={!!port}
           flashing={flashing}
+          name={name}
+          onClickFlash={flash}
+          selectedSketches={selectedSketches}
+          soulmateLoading={soulmateLoading}
+          type={type}
           usbFlashingPercentage={usbFlashingPercentage}
         />
       </div>

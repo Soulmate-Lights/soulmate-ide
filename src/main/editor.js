@@ -5,7 +5,6 @@ import BuildsContainer from "~/containers/builds";
 import ConfigContainer from "~/containers/config";
 import SelectionsContainer from "~/containers/selection";
 import SketchesContainer from "~/containers/sketches";
-import Soulmates from "~/containers/soulmates";
 import Logo from "~/images/logo.svg";
 import { emptyCode } from "~/utils/code";
 import history from "~/utils/history";
@@ -53,34 +52,28 @@ const Editor = ({ id, mine }) => {
     return () => document.removeEventListener("click", closeMenu);
   }, []);
 
-  const flash = async () => {
-    const { config } = ConfigContainer.useContainer();
-    const { soulmate, flashSketches } = Soulmates.useContainer();
-    const result = await flashSketches(soulmate, sketch, config);
-  };
-
   const menu = (
     <div className="relative inline-block text-left" ref={menuRef}>
       <div>
         <span className="rounded-md shadow-sm">
           <button
+            aria-expanded="true"
+            aria-haspopup="true"
+            className="inline-flex justify-center w-full px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md leading-5 hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-50 active:text-gray-800 transition ease-in-out duration-150"
+            id="options-menu"
             onClick={() => setMenuOpen(!menuOpen)}
             type="button"
-            className="inline-flex justify-center w-full rounded-md border border-gray-300 px-4 py-2 bg-white text-sm leading-5 font-medium text-gray-700 hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-50 active:text-gray-800 transition ease-in-out duration-150"
-            id="options-menu"
-            aria-haspopup="true"
-            aria-expanded="true"
           >
             Options
             <svg
-              className="-mr-1 ml-2 h-5 w-5"
-              viewBox="0 0 20 20"
+              className="w-5 h-5 ml-2 -mr-1"
               fill="currentColor"
+              viewBox="0 0 20 20"
             >
               <path
-                fillRule="evenodd"
-                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
                 clipRule="evenodd"
+                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                fillRule="evenodd"
               />
             </svg>
           </button>
@@ -88,17 +81,17 @@ const Editor = ({ id, mine }) => {
       </div>
 
       {menuOpen && (
-        <div className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg z-20">
+        <div className="absolute right-0 z-20 w-56 mt-2 shadow-lg origin-top-right rounded-md">
           <div
-            className="rounded-md bg-white shadow-xs"
-            role="menu"
-            aria-orientation="vertical"
             aria-labelledby="options-menu"
+            aria-orientation="vertical"
+            className="bg-white rounded-md shadow-xs"
+            role="menu"
           >
             <div className="py-1">
               <button
+                className="flex-grow block w-full px-4 py-2 text-sm text-left text-gray-700 leading-5 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:bg-gray-100 focus:text-gray-900"
                 onClick={() => togglePublic(sketch.id)}
-                className="block px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:bg-gray-100 focus:text-gray-900 flex-grow w-full text-left"
                 role="menuitem"
               >
                 {sketch.public ? "Make private" : "Make public"}
@@ -106,9 +99,9 @@ const Editor = ({ id, mine }) => {
             </div>
             <div className="py-1">
               <a
-                onClick={confirmAndDelete}
+                className="block px-4 py-2 text-sm text-gray-700 leading-5 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:bg-gray-100 focus:text-gray-900"
                 href="#"
-                className="block px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:bg-gray-100 focus:text-gray-900"
+                onClick={confirmAndDelete}
                 role="menuitem"
               >
                 Delete
@@ -123,23 +116,20 @@ const Editor = ({ id, mine }) => {
   return (
     <div className="flex flex-col flex-grow flex-shrink min-w-0">
       <Header
-        title={
-          <>
-            {sketch.name}{" "}
-            {sketch.public && (
-              <div className="border rounded-full mx-2 text-xs px-2 py-1 leading-snug">
-                Public
-              </div>
-            )}
-          </>
-        }
+        actions={[
+          menu,
+          dirty && {
+            title: mine ? "Save" : "Refresh",
+            onClick: () => save(sketch.id, sketch.dirtyCode),
+          },
+        ]}
         sections={[
           !mine && { title: "Gallery", to: "/gallery" },
           !mine && {
             title: (
               <>
                 <img
-                  className="w-8 h-8 rounded-full mr-2"
+                  className="w-8 h-8 mr-2 rounded-full"
                   src={sketch.user.image}
                 />
                 {sketch.user.name}
@@ -149,33 +139,30 @@ const Editor = ({ id, mine }) => {
           },
           mine && { title: "My patterns", to: "/my-patterns" },
         ]}
-        actions={[
-          menu,
-          dirty && {
-            title: mine ? "Save" : "Refresh",
-            onClick: () => save(sketch.id, sketch.dirtyCode),
-          },
-        ]}
+        title={
+          <>
+            {sketch.name}{" "}
+            {sketch.public && (
+              <div className="px-2 py-1 mx-2 text-xs leading-snug border rounded-full">
+                Public
+              </div>
+            )}
+          </>
+        }
       />
 
-      <div className="flex flex-row flex-grow w-full flex-shrink min-h-0">
+      <div className="flex flex-row flex-grow flex-shrink w-full min-h-0">
         <CodeEditor
           build={build}
-          selection={selection}
-          className="flex-grow flex-shrink relative min-w-0 bg-white"
+          className="relative flex-grow flex-shrink min-w-0 bg-white"
           code={code}
-          onChangeSelection={(selection) => {
-            setSelection(sketch.id, selection);
-          }}
-          onChange={(code) => {
-            persistCode(sketch.id, code);
-          }}
-          onSave={(code) => {
-            save(sketch.id, code);
-          }}
+          onChange={(code) => persistCode(sketch.id, code)}
+          onChangeSelection={(selection) => setSelection(sketch.id, selection)}
+          onSave={(code) => save(sketch.id, code)}
+          selection={selection}
         />
 
-        <Simulator build={build} config={config} className="flex flex-col" />
+        <Simulator build={build} className="flex flex-col" config={config} />
       </div>
     </div>
   );

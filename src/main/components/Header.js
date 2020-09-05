@@ -17,19 +17,19 @@ const Header = ({ title, sections, subtitle, actions, className }) => {
       >
         <div className="md:flex md:items-center md:justify-between">
           <div className="flex-1 min-w-0">
-            <span className="text-xl leading-7 text-gray-900 dark-mode:text-white sm:leading-9 sm:truncate flex flex-row items-center">
+            <span className="flex flex-row items-center text-xl text-gray-900 leading-7 dark-mode:text-white sm:leading-9 sm:truncate">
               {compact(sections).map(({ title, to }, i) => (
                 <React.Fragment key={i}>
                   <Link
                     key={to}
                     to={to}
-                    className="text-gray-500 dark-mode:text-white hover:text-gray-700 transition duration-150 ease-in-out flex flex-row items-center"
+                    className="flex flex-row items-center text-gray-500 dark-mode:text-white hover:text-gray-700 transition duration-150 ease-in-out"
                   >
                     {title}
                   </Link>
                   {i < sections.length && (
                     <svg
-                      className="flex-shrink-0 h-5 w-5 text-gray-400"
+                      className="flex-shrink-0 w-5 h-5 text-gray-400"
                       viewBox="0 0 20 20"
                       fill="currentColor"
                       width="40"
@@ -52,14 +52,14 @@ const Header = ({ title, sections, subtitle, actions, className }) => {
         </div>
       </div>
       {actions && (
-        <div className="flex flex-shrink-0 ml-auto items-center pr-8">
+        <div className="flex items-center flex-shrink-0 pr-8 ml-auto">
           {compact(actions).map((action) => {
             const { title, onClick, className, ...rest } = action;
 
             if (!title) return action;
 
             return (
-              <span key={title} className="shadow-sm rounded-md ml-2">
+              <span key={title} className="ml-2 shadow-sm rounded-md">
                 <button
                   onClick={onClick}
                   type="button"
