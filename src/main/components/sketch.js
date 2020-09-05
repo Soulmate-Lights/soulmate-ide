@@ -28,12 +28,12 @@ const Sketch = ({
     >
       <div className={`block w-${width} h-${width} bg-black`}>
         <video
-          ref={videoRef}
-          style={{ transform: "rotate(180deg)" }}
-          muted
           loop
+          muted
           onMouseEnter={(e) => e.target.play()}
           onMouseLeave={(e) => e.target.pause()}
+          ref={videoRef}
+          style={{ transform: "scale(-1, 1)" }}
         >
           <source
             id="media-source"

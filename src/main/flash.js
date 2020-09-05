@@ -29,15 +29,8 @@ const showErrorMessage = () => {
 };
 
 const Flash = () => {
-  const { type, config } = ConfigContainer.useContainer();
-  const {
-    flashSketches,
-    soulmateLoading,
-    flashing,
-    name,
-    usbFlashingPercentage,
-    port,
-  } = Soulmates.useContainer();
+  const { config } = ConfigContainer.useContainer();
+  const { flashSketches, flashing } = Soulmates.useContainer();
   const { userDetails } = UserContainer.useContainer();
   const { allSketches, sketches } = SketchesContainer.useContainer();
   const [search, setSearch] = useState("");
@@ -65,7 +58,7 @@ const Flash = () => {
   );
 
   const selectedSketches = selected.map((id) =>
-    [...allSketches, ...sketches].find((s) => s.id === id)
+    [...(allSketches || []), ...(sketches || [])].find((s) => s.id === id)
   );
 
   let users = uniqBy(
@@ -185,15 +178,8 @@ const Flash = () => {
         </div>
 
         <FlashButton
-          config={config}
-          enabled={!!port}
-          flashing={flashing}
-          name={name}
-          onClickFlash={flash}
+          className="items-end flex-shrink-0 h-full ml-auto"
           selectedSketches={selectedSketches}
-          soulmateLoading={soulmateLoading}
-          type={type}
-          usbFlashingPercentage={usbFlashingPercentage}
         />
       </div>
     </div>

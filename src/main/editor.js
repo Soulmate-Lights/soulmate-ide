@@ -8,6 +8,9 @@ import SketchesContainer from "~/containers/sketches";
 import Logo from "~/images/logo.svg";
 import { emptyCode } from "~/utils/code";
 import history from "~/utils/history";
+import isElectron from "~/utils/isElectron";
+
+import FlashButton from "./components/flashButton";
 
 const Editor = ({ id, mine }) => {
   const {
@@ -162,7 +165,17 @@ const Editor = ({ id, mine }) => {
           selection={selection}
         />
 
-        <Simulator build={build} className="flex flex-col" config={config} />
+        <div className="flex flex-col">
+          <Simulator
+            build={build}
+            className="flex flex-col flex-grow"
+            config={config}
+          />
+
+          {isElectron() && (
+            <FlashButton className="mx-4 my-4" selectedSketches={[sketch]} />
+          )}
+        </div>
       </div>
     </div>
   );
