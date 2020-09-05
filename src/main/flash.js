@@ -6,7 +6,6 @@ import { AiFillCheckCircle } from "react-icons/ai";
 
 import Header from "~/components/Header";
 import Sketch from "~/components/sketch";
-import ConfigContainer from "~/containers/config";
 import SketchesContainer from "~/containers/sketches";
 import Soulmates from "~/containers/soulmates";
 import UserContainer from "~/containers/user";
