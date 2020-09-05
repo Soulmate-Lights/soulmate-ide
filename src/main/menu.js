@@ -94,7 +94,6 @@ const Menu = () => {
                 <NavLink
                   activeClassName={activeLinkClass}
                   className={linkClass}
-                  disabled
                   location={location}
                   to="/flash"
                 >

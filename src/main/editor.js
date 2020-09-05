@@ -138,7 +138,7 @@ const Editor = ({ id, mine }) => {
                 {sketch.user.name}
               </>
             ),
-            to: `/user/${sketch.user.id}`,
+            to: `/gallery/user/${sketch.user.id}`,
           },
           mine && { title: "My patterns", to: "/my-patterns" },
         ]}

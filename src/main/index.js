@@ -81,21 +81,21 @@ const Main = () => {
               </Route>
 
               <Route
+                path="/gallery/user/:id"
+                render={({
+                  match: {
+                    params: { id },
+                  },
+                }) => <User id={id} />}
+              />
+
+              <Route
                 path="/gallery/:id"
                 render={({
                   match: {
                     params: { id },
                   },
                 }) => <Editor id={id} />}
-              />
-
-              <Route
-                path="/user/:id"
-                render={({
-                  match: {
-                    params: { id },
-                  },
-                }) => <User id={id} />}
               />
 
               <Route
