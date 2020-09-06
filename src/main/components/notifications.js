@@ -1,4 +1,4 @@
-import { CSSTransitionGroup } from "react-transition-group";
+import { TransitionGroup } from "react-transition-group";
 
 import NotificationsContainer from "~/containers/notifications";
 
@@ -6,11 +6,10 @@ const Notifications = () => {
   const notificationsContainer = NotificationsContainer.useContainer();
 
   return (
-    <CSSTransitionGroup
+    <TransitionGroup
       className="absolute z-50 top-10 right-10 space-y-4"
-      transitionEnterTimeout={500}
-      transitionLeaveTimeout={300}
-      transitionName="toast"
+      classNames="example"
+      timeout={{ enter: 500, exit: 300 }}
     >
       {notificationsContainer.notifications.map(({ text, type }) => (
         <div
@@ -30,7 +29,7 @@ const Notifications = () => {
           </p>
         </div>
       ))}
-    </CSSTransitionGroup>
+    </TransitionGroup>
   );
 };
 
