@@ -1382,6 +1382,11 @@
   dependencies:
     "@types/yargs-parser" "*"
 
+"@use-it/interval@^0.1.3":
+  version "0.1.3"
+  resolved "https://registry.yarnpkg.com/@use-it/interval/-/interval-0.1.3.tgz#5d1096b2295d7a5dda8e8022f3abb5f9d9ef27f8"
+  integrity sha512-chshdtDZTFoWA9aszBz1Cc04Ca9NBD2JTi/GMjdJ+HGm4q7Vy1v71+2mm22r7Kfb2nYW+lTRsPcEHdB/VFVHsQ==
+
 "@wokwi/gcc-output-parser@^0.2.1":
   version "0.2.1"
   resolved "https://registry.yarnpkg.com/@wokwi/gcc-output-parser/-/gcc-output-parser-0.2.1.tgz#564d6b05b6655895ea31a57cb1e4720cc50a9f5f"

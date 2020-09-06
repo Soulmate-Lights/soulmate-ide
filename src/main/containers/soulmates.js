@@ -1,3 +1,4 @@
+import useInterval from "@use-it/interval";
 import { useState } from "react";
 import { createContainer } from "unstated-next";
 
@@ -6,7 +7,6 @@ import NotificationsContainer from "~/containers/notifications";
 import { getFullBuild, prepareSketches } from "~/utils/code";
 import { flashBuild } from "~/utils/flash";
 import { getPort, readPort } from "~/utils/ports";
-import useInterval from "~/utils/useInterval";
 
 const SoulmateContainer = () => {
   const notificationsContainer = NotificationsContainer.useContainer();
