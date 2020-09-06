@@ -4,6 +4,9 @@ module.exports = {
   purge: {
     enabled: false,
   },
+  future: {
+    removeDeprecatedGapUtilities: true,
+  },
   theme: {
     extend: {
       screens: {
@@ -17,8 +20,8 @@ module.exports = {
         "spin-slow": "spin 3s linear infinite",
       },
       transitionDuration: {
-        "0": "0ms",
-        "2000": "2000ms",
+        0: "0ms",
+        2000: "2000ms",
       },
     },
   },
