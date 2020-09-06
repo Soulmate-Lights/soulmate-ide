@@ -90,13 +90,14 @@
   },
   "scripts": {
     "react-start": "parcel -p 3000 index.html",
-    "react-build": "yarn build-worker && parcel build index.html --out-dir build --public-url . --no-source-maps",
+    "react-build": "yarn build-worker && parcel build index.html --out-dir build --public-url / --no-source-maps",
+    "react-build-desktop": "yarn build-worker && parcel build index.html --out-dir build --public-url . --no-source-maps",
     "start": "concurrently \"cross-env BROWSER=none yarn react-start\" \"wait-on http://localhost:3000 && electron . \" \"yarn build-worker-dev\"",
     "electron-build": "electron-builder -mw",
     "build": "yarn react-build && yarn electron-build",
     "build-worker": "parcel build node_modules/monaco-editor/esm/vs/editor/editor.worker.js -d build --no-source-maps",
     "build-worker-dev": "parcel build node_modules/monaco-editor/esm/vs/editor/editor.worker.js --no-source-maps",
-    "release": "yarn clean && yarn version --patch && yarn react-build && AWS_PROFILE=soulmate-ide-updates yarn electron-build -mw --publish always",
+    "release": "yarn clean && yarn version --patch && yarn react-build-desktop && AWS_PROFILE=soulmate-ide-updates yarn electron-build -mw --publish always",
     "clean": "rm -rf ./build ./.cache ./dist",
     "postinstall": "npx electron-builder install-app-deps",
     "web": "NODE_ENV=development parcel index.html --open -p 3000"
