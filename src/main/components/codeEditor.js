@@ -6,6 +6,8 @@ import startCase from "lodash/startCase";
 import Monaco from "react-monaco-editor";
 import { Mode, useLightSwitch } from "use-light-switch";
 
+const LINE_OFFSET = 65;
+
 const jsBeautifierConfig = {
   indent_size: 2,
   indent_empty_lines: true,
@@ -167,7 +169,8 @@ const codeEditor = ({
             ({ line, text, type }) =>
               type === "error" && (
                 <p className="py-1" key={line}>
-                  <strong>{startCase(type)}:</strong> Line {line - 65}: {text}
+                  <strong>{startCase(type)}:</strong> Line {line - LINE_OFFSET}:{" "}
+                  {text}
                 </p>
               )
           )}

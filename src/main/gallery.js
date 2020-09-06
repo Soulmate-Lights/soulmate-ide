@@ -83,8 +83,8 @@ const Gallery = () => {
                         {user.sketches?.map((sketch) => (
                           <Sketch
                             className="flex-shrink-0 mr-4"
-                            hideTitle
                             key={sketch.id}
+                            showTitle={false}
                             sketch={sketch}
                             width={14}
                           />
