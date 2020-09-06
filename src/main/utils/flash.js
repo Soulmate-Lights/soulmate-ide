@@ -1,7 +1,5 @@
 if (!window.remote) {
-  console.log("fake remote");
   window.remote = undefined;
-  console.log(remote?.require);
 }
 
 import { prepareSketches } from "~/utils/code";
