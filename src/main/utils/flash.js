@@ -1,22 +1,28 @@
-import { prepareFullCodeWithMultipleSketches } from "~/utils/code";
+if (!window.remote) {
+  console.log("fake remote");
+  window.remote = undefined;
+  console.log(remote?.require);
+}
+
+import { prepareSketches } from "~/utils/code";
 import streamWithProgress from "~/utils/streamWithProgress";
-const path = remote.require("path");
-const fs = remote.require("fs");
+const path = remote?.require("path");
+const fs = remote?.require("fs");
 const IS_PROD = process.env.NODE_ENV === "production";
-const { getAppPath } = remote.app;
+const getAppPath = remote?.app.getAppPath;
 const isPackaged =
-  remote.process.mainModule.filename.indexOf("app.asar") !== -1;
-const rootPath = remote.require("electron-root-path").rootPath;
-const childProcess = remote.require("child_process");
+  remote?.process.mainModule.filename.indexOf("app.asar") !== -1;
+const rootPath = remote?.require("electron-root-path").rootPath;
+const childProcess = remote?.require("child_process");
 const dir =
   IS_PROD && isPackaged
-    ? path.join(path.dirname(getAppPath()), "..", "./builder")
-    : path.join(rootPath, "builder");
+    ? path?.join(path.dirname(getAppPath()), "..", "./builder")
+    : path?.join(rootPath, "builder");
 
 // Fetching
 
 export const getBuild = async (sketches, config) => {
-  const source = prepareFullCodeWithMultipleSketches(sketches, config);
+  const source = prepareSketches(sketches, config);
 
   const res = await window.fetch("http://54.243.44.4:8081/build", {
     method: "POST",
@@ -77,7 +83,7 @@ const getNumberFromFlashOutput = (data) => {
 };
 
 /** Flash a build file to a USB output */
-export const flashBuildtoUSBSoulmate = async (port, file, progressCallback) => {
+export const flashBuild = async (port, file, progressCallback) => {
   installDependencies();
 
   const cmd = `python ./esptool.py --chip esp32 --port ${port} --baud 1500000 --before default_reset --after hard_reset write_flash -z --flash_mode dio --flash_freq 80m --flash_size detect 0xe000 ./ota_data_initial.bin 0x1000 ./bootloader.bin 0x10000 ${file} 0x8000 ./partitions.bin`;

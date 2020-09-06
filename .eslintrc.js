@@ -3,7 +3,11 @@ module.exports = {
     browser: true,
     es6: true,
   },
-  extends: ["eslint:recommended", "plugin:react/recommended"],
+  extends: [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:tailwind/recommended",
+  ],
   globals: {
     Atomics: "readonly",
     SharedArrayBuffer: "readonly",
@@ -38,6 +42,9 @@ module.exports = {
     strict: 0,
     "react/prop-types": 0,
     "no-unused-vars": ["error", { argsIgnorePattern: "^_" }],
+    "simple-import-sort/sort": "error",
+    "tailwind/class-order": "error",
+    "react/jsx-sort-props": "error",
   },
   settings: {
     react: {

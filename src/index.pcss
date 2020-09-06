@@ -16,3 +16,25 @@
   animation: spin 3s linear infinite;
   margin: auto;
 }
+
+.spinner {
+  animation: spin 3s linear infinite;
+}
+
+.toast-enter {
+  opacity: 0.01;
+}
+
+.toast-enter.toast-enter-active {
+  opacity: 1;
+  transition: opacity 500ms ease-in;
+}
+
+.toast-leave {
+  opacity: 1;
+}
+
+.toast-leave.toast-leave-active {
+  opacity: 0.01;
+  transition: opacity 300ms ease-in;
+}

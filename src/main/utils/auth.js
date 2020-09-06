@@ -3,10 +3,12 @@ const config = {
   domain: "yellow-boat-0900.auth0.com",
   clientId: "OsKmsunrgzhFv2znzUHpd9JsFSsOl46o",
 };
-import history from "~/utils/history";
-import isElectron from "./isElectron";
 import createAuth0Client from "@auth0/auth0-spa-js";
 import jwtDecode from "jwt-decode";
+
+import history from "~/utils/history";
+
+import isElectron from "./isElectron";
 
 let auth0;
 

@@ -1,25 +1,28 @@
+import classnames from "classnames";
+import { hot } from "react-hot-loader";
 import { HashRouter, Route, Router, Switch } from "react-router-dom";
+import { LastLocationProvider } from "react-router-last-location";
 
+import Notifications from "~/components/notifications";
 import BuildsContainer from "~/containers/builds";
-import Config from "./config";
 import ConfigContainer from "~/containers/config";
+import NotificationsContainer from "~/containers/notifications";
+import SelectionsContainer from "~/containers/selection";
+import SketchesContainer from "~/containers/sketches";
+import SoulmateContainer from "~/containers/soulmates";
+import UserContainer from "~/containers/user";
+import history from "~/utils/history";
+import isElectron from "~/utils/isElectron";
+
+import Config from "./config";
 import Dashboard from "./dashboard";
 import Editor from "./editor";
 import Flash from "./flash";
 import Gallery from "./gallery";
-import { LastLocationProvider } from "react-router-last-location";
 import Menu from "./menu";
 import MySketches from "./mySketches";
-import SelectionsContainer from "~/containers/selection";
-import SketchesContainer from "~/containers/sketches";
-import SoulmatesContainer from "~/containers/soulmates";
 import User from "./user";
-import UserContainer from "~/containers/user";
 import Welcome from "./welcome";
-import classnames from "classnames";
-import history from "~/utils/history";
-import { hot } from "react-hot-loader";
-import isElectron from "~/utils/isElectron";
 
 const SpecificRouter = isElectron() ? HashRouter : Router;
 
@@ -49,7 +52,9 @@ const Main = () => {
 
           <Menu />
 
-          <div className="flex flex-row flex-grow  min-w-0 flex-shrink w-full bg-gray-100 dark-mode:bg-gray-800 dark-mode:text-white">
+          <Notifications />
+
+          <div className="flex flex-row flex-grow flex-shrink w-full min-w-0 bg-gray-100 dark-mode:bg-gray-800 dark-mode:text-white">
             <Switch>
               <Route exact path="/">
                 <Dashboard />
@@ -76,21 +81,21 @@ const Main = () => {
               </Route>
 
               <Route
+                path="/gallery/user/:id"
+                render={({
+                  match: {
+                    params: { id },
+                  },
+                }) => <User id={id} />}
+              />
+
+              <Route
                 path="/gallery/:id"
                 render={({
                   match: {
                     params: { id },
                   },
                 }) => <Editor id={id} />}
-              />
-
-              <Route
-                path="/user/:id"
-                render={({
-                  match: {
-                    params: { id },
-                  },
-                }) => <User id={id} />}
               />
 
               <Route
@@ -112,19 +117,21 @@ const Main = () => {
 const HotMain = hot(module)((params) => <Main {...params} />);
 
 const WrappedHotMain = (params) => (
-  <ConfigContainer.Provider>
-    <SelectionsContainer.Provider>
-      <BuildsContainer.Provider>
-        <SketchesContainer.Provider>
-          <UserContainer.Provider>
-            <SoulmatesContainer.Provider>
-              <HotMain {...params} />
-            </SoulmatesContainer.Provider>
-          </UserContainer.Provider>
-        </SketchesContainer.Provider>
-      </BuildsContainer.Provider>
-    </SelectionsContainer.Provider>
-  </ConfigContainer.Provider>
+  <NotificationsContainer.Provider>
+    <ConfigContainer.Provider>
+      <SelectionsContainer.Provider>
+        <BuildsContainer.Provider>
+          <SketchesContainer.Provider>
+            <UserContainer.Provider>
+              <SoulmateContainer.Provider>
+                <HotMain {...params} />
+              </SoulmateContainer.Provider>
+            </UserContainer.Provider>
+          </SketchesContainer.Provider>
+        </BuildsContainer.Provider>
+      </SelectionsContainer.Provider>
+    </ConfigContainer.Provider>
+  </NotificationsContainer.Provider>
 );
 
 export default WrappedHotMain;

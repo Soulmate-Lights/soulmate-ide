@@ -5,8 +5,10 @@ CRGB* leds = Soulmate.leds;
 #define COLS LED_COLS
 `;
 
-export const preparePreviewCode = (code, rows, cols) =>
-  `#define FASTLED_INTERNAL
+export const preparePreviewCode = (code, config) => {
+  const { rows, cols, serpentine } = config;
+
+  return `#define FASTLED_INTERNAL
 #include "FastLED.h"
 
 // LEDs pin
@@ -24,6 +26,8 @@ class FakeSoulmate {
   CRGB leds[N_LEDS];
 };
 
+#define SOULMATE_SERPENTINE ${serpentine ? "true" : "false"}
+
 FakeSoulmate Soulmate;
 
 ${translation}
@@ -35,10 +39,15 @@ int16_t gridIndexHorizontal(int16_t x, int16_t y) {
   if (y < 0) return -1;
 
   int16_t index = 0;
-  if (y % 2 == 1) {
-    index = y * LED_COLS + x;
+
+  if (SOULMATE_SERPENTINE) {
+    if (y % 2 == 1) {
+      index = y * LED_COLS + x;
+    } else {
+      index = y * LED_COLS + LED_COLS - 1 - x;
+    }
   } else {
-    index = y * LED_COLS + LED_COLS - 1 - x;
+    index = y * LED_COLS + x;
   }
 
   if (index > -1 && index < N_LEDS) {
@@ -67,8 +76,9 @@ void loop() {
   FastLED.show();
 }
 `.trim();
+};
 
-export const prepareFullCodeWithMultipleSketches = (sketches, config) => {
+export const prepareSketches = (sketches, config) => {
   const {
     rows = 70,
     cols = 15,
@@ -163,3 +173,43 @@ export const emptyCode = `void draw() {
   //
   // For more information, visit https://github.com/FastLED/FastLED/wiki/Overview
 }`;
+
+const url = "https://editor.soulmatelights.com/sketches/build";
+import streamWithProgress from "~/utils/streamWithProgress";
+
+const options = {
+  method: "POST",
+  mode: "cors",
+  credentials: "same-origin",
+  cache: "no-cache",
+  headers: {
+    "Content-Type": "application/json",
+  },
+};
+
+export async function buildHex(source) {
+  const body = JSON.stringify({ sketch: source, board: "mega" });
+  const resp = await fetch(url, { ...options, body });
+  return await resp.json();
+}
+
+export async function getFullBuild(source) {
+  const body = JSON.stringify({ sketch: source });
+  const res = await window.fetch("http://54.243.44.4:8081/build", {
+    ...options,
+    body,
+  });
+
+  if (!res.ok) return false;
+
+  const path = electron.remote.app.getPath("temp");
+  const filename = parseInt(Math.random() * 10000000);
+  const filePath = `${path}${filename}.bin`;
+  const writer = fs.createWriteStream(filePath);
+  const reader = res.body.getReader();
+  const finalLength =
+    length || parseInt(res.headers.get("Content-Length" || "0"), 10);
+  await streamWithProgress(finalLength, reader, writer, () => {});
+
+  return filePath;
+}
