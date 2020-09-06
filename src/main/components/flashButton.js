@@ -33,14 +33,18 @@ const FlashButton = ({ selectedSketches, disabled = false, className }) => {
   } = Soulmates.useContainer();
 
   const disableFlashButton =
-    selectedSketches.length === 0 || flashing || soulmateLoading || disabled;
-  const showConfigButton = !soulmateLoading && !flashing;
+    selectedSketches.length === 0 ||
+    flashing ||
+    soulmateLoading ||
+    disabled ||
+    !port;
+  const showConfigButton = !soulmateLoading && !flashing && port;
 
   let text;
   if (soulmateLoading) {
     text = "Loading...";
   } else if (!port) {
-    text = "Connect your Soulmate to flash it";
+    text = "No soulmate connected";
   } else if (usbFlashingPercentage >= 0) {
     text = (
       <progress

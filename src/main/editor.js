@@ -5,6 +5,7 @@ import BuildsContainer from "~/containers/builds";
 import ConfigContainer from "~/containers/config";
 import SelectionsContainer from "~/containers/selection";
 import SketchesContainer from "~/containers/sketches";
+import SoulmatesContainer from "~/containers/soulmates";
 import Logo from "~/images/logo.svg";
 import { emptyCode } from "~/utils/code";
 import history from "~/utils/history";
@@ -23,6 +24,7 @@ const Editor = ({ id, mine }) => {
   const { getSelection, setSelection } = SelectionsContainer.useContainer();
   const { getBuild } = BuildsContainer.useContainer();
   const { config } = ConfigContainer.useContainer();
+  const { port } = SoulmatesContainer.useContainer();
 
   const sketch = getSketch(id);
 
@@ -173,7 +175,7 @@ const Editor = ({ id, mine }) => {
             minWidth={320}
           />
 
-          {isElectron() && (
+          {isElectron() && port && (
             <FlashButton
               className="mx-4 my-4"
               disabled={!build || build?.stderr}
