@@ -93,15 +93,17 @@ const Editor = ({ id, mine }) => {
             className="bg-white rounded-md shadow-xs"
             role="menu"
           >
-            <div className="py-1">
-              <button
-                className="flex-grow block w-full px-4 py-2 text-sm text-left text-gray-700 leading-5 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:bg-gray-100 focus:text-gray-900"
-                onClick={() => togglePublic(sketch.id)}
-                role="menuitem"
-              >
-                {sketch.public ? "Make private" : "Make public"}
-              </button>
-            </div>
+            {mine && (
+              <div className="py-1">
+                <button
+                  className="flex-grow block w-full px-4 py-2 text-sm text-left text-gray-700 leading-5 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:bg-gray-100 focus:text-gray-900"
+                  onClick={() => togglePublic(sketch.id)}
+                  role="menuitem"
+                >
+                  {sketch.public ? "Make private" : "Make public"}
+                </button>
+              </div>
+            )}
             <div className="py-1">
               <a
                 className="block px-4 py-2 text-sm text-gray-700 leading-5 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:bg-gray-100 focus:text-gray-900"
