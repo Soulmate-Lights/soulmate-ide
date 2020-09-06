@@ -5,6 +5,7 @@ module.exports = {
     enabled: false,
   },
   future: {
+    purgeLayersByDefault: true,
     removeDeprecatedGapUtilities: true,
   },
   theme: {

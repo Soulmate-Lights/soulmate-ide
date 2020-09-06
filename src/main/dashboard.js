@@ -1,3 +1,4 @@
+import { AiFillApple, AiFillWindows } from "react-icons/ai";
 import { Link } from "react-router-dom";
 
 function isMacintosh() {
@@ -76,22 +77,22 @@ const Dashboard = () => {
               )}
             </div>
 
-            {(!isElectron() && isWindows()) ||
-              (isMacintosh() && (
-                <div className="absolute opacity-25 bottom-8 hover:opacity-100 transition-opacity duration-500">
-                  <a
-                    className="inline-flex items-center px-4 py-2 mx-4 text-base font-medium text-purple-600 bg-white border border-transparent leading-6 rounded-md hover:text-purple-500 focus:outline-none focus:border-purple-300 focus:shadow-outline-gray active:bg-purple-50 active:text-purple-700 transition duration-150 ease-in-out"
-                    href={
-                      isMacintosh()
-                        ? "https://editor.soulmatelights.com/download/mac"
-                        : "https://editor.soulmatelights.com/download/windows"
-                    }
-                  >
-                    Download the desktop app
-                  </a>
-                  to upload your patterns right to your Soulmate.
-                </div>
-              ))}
+            {((!isElectron() && isWindows()) || isMacintosh()) && (
+              <div className="absolute opacity-25 bottom-8 hover:opacity-100 transition-opacity duration-500">
+                <a
+                  className="inline-flex items-center px-4 py-2 mx-4 text-base font-medium text-purple-600 bg-white border border-transparent leading-6 rounded-md hover:text-purple-500 focus:outline-none focus:border-purple-300 focus:shadow-outline-gray active:bg-purple-50 active:text-purple-700 transition duration-150 ease-in-out"
+                  href={
+                    isMacintosh()
+                      ? "https://editor.soulmatelights.com/download/mac"
+                      : "https://editor.soulmatelights.com/download/windows"
+                  }
+                >
+                  {isMacintosh() ? <AiFillApple /> : <AiFillWindows />}
+                  Download the desktop app
+                </a>
+                to upload your patterns right to your Soulmate.
+              </div>
+            )}
           </div>
         </main>
       </div>
