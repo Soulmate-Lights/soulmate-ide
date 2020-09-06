@@ -1,5 +1,13 @@
 import { Link } from "react-router-dom";
 
+function isMacintosh() {
+  return navigator.platform.indexOf("Mac") > -1;
+}
+
+function isWindows() {
+  return navigator.platform.indexOf("Win") > -1;
+}
+
 import UserContainer from "~/containers/user";
 import isElectron from "~/utils/isElectron";
 
@@ -68,17 +76,22 @@ const Dashboard = () => {
               )}
             </div>
 
-            {!isElectron() && (
-              <div className="absolute opacity-25 bottom-8 hover:opacity-100 transition-opacity duration-500">
-                <a
-                  className="inline-flex items-center px-4 py-2 mx-4 text-base font-medium text-purple-600 bg-white border border-transparent leading-6 rounded-md hover:text-purple-500 focus:outline-none focus:border-purple-300 focus:shadow-outline-gray active:bg-purple-50 active:text-purple-700 transition duration-150 ease-in-out"
-                  href="https://editor.soulmatelights.com/download"
-                >
-                  Download the desktop app
-                </a>
-                to upload your patterns right to your Soulmate.
-              </div>
-            )}
+            {(!isElectron() && isWindows()) ||
+              (isMacintosh() && (
+                <div className="absolute opacity-25 bottom-8 hover:opacity-100 transition-opacity duration-500">
+                  <a
+                    className="inline-flex items-center px-4 py-2 mx-4 text-base font-medium text-purple-600 bg-white border border-transparent leading-6 rounded-md hover:text-purple-500 focus:outline-none focus:border-purple-300 focus:shadow-outline-gray active:bg-purple-50 active:text-purple-700 transition duration-150 ease-in-out"
+                    href={
+                      isMacintosh()
+                        ? "https://editor.soulmatelights.com/download/mac"
+                        : "https://editor.soulmatelights.com/download/windows"
+                    }
+                  >
+                    Download the desktop app
+                  </a>
+                  to upload your patterns right to your Soulmate.
+                </div>
+              ))}
           </div>
         </main>
       </div>
