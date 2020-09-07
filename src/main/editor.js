@@ -104,7 +104,10 @@ const Editor = ({ id, mine }) => {
             <div className="py-1">
               <button
                 className="flex-grow block w-full px-4 py-2 text-sm text-left text-gray-700 leading-5 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:bg-gray-100 focus:text-gray-900"
-                onClick={() => togglePublic(sketch.id)}
+                onClick={() => {
+                  setMenuOpen(false);
+                  togglePublic(sketch.id);
+                }}
                 role="menuitem"
               >
                 {sketch.public ? "Make private" : "Make public"}
@@ -113,7 +116,10 @@ const Editor = ({ id, mine }) => {
             <div className="py-1">
               <button
                 className="flex-grow block w-full px-4 py-2 text-sm text-left text-gray-700 leading-5 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:bg-gray-100 focus:text-gray-900"
-                onClick={() => setRenaming(true)}
+                onClick={() => {
+                  setMenuOpen(false);
+                  setRenaming(true);
+                }}
                 role="menuitem"
               >
                 Rename
@@ -123,7 +129,10 @@ const Editor = ({ id, mine }) => {
               <a
                 className="block px-4 py-2 text-sm text-gray-700 leading-5 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:bg-gray-100 focus:text-gray-900"
                 href="#"
-                onClick={confirmAndDelete}
+                onClick={() => {
+                  setMenuOpen(false);
+                  confirmAndDelete();
+                }}
                 role="menuitem"
               >
                 Delete
@@ -169,6 +178,17 @@ const Editor = ({ id, mine }) => {
                 className="px-2 border rounded-l"
                 defaultValue={sketch.name}
                 onChange={(e) => setNewName(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === "Escape") {
+                    setRenaming(false);
+                    setNewName(sketch.name);
+                  }
+
+                  if (e.key === "Enter" && e.target.value) {
+                    rename(sketch.id, newName);
+                    setRenaming(false);
+                  }
+                }}
               />
               <button
                 className="block px-4 py-2 text-sm text-left text-gray-700 border border-l-0 rounded-r leading-5 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:bg-gray-100 focus:text-gray-900"
