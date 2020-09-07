@@ -1,8 +1,11 @@
+import { HiOutlineLink } from "react-icons/hi";
+
 import CodeEditor from "~/components/codeEditor";
 import Header from "~/components/Header";
 import Simulator from "~/components/Simulator";
 import BuildsContainer from "~/containers/builds";
 import ConfigContainer from "~/containers/config";
+import NotificationsContainer from "~/containers/notifications";
 import SelectionsContainer from "~/containers/selection";
 import SketchesContainer from "~/containers/sketches";
 import SoulmatesContainer from "~/containers/soulmates";
@@ -21,6 +24,7 @@ const Editor = ({ id, mine }) => {
     persistCode,
     deleteSketch,
   } = SketchesContainer.useContainer();
+  const { notify } = NotificationsContainer.useContainer();
   const { getSelection, setSelection } = SelectionsContainer.useContainer();
   const { getBuild } = BuildsContainer.useContainer();
   const { config } = ConfigContainer.useContainer();
@@ -159,17 +163,45 @@ const Editor = ({ id, mine }) => {
       />
 
       <div className="flex flex-row flex-grow flex-shrink w-full min-h-0">
-        <CodeEditor
-          build={build}
-          className="relative flex-grow flex-shrink min-w-0 bg-white"
-          code={code}
-          onChange={(code) => persistCode(sketch.id, code)}
-          onChangeSelection={(selection) => setSelection(sketch.id, selection)}
-          onSave={(code) => save(sketch.id, code)}
-          selection={selection}
-        />
+        <div className="flex flex-col flex-grow flex-shrink min-w-0 ">
+          <CodeEditor
+            build={build}
+            className="relative flex-grow flex-shrink min-w-0 bg-white"
+            code={code}
+            onChange={(code) => persistCode(sketch.id, code)}
+            onChangeSelection={(selection) =>
+              setSelection(sketch.id, selection)
+            }
+            onSave={(code) => save(sketch.id, code)}
+            selection={selection}
+          />
+          <div className="flex flex-row items-center p-2 text-sm">
+            <span className="px-4 font-light">Public URL</span>
+            <input
+              className="flex-grow h-8 px-2 py-1 border rounded-l"
+              onClick={(e) => {
+                e.target.select();
+              }}
+              value={`https://editor.soulmatelights.com/gallery/${sketch.id}`}
+            />
+            <span className="inline-flex rounded-md shadow-sm">
+              <button
+                className="inline-flex items-center h-8 text-xs font-medium text-white bg-indigo-600 border border-transparent rounded rounded-l-none px-2.5 leading-4 hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition ease-in-out duration-150"
+                onClick={() => {
+                  navigator.clipboard.writeText(
+                    `https://editor.soulmatelights.com/gallery/${sketch.id}`
+                  );
+                  notify("Copied link to clipboard");
+                }}
+                type="button"
+              >
+                <HiOutlineLink />
+              </button>
+            </span>
+          </div>
+        </div>
 
-        <div className="flex flex-col">
+        <div className="flex flex-col border-l">
           <Simulator
             build={build}
             className="flex flex-col flex-grow"
@@ -179,7 +211,7 @@ const Editor = ({ id, mine }) => {
 
           {isElectron() && port && (
             <FlashButton
-              className="mx-4 my-4"
+              className="mx-2 my-2"
               disabled={!build || build?.stderr}
               selectedSketches={[sketch]}
             />
