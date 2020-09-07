@@ -128,7 +128,7 @@ const Editor = ({ id, mine }) => {
     <div className="flex flex-col flex-grow flex-shrink min-w-0">
       <Header
         actions={[
-          menu,
+          mine && menu,
           dirty && {
             title: mine ? "Save" : "Refresh",
             onClick: () => save(sketch.id, sketch.dirtyCode),
