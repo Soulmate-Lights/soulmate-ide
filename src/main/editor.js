@@ -89,7 +89,7 @@ const Editor = ({ id, mine }) => {
         </span>
       </div>
 
-      {menuOpen && (
+      {menuOpen && mine && (
         <div className="absolute right-0 z-20 w-56 mt-2 shadow-lg origin-top-right rounded-md">
           <div
             aria-labelledby="options-menu"
