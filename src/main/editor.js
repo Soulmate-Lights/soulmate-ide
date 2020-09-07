@@ -23,6 +23,7 @@ const Editor = ({ id, mine }) => {
     togglePublic,
     persistCode,
     deleteSketch,
+    rename,
   } = SketchesContainer.useContainer();
   const { notify } = NotificationsContainer.useContainer();
   const { getSelection, setSelection } = SelectionsContainer.useContainer();
@@ -30,7 +31,20 @@ const Editor = ({ id, mine }) => {
   const { config } = ConfigContainer.useContainer();
   const { port } = SoulmatesContainer.useContainer();
 
+  const [renaming, setRenaming] = useState(false);
+  const [newName, setNewName] = useState(sketch?.name);
+
+  const [menuOpen, setMenuOpen] = useState(false);
   const sketch = getSketch(id);
+  const menuRef = useRef();
+
+  useEffect(() => {
+    const closeMenu = (e) => {
+      if (!menuRef.current.contains(e.target)) setMenuOpen(false);
+    };
+    document.addEventListener("click", closeMenu);
+    return () => document.removeEventListener("click", closeMenu);
+  }, []);
 
   if (!sketch) {
     return (
@@ -50,16 +64,6 @@ const Editor = ({ id, mine }) => {
     setTimeout(() => history.push(`/my-patterns`));
     deleteSketch(sketch.id);
   };
-
-  const [menuOpen, setMenuOpen] = useState(false);
-  const menuRef = useRef();
-  useEffect(() => {
-    const closeMenu = (e) => {
-      if (!menuRef.current.contains(e.target)) setMenuOpen(false);
-    };
-    document.addEventListener("click", closeMenu);
-    return () => document.removeEventListener("click", closeMenu);
-  }, []);
 
   const menu = (
     <div className="relative inline-block text-left" ref={menuRef}>
@@ -97,17 +101,24 @@ const Editor = ({ id, mine }) => {
             className="bg-white rounded-md shadow-xs"
             role="menu"
           >
-            {mine && (
-              <div className="py-1">
-                <button
-                  className="flex-grow block w-full px-4 py-2 text-sm text-left text-gray-700 leading-5 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:bg-gray-100 focus:text-gray-900"
-                  onClick={() => togglePublic(sketch.id)}
-                  role="menuitem"
-                >
-                  {sketch.public ? "Make private" : "Make public"}
-                </button>
-              </div>
-            )}
+            <div className="py-1">
+              <button
+                className="flex-grow block w-full px-4 py-2 text-sm text-left text-gray-700 leading-5 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:bg-gray-100 focus:text-gray-900"
+                onClick={() => togglePublic(sketch.id)}
+                role="menuitem"
+              >
+                {sketch.public ? "Make private" : "Make public"}
+              </button>
+            </div>
+            <div className="py-1">
+              <button
+                className="flex-grow block w-full px-4 py-2 text-sm text-left text-gray-700 leading-5 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:bg-gray-100 focus:text-gray-900"
+                onClick={() => setRenaming(true)}
+                role="menuitem"
+              >
+                Rename
+              </button>
+            </div>
             <div className="py-1">
               <a
                 className="block px-4 py-2 text-sm text-gray-700 leading-5 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:bg-gray-100 focus:text-gray-900"
@@ -151,14 +162,35 @@ const Editor = ({ id, mine }) => {
           mine && { title: "My patterns", to: "/my-patterns" },
         ]}
         title={
-          <>
-            {sketch.name}{" "}
-            {sketch.public && (
-              <div className="px-2 py-1 mx-2 text-xs leading-snug border rounded-full">
-                Public
-              </div>
-            )}
-          </>
+          renaming ? (
+            <>
+              <input
+                autoFocus
+                className="px-2 border rounded-l"
+                defaultValue={sketch.name}
+                onChange={(e) => setNewName(e.target.value)}
+              />
+              <button
+                className="block px-4 py-2 text-sm text-left text-gray-700 border border-l-0 rounded-r leading-5 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:bg-gray-100 focus:text-gray-900"
+                onClick={() => {
+                  rename(sketch.id, newName);
+                  setRenaming(false);
+                }}
+                role="menuitem"
+              >
+                Save
+              </button>
+            </>
+          ) : (
+            <>
+              {sketch.name}{" "}
+              {sketch.public && (
+                <div className="px-2 py-1 mx-2 text-xs leading-snug border rounded-full">
+                  Public
+                </div>
+              )}
+            </>
+          )
         }
       />
 
