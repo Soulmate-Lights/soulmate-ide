@@ -7,7 +7,8 @@ const Header = ({ title, sections, subtitle, actions, className }) => {
     <div
       className={classnames(
         "flex dark-mode:bg-gray-800 dark-mode:text-white flex-row",
-        "h-24 border-b dark-mode:border-gray-700",
+        "h-20 border-b dark-mode:border-gray-700",
+        "flex-shrink-0 flex-grow-0",
         className
       )}
     >

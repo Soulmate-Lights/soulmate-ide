@@ -18,7 +18,7 @@ const Dashboard = () => {
   return (
     <div
       className="flex flex-col flex-grow w-full"
-      style={{ WebkitAppRegion: "drag" }}
+      // style={{ WebkitAppRegion: "drag" }}
     >
       <div className="relative flex flex-col items-center justify-center flex-grow p-6 overflow-hidden">
         <nav className="absolute top-0 flex flex-row items-center justify-center justify-between w-full p-2 px-5 pt-5">

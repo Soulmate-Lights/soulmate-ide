@@ -1,3 +1,5 @@
+import "react-resizable/css/styles.css";
+
 import classnames from "classnames";
 import { hot } from "react-hot-loader";
 import { HashRouter, Route, Router, Switch } from "react-router-dom";

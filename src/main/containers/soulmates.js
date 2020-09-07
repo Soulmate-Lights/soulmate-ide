@@ -6,7 +6,7 @@ import ConfigContainer from "~/containers/config";
 import NotificationsContainer from "~/containers/notifications";
 import { getFullBuild, prepareSketches } from "~/utils/code";
 import { flashBuild } from "~/utils/flash";
-import { getPort, readPort } from "~/utils/ports";
+import { getPort, PortListener } from "~/utils/ports";
 
 const SoulmateContainer = () => {
   const notificationsContainer = NotificationsContainer.useContainer();
@@ -17,10 +17,15 @@ const SoulmateContainer = () => {
   const [usbFlashingPercentage, setUsbFlashingPercentage] = useState();
   const [flashing, setFlashing] = useState(false);
 
+  // var listener;
+  const [listener, setListener] = useState(false);
+  const [text, setText] = useState([]);
+
   // Web-safe!
   if (!window.ipcRenderer) return {};
 
   const flashSketches = async (sketches, config) => {
+    listener.close();
     setFlashing(true);
 
     const preparedCode = prepareSketches(sketches, config);
@@ -38,24 +43,51 @@ const SoulmateContainer = () => {
 
     setUsbFlashingPercentage(undefined);
     setFlashing(false);
+    open(port);
     return true;
   };
 
+  const open = (port) => {
+    let receivedData;
+
+    const listener = new PortListener(port, (text) => {
+      if (text[0] === "{") {
+        setSoulmateLoading(false);
+        const data = JSON.parse(text);
+        receivedData = data;
+        configContainer.setConfigFromSoulmateData(data);
+        setName(data?.name || "USB Soulmate");
+      }
+      setText((oldText) => [...oldText, text]);
+    });
+
+    setListener(listener);
+
+    setTimeout(() => {
+      if (!receivedData) {
+        setSoulmateLoading(false);
+        setName("USB Soulmate");
+      }
+    }, 2000);
+
+    window.addEventListener("beforeunload", () => {
+      listener.close();
+    });
+  };
+
   const checkUsb = async () => {
+    if (flashing) return;
+
     const newPort = await getPort();
 
     if (newPort && !port) {
       notificationsContainer.notify(`Detecting Soulmate...`);
       setPort(newPort);
       setSoulmateLoading(true);
-      const data = await readPort(newPort);
-      setSoulmateLoading(false);
 
-      if (data) {
-        configContainer.setConfigFromSoulmateData(data);
-      }
-      setName(data?.name || "USB Soulmate");
+      open(newPort);
     } else if (!newPort) {
+      listener.close();
       setPort(undefined);
       setName(undefined);
     }
@@ -70,6 +102,10 @@ const SoulmateContainer = () => {
   useInterval(checkUsb, 2000);
   useEffect(() => checkUsb(), []);
 
+  const restart = () => {
+    listener.port.write('{ "restart": true }\n');
+  };
+
   return {
     flashSketches,
     soulmateLoading,
@@ -77,6 +113,8 @@ const SoulmateContainer = () => {
     name,
     usbFlashingPercentage,
     flashing,
+    text,
+    restart,
   };
 };
 

@@ -35,7 +35,7 @@ const Menu = () => {
           <div
             className={classnames("flex-1 flex flex-col pb-4 overflow-y-auto")}
           >
-            <div className="flex flex-row items-center h-24 px-6 py-4 border-b dark-mode:border-gray-600">
+            <div className="flex flex-row items-center h-20 px-6 py-4 border-b dark-mode:border-gray-600">
               <Logo className="w-10 h-10 mr-4" />
 
               <span className="flex flex-col">
