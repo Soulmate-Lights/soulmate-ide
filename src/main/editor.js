@@ -175,7 +175,7 @@ const Editor = ({ id, mine }) => {
             onSave={(code) => save(sketch.id, code)}
             selection={selection}
           />
-          <div className="flex flex-row items-center p-2 text-sm">
+          <div className="flex flex-row items-center p-4 text-sm border-t ">
             <span className="px-4 font-light">Public URL</span>
             <input
               className="flex-grow h-8 px-2 py-1 border rounded-l"
@@ -211,7 +211,7 @@ const Editor = ({ id, mine }) => {
 
           {isElectron() && port && (
             <FlashButton
-              className="mx-2 my-2"
+              className="m-4"
               disabled={!build || build?.stderr}
               selectedSketches={[sketch]}
             />
