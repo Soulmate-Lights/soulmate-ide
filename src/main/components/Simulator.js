@@ -1,4 +1,6 @@
 import { BsFillPauseFill, BsPlayFill } from "react-icons/bs";
+import { FaCog } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 import Logo from "~/images/logo.svg";
 
@@ -117,7 +119,14 @@ const Simulator = ({ className = "", build, config, maxWidth, minWidth }) => {
     >
       {build ? (
         <>
-          <span className="absolute inline-flex rounded-md shadow-sm top-4 right-4">
+          <span className="absolute inline-flex rounded-md shadow-sm top-4 right-4 space-x-2">
+            <Link
+              className="inline-flex items-center px-3 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 leading-4 rounded-md hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150"
+              onClick={() => setPaused(!paused)}
+              to="/config"
+            >
+              {<FaCog />}
+            </Link>
             <button
               className="inline-flex items-center px-3 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 leading-4 rounded-md hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150"
               onClick={() => setPaused(!paused)}
