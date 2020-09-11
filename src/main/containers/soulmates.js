@@ -1,4 +1,5 @@
 import useInterval from "@use-it/interval";
+import takeRight from "lodash/takeRight";
 import { useState } from "react";
 import { createContainer } from "unstated-next";
 
@@ -58,7 +59,7 @@ const SoulmateContainer = () => {
         configContainer.setConfigFromSoulmateData(data);
         setName(data?.name || "USB Soulmate");
       }
-      setText((oldText) => [...oldText, text]);
+      setText((oldText) => [...takeRight(oldText, 100), text]);
     });
 
     setListener(listener);
