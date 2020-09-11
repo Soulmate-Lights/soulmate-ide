@@ -195,20 +195,26 @@ export async function buildHex(source) {
 
 export async function getFullBuild(source) {
   const body = JSON.stringify({ sketch: source });
+  console.log("[getFullBuild]", { body });
   const res = await window.fetch("http://54.243.44.4:8081/build", {
     ...options,
     body,
   });
+
+  console.log("[getFullBuild]", { res });
 
   if (!res.ok) return false;
 
   const path = electron.remote.app.getPath("temp");
   const filename = parseInt(Math.random() * 10000000);
   const filePath = `${path}${filename}.bin`;
+  console.log("[getFullBuild]", { filePath });
   const writer = fs.createWriteStream(filePath);
+  console.log("[getFullBuild]", { writer });
   const reader = res.body.getReader();
   const finalLength =
     length || parseInt(res.headers.get("Content-Length" || "0"), 10);
+  console.log("[getFullBuild]", { finalLength });
   await streamWithProgress(finalLength, reader, writer, () => {});
 
   return filePath;
