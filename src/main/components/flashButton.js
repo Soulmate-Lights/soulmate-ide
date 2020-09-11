@@ -13,15 +13,6 @@ const flashButtonClassName =
   "inline-flex items-center px-6 py-3 border border-transparent text-base leading-6 font-medium rounded-md text-white bg-indigo-600  focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition ease-in-out duration-150 h-15 flex-grow justify-center";
 
 const FlashButton = ({ selectedSketches, disabled = false, className }) => {
-  const notificationsContainer = NotificationsContainer.useContainer();
-
-  const flash = async () => {
-    const result = await flashSketches(selectedSketches, config);
-    if (!result) {
-      notificationsContainer.notify("Error flashing!", "error");
-    }
-  };
-
   const { type, config } = ConfigContainer.useContainer();
   const {
     flashSketches,
@@ -31,6 +22,14 @@ const FlashButton = ({ selectedSketches, disabled = false, className }) => {
     name,
     port,
   } = Soulmates.useContainer();
+  const notificationsContainer = NotificationsContainer.useContainer();
+
+  const flash = async () => {
+    const result = await flashSketches(selectedSketches, config);
+    if (!result) {
+      notificationsContainer.notify("Error flashing!", "error");
+    }
+  };
 
   const disableFlashButton =
     selectedSketches.length === 0 ||

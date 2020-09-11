@@ -19,23 +19,28 @@ const SoulmateContainer = () => {
   const [flashing, setFlashing] = useState(false);
 
   // var listener;
-  const [listener, setListener] = useState(false);
+  const [listener, setListener] = useState();
   const [text, setText] = useState([]);
 
   // Web-safe!
   if (!window.ipcRenderer) return {};
 
   const flashSketches = async (sketches, config) => {
-    listener.close();
+    console.log("[flashSketches]", { sketches, config });
+
+    listener?.close();
     setFlashing(true);
 
     const preparedCode = prepareSketches(sketches, config);
+    console.log("[flashSketches]", { preparedCode });
     const build = await getFullBuild(preparedCode);
 
     if (!build) {
       setFlashing(false);
       return false;
     }
+
+    console.log("[flashSketches]", { build, port });
 
     await flashBuild(port, build, (progress) => {
       setUsbFlashingPercentage(progress);
@@ -72,7 +77,7 @@ const SoulmateContainer = () => {
     }, 2000);
 
     window.addEventListener("beforeunload", () => {
-      listener.close();
+      listener?.close();
     });
   };
 
@@ -88,7 +93,7 @@ const SoulmateContainer = () => {
 
       open(newPort);
     } else if (!newPort) {
-      listener.close();
+      listener?.close();
       setPort(undefined);
       setName(undefined);
     }
