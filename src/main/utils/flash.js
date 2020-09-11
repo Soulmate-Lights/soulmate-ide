@@ -53,11 +53,20 @@ export const getBuild = async (sketches, config) => {
 const installDependencies = () => {
   const childProcess = remote.require("child_process");
   if (remote.require("os").platform() === "darwin") {
-    // Ensure pyserial is installed before flashing
-    if (!fs.existsSync(`/usr/local/bin/pip`)) {
-      childProcess.execSync("python ./get-pip.py", { cwd: dir });
+    try {
+      childProcess.execSync("which pip").toString().replace("\n", "");
+    } catch (e) {
+      childProcess.execSync(`$(which python) ./get-pip.py`, { cwd: dir });
     }
-    childProcess.execSync(`/usr/local/bin/pip install pyserial`);
+
+    const hasPip = !childProcess
+      .execSync("pip show pyserial")
+      .toString()
+      .includes("Package(s) not found");
+
+    if (!hasPip) {
+      childProcess.execSync(`$(which pip) install pyserial`);
+    }
   }
 };
 
@@ -84,7 +93,7 @@ const getNumberFromFlashOutput = (data) => {
 export const flashBuild = async (port, file, progressCallback) => {
   installDependencies();
 
-  const cmd = `python ./esptool.py --chip esp32 --port ${port} --baud 1500000 --before default_reset --after hard_reset write_flash -z --flash_mode dio --flash_freq 80m --flash_size detect 0xe000 ./ota_data_initial.bin 0x1000 ./bootloader.bin 0x10000 ${file} 0x8000 ./partitions.bin`;
+  const cmd = `$(which python) ./esptool.py --chip esp32 --port ${port} --baud 1500000 --before default_reset --after hard_reset write_flash -z --flash_mode dio --flash_freq 80m --flash_size detect 0xe000 ./ota_data_initial.bin 0x1000 ./bootloader.bin 0x10000 ${file} 0x8000 ./partitions.bin`;
 
   console.log("[flashBuild]", { cmd });
 
