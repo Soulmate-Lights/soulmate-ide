@@ -35,7 +35,9 @@ const Console = ({ className }) => {
   const textDiv = useRef(false);
 
   const scrollToBottom = () => {
-    textDiv.current.scrollTop = textDiv.current.scrollHeight;
+    if (textDiv.current) {
+      textDiv.current.scrollTop = textDiv.current.scrollHeight;
+    }
   };
 
   const autoscroll = () => {
