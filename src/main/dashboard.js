@@ -77,7 +77,7 @@ const Dashboard = () => {
               )}
             </div>
 
-            {((!isElectron() && isWindows()) || isMacintosh()) && (
+            {!isElectron() && (isWindows() || isMacintosh()) && (
               <div className="absolute opacity-75 bottom-8 hover:opacity-100 transition-opacity duration-500">
                 <a
                   className="inline-flex items-center px-4 py-2 mx-4 text-base font-medium text-purple-600 bg-white border border-transparent leading-6 rounded-md hover:text-purple-500 focus:outline-none focus:border-purple-300 focus:shadow-outline-gray active:bg-purple-50 active:text-purple-700 transition duration-150 ease-in-out"
