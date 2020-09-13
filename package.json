@@ -122,8 +122,7 @@
       "entitlements": "entitlements.plist",
       "entitlementsInherit": "entitlements.plist",
       "gatekeeperAssess": false,
-      "hardenedRuntime": true,
-      "provisioningProfile": "Soulmate_macOS.provisionprofile"
+      "hardenedRuntime": true
     },
     "dmg": {
       "sign": false
