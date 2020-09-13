@@ -54,19 +54,30 @@ const installDependencies = () => {
   const childProcess = remote.require("child_process");
   if (remote.require("os").platform() === "darwin") {
     try {
-      childProcess.execSync("which pip").toString().replace("\n", "");
-    } catch (e) {
+      //   console.log("[installDependencies] Trying which pip");
+      //   childProcess.execSync("which pip").toString().replace("\n", "");
+      // } catch (e) {
+      // console.log("Running get-pip.py");
       childProcess.execSync(`$(which python) ./get-pip.py`, { cwd: dir });
-    }
+      //   console.log("Installed pip");
+      // }
 
-    const hasPip = !childProcess
-      .execSync("pip show pyserial")
-      .toString()
-      .includes("Package(s) not found");
+      // console.log("[installDependencies] Checking for pyserial");
+      // const pyserialCommandOutput = childProcess.execSync(
+      //   "$(which pip) show pyserial"
+      // );
+      // console.log("[installDependencies]", { pyserialCommandOutput });
+      // const hasPySerial = !pyserialCommandOutput
+      //   .toString()
+      //   .includes("Package(s) not found");
 
-    if (!hasPip) {
-      childProcess.execSync(`$(which pip) install pyserial`);
+      // if (!hasPySerial) {
+      //   console.log("[installDependencies] installing pyserial...");
+      childProcess.execSync(`~/Library/Python/2.7/bin/pip install pyserial`);
+    } catch (e) {
+      console.log("Error installing dependencies", e);
     }
+    // }
   }
 };
 
@@ -91,7 +102,12 @@ const getNumberFromFlashOutput = (data) => {
 
 /** Flash a build file to a USB output */
 export const flashBuild = async (port, file, progressCallback) => {
-  installDependencies();
+  console.log("[flashbuild] Installing dependencices");
+  try {
+    installDependencies();
+  } catch (e) {
+    console.log("Error installing dependencies", e);
+  }
 
   const cmd = `$(which python) ./esptool.py --chip esp32 --port ${port} --baud 1500000 --before default_reset --after hard_reset write_flash -z --flash_mode dio --flash_freq 80m --flash_size detect 0xe000 ./ota_data_initial.bin 0x1000 ./bootloader.bin 0x10000 ${file} 0x8000 ./partitions.bin`;
 
