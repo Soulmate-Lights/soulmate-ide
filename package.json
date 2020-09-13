@@ -105,7 +105,8 @@
     "release": "yarn clean && yarn version --patch && yarn react-build-desktop && AWS_PROFILE=soulmate-ide-updates electron-builder -mw --publish always",
     "clean": "rm -rf ./build ./.cache ./dist",
     "postinstall": "npx electron-builder install-app-deps",
-    "web": "NODE_ENV=development parcel index.html --open -p 3000"
+    "web": "NODE_ENV=development parcel index.html --open -p 3000",
+    "bump": "yarn version --patch"
   },
   "build": {
     "afterSign": "electron-builder-notarize",
