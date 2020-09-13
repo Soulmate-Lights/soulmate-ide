@@ -106,7 +106,7 @@
     "clean": "rm -rf ./build ./.cache ./dist",
     "postinstall": "npx electron-builder install-app-deps",
     "web": "NODE_ENV=development parcel index.html --open -p 3000",
-    "bump": "yarn version --patch"
+    "bump": "yarn version --patch && git push --tags"
   },
   "build": {
     "afterSign": "electron-builder-notarize",
