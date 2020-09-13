@@ -239,14 +239,6 @@ const Config = () => {
                     </div>
                   </div>
                 </div>
-                <div className="py-3 mt-4 text-right">
-                  <button
-                    className="px-8 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-500 focus:outline-none focus:shadow-outline-blue focus:bg-indigo-500 active:bg-indigo-600 transition duration-150 ease-in-out"
-                    onClick={() => history.back()}
-                  >
-                    Save
-                  </button>
-                </div>
               </form>
             </div>
           </div>
