@@ -22,10 +22,10 @@ jobs:
           node-version: 13
 
       - name: yarn
-        run: yarn --frozen-lockfile
+        run: yarn
 
       - name: Update UI
-        run: "yarn update-ui"
+        run: yarn update-ui
 
       - name: Push changes
         run: git add build && git commit -m "Update UI" && git push
