@@ -13,6 +13,7 @@ jobs:
           token: ${{ secrets.TOKEN }}
           ref: refs/heads/master
           clean: true
+        working-directory: "soulmate-server"
 
       - name: yarn
         run: yarn --frozen-lockfile
