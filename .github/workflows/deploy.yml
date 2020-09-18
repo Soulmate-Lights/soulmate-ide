@@ -20,6 +20,11 @@ jobs:
         with:
           node-version: 13
 
+      - uses: actions/cache@v2.1.0
+        with:
+          path: "soulmate-server/soulmate-ide/.cache"
+          key: ${{ runner.os }}-modules-${{ hashFiles('soulmate-server/soulmate-ide/yarn.lock') }}
+
       - name: yarn
         run: yarn
         working-directory: soulmate-server/soulmate-ide
@@ -29,5 +34,5 @@ jobs:
         working-directory: soulmate-server
 
       - name: Push changes
-        run: git add public && git commit -m "Update UI" && git push
+        run: git add public ; git commit -m "Update UI" ; git push
         working-directory: soulmate-server
