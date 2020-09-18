@@ -1,6 +1,8 @@
 import { AiFillApple, AiFillWindows } from "react-icons/ai";
 import { Link } from "react-router-dom";
 
+import packagedotjson from "../../package.json";
+
 function isMacintosh() {
   return navigator.platform.indexOf("Mac") > -1;
 }
@@ -76,7 +78,6 @@ const Dashboard = () => {
                 </div>
               )}
             </div>
-
             {!isElectron() && (isWindows() || isMacintosh()) && (
               <div className="mt-auto opacity-75 bottom-8 hover:opacity-100 transition-opacity duration-500">
                 <div className="mx-auto mt-40 sm:flex sm:justify-center">
@@ -102,6 +103,9 @@ const Dashboard = () => {
             )}
           </div>
         </main>
+      </div>
+      <div className="p-4 text-xs text-center opacity-25 dark-mode:text-white">
+        Version {packagedotjson.version}
       </div>
     </div>
   );
