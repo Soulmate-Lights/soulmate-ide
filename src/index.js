@@ -1,6 +1,8 @@
 import "regenerator-runtime/runtime";
 import "../tailwind.config";
 
+import * as Sentry from "@sentry/react";
+import { Integrations } from "@sentry/tracing";
 import * as monaco from "monaco-editor/esm/vs/editor/editor.main.js";
 import React from "react";
 import ReactDOM from "react-dom";
@@ -9,9 +11,6 @@ import Main from "./main";
 
 require("./index.pcss");
 require("@tailwindcss/ui");
-
-import * as Sentry from "@sentry/react";
-import { Integrations } from "@sentry/tracing";
 
 Sentry.init({
   dsn:
