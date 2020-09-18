@@ -20,6 +20,10 @@ jobs:
         with:
           node-version: 13
 
+      - name: cat
+        run: cat _packagejson
+        working-directory: soulmate-server
+
       - name: ls
         run: ls
         working-directory: soulmate-server
