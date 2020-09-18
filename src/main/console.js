@@ -14,7 +14,7 @@ const excludes = (line) => {
 const format = (line) => {
   const parsed = parse(line);
 
-  return parsed.spans.map(({ css, color, text, code }, i) =>
+  return parsed.spans.map(({ css, text }) =>
     Style.it(
       `.line {
       ${css}
