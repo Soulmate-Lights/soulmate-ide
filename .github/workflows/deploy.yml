@@ -34,5 +34,5 @@ jobs:
         working-directory: soulmate-server
 
       - name: Push changes
-        run: git add public ; git commit -m "Update UI" ; git push
+        run: git diff-index --quiet HEAD || (git add public ; git commit -m "Update UI" ; git push)
         working-directory: soulmate-server
