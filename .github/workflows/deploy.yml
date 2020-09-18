@@ -9,11 +9,17 @@ jobs:
       - name: Check out Git repository
         uses: actions/checkout@v2
         with:
+          fetch-depth: 2
           path: soulmate-server
           repository: Soulmate-Lights/soulmate-server
           token: ${{ secrets.TOKEN }}
           ref: refs/heads/master
           clean: true
+
+      - name: Install Node.js, NPM and Yarn
+        uses: actions/setup-node@v1
+        with:
+          node-version: 13
 
       - name: yarn
         run: yarn --frozen-lockfile
