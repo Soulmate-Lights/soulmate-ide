@@ -21,15 +21,7 @@ jobs:
           node-version: 13
 
       - name: cat
-        run: cat _packagejson
-        working-directory: soulmate-server
-
-      - name: ls
-        run: ls
-        working-directory: soulmate-server
-
-      - name: pwd
-        run: pwd
+        run: rm package.json && mv _packagejson package.json
         working-directory: soulmate-server
 
       - name: yarn
