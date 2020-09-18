@@ -20,13 +20,9 @@ jobs:
         with:
           node-version: 13
 
-      - name: cat
-        run: rm package.json && mv _packagejson package.json
-        working-directory: soulmate-server
-
       - name: yarn
         run: yarn
-        working-directory: soulmate-server
+        working-directory: soulmate-server/soulmate-ide
 
       - name: Update UI
         run: yarn update-ui
