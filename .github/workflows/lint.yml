@@ -3,7 +3,7 @@ name: Lint
 on: push
 
 jobs:
-  release:
+  lint:
     runs-on: ubuntu-latest
 
     steps:
@@ -16,4 +16,7 @@ jobs:
           node-version: 10
 
       - name: yarn
+        run: yarn
+
+      - name: eslint
         run: npx eslint src
