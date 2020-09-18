@@ -23,12 +23,9 @@ jobs:
 
       - name: yarn
         run: yarn --frozen-lockfile
-        working-directory: soulmate-server
 
       - name: Update UI
         run: "yarn update-ui"
-        working-directory: soulmate-server
 
       - name: Push changes
         run: git add build && git commit -m "Update UI" && git push
-        working-directory: soulmate-server
