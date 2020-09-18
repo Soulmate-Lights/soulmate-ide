@@ -9,7 +9,7 @@ jobs:
       - name: Check out Git repository
         uses: actions/checkout@v1
         with:
-          repository: "git@github.com:Soulmate-Lights/soulmate-server.git"
+          repository: https://github.com/Soulmate-Lights/soulmate-server.git
           token: ${{ secrets.TOKEN }}
       - name: yarn
         run: yarn --frozen-lockfile
