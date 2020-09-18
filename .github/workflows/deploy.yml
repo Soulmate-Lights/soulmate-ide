@@ -9,17 +9,22 @@ jobs:
       - name: Check out Git repository
         uses: actions/checkout@v2
         with:
-          fetch-depth: 2
           repository: Soulmate-Lights/soulmate-server
           token: ${{ secrets.TOKEN }}
           ref: refs/heads/master
-          clean: true
           submodules: true
+          path: ""
 
       - name: Install Node.js, NPM and Yarn
         uses: actions/setup-node@v1
         with:
           node-version: 13
+
+      - name: ls
+        run: ls
+
+      - name: pwd
+        run: pwd
 
       - name: yarn
         run: yarn
