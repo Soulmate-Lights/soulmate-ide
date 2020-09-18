@@ -13,24 +13,30 @@ jobs:
           token: ${{ secrets.TOKEN }}
           ref: refs/heads/master
           submodules: true
-          path: ""
+          path: soulmate-server
 
       - name: Install Node.js, NPM and Yarn
         uses: actions/setup-node@v1
+        working-directory: soulmate-server
         with:
           node-version: 13
 
       - name: ls
         run: ls
+        working-directory: soulmate-server
 
       - name: pwd
         run: pwd
+        working-directory: soulmate-server
 
       - name: yarn
         run: yarn
+        working-directory: soulmate-server
 
       - name: Update UI
         run: yarn update-ui
+        working-directory: soulmate-server
 
       - name: Push changes
         run: git add build && git commit -m "Update UI" && git push
+        working-directory: soulmate-server
