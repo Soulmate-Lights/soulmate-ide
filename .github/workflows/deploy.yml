@@ -38,7 +38,7 @@ jobs:
 
       - name: Push changes
         run: |
-          git add public
+          git add public soulmate-ide
           git commit -m "Update UI" || echo "No changes"
           git push
         working-directory: soulmate-server
