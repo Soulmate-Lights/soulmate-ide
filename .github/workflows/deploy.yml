@@ -10,7 +10,6 @@ jobs:
         uses: actions/checkout@v2
         with:
           fetch-depth: 2
-          path: soulmate-server
           repository: Soulmate-Lights/soulmate-server
           token: ${{ secrets.TOKEN }}
           ref: refs/heads/master
