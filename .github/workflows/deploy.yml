@@ -9,8 +9,10 @@ jobs:
       - name: Check out Git repository
         uses: actions/checkout@v1
         with:
-          repository: "https://github.com/Soulmate-Lights/soulmate-server.git"
+          repository: Soulmate-Lights/soulmate-server
           token: ${{ secrets.TOKEN }}
+          ref: refs/heads/master
+          clean: true
       - name: yarn
         run: yarn --frozen-lockfile
       - name: Update UI
