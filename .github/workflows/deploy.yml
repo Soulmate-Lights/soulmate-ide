@@ -7,22 +7,22 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out Git repository
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2
         with:
+          path: soulmate-server
           repository: Soulmate-Lights/soulmate-server
           token: ${{ secrets.TOKEN }}
           ref: refs/heads/master
           clean: true
-        working-directory: "soulmate-server"
 
       - name: yarn
         run: yarn --frozen-lockfile
-        working-directory: "soulmate-server"
+        working-directory: soulmate-server
 
       - name: Update UI
         run: "yarn update-ui"
-        working-directory: "soulmate-server"
+        working-directory: soulmate-server
 
       - name: Push changes
         run: git add build && git commit -m "Update UI" && git push
-        working-directory: "soulmate-server"
+        working-directory: soulmate-server
