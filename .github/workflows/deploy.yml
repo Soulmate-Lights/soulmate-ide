@@ -4,7 +4,7 @@ on: push
 
 jobs:
   update-ui:
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     steps:
       - name: Check out Git repository
         uses: actions/checkout@v2
