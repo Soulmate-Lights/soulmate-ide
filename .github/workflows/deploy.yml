@@ -10,7 +10,7 @@ jobs:
         uses: actions/checkout@v1
         with:
           repository: "git@github.com:Soulmate-Lights/soulmate-server.git"
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.TOKEN }}
       - name: yarn
         run: yarn --frozen-lockfile
       - name: Update UI
