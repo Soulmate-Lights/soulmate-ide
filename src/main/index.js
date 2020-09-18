@@ -23,6 +23,7 @@ import Flash from "./flash";
 import Gallery from "./gallery";
 import Menu from "./menu";
 import MySketches from "./mySketches";
+import Three from "./three";
 import User from "./user";
 import Welcome from "./welcome";
 
@@ -58,6 +59,10 @@ const Main = () => {
 
           <div className="flex flex-row flex-grow flex-shrink w-full min-w-0 bg-gray-100 dark-mode:bg-gray-800 dark-mode:text-white">
             <Switch>
+              <Route exact path="/three">
+                <Three />
+              </Route>
+
               <Route exact path="/">
                 <Dashboard />
               </Route>
