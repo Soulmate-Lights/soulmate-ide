@@ -1,0 +1,19 @@
+name: Deploy to web
+
+on: push
+
+jobs:
+  update-ui:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out Git repository
+        uses: actions/checkout@v1
+        with:
+          repository: "git@github.com:Soulmate-Lights/soulmate-server.git"
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: yarn
+        run: yarn --frozen-lockfile
+      - name: Update UI
+        run: "yarn update-ui"
+      - name: Push changes
+        run: git add build && git commit -m "Update UI" && git push
