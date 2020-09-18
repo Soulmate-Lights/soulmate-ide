@@ -1,6 +1,9 @@
 name: Deploy to web
 
-on: push
+on:
+  push:
+    branches:
+      - master
 
 jobs:
   update-ui:
