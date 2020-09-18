@@ -31,4 +31,4 @@ jobs:
         run: npx eslint src
 
       - name: jest
-        run: npx jest
+        run: npx jest --passWithNoTests
