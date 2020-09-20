@@ -1,5 +1,6 @@
 import useInterval from "@use-it/interval";
 import { Canvas, extend, useFrame, useThree } from "react-three-fiber";
+import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 
 // Extend will make OrbitControls available as a JSX element called orbitControls for us to use.
@@ -39,9 +40,81 @@ const CameraControls = () => {
   return <orbitControls args={[camera, domElement]} ref={controls} />;
 };
 
+const dot = ({ x, y, z }) => {
+  const hue = Math.abs(z);
+  return (
+    <mesh position={[x, y, z]}>
+      <sphereBufferGeometry args={[3, 16]} attach="geometry" />
+      <meshStandardMaterial
+        attach="material"
+        color={`hsl(${hue}, 100%, 50%)`}
+        opacity={1}
+      />
+    </mesh>
+  );
+};
+
+const Pyramid = () => {
+  var g = new THREE.TetrahedronGeometry(100, 0);
+
+  let dots = [];
+  for (let i = 0; i < g.vertices.length; i++) {
+    const start = g.vertices[i];
+    const end = g.vertices[i + 1] || g.vertices[0];
+
+    for (let led = 0; led <= 39; led++) {
+      let x = start.x + ((end.x - start.x) / 39) * led;
+      let y = start.y + ((end.y - start.y) / 39) * led;
+      let z = start.z + ((end.z - start.z) / 39) * led;
+
+      dots.push(dot({ x, y, z }));
+    }
+  }
+
+  [
+    [0, 2],
+    [1, 3],
+  ].forEach((pair) => {
+    const [a, b] = pair;
+    const start = g.vertices[a];
+    const end = g.vertices[b];
+
+    for (let led = 0; led <= 39; led++) {
+      let x = start.x + ((end.x - start.x) / 39) * led;
+      let y = start.y + ((end.y - start.y) / 39) * led;
+      let z = start.z + ((end.z - start.z) / 39) * led;
+
+      dots.push(dot({ x, y, z }));
+    }
+  });
+
+  return (
+    <mesh
+      position={[0, 0, 0]}
+      rotation={[Math.PI * 0.22, -Math.PI / 4, -Math.PI / 1]}
+    >
+      <mesh>
+        <tetrahedronBufferGeometry
+          args={[100, 0]}
+          attach="geometry"
+          opacity={0.1}
+        />
+        <meshStandardMaterial
+          attach="material"
+          color={"white"}
+          opacity={0.8}
+          transparent
+        />
+      </mesh>
+      {/* <sphereBufferGeometry args={[1.2, 16, 16]} attach="geometry" /> */}
+
+      {dots}
+    </mesh>
+  );
+};
+
 const Boxes = () => {
   const boxes = [];
-
   useFrame((/* state */) => {
     offset++;
   });
@@ -67,18 +140,20 @@ const Drawer = () => {
   const [offset, setOffset] = useState(0);
   useInterval(() => {
     setOffset(offset + 1);
-  }, 1);
+  }, 1000 / 60);
 
   return (
     <div style={{ width: "100%", height: "100%", outline: "none" }}>
       <Canvas
         camera={{
-          fov: 1000,
+          fov: 30,
           near: 0.1,
           far: 1000,
-          position: [0, 0, -30],
+          z: -30,
+          position: [0, 0, -100],
         }}
         colorManagement
+        // orthographic
         pixelRatio={window.devicePixelRatio}
         scroll={{ resize: false }}
         style={{ outline: "none" }}
@@ -91,6 +166,7 @@ const Drawer = () => {
         <pointLight position={[-10, -10, -10]} />
 
         <Boxes />
+        {/* <Pyramid /> */}
       </Canvas>
     </div>
   );
