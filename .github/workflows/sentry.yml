@@ -1,14 +1,10 @@
-name: Build/release
+name: Upload Sentry sourcemaps
 
 on: push
 
 jobs:
   release:
-    runs-on: ${{ matrix.os }}
-
-    strategy:
-      matrix:
-        os: [macos-latest, windows-latest]
+    runs-on: ubuntu-latest
 
     steps:
       - name: Check out Git repository
