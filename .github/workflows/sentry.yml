@@ -3,7 +3,7 @@ name: Upload Sentry sourcemaps
 on: push
 
 jobs:
-  Upload sourcemaps to Sentry:
+  upload-sourcemaps-to-sentry:
     runs-on: ubuntu-latest
 
     steps:
