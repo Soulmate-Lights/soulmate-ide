@@ -6,7 +6,7 @@ npx sentry-cli releases new $VERSION
 
 npx parcel build src/index.html
 
-npx sentry-cli releases files $VERSION upload-sourcemaps src --rewrite
+npx sentry-cli releases files $VERSION upload-sourcemaps dist --rewrite
 
 # Finalize the release and mark it deployed
 npx sentry-cli releases finalize $VERSION

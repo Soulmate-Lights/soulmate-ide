@@ -13,6 +13,7 @@
     "@hot-loader/react-dom": "^16.13.0",
     "@sentry/cli": "^1.57.0",
     "@sentry/electron": "^2.0.1",
+    "@sentry/integrations": "^5.24.2",
     "@sentry/react": "^5.23.0",
     "@sentry/tracing": "^5.23.0",
     "@tailwindcss/ui": "^0.5.0",
