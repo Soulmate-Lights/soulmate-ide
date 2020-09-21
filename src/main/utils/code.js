@@ -17,7 +17,7 @@ export const preparePreviewCode = (code, config) => {
 // Matrix size
 #define LED_ROWS ${rows}
 #define LED_COLS ${cols}
-#define N_LEDS LED_ROWS * LED_COLS
+#define N_LEDS (LED_ROWS * LED_COLS)
 #define N_CELLS N_LEDS
 
 class FakeSoulmate {
