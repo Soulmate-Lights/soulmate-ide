@@ -1,3 +1,4 @@
+import * as SentryReact from "@sentry/react";
 import { useEffect, useState } from "react";
 import { createContainer } from "unstated-next";
 
@@ -19,6 +20,15 @@ const UserContainer = () => {
     if (newUserDetails) {
       localStorage.loginSaved = "true";
     }
+
+    SentryReact.setUser({
+      name: newUserDetails.name,
+      username: newUserDetails.name,
+      id: newUserDetails.sub,
+      avatarUrl: newUserDetails.picture,
+      ...newUserDetails,
+    });
+
     setUserDetails(newUserDetails);
     reset();
   };
@@ -41,7 +51,6 @@ const UserContainer = () => {
   }, [localStorage.loginSaved, localStorage.token]);
 
   const login = async () => {
-    console.log("login");
     await triggerLogin();
     fetchUser();
   };
