@@ -17,8 +17,8 @@ SentryReact.init({
   dsn:
     "https://d71092cee93f41a1a5c02404ad236f82@o141622.ingest.sentry.io/5433159",
   integrations: [new Integrations.BrowserTracing(), new RewriteFrames()],
-  tracesSampleRate: 1.0,
   release: require("../package.json").version,
+  environment: process.env.NODE_ENV,
 });
 
 self.MonacoEnvironment = {
