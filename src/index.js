@@ -1,23 +1,32 @@
 import "regenerator-runtime/runtime";
 import "../tailwind.config";
 
-import * as Sentry from "@sentry/react";
+import * as SentryElectron from "@sentry/electron";
+import * as SentryReact from "@sentry/react";
 import { Integrations } from "@sentry/tracing";
 import * as monaco from "monaco-editor/esm/vs/editor/editor.main.js";
 import React from "react";
 import ReactDOM from "react-dom";
+
+import isElectron from "~/utils/isElectron";
 
 import Main from "./main";
 
 require("./index.pcss");
 require("@tailwindcss/ui");
 
-Sentry.init({
+const options = {
   dsn:
     "https://d71092cee93f41a1a5c02404ad236f82@o141622.ingest.sentry.io/5433159",
   integrations: [new Integrations.BrowserTracing()],
   tracesSampleRate: 1.0,
-});
+};
+
+if (isElectron()) {
+  SentryElectron.init(options);
+} else {
+  SentryReact.init(options);
+}
 
 self.MonacoEnvironment = {
   getWorker: function (_moduleId, _label) {
