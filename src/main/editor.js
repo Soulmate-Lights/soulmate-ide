@@ -40,7 +40,7 @@ const Editor = ({ id, mine }) => {
 
   useEffect(() => {
     const closeMenu = (e) => {
-      if (!menuRef.current.contains(e.target)) setMenuOpen(false);
+      if (!menuRef.current?.contains(e.target)) setMenuOpen(false);
     };
     document.addEventListener("click", closeMenu);
     return () => document.removeEventListener("click", closeMenu);
