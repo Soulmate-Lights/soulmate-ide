@@ -1,6 +1,9 @@
 name: Upload Sentry sourcemaps
 
-on: push
+on:
+  push:
+    tags:
+      - "v*"
 
 jobs:
   upload-sourcemaps-to-sentry:
