@@ -113,6 +113,9 @@ const Pyramid = () => {
   );
 };
 
+import noise from "./noise";
+const { seed, perlin3 } = noise;
+
 const Boxes = () => {
   const boxes = [];
   useFrame((/* state */) => {
@@ -122,7 +125,8 @@ const Boxes = () => {
   for (let x = -10; x < 10; x += 2) {
     for (let y = -10; y < 10; y += 2) {
       for (let z = -10; z < 10; z += 2) {
-        const hue = x * 5 + y * 5 + z * 5 + offset * 2;
+        const move = offset / 100;
+        var hue = perlin3(x / 20 + move, y / 20 + move, z / 20 + move) * 255;
         boxes.push(
           <Box
             color={`hsl(${Math.abs(hue)}, 100%, 50%)`}

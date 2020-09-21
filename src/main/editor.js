@@ -1,5 +1,6 @@
 import { HiOutlineLink } from "react-icons/hi";
 
+import Simulator3D from "~/components/3DSimulator";
 import CodeEditor from "~/components/codeEditor";
 import Header from "~/components/Header";
 import Simulator from "~/components/Simulator";
@@ -15,6 +16,8 @@ import history from "~/utils/history";
 import isElectron from "~/utils/isElectron";
 
 import FlashButton from "./components/flashButton";
+
+const use3d = localStorage["use3d"];
 
 const Editor = ({ id, mine }) => {
   const {
@@ -254,12 +257,21 @@ const Editor = ({ id, mine }) => {
         </div>
 
         <div className="flex flex-col border-l">
-          <Simulator
-            build={build}
-            className="flex flex-col flex-grow"
-            config={config}
-            minWidth={320}
-          />
+          {use3d ? (
+            <Simulator3D
+              build={build}
+              className="flex flex-col flex-grow"
+              config={config}
+              minWidth={320}
+            />
+          ) : (
+            <Simulator
+              build={build}
+              className="flex flex-col flex-grow"
+              config={config}
+              minWidth={320}
+            />
+          )}
 
           {isElectron() && port && (
             <FlashButton
