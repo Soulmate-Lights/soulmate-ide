@@ -19,15 +19,14 @@ const UserContainer = () => {
     const newUserDetails = await tokenProperties();
     if (newUserDetails) {
       localStorage.loginSaved = "true";
+      SentryReact.setUser({
+        name: newUserDetails.name,
+        username: newUserDetails.name,
+        id: newUserDetails.sub,
+        avatarUrl: newUserDetails.picture,
+        ...newUserDetails,
+      });
     }
-
-    SentryReact.setUser({
-      name: newUserDetails.name,
-      username: newUserDetails.name,
-      id: newUserDetails.sub,
-      avatarUrl: newUserDetails.picture,
-      ...newUserDetails,
-    });
 
     setUserDetails(newUserDetails);
     reset();
