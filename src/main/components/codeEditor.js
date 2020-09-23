@@ -50,15 +50,15 @@ const codeEditor = ({
   const formatCheckboxRef = useRef();
 
   useEffect(() => {
-    const monacoEditor = monacoInstance.current.editor;
-    monacoEditor.focus();
+    const monacoEditor = monacoInstance.current?.editor;
+    monacoEditor?.focus();
   }, []);
 
   const resizeEditor = () => {
-    const monacoEditor = monacoInstance.current.editor;
+    const monacoEditor = monacoInstance.current?.editor;
     monacoEditor?.layout();
     setTimeout(() => {
-      const monacoEditor = monacoInstance.current.editor;
+      const monacoEditor = monacoInstance.current?.editor;
       monacoEditor?.layout();
     }, 10);
   };
@@ -76,7 +76,7 @@ const codeEditor = ({
 
   const save = () => {
     // Build for the simulator
-    const monacoEditor = monacoInstance.current.editor;
+    const monacoEditor = monacoInstance.current?.editor;
     if (!monacoEditor) return;
     let editorCode = monacoEditor?.getModel().getValue();
 
@@ -114,7 +114,9 @@ const codeEditor = ({
   // // for scope. Only do this after first mount.
   // // const mounted = useRef();
   useEffect(() => {
-    const monacoEditor = monacoInstance.current.editor;
+    const monacoEditor = monacoInstance.current?.editor;
+    if (!monacoEditor) return;
+
     const cmdS = monaco.KeyMod.CtrlCmd | monaco.KeyCode.KEY_S;
 
     monacoEditor?.addCommand(cmdS, () => {
