@@ -4,6 +4,7 @@ const config = {
   clientId: "OsKmsunrgzhFv2znzUHpd9JsFSsOl46o",
 };
 import createAuth0Client from "@auth0/auth0-spa-js";
+import * as SentryReact from "@sentry/react";
 import jwtDecode from "jwt-decode";
 
 import history from "~/utils/history";
@@ -22,14 +23,18 @@ if (!isElectron() && !window.auth && !auth0) {
 
     const query = window.location.search;
     if (query.includes("code=") && query.includes("state=")) {
-      localStorage.loginPending = true;
-      await auth0.handleRedirectCallback();
+      try {
+        localStorage.loginPending = true;
+        await auth0.handleRedirectCallback();
 
-      const claim = await auth0?.getIdTokenClaims();
-      localStorage.token = JSON.stringify(claim.__raw);
+        const claim = await auth0?.getIdTokenClaims();
+        localStorage.token = JSON.stringify(claim.__raw);
 
-      const user = await auth0.getUser();
-      localStorage.user = JSON.stringify(user);
+        const user = await auth0.getUser();
+        localStorage.user = JSON.stringify(user);
+      } catch (e) {
+        SentryReact.captureException(e);
+      }
 
       history.push("/");
     }
