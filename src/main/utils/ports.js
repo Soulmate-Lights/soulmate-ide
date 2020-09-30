@@ -2,7 +2,14 @@ const serialport = remote?.require("serialport");
 
 export const getPort = async () => {
   const results = await serialport.list();
-  const port = results.find((result) => result.vendorId === "0403");
+
+  const port = results.find((result) => {
+    if (result.vendorId === "0403") return true;
+    if (result.path.includes("usbserial")) return true;
+    if (result.path.includes("tty.wchusbserial")) return true;
+    if (result.path.includes("cu.SLAB_USBtoUART")) return true;
+  });
+
   if (!port) return false;
   return port.path;
 };
