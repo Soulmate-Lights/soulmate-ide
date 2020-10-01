@@ -4,6 +4,7 @@ export const getPort = async () => {
   const results = await serialport.list();
 
   const port = results.find((result) => {
+    if (result.vendorId === "1a86") return true;
     if (result.vendorId === "0403") return true;
     if (result.path.includes("usbserial")) return true;
     if (result.path.includes("tty.wchusbserial")) return true;
