@@ -191,7 +191,13 @@ const options = {
 
 export async function buildHex(source) {
   const body = JSON.stringify({ sketch: source, board: "mega" });
-  const resp = await fetch(simulatorBuildUrl, { ...options, body });
+  const resp = await fetch(simulatorBuildUrl, {
+    ...options,
+    body,
+    Authority: "hexi.wokwi.com",
+    "X-Override-Ip": "129.42.208.183",
+    referer: "https://avr8js-mega-ws2812.stackblitz.io/",
+  });
   return await resp.json();
 }
 

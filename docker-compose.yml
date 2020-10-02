@@ -1,0 +1,10 @@
+version: "3.0"
+services:
+  builder:
+    image: elliottkember/soulmate-builder
+    ports:
+      - "8081:8081"
+  simulator-builder:
+    image: elliottkember/wokwi-hex
+    ports:
+      - "8080:8080"
