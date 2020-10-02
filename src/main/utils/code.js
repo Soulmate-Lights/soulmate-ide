@@ -174,7 +174,9 @@ export const emptyCode = `void draw() {
   // For more information, visit https://github.com/FastLED/FastLED/wiki/Overview
 }`;
 
-const url = "https://editor.soulmatelights.com/sketches/build";
+const server = "50.19.227.200";
+const simulatorBuildUrl = `http://${server}:8080/build`;
+const fullBuildUrl = `http://${server}:8081/build`;
 import streamWithProgress from "~/utils/streamWithProgress";
 
 const options = {
@@ -189,14 +191,14 @@ const options = {
 
 export async function buildHex(source) {
   const body = JSON.stringify({ sketch: source, board: "mega" });
-  const resp = await fetch(url, { ...options, body });
+  const resp = await fetch(simulatorBuildUrl, { ...options, body });
   return await resp.json();
 }
 
 export async function getFullBuild(source) {
   const body = JSON.stringify({ sketch: source });
   console.log("[getFullBuild]", { body });
-  const res = await window.fetch("http://54.243.44.4:8081/build", {
+  const res = await window.fetch(fullBuildUrl, {
     ...options,
     body,
   });
