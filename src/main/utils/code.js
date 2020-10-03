@@ -174,9 +174,9 @@ export const emptyCode = `void draw() {
   // For more information, visit https://github.com/FastLED/FastLED/wiki/Overview
 }`;
 
-const server = "builder.soulmatelights.com";
-const simulatorBuildUrl = `http://${server}:8080/build`;
-const fullBuildUrl = `http://${server}:8081/build`;
+// const simulatorBuildUrl = `http://${server}:8080/build`;
+const simulatorBuildUrl = "https://editor.soulmatelights.com/sketches/build";
+const fullBuildUrl = `http://builder.soulmatelights.com:8081/build`;
 import streamWithProgress from "~/utils/streamWithProgress";
 
 const options = {
