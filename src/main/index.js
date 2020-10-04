@@ -55,6 +55,9 @@ const Main = () => {
               <Marketing />
             </Route>
           )}
+          <Route exact path="/marketing">
+            <Marketing />
+          </Route>
           <Route>
             <div
               className={classnames(

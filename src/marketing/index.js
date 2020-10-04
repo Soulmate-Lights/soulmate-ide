@@ -1,4 +1,5 @@
 import React from "react";
+import { AiFillApple, AiFillWindows } from "react-icons/ai";
 
 import examples from "~/welcome/examples";
 
@@ -6,6 +7,14 @@ import Example from "./example";
 import hand from "./hand.jpg";
 import logo from "./logo.png";
 import theboyz from "./theboyz.jpg";
+
+function isMacintosh() {
+  return navigator.platform.indexOf("Mac") > -1;
+}
+
+function isWindows() {
+  return navigator.platform.indexOf("Win") > -1;
+}
 
 export default function MarketingPage() {
   const [index, setIndex] = useState(0);
@@ -188,24 +197,6 @@ export default function MarketingPage() {
                 <p className="mt-3 text-base text-gray-500 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0">
                   Made by a bunch of dudes in California.
                 </p>
-                <div className="mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start">
-                  <div className="shadow rounded-md">
-                    <a
-                      className="flex items-center justify-center w-full px-8 py-3 text-base font-medium text-white bg-indigo-600 border border-transparent leading-6 rounded-md hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo transition duration-150 ease-in-out md:py-4 md:text-lg md:px-10"
-                      href="/"
-                    >
-                      Get started
-                    </a>
-                  </div>
-                  <div className="mt-3 sm:mt-0 sm:ml-3">
-                    <a
-                      className="flex items-center justify-center w-full px-8 py-3 text-base font-medium text-indigo-700 bg-indigo-100 border border-transparent leading-6 rounded-md hover:text-indigo-600 hover:bg-indigo-50 focus:outline-none focus:shadow-outline-indigo focus:border-indigo-300 transition duration-150 ease-in-out md:py-4 md:text-lg md:px-10"
-                      href="#"
-                    >
-                      Read more
-                    </a>
-                  </div>
-                </div>
               </div>
             </main>
           </div>
@@ -353,6 +344,49 @@ export default function MarketingPage() {
             </div>
           </div>
           <Example className="my-8" code={examples[index]} key={index} />
+        </div>
+      </div>
+
+      {/*
+  Tailwind UI components require Tailwind CSS v1.8 and the @tailwindcss/ui plugin.
+  Read the documentation to get started: https://tailwindui.com/documentation
+*/}
+      <div className="bg-gray-50">
+        <div className="px-4 py-12 mx-auto max-w-screen-xl sm:px-6 lg:py-16 lg:px-8 lg:flex lg:items-center lg:justify-between">
+          <h2 className="text-3xl font-extrabold tracking-tight text-gray-900 leading-9 sm:text-4xl sm:leading-10">
+            Ready to dive in?
+            <br />
+            <span className="text-indigo-600">
+              Open the Soulmate IDE to get started.
+            </span>
+          </h2>
+          <div className="flex mt-8 lg:flex-shrink-0 lg:mt-0 space-x-4">
+            <div className="inline-flex shadow rounded-md">
+              <a
+                className="inline-flex items-center justify-center px-5 py-3 text-base font-medium text-white bg-indigo-600 border border-transparent leading-6 rounded-md hover:bg-indigo-500 focus:outline-none focus:shadow-outline transition duration-150 ease-in-out"
+                href="https://editor.soulmatelights.com"
+              >
+                Open the web editor
+              </a>
+            </div>
+            <div className="shadow rounded-md">
+              <a
+                className="inline-flex items-center justify-center px-5 py-3 text-base font-medium text-purple-600 bg-white border border-transparent leading-6 rounded-md hover:text-indigo-800 focus:outline-none focus:shadow-outline transition duration-150 ease-in-out"
+                href={
+                  isMacintosh()
+                    ? "https://editor.soulmatelights.com/download/mac"
+                    : "https://editor.soulmatelights.com/download/windows"
+                }
+              >
+                {isMacintosh() ? (
+                  <AiFillApple className="mr-2" />
+                ) : (
+                  <AiFillWindows className="mr-2" />
+                )}
+                Download the desktop app
+              </a>
+            </div>
+          </div>
         </div>
       </div>
 
