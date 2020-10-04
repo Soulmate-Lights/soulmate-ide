@@ -12,10 +12,6 @@ function isMacintosh() {
   return navigator.platform.indexOf("Mac") > -1;
 }
 
-function isWindows() {
-  return navigator.platform.indexOf("Win") > -1;
-}
-
 export default function MarketingPage() {
   const [index, setIndex] = useState(0);
   return (
