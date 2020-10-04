@@ -1,3 +1,5 @@
+import "./marketing.pcss";
+
 import React from "react";
 import { AiFillApple, AiFillWindows } from "react-icons/ai";
 
@@ -14,6 +16,7 @@ function isMacintosh() {
 
 export default function MarketingPage() {
   const [index, setIndex] = useState(0);
+
   return (
     <div className="full-width">
       <div className="relative overflow-hidden bg-white">
