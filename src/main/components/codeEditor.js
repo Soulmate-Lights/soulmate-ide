@@ -46,6 +46,7 @@ const codeEditor = ({
   onChangeSelection,
   className,
   selection,
+  autoFocus = false,
 }) => {
   let monacoInstance = useRef(false);
   const [dirty, setDirty] = useState(false);
@@ -56,7 +57,10 @@ const codeEditor = ({
 
   useEffect(() => {
     const monacoEditor = monacoInstance.current?.editor;
-    monacoEditor?.focus();
+
+    if (autoFocus) {
+      monacoEditor?.focus();
+    }
   }, []);
 
   const resizeEditor = () => {

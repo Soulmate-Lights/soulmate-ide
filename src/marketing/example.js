@@ -20,6 +20,7 @@ const Example = ({ code, className }) => {
       style={{ minHeight: 480 }}
     >
       <CodeEditor
+        autoFocus={false}
         className="relative flex-grow flex-shrink w-7/12 min-w-0 bg-white"
         code={code}
         onSave={(code) => {
