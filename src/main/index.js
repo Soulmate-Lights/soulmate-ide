@@ -38,6 +38,8 @@ const Main = () => {
 
   const [focus, setFocus] = useState(true);
   const blur = !focus;
+  const subdomain =
+    document.location.href === "https://www.soulmatelights.com/";
 
   return (
     <SpecificRouter history={isElectron() ? undefined : history}>
@@ -48,9 +50,11 @@ const Main = () => {
         />
 
         <Switch>
-          <Route exact path="/marketing">
-            <Marketing />
-          </Route>
+          {subdomain === "www" && (
+            <Route exact path="/">
+              <Marketing />
+            </Route>
+          )}
           <Route>
             <div
               className={classnames(
