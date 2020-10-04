@@ -62,7 +62,7 @@ const Header = ({ title, sections, subtitle, actions, className }) => {
             return (
               <span className="ml-2 shadow-sm rounded-md" key={title}>
                 <button
-                  className={`inline-flex items-center px-4 py-2 border border-gray-300 text-sm leading-5 font-medium rounded-md bg-white hover:text-gray-800 hover:bg-indigo-50 ()):outline-none focus:shadow-outline-blue focus:border-blue-300 active:text-gray-800 text-gray-800 active:bg-gray-50 transition duration-150 ease-in-out ${className}`}
+                  className={`inline-flex items-center px-4 py-2 border border-gray-300 text-sm leading-5 font-medium rounded-md bg-white hover:text-gray-800 hover:bg-purple-50 ()):outline-none focus:shadow-outline-blue focus:border-blue-300 active:text-gray-800 text-gray-800 active:bg-gray-50 transition duration-150 ease-in-out ${className}`}
                   onClick={onClick}
                   type="button"
                   {...rest}

@@ -238,7 +238,7 @@ const Editor = ({ id, mine }) => {
             />
             <span className="inline-flex rounded-md shadow-sm">
               <button
-                className="inline-flex items-center h-8 text-xs font-medium text-white bg-indigo-600 border border-transparent rounded rounded-l-none px-2.5 leading-4 hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition ease-in-out duration-150"
+                className="inline-flex items-center h-8 text-xs font-medium text-white bg-purple-600 border border-transparent rounded rounded-l-none px-2.5 leading-4 hover:bg-purple-500 focus:outline-none focus:border-purple-700 focus:shadow-outline-purple active:bg-purple-700 transition ease-in-out duration-150"
                 onClick={() => {
                   navigator.clipboard.writeText(
                     `https://editor.soulmatelights.com/gallery/${sketch.id}`

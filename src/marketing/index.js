@@ -81,7 +81,7 @@ export default function MarketingPage() {
                     Company
                   </a>
                   <a
-                    className="ml-8 font-medium text-indigo-600 hover:text-indigo-900 transition duration-150 ease-in-out"
+                    className="ml-8 font-medium text-purple-600 hover:text-purple-900 transition duration-150 ease-in-out"
                     href="#"
                   >
                     Log in
@@ -165,7 +165,7 @@ export default function MarketingPage() {
                   </div>
                   <div>
                     <a
-                      className="block w-full px-5 py-3 font-medium text-center text-indigo-600 bg-gray-50 hover:bg-gray-100 hover:text-indigo-700 focus:outline-none focus:bg-gray-100 focus:text-indigo-700 transition duration-150 ease-in-out"
+                      className="block w-full px-5 py-3 font-medium text-center text-purple-600 bg-gray-50 hover:bg-gray-100 hover:text-purple-700 focus:outline-none focus:bg-gray-100 focus:text-purple-700 transition duration-150 ease-in-out"
                       href="#"
                       role="menuitem"
                     >
@@ -180,7 +180,7 @@ export default function MarketingPage() {
                 <h2 className="text-4xl font-extrabold tracking-tight text-gray-900 leading-10 sm:text-5xl sm:leading-none md:text-6xl">
                   Soulmate
                   <br />
-                  <span className="text-4xl text-indigo-600">
+                  <span className="text-4xl text-purple-600">
                     A FastLED ESP32 ecosystem
                   </span>
                 </h2>
@@ -234,7 +234,7 @@ export default function MarketingPage() {
             </div>
             <div>
               <div className="mx-auto mb-4 text-base max-w-prose lg:max-w-none">
-                <p className="text-base font-semibold tracking-wide text-indigo-600 uppercase leading-6">
+                <p className="text-base font-semibold tracking-wide text-purple-600 uppercase leading-6">
                   How it works
                 </p>
                 <h1 className="mt-2 mb-4 text-3xl font-extrabold tracking-tight text-gray-900 leading-8 sm:text-4xl sm:leading-10">
@@ -278,7 +278,7 @@ export default function MarketingPage() {
           <div className="relative z-10 flex flex-row mb-8 md:mb-2 md:px-6">
             <div>
               <div className="text-base max-w-prose lg:max-w-none">
-                <p className="font-semibold tracking-wide text-indigo-600 uppercase leading-6">
+                <p className="font-semibold tracking-wide text-purple-600 uppercase leading-6">
                   Demo time
                 </p>
                 <h1 className="mt-2 text-3xl font-extrabold tracking-tight text-gray-900 leading-8 sm:text-4xl sm:leading-10">
@@ -352,14 +352,14 @@ export default function MarketingPage() {
           <h2 className="text-3xl font-extrabold tracking-tight text-gray-900 leading-9 sm:text-4xl sm:leading-10">
             Ready to dive in?
             <br />
-            <span className="text-indigo-600">
+            <span className="text-purple-600">
               Open the Soulmate IDE to get started.
             </span>
           </h2>
           <div className="flex mt-8 lg:flex-shrink-0 lg:mt-0 space-x-4">
             <div className="inline-flex shadow rounded-md">
               <a
-                className="inline-flex items-center justify-center px-5 py-3 text-base font-medium text-white bg-indigo-600 border border-transparent leading-6 rounded-md hover:bg-indigo-500 focus:outline-none focus:shadow-outline transition duration-150 ease-in-out"
+                className="inline-flex items-center justify-center px-5 py-3 text-base font-medium text-white bg-purple-600 border border-transparent leading-6 rounded-md hover:bg-purple-500 focus:outline-none focus:shadow-outline transition duration-150 ease-in-out"
                 href="https://editor.soulmatelights.com"
               >
                 Open the web editor
@@ -367,7 +367,7 @@ export default function MarketingPage() {
             </div>
             <div className="shadow rounded-md">
               <a
-                className="inline-flex items-center justify-center px-5 py-3 text-base font-medium text-purple-600 bg-white border border-transparent leading-6 rounded-md hover:text-indigo-800 focus:outline-none focus:shadow-outline transition duration-150 ease-in-out"
+                className="inline-flex items-center justify-center px-5 py-3 text-base font-medium text-purple-600 bg-white border border-transparent leading-6 rounded-md hover:text-purple-800 focus:outline-none focus:shadow-outline transition duration-150 ease-in-out"
                 href={
                   isMacintosh()
                     ? "https://editor.soulmatelights.com/download/mac"

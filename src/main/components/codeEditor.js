@@ -210,7 +210,7 @@ const codeEditor = ({
       <span className="absolute inline-flex bottom-4 rounded-md shadow-sm right-8">
         <button
           className={classnames(
-            "inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent leading-5 rounded-md hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition ease-in-out duration-150",
+            "inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-purple-600 border border-transparent leading-5 rounded-md hover:bg-purple-500 focus:outline-none focus:border-purple-700 focus:shadow-outline-purple active:bg-purple-700 transition ease-in-out duration-150",
             {
               "opacity-25": !dirty,
             }
