@@ -1,7 +1,4 @@
-import { Link } from "react-router-dom";
-
 import ConfigContainer from "~/containers/config";
-import history from "~/utils/history";
 
 import Header from "./components/Header";
 

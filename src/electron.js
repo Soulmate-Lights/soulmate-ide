@@ -4,6 +4,16 @@ const path = require("path");
 const isDev = require("electron-is-dev");
 const bonjour = require("bonjour")();
 const { autoUpdater } = require("electron-updater");
+const SentryElectron = require("@sentry/electron");
+
+const options = {
+  release: require("../package.json").version,
+  dsn:
+    "https://d71092cee93f41a1a5c02404ad236f82@o141622.ingest.sentry.io/5433159",
+  environment: process.env.NODE_ENV,
+};
+
+SentryElectron.init(options);
 
 app.on("ready", () => {
   autoUpdater.checkForUpdatesAndNotify();

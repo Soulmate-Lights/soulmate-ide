@@ -17,7 +17,7 @@ export const preparePreviewCode = (code, config) => {
 // Matrix size
 #define LED_ROWS ${rows}
 #define LED_COLS ${cols}
-#define N_LEDS LED_ROWS * LED_COLS
+#define N_LEDS (LED_ROWS * LED_COLS)
 #define N_CELLS N_LEDS
 
 class FakeSoulmate {
@@ -174,7 +174,9 @@ export const emptyCode = `void draw() {
   // For more information, visit https://github.com/FastLED/FastLED/wiki/Overview
 }`;
 
-const url = "https://editor.soulmatelights.com/sketches/build";
+// const simulatorBuildUrl = `http://${server}:8080/build`;
+const simulatorBuildUrl = "https://editor.soulmatelights.com/sketches/build";
+const fullBuildUrl = `http://builder.soulmatelights.com:8081/build`;
 import streamWithProgress from "~/utils/streamWithProgress";
 
 const options = {
@@ -189,14 +191,20 @@ const options = {
 
 export async function buildHex(source) {
   const body = JSON.stringify({ sketch: source, board: "mega" });
-  const resp = await fetch(url, { ...options, body });
+  const resp = await fetch(simulatorBuildUrl, {
+    ...options,
+    body,
+    Authority: "hexi.wokwi.com",
+    "X-Override-Ip": "129.42.208.183",
+    referer: "https://avr8js-mega-ws2812.stackblitz.io/",
+  });
   return await resp.json();
 }
 
 export async function getFullBuild(source) {
   const body = JSON.stringify({ sketch: source });
   console.log("[getFullBuild]", { body });
-  const res = await window.fetch("http://54.243.44.4:8081/build", {
+  const res = await window.fetch(fullBuildUrl, {
     ...options,
     body,
   });

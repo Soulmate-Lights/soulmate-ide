@@ -1,0 +1,44 @@
+name: Deploy to web
+
+on:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  update-ui:
+    runs-on: macos-latest
+    steps:
+      - name: Check out Git repository
+        uses: actions/checkout@v2
+        with:
+          repository: Soulmate-Lights/soulmate-server
+          token: ${{ secrets.TOKEN }}
+          ref: refs/heads/master
+          submodules: true
+          path: soulmate-server
+
+      - name: Install Node.js, NPM and Yarn
+        uses: actions/setup-node@v1
+        with:
+          node-version: 13
+
+      - uses: actions/cache@v2.1.0
+        with:
+          path: "soulmate-server/soulmate-ide/.cache"
+          key: ${{ runner.os }}-modules-${{ hashFiles('soulmate-server/soulmate-ide/yarn.lock') }}
+
+      - name: yarn
+        run: yarn
+        working-directory: soulmate-server/soulmate-ide
+
+      - name: Update UI
+        run: yarn update-ui
+        working-directory: soulmate-server
+
+      - name: Push changes
+        run: |
+          git add public soulmate-ide
+          git commit -m "Update UI" || echo "No changes"
+          git push
+        working-directory: soulmate-server
