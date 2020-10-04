@@ -38,7 +38,7 @@ const Main = () => {
 
   const [focus, setFocus] = useState(true);
   const blur = !focus;
-  const subdomain =
+  const marketing =
     document.location.href === "https://www.soulmatelights.com/";
 
   return (
@@ -50,7 +50,7 @@ const Main = () => {
         />
 
         <Switch>
-          {subdomain === "www" && (
+          {marketing && (
             <Route exact path="/">
               <Marketing />
             </Route>
