@@ -423,6 +423,16 @@ export default function MarketingPage() {
           </dl>
         </div>
       </div>
+
+      <footer className="bg-white">
+        <div className="px-4 py-12 mx-auto max-w-screen-xl sm:px-6 lg:py-16 lg:px-8">
+          <div className="pt-8 mt-12 border-t border-gray-200">
+            <p className="text-base text-gray-400 leading-6 xl:text-center">
+              © 2020 Soulmate Lights, LLC. All rights reserved.
+            </p>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }
