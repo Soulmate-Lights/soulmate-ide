@@ -111,24 +111,17 @@ export default function MarketingPage() {
               <div className="relative mx-auto text-base max-w-prose lg:max-w-none">
                 <figure>
                   <div className="relative pb-7/12 lg:pb-0">
-                    {/* <img
-                      alt
-                      className="absolute inset-0 object-cover object-center w-full h-full rounded-lg shadow-lg lg:static lg:h-auto"
-
-                      src="https://images.unsplash.com/photo-1546913199-55e06682967e?ixlib=rb-1.2.1&auto=format&fit=crop&crop=focalpoint&fp-x=.735&fp-y=.55&w=1184&h=1376&q=80"
-                    /> */}
                     <img
                       alt
                       className="absolute inset-0 object-cover object-center w-full h-full rounded-lg shadow-lg lg:static lg:h-auto"
                       height={1376}
                       src={hand}
-                      // width={1184}
                     />
                   </div>
                 </figure>
               </div>
             </div>
-            <div>
+            <div className="lg:pl-4">
               <div className="mx-auto mb-4 text-base max-w-prose lg:max-w-none">
                 <p className="text-base font-semibold tracking-wide text-purple-600 uppercase leading-6">
                   How it works
