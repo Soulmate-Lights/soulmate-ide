@@ -38,8 +38,8 @@ const Main = () => {
 
   const [focus, setFocus] = useState(true);
   const blur = !focus;
-  const marketing =
-    document.location.href === "https://www.soulmatelights.com/";
+  // const marketing =
+  //   document.location.href === "https://www.soulmatelights.com/";
 
   return (
     <SpecificRouter history={isElectron() ? undefined : history}>
@@ -50,11 +50,11 @@ const Main = () => {
         />
 
         <Switch>
-          {marketing && (
+          {/* {marketing && (
             <Route exact path="/">
               <Marketing />
             </Route>
-          )}
+          )} */}
           <Route exact path="/marketing">
             <Marketing />
           </Route>
