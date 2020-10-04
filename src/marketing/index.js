@@ -176,7 +176,7 @@ export default function MarketingPage() {
                   </span>
                 </h2>
                 <p className="mt-3 text-base text-gray-500 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0">
-                  Soulmate is the easiest way to work with LEDs. Whether you're
+                  Soulmate is the easiest way to work with LEDs. Whether you’re
                   building an LED panel, lighting your room with an LED strip,
                   or just writing C++, try Soulmate free today.
                 </p>
@@ -296,7 +296,7 @@ export default function MarketingPage() {
                 <dd className="text-base text-gray-500 leading-6">
                   To write LED patterns, all you need is the{" "}
                   <a href="https://editor.soulmatelights.com/">Soulmate IDE.</a>{" "}
-                  Once you've got some patterns, just hook up your ESP32. We
+                  Once you’ve got some patterns, just hook up your ESP32. We
                   like the{" "}
                   <a href="https://m5stack.com/products/atom-lite-esp32-development-kit">
                     M5 Atom Lite
@@ -313,7 +313,7 @@ export default function MarketingPage() {
                   <a href="http://github.com/fastled/fastled">
                     FastLED library
                   </a>
-                  . But don't worry - we've made a{" "}
+                  . But don’t worry - we’ve made a{" "}
                   <a href="https://editor.soulmatelights.com/tutorial">
                     tutorial
                   </a>{" "}
@@ -325,7 +325,7 @@ export default function MarketingPage() {
                   How many LEDs can I control?
                 </dt>
                 <dd className="text-base text-gray-500 leading-6">
-                  Good question! We've tested up to 1200 LEDs from a single
+                  Good question! We’ve tested up to 1200 LEDs from a single
                   ESP32.
                 </dd>
               </div>
