@@ -16,6 +16,7 @@ import UserContainer from "~/containers/user";
 import history from "~/utils/history";
 import isElectron from "~/utils/isElectron";
 
+import Marketing from "../marketing";
 import Config from "./config";
 import Dashboard from "./dashboard";
 import Editor from "./editor";
@@ -42,75 +43,82 @@ const Main = () => {
     <SpecificRouter history={isElectron() ? undefined : history}>
       <LastLocationProvider>
         <div
-          className={classnames(
-            "h-screen flex overflow-hidden bg-gray-100 dark-mode:bg-gray-300 font-medium"
-          )}
-          style={{ WebkitUserSelect: "none", opacity: blur ? "0.9" : 1 }}
-        >
-          <div
-            className="absolute w-full h-5"
-            style={{ WebkitAppRegion: "drag" }}
-          />
+          className="absolute w-full h-5"
+          style={{ WebkitAppRegion: "drag" }}
+        />
 
-          <Menu />
+        <Switch>
+          <Route exact path="/marketing">
+            <Marketing />
+          </Route>
+          <Route>
+            <div
+              className={classnames(
+                "h-screen flex overflow-hidden bg-gray-100 dark-mode:bg-gray-300 font-medium"
+              )}
+              style={{ WebkitUserSelect: "none", opacity: blur ? "0.9" : 1 }}
+            >
+              <Menu />
 
-          <Notifications />
+              <Notifications />
 
-          <div className="flex flex-row flex-grow flex-shrink w-full min-w-0 bg-gray-100 dark-mode:bg-gray-800 dark-mode:text-white">
-            <Switch>
-              <Route exact path="/">
-                <Dashboard />
-              </Route>
+              <div className="flex flex-row flex-grow flex-shrink w-full min-w-0 bg-gray-100 dark-mode:bg-gray-800 dark-mode:text-white">
+                <Switch>
+                  <Route exact path="/">
+                    <Dashboard />
+                  </Route>
 
-              <Route exact path="/tutorial">
-                <Welcome />
-              </Route>
+                  <Route exact path="/tutorial">
+                    <Welcome />
+                  </Route>
 
-              <Route exact path="/my-patterns">
-                <MySketches />
-              </Route>
+                  <Route exact path="/my-patterns">
+                    <MySketches />
+                  </Route>
 
-              <Route exact path="/gallery">
-                <Gallery />
-              </Route>
+                  <Route exact path="/gallery">
+                    <Gallery />
+                  </Route>
 
-              <Route exact path="/flash">
-                <Flash />
-              </Route>
+                  <Route exact path="/flash">
+                    <Flash />
+                  </Route>
 
-              <Route exact path="/config">
-                <Config />
-              </Route>
+                  <Route exact path="/config">
+                    <Config />
+                  </Route>
 
-              <Route
-                path="/gallery/user/:id"
-                render={({
-                  match: {
-                    params: { id },
-                  },
-                }) => <User id={id} />}
-              />
+                  <Route
+                    path="/gallery/user/:id"
+                    render={({
+                      match: {
+                        params: { id },
+                      },
+                    }) => <User id={id} />}
+                  />
 
-              <Route
-                path="/gallery/:id"
-                render={({
-                  match: {
-                    params: { id },
-                  },
-                }) => <Editor id={id} />}
-              />
+                  <Route
+                    path="/gallery/:id"
+                    render={({
+                      match: {
+                        params: { id },
+                      },
+                    }) => <Editor id={id} />}
+                  />
 
-              <Route
-                path="/my-patterns/:id"
-                render={({
-                  match: {
-                    params: { id },
-                  },
-                }) => <Editor id={id} mine />}
-              />
-            </Switch>
-          </div>
-        </div>
+                  <Route
+                    path="/my-patterns/:id"
+                    render={({
+                      match: {
+                        params: { id },
+                      },
+                    }) => <Editor id={id} mine />}
+                  />
+                </Switch>
+              </div>
+            </div>
+          </Route>
+        </Switch>
       </LastLocationProvider>
     </SpecificRouter>
   );
