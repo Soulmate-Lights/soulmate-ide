@@ -6,6 +6,10 @@ import startCase from "lodash/startCase";
 import Monaco from "react-monaco-editor";
 import { Mode, useLightSwitch } from "use-light-switch";
 
+function isWindows() {
+  return navigator.platform.indexOf("Win") > -1;
+}
+
 const LINE_OFFSET = 65;
 
 const jsBeautifierConfig = {
@@ -44,6 +48,7 @@ const codeEditor = ({
   selection,
 }) => {
   let monacoInstance = useRef(false);
+  const [dirty, setDirty] = useState(false);
 
   const mode = useLightSwitch();
   const dark = mode === Mode.Dark;
@@ -79,6 +84,8 @@ const codeEditor = ({
     const monacoEditor = monacoInstance.current?.editor;
     if (!monacoEditor) return;
     let editorCode = monacoEditor?.getModel().getValue();
+
+    setDirty(false);
 
     if (formatCheckboxRef.current.checked) {
       const formattedCode = formatCode(editorCode);
@@ -155,7 +162,10 @@ const codeEditor = ({
             });
           }}
           key={dark ? "dark" : "light"}
-          onChange={onChange}
+          onChange={(code) => {
+            onChange && onChange(code);
+            setDirty(true);
+          }}
           options={{
             ...editorConfig,
             value: code,
@@ -196,6 +206,22 @@ const codeEditor = ({
           type="checkbox"
         />
       </label>
+
+      <span className="absolute inline-flex bottom-4 rounded-md shadow-sm right-8">
+        <button
+          className={classnames(
+            "inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent leading-5 rounded-md hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition ease-in-out duration-150",
+            {
+              "opacity-25": !dirty,
+            }
+          )}
+          disabled={dirty}
+          onClick={() => save()}
+          type="button"
+        >
+          Preview ({isWindows() ? "CTRL" : "CMD"}+S)
+        </button>
+      </span>
     </div>
   );
 };

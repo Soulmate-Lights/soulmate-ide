@@ -1,10 +1,14 @@
 import React from "react";
 
+import examples from "~/welcome/examples";
+
+import Example from "./example";
 import hand from "./hand.jpg";
 import logo from "./logo.png";
 import theboyz from "./theboyz.jpg";
 
 export default function MarketingPage() {
+  const [index, setIndex] = useState(0);
   return (
     <div className="full-width">
       <div className="relative overflow-hidden bg-white">
@@ -282,76 +286,141 @@ export default function MarketingPage() {
         </div>
       </div>
 
-      <div className="bg-white">
-        <div className="w-10/12 px-4 py-16 mx-auto max-w-screen-xl sm:py-24 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-extrabold text-center text-gray-900 leading-9">
-            Frequently asked questions
-          </h2>
-          <div className="px-12 mt-12">
-            <dl className="space-y-10 sm:space-y-0 sm:grid sm:grid-cols-2 sm:grid-rows-2 col-gap-8 sm:row-gap-12 lg:grid-cols-3">
-              <div className="px-4 mb-6 space-y-2">
-                <dt className="text-lg font-medium text-gray-900 leading-6">
-                  What do I need to get started?
-                </dt>
-                <dd className="text-base text-gray-500 leading-6">
-                  To write LED patterns, all you need is the{" "}
-                  <a href="https://editor.soulmatelights.com/">Soulmate IDE.</a>{" "}
-                  Once you’ve got some patterns, just hook up your ESP32. We
-                  like the{" "}
-                  <a href="https://m5stack.com/products/atom-lite-esp32-development-kit">
-                    M5 Atom Lite
-                  </a>{" "}
-                  - but any ESP32 will work.
-                </dd>
+      <div className="bg-gray-200">
+        <div className="w-10/12 px-4 py-16 pb-6 mx-auto max-w-screen-xl sm:py-24 sm:px-6 lg:px-8">
+          <div className="relative z-10 flex flex-row mb-8 md:mb-2 md:px-6">
+            <div>
+              <div className="text-base max-w-prose lg:max-w-none">
+                <p className="font-semibold tracking-wide text-indigo-600 uppercase leading-6">
+                  Demo time
+                </p>
+                <h1 className="mt-2 text-3xl font-extrabold tracking-tight text-gray-900 leading-8 sm:text-4xl sm:leading-10">
+                  The Soulmate IDE
+                </h1>
               </div>
-              <div className="px-4 mb-6 space-y-2">
-                <dt className="text-lg font-medium text-gray-900 leading-6">
-                  What language does Soulmate use?
-                </dt>
-                <dd className="text-base text-gray-500 leading-6">
-                  Soulmate patterns are made in C++, using the amazing{" "}
-                  <a href="http://github.com/fastled/fastled">
-                    FastLED library
-                  </a>
-                  . But don’t worry - we’ve made a{" "}
-                  <a href="https://editor.soulmatelights.com/tutorial">
-                    tutorial
-                  </a>{" "}
-                  to help you get started.
-                </dd>
+
+              <div className="mx-auto mt-3 text-gray-500 prose lg:max-w-none lg:row-start-1 lg:col-start-2">
+                <p>
+                  Try writing your own FastLED pattern here. Press CMD-S to
+                  save.
+                </p>
               </div>
-              <div className="px-4 mb-6 space-y-2">
-                <dt className="text-lg font-medium text-gray-900 leading-6">
-                  How many LEDs can I control?
-                </dt>
-                <dd className="text-base text-gray-500 leading-6">
-                  Good question! We’ve tested up to 1200 LEDs from a single
-                  ESP32.
-                </dd>
-              </div>
-              <div className="px-4 mb-6 space-y-2">
-                <dt className="text-lg font-medium text-gray-900 leading-6">
-                  What does it cost?
-                </dt>
-                <dd className="text-base text-gray-500 leading-6">
-                  Soulmate firmware is free and open-source, and we plan to keep
-                  it that way.
-                </dd>
-              </div>
-              <div className="px-4 mb-6 space-y-2">
-                <dt className="text-lg font-medium text-gray-900 leading-6">
-                  Where can I buy a Soulmate?
-                </dt>
-                <dd className="text-base text-gray-500 leading-6">
-                  Thanks for asking! You can buy a Soulmate from{" "}
-                  <a href="https://shop.soulmatelights.com/">
-                    the Soulmate Store
-                  </a>{" "}
-                  - buying a Soulmate helps keep the compiler servers running.
-                </dd>
-              </div>
-            </dl>
+            </div>
+
+            <div className="flex flex-col justify-center ml-auto">
+              <nav className="relative z-0 inline-flex shadow-sm">
+                <a
+                  aria-label="Previous"
+                  className="inline-flex items-center px-2 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 cursor-pointer select-none rounded-l-md leading-5 focus:z-10 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-100 active:text-gray-500 transition ease-in-out duration-150"
+                  onClick={() => index > 0 && setIndex(index - 1)}
+                >
+                  <svg
+                    className="w-5 h-5"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      clipRule="evenodd"
+                      d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
+                      fillRule="evenodd"
+                    />
+                  </svg>
+                  Previous
+                </a>
+                <a
+                  aria-label="Next"
+                  className="inline-flex items-center px-2 py-2 -ml-px text-sm font-medium text-gray-500 bg-white border border-gray-300 cursor-pointer select-none rounded-r-md leading-5 focus:z-10 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-100 active:text-gray-500 transition ease-in-out duration-150"
+                  onClick={() =>
+                    setIndex(index + 1 >= examples.length ? 0 : index + 1)
+                  }
+                >
+                  Next
+                  <svg
+                    className="w-5 h-5"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      clipRule="evenodd"
+                      d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                      fillRule="evenodd"
+                    />
+                  </svg>
+                </a>
+              </nav>
+            </div>
           </div>
+          <Example className="my-8" code={examples[index]} key={index} />
+        </div>
+      </div>
+
+      <div className="w-10/12 px-4 py-8 mx-auto max-w-screen-xl sm:py-16 sm:px-6 lg:px-8">
+        <h2 className="text-3xl font-extrabold text-center text-gray-900 leading-9">
+          Frequently asked questions
+        </h2>
+        <div className="px-12 mt-12">
+          <dl className="space-y-10 sm:space-y-0 sm:grid sm:grid-cols-2 sm:grid-rows-2 col-gap-8 sm:row-gap-12 lg:grid-cols-3">
+            <div className="px-4 mb-6 space-y-2">
+              <dt className="text-lg font-medium text-gray-900 leading-6">
+                What do I need to get started?
+              </dt>
+              <dd className="text-base text-gray-500 leading-6">
+                To write LED patterns, all you need is the{" "}
+                <a href="https://editor.soulmatelights.com/">Soulmate IDE.</a>{" "}
+                Once you’ve got some patterns, just hook up your ESP32. We like
+                the{" "}
+                <a href="https://m5stack.com/products/atom-lite-esp32-development-kit">
+                  M5 Atom Lite
+                </a>{" "}
+                - but any ESP32 will work.
+              </dd>
+            </div>
+            <div className="px-4 mb-6 space-y-2">
+              <dt className="text-lg font-medium text-gray-900 leading-6">
+                What language does Soulmate use?
+              </dt>
+              <dd className="text-base text-gray-500 leading-6">
+                Soulmate patterns are made in C++, using the amazing{" "}
+                <a href="http://github.com/fastled/fastled">FastLED library</a>.
+                But don’t worry - we’ve made a{" "}
+                <a href="https://editor.soulmatelights.com/tutorial">
+                  tutorial
+                </a>{" "}
+                to help you get started.
+              </dd>
+            </div>
+            <div className="px-4 mb-6 space-y-2">
+              <dt className="text-lg font-medium text-gray-900 leading-6">
+                How many LEDs can I control?
+              </dt>
+              <dd className="text-base text-gray-500 leading-6">
+                Good question! We’ve tested up to 1200 LEDs from a single ESP32.
+              </dd>
+            </div>
+            <div className="px-4 mb-6 space-y-2">
+              <dt className="text-lg font-medium text-gray-900 leading-6">
+                What does it cost?
+              </dt>
+              <dd className="text-base text-gray-500 leading-6">
+                Soulmate firmware is free and open-source, and we plan to keep
+                it that way.
+              </dd>
+            </div>
+            <div className="px-4 mb-6 space-y-2">
+              <dt className="text-lg font-medium text-gray-900 leading-6">
+                Where can I buy a Soulmate?
+              </dt>
+              <dd className="text-base text-gray-500 leading-6">
+                Thanks for asking! You can buy a Soulmate from{" "}
+                <a href="https://shop.soulmatelights.com/">
+                  the Soulmate Store
+                </a>{" "}
+                - buying a Soulmate helps keep the compiler servers running.
+              </dd>
+            </div>
+          </dl>
         </div>
       </div>
     </div>
