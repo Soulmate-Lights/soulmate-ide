@@ -163,6 +163,32 @@ export default function MarketingPage() {
                   Building your LEDs with Soulmate means you can use the
                   Soulmate mobile app to control your art.
                 </p>
+
+                <p className="flex flex-row items-center flex-grow">
+                  <a
+                    href="https://apps.apple.com/us/app/soulmate-lights/id1330064071?itsct=apps_box&itscg=30200"
+                    style={{
+                      display: "inline-block",
+                      overflow: "hidden",
+                      borderRadius: 13,
+                      width: 202,
+                    }}
+                  >
+                    <img
+                      alt="Download on the App Store"
+                      src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-US?size=250x83&releaseDate=1525824000&h=81675dcdecb1a69208c7e764a3712eb2"
+                      style={{ borderRadius: 13, width: 250, height: 83 }}
+                    />
+                  </a>
+
+                  <a href="https://play.google.com/store/apps/details?id=com.lantern&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1">
+                    <img
+                      alt="Get it on Google Play"
+                      className="w-64"
+                      src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png"
+                    />
+                  </a>
+                </p>
               </div>
             </div>
           </div>
@@ -172,7 +198,7 @@ export default function MarketingPage() {
       <div className="bg-gray-200">
         <div className="w-10/12 px-4 py-16 pb-6 mx-auto max-w-screen-xl sm:py-24 sm:px-6 lg:px-8">
           <div className="relative z-10 flex flex-row mb-8 md:mb-2 md:px-6">
-            <div>
+            <div className="w-full">
               <div className="text-base max-w-prose lg:max-w-none">
                 <p className="font-semibold tracking-wide text-purple-600 uppercase leading-6">
                   Demo time
@@ -182,60 +208,71 @@ export default function MarketingPage() {
                 </h1>
               </div>
 
-              <div className="mx-auto mt-3 text-gray-500 prose lg:max-w-none lg:row-start-1 lg:col-start-2">
+              <div className="mt-3 text-gray-500 lg:max-w-none lg:row-start-1 lg:col-start-2">
+                <p>
+                  The Soulmate IDE is an all-in-one app for building, previewing
+                  and sharing your FastLED patterns. Write real C++ code,
+                  preview it in the simulator in real-time, and then flash
+                  patterns to your Soulmate over USB. You can buy a Soulmate
+                  lamp from our online store, or use your own ESP32.
+                </p>
+              </div>
+              <div className="flex flex-row items-center mt-3 text-gray-500 lg:row-start-1 lg:col-start-2">
                 <p>
                   Try writing your own FastLED pattern here. Press CMD-S to
                   save.
                 </p>
+
+                <div className="w-auto ml-auto">
+                  <div className="flex flex-col justify-center ml-auto mr-2">
+                    <nav className="relative z-0 inline-flex shadow-sm">
+                      <a
+                        aria-label="Previous"
+                        className="inline-flex items-center px-2 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 cursor-pointer select-none rounded-l-md leading-5 focus:z-10 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-100 active:text-gray-500 transition ease-in-out duration-150"
+                        onClick={() => index > 0 && setIndex(index - 1)}
+                      >
+                        <svg
+                          className="w-5 h-5"
+                          fill="currentColor"
+                          viewBox="0 0 20 20"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            clipRule="evenodd"
+                            d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
+                            fillRule="evenodd"
+                          />
+                        </svg>
+                        Previous example
+                      </a>
+                      <a
+                        aria-label="Next"
+                        className="inline-flex items-center px-2 py-2 -ml-px text-sm font-medium text-gray-500 bg-white border border-gray-300 cursor-pointer select-none rounded-r-md leading-5 focus:z-10 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-100 active:text-gray-500 transition ease-in-out duration-150"
+                        onClick={() =>
+                          setIndex(index + 1 >= examples.length ? 0 : index + 1)
+                        }
+                      >
+                        Next example
+                        <svg
+                          className="w-5 h-5"
+                          fill="currentColor"
+                          viewBox="0 0 20 20"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            clipRule="evenodd"
+                            d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                            fillRule="evenodd"
+                          />
+                        </svg>
+                      </a>
+                    </nav>
+                  </div>
+                </div>
               </div>
             </div>
-
-            <div className="flex flex-col justify-center ml-auto">
-              <nav className="relative z-0 inline-flex shadow-sm">
-                <a
-                  aria-label="Previous"
-                  className="inline-flex items-center px-2 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 cursor-pointer select-none rounded-l-md leading-5 focus:z-10 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-100 active:text-gray-500 transition ease-in-out duration-150"
-                  onClick={() => index > 0 && setIndex(index - 1)}
-                >
-                  <svg
-                    className="w-5 h-5"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      clipRule="evenodd"
-                      d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
-                      fillRule="evenodd"
-                    />
-                  </svg>
-                  Previous
-                </a>
-                <a
-                  aria-label="Next"
-                  className="inline-flex items-center px-2 py-2 -ml-px text-sm font-medium text-gray-500 bg-white border border-gray-300 cursor-pointer select-none rounded-r-md leading-5 focus:z-10 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-100 active:text-gray-500 transition ease-in-out duration-150"
-                  onClick={() =>
-                    setIndex(index + 1 >= examples.length ? 0 : index + 1)
-                  }
-                >
-                  Next
-                  <svg
-                    className="w-5 h-5"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      clipRule="evenodd"
-                      d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                      fillRule="evenodd"
-                    />
-                  </svg>
-                </a>
-              </nav>
-            </div>
           </div>
-          <Example className="my-8" code={examples[index]} key={index} />
+          <Example className="mt-4 mb-8" code={examples[index]} key={index} />
         </div>
       </div>
 
