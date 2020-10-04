@@ -1,4 +1,4 @@
-require("./marketing.pcss");
+import "./marketing.pcss";
 
 import React from "react";
 import { AiFillApple, AiFillWindows } from "react-icons/ai";
