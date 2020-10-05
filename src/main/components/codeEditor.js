@@ -155,7 +155,7 @@ const codeEditor = ({
         "dark-mode:bg-gray-900 flex flex-col min-h-0"
       )}
     >
-      <div className="flex flex-grow flex-shrink min-h-0 overflow-hidden">
+      <div className="flex flex-grow flex-shrink h-full min-h-0 overflow-hidden">
         <Monaco
           editorDidMount={(editor) => {
             editor.changeViewZones((accessor) => {
