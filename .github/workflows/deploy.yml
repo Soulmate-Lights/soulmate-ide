@@ -1,13 +1,10 @@
 name: Deploy to web
 
-on:
-  push:
-    tags:
-      - "v*"
+on: push
 
 jobs:
   update-ui:
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
     steps:
       - name: Check out Git repository
         uses: actions/checkout@v2
