@@ -219,12 +219,12 @@ export default function MarketingPage() {
                   save.
                 </p>
 
-                <div className="w-auto ml-auto">
-                  <div className="flex flex-col justify-center ml-auto mr-2">
-                    <nav className="relative z-0 inline-flex shadow-sm">
+                <div className="w-auto ml-auto mr-8 lg:mr-4">
+                  <div className="flex flex-col justify-center ml-auto">
+                    <nav className="relative z-0 inline-flex flex-shrink-0 ml-12 shadow-sm">
                       <a
                         aria-label="Previous"
-                        className="inline-flex items-center px-2 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 cursor-pointer select-none rounded-l-md leading-5 focus:z-10 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-100 active:text-gray-500 transition ease-in-out duration-150"
+                        className="inline-flex items-center flex-shrink-0 px-2 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 cursor-pointer select-none rounded-l-md leading-5 focus:z-10 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-100 active:text-gray-500 transition ease-in-out duration-150"
                         onClick={() => index > 0 && setIndex(index - 1)}
                       >
                         <svg
@@ -243,7 +243,7 @@ export default function MarketingPage() {
                       </a>
                       <a
                         aria-label="Next"
-                        className="inline-flex items-center px-2 py-2 -ml-px text-sm font-medium text-gray-500 bg-white border border-gray-300 cursor-pointer select-none rounded-r-md leading-5 focus:z-10 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-100 active:text-gray-500 transition ease-in-out duration-150"
+                        className="inline-flex items-center flex-shrink-0 px-2 py-2 -ml-px text-sm font-medium text-gray-500 bg-white border border-gray-300 cursor-pointer select-none rounded-r-md leading-5 focus:z-10 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-100 active:text-gray-500 transition ease-in-out duration-150"
                         onClick={() =>
                           setIndex(index + 1 >= examples.length ? 0 : index + 1)
                         }
@@ -273,7 +273,7 @@ export default function MarketingPage() {
       </div>
 
       <div className="bg-gray-50">
-        <div className="py-12 mx-auto max-w-screen-xl sm:px-12 lg:py-16 lg:px-24 lg:flex lg:items-center lg:justify-between">
+        <div className="py-12 mx-auto sm:text-center lg:text-left max-w-screen-xl sm:px-12 lg:py-16 lg:px-24 lg:flex lg:items-center lg:justify-between">
           <h2 className="text-3xl font-extrabold tracking-tight text-gray-900 leading-9 sm:text-4xl sm:leading-10">
             Ready to dive in?
             <br />
@@ -281,7 +281,7 @@ export default function MarketingPage() {
               Open the Soulmate IDE to get started.
             </span>
           </h2>
-          <div className="flex mt-8 lg:flex-shrink-0 lg:mt-0 space-x-4">
+          <div className="flex justify-center pt-8 lg:justify-end lg:flex-shrink-0 lg:pt-0 space-x-4">
             <div className="inline-flex shadow rounded-md">
               <a
                 className="inline-flex items-center justify-center px-5 py-3 text-base font-medium text-white bg-purple-600 border border-transparent leading-6 rounded-md hover:bg-purple-500 focus:outline-none focus:shadow-outline transition duration-150 ease-in-out"
@@ -406,10 +406,6 @@ export default function MarketingPage() {
         </div>
       </div>
 
-      {/*
-  Tailwind UI components require Tailwind CSS v1.8 and the @tailwindcss/ui plugin.
-  Read the documentation to get started: https://tailwindui.com/documentation
-*/}
       <div className="bg-gray-50">
         <div className="px-4 py-12 mx-auto text-center max-w-screen-xl sm:px-6 lg:px-8 lg:py-24">
           <div className="space-y-12">
@@ -483,7 +479,7 @@ export default function MarketingPage() {
       <footer className="bg-white">
         <div className="px-4 py-12 mx-auto max-w-screen-xl sm:px-6 lg:py-16 lg:px-8">
           <div className="pt-8 mt-12 border-t border-gray-200">
-            <p className="text-base text-gray-400 leading-6 xl:text-center">
+            <p className="text-base text-center text-gray-400 leading-6">
               © 2020 Soulmate Lights, LLC. All rights reserved.
             </p>
           </div>
