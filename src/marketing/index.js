@@ -87,7 +87,7 @@ export default function MarketingPage() {
                 </p>
 
                 <p className="mt-3 text-base text-gray-500 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0">
-                  Made by a bunch of dudes in California.
+                  Made by a bunch of friends in California.
                 </p>
               </div>
             </main>
@@ -127,7 +127,7 @@ export default function MarketingPage() {
                   How it works
                 </p>
                 <h1 className="mt-2 mb-4 text-3xl font-extrabold tracking-tight text-gray-900 leading-8 sm:text-4xl sm:leading-10">
-                  Soulmate. LEDS reimagined.
+                  Soulmate. LEDs reimagined.
                 </h1>
               </div>
               <div className="mx-auto text-base max-w-prose lg:max-w-none">
@@ -174,7 +174,10 @@ export default function MarketingPage() {
                     />
                   </a>
 
-                  <a href="https://play.google.com/store/apps/details?id=com.lantern&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1">
+                  <a
+                    href="https://play.google.com/store/apps/details?id=com.lantern&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1"
+                    target="_blank"
+                  >
                     <img
                       alt="Get it on Google Play"
                       className="w-64"
@@ -269,12 +272,8 @@ export default function MarketingPage() {
         </div>
       </div>
 
-      {/*
-  Tailwind UI components require Tailwind CSS v1.8 and the @tailwindcss/ui plugin.
-  Read the documentation to get started: https://tailwindui.com/documentation
-*/}
       <div className="bg-gray-50">
-        <div className="px-4 py-12 mx-auto max-w-screen-xl sm:px-6 lg:py-16 lg:px-8 lg:flex lg:items-center lg:justify-between">
+        <div className="py-12 mx-auto max-w-screen-xl sm:px-12 lg:py-16 lg:px-24 lg:flex lg:items-center lg:justify-between">
           <h2 className="text-3xl font-extrabold tracking-tight text-gray-900 leading-9 sm:text-4xl sm:leading-10">
             Ready to dive in?
             <br />
@@ -326,10 +325,15 @@ export default function MarketingPage() {
               </dt>
               <dd className="text-base text-gray-500 leading-6">
                 To write LED patterns, all you need is the{" "}
-                <a href="https://editor.soulmatelights.com/">Soulmate IDE.</a>{" "}
+                <a href="https://editor.soulmatelights.com/" target="_blank">
+                  Soulmate IDE.
+                </a>{" "}
                 Once you’ve got some patterns, just hook up your ESP32. We like
                 the{" "}
-                <a href="https://m5stack.com/products/atom-lite-esp32-development-kit">
+                <a
+                  href="https://m5stack.com/products/atom-lite-esp32-development-kit"
+                  target="_blank"
+                >
                   M5 Atom Lite
                 </a>{" "}
                 - but any ESP32 will work.
@@ -341,9 +345,14 @@ export default function MarketingPage() {
               </dt>
               <dd className="text-base text-gray-500 leading-6">
                 Soulmate patterns are made in C++, using the amazing{" "}
-                <a href="http://github.com/fastled/fastled">FastLED library</a>.
-                But don’t worry - we’ve made a{" "}
-                <a href="https://editor.soulmatelights.com/tutorial">
+                <a href="http://github.com/fastled/fastled" target="_blank">
+                  FastLED library
+                </a>
+                . But don’t worry - we’ve made a{" "}
+                <a
+                  href="https://editor.soulmatelights.com/tutorial"
+                  target="_blank"
+                >
                   tutorial
                 </a>{" "}
                 to help you get started.
@@ -372,13 +381,102 @@ export default function MarketingPage() {
               </dt>
               <dd className="text-base text-gray-500 leading-6">
                 Thanks for asking! You can buy a Soulmate from{" "}
-                <a href="https://shop.soulmatelights.com/">
+                <a href="https://shop.soulmatelights.com/" target="_blank">
                   the Soulmate Store
                 </a>{" "}
                 - buying a Soulmate helps keep the compiler servers running.
               </dd>
             </div>
+            <div className="px-4 mb-6 space-y-2">
+              <dt className="text-lg font-medium text-gray-900 leading-6">
+                Is this project open source?
+              </dt>
+              <dd className="text-base text-gray-500 leading-6">
+                Of course it is. Check out the{" "}
+                <a
+                  href="https://github.com/Soulmate-Lights/soulmate-core"
+                  target="_blank"
+                >
+                  source code
+                </a>{" "}
+                on GitHub.
+              </dd>
+            </div>
           </dl>
+        </div>
+      </div>
+
+      {/*
+  Tailwind UI components require Tailwind CSS v1.8 and the @tailwindcss/ui plugin.
+  Read the documentation to get started: https://tailwindui.com/documentation
+*/}
+      <div className="bg-gray-50">
+        <div className="px-4 py-12 mx-auto text-center max-w-screen-xl sm:px-6 lg:px-8 lg:py-24">
+          <div className="space-y-12">
+            <div className="space-y-5 sm:mx-auto sm:max-w-xl sm:space-y-4 lg:max-w-5xl">
+              <h2 className="text-3xl font-extrabold tracking-tight leading-9 sm:text-4xl">
+                Meet our team
+              </h2>
+              <p className="text-xl text-gray-500 leading-7"></p>
+            </div>
+            <ul className="mx-auto space-y-16 sm:grid sm:grid-cols-2 sm:gap-16 sm:space-y-0 lg:grid-cols-4 lg:max-w-5xl">
+              {[
+                {
+                  twitter: "elliottkember",
+                  name: "Elliott Kember",
+                  image: require("./elliott.jpg"),
+                },
+                {
+                  twitter: "lazyJL",
+                  name: "Jess Lam",
+                  image: require("./jess.jpg"),
+                },
+                {
+                  twitter: "kalan_k",
+                  name: "Kalan Kircher",
+                  image: require("./kalan.jpg"),
+                },
+                {
+                  twitter: "pirrucello",
+                  name: "Brent Piruccello",
+                  image: require("./brent.jpg"),
+                },
+              ].map(({ name, image, twitter }) => (
+                <li key={name}>
+                  <div className="space-y-6">
+                    <div className="relative w-40 h-40 mx-auto overflow-hidden rounded-full cover xl:w-56 xl:h-56">
+                      <img
+                        alt
+                        className="absolute inset-0 object-cover w-full h-full rounded-lg shadow-lg"
+                        src={image}
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <div className="inline text-lg font-medium leading-6 space-y-1">
+                        <h4 className="flex flex-row justify-center text-gray-500 space-x-2">
+                          <span>{name}</span>
+                          <a
+                            className="text-gray-400 hover:text-gray-500 transition ease-in-out duration-150"
+                            href={`https://twitter.com/${twitter}`}
+                          >
+                            <span className="sr-only">Twitter</span>
+                            <svg
+                              className="w-5 h-5"
+                              fill="currentColor"
+                              viewBox="0 0 20 20"
+                            >
+                              <path d="M6.29 18.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0020 3.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.073 4.073 0 01.8 7.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 010 16.407a11.616 11.616 0 006.29 1.84" />
+                            </svg>
+                          </a>
+                        </h4>
+                        <p className="text-indigo-600"></p>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       </div>
 
