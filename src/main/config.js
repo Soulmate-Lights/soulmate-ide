@@ -1,3 +1,5 @@
+import { Helmet } from "react-helmet";
+
 import ConfigContainer from "~/containers/config";
 
 import Header from "./components/Header";
@@ -16,6 +18,9 @@ const Config = () => {
 
   return (
     <div className="flex flex-col w-full">
+      <Helmet>
+        <title>Config &mdash; Soulmate IDE</title>
+      </Helmet>
       <Header title="Config" />
 
       <div className="flex flex-col flex-shrink min-h-0 p-8 overflow-auto">

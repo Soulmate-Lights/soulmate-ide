@@ -1,3 +1,4 @@
+import { Helmet } from "react-helmet";
 import { HiOutlineLink } from "react-icons/hi";
 
 import CodeEditor from "~/components/codeEditor";
@@ -146,6 +147,14 @@ const Editor = ({ id, mine }) => {
 
   return (
     <div className="flex flex-col flex-grow flex-shrink min-w-0">
+      <Helmet>
+        <title>
+          {sketch?.name
+            ? `${sketch?.name} by ${sketch?.user?.name}`
+            : "Loading sketch..."}{" "}
+          &mdash; Soulmate IDE
+        </title>
+      </Helmet>
       <Header
         actions={[
           mine && menu,

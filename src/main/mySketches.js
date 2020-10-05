@@ -1,5 +1,6 @@
 import _ from "lodash";
 import moment from "moment";
+import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";
 
 import Header from "~/components/Header";
@@ -39,6 +40,9 @@ const MySketches = () => {
 
   return (
     <div className="flex flex-col flex-grow">
+      <Helmet>
+        <title>My Sketches &mdash; Soulmate IDE</title>
+      </Helmet>
       <Header
         actions={[
           !creating && {

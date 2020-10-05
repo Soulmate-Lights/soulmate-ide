@@ -1,3 +1,4 @@
+import { Helmet } from "react-helmet";
 import { useContainer } from "unstated-next";
 import { Mode, useLightSwitch } from "use-light-switch";
 
@@ -87,6 +88,9 @@ const Welcome = () => {
 
   return (
     <div className="flex flex-col flex-grow flex-shrink min-w-0">
+      <Helmet>
+        <title>Tutorial &mdash; Soulmate IDE</title>
+      </Helmet>
       <Header actions={actions} title="Tutorial" />
       <div className="flex flex-row flex-grow flex-shrink min-w-0 min-h-0">
         {!examples[index] ? (

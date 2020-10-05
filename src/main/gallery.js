@@ -1,5 +1,6 @@
 import _ from "lodash";
 import uniqBy from "lodash/uniqBy";
+import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";
 
 import Header from "~/components/Header";
@@ -35,6 +36,9 @@ const Gallery = () => {
 
   return (
     <div className="flex flex-col flex-grow">
+      <Helmet>
+        <title>Gallery &mdash; Soulmate IDE</title>
+      </Helmet>
       <Header
         actions={[
           <input

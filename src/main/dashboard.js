@@ -1,3 +1,4 @@
+import { Helmet } from "react-helmet";
 import { AiFillApple, AiFillWindows } from "react-icons/ai";
 import { Link } from "react-router-dom";
 
@@ -22,6 +23,9 @@ const Dashboard = () => {
       className="flex flex-col flex-grow w-full"
       // style={{ WebkitAppRegion: "drag" }}
     >
+      <Helmet>
+        <title>Home &mdash; Soulmate IDE</title>
+      </Helmet>
       <div className="relative flex flex-col items-center justify-center flex-grow p-6 overflow-hidden">
         <nav className="absolute top-0 flex flex-row items-center justify-center justify-between w-full p-2 px-5 pt-5">
           <span className="inline-flex w-full rounded-md">
