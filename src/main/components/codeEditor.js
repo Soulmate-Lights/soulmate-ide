@@ -47,6 +47,7 @@ const codeEditor = ({
   className,
   selection,
   autoFocus = false,
+  autoFormat = true,
 }) => {
   let monacoInstance = useRef(false);
   const [dirty, setDirty] = useState(false);
@@ -193,23 +194,25 @@ const codeEditor = ({
         </pre>
       )}
 
-      <label
-        className="absolute flex flex-row items-center justify-center text-xs top-2 right-8 dark-mode:text-white"
-        htmlFor="auto-format"
-      >
-        Auto-format
-        <input
-          className="ml-2"
-          defaultChecked={localStorage.autoFormat === "true"}
-          onChange={(e) => {
-            localStorage.autoFormat = e.target.checked;
+      {autoFormat && (
+        <label
+          className="absolute flex flex-row items-center justify-center text-xs top-2 right-8 dark-mode:text-white"
+          htmlFor="auto-format"
+        >
+          Auto-format
+          <input
+            className="ml-2"
+            defaultChecked={localStorage.autoFormat === "true"}
+            onChange={(e) => {
+              localStorage.autoFormat = e.target.checked;
 
-            save();
-          }}
-          ref={formatCheckboxRef}
-          type="checkbox"
-        />
-      </label>
+              save();
+            }}
+            ref={formatCheckboxRef}
+            type="checkbox"
+          />
+        </label>
+      )}
 
       <span className="absolute inline-flex bottom-4 rounded-md shadow-sm right-8">
         <button

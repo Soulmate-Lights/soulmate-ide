@@ -21,6 +21,7 @@ const Example = ({ code, className }) => {
     >
       <CodeEditor
         autoFocus={false}
+        autoFormat={false}
         className="relative flex-grow flex-shrink w-7/12 min-w-0 bg-white"
         code={code}
         onSave={(code) => {
