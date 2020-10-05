@@ -3,7 +3,7 @@ import { FaUsb } from "react-icons/fa";
 import { FiCloud, FiFolder, FiHome, FiSettings, FiSmile } from "react-icons/fi";
 import { Link, NavLink, useLocation } from "react-router-dom";
 
-import Logo from "~/images/Logo.svg";
+import Logo from "~/images/logo.svg";
 import isElectron from "~/utils/isElectron";
 
 import UserDetails from "./userDetails";
