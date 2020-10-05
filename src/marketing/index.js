@@ -477,6 +477,8 @@ export default function MarketingPage() {
                           <a
                             className="text-gray-400 hover:text-gray-500 transition ease-in-out duration-150"
                             href={`https://twitter.com/${twitter}`}
+                            rel="noopener noreferrer"
+                            target="_blank"
                           >
                             <span className="sr-only">Twitter</span>
                             <svg
