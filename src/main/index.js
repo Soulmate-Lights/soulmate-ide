@@ -31,9 +31,7 @@ const SpecificRouter = isElectron() ? HashRouter : Router;
 
 const Main = () => {
   useEffect(() => {
-    if (window.ipcRenderer) {
-      window.ipcRenderer.on("focus", (event, isFocused) => setFocus(isFocused));
-    }
+    window.ipcRenderer?.on("focus", (event, isFocused) => setFocus(isFocused));
   }, [window, window.ipcRenderer]);
 
   const [focus, setFocus] = useState(true);
@@ -42,113 +40,114 @@ const Main = () => {
     document.location.href === "https://www.soulmatelights.com/";
 
   return (
-    <SpecificRouter history={isElectron() ? undefined : history}>
-      <LastLocationProvider>
-        <div
-          className="absolute w-full h-5"
-          style={{ WebkitAppRegion: "drag" }}
-        />
+    <BuildsContainer.Provider>
+      <SpecificRouter history={isElectron() ? undefined : history}>
+        <LastLocationProvider>
+          <div
+            className="absolute w-full h-5"
+            style={{ WebkitAppRegion: "drag" }}
+          />
 
-        <Switch>
-          {marketing && (
-            <Route exact path="/">
+          <Switch>
+            {marketing && (
+              <Route exact path="/">
+                <Marketing />
+              </Route>
+            )}
+
+            <Route exact path="/marketing">
               <Marketing />
             </Route>
-          )}
-          <Route exact path="/marketing">
-            <Marketing />
-          </Route>
-          <Route>
-            <div
-              className={classnames(
-                "h-screen flex overflow-hidden bg-gray-100 dark-mode:bg-gray-300 font-medium"
-              )}
-              style={{ WebkitUserSelect: "none", opacity: blur ? "0.9" : 1 }}
-            >
-              <Menu />
 
-              <Notifications />
+            <Route>
+              <NotificationsContainer.Provider>
+                <ConfigContainer.Provider>
+                  <SelectionsContainer.Provider>
+                    <SketchesContainer.Provider>
+                      <UserContainer.Provider>
+                        <SoulmateContainer.Provider>
+                          <div
+                            className={classnames(
+                              "h-screen flex overflow-hidden bg-gray-100 dark-mode:bg-gray-300 font-medium"
+                            )}
+                            style={{
+                              WebkitUserSelect: "none",
+                              opacity: blur ? "0.9" : 1,
+                            }}
+                          >
+                            <Menu />
 
-              <div className="flex flex-row flex-grow flex-shrink w-full min-w-0 bg-gray-100 dark-mode:bg-gray-800 dark-mode:text-white">
-                <Switch>
-                  <Route exact path="/">
-                    <Dashboard />
-                  </Route>
+                            <Notifications />
 
-                  <Route exact path="/tutorial">
-                    <Welcome />
-                  </Route>
+                            <div className="flex flex-row flex-grow flex-shrink w-full min-w-0 bg-gray-100 dark-mode:bg-gray-800 dark-mode:text-white">
+                              <Switch>
+                                <Route exact path="/">
+                                  <Dashboard />
+                                </Route>
 
-                  <Route exact path="/my-patterns">
-                    <MySketches />
-                  </Route>
+                                <Route exact path="/tutorial">
+                                  <Welcome />
+                                </Route>
 
-                  <Route exact path="/gallery">
-                    <Gallery />
-                  </Route>
+                                <Route exact path="/my-patterns">
+                                  <MySketches />
+                                </Route>
 
-                  <Route exact path="/flash">
-                    <Flash />
-                  </Route>
+                                <Route exact path="/gallery">
+                                  <Gallery />
+                                </Route>
 
-                  <Route exact path="/config">
-                    <Config />
-                  </Route>
+                                <Route exact path="/flash">
+                                  <Flash />
+                                </Route>
 
-                  <Route
-                    path="/gallery/user/:id"
-                    render={({
-                      match: {
-                        params: { id },
-                      },
-                    }) => <User id={id} />}
-                  />
+                                <Route exact path="/config">
+                                  <Config />
+                                </Route>
 
-                  <Route
-                    path="/gallery/:id"
-                    render={({
-                      match: {
-                        params: { id },
-                      },
-                    }) => <Editor id={id} />}
-                  />
+                                <Route
+                                  path="/gallery/user/:id"
+                                  render={({
+                                    match: {
+                                      params: { id },
+                                    },
+                                  }) => <User id={id} />}
+                                />
 
-                  <Route
-                    path="/my-patterns/:id"
-                    render={({
-                      match: {
-                        params: { id },
-                      },
-                    }) => <Editor id={id} mine />}
-                  />
-                </Switch>
-              </div>
-            </div>
-          </Route>
-        </Switch>
-      </LastLocationProvider>
-    </SpecificRouter>
+                                <Route
+                                  path="/gallery/:id"
+                                  render={({
+                                    match: {
+                                      params: { id },
+                                    },
+                                  }) => <Editor id={id} />}
+                                />
+
+                                <Route
+                                  path="/my-patterns/:id"
+                                  render={({
+                                    match: {
+                                      params: { id },
+                                    },
+                                  }) => <Editor id={id} mine />}
+                                />
+                              </Switch>
+                            </div>
+                          </div>
+                        </SoulmateContainer.Provider>
+                      </UserContainer.Provider>
+                    </SketchesContainer.Provider>
+                  </SelectionsContainer.Provider>
+                </ConfigContainer.Provider>
+              </NotificationsContainer.Provider>
+            </Route>
+          </Switch>
+        </LastLocationProvider>
+      </SpecificRouter>
+    </BuildsContainer.Provider>
   );
 };
 
 const HotMain = hot(module)((params) => <Main {...params} />);
 
-const WrappedHotMain = (params) => (
-  <NotificationsContainer.Provider>
-    <ConfigContainer.Provider>
-      <SelectionsContainer.Provider>
-        <BuildsContainer.Provider>
-          <SketchesContainer.Provider>
-            <UserContainer.Provider>
-              <SoulmateContainer.Provider>
-                <HotMain {...params} />
-              </SoulmateContainer.Provider>
-            </UserContainer.Provider>
-          </SketchesContainer.Provider>
-        </BuildsContainer.Provider>
-      </SelectionsContainer.Provider>
-    </ConfigContainer.Provider>
-  </NotificationsContainer.Provider>
-);
-
-export default WrappedHotMain;
+export default HotMain;
