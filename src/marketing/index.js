@@ -433,7 +433,7 @@ export default function MarketingPage() {
               </h2>
               <p className="text-xl text-gray-500 leading-7"></p>
             </div>
-            <ul className="mx-auto space-y-16 sm:grid sm:grid-cols-2 sm:gap-16 sm:space-y-0 lg:grid-cols-4 lg:max-w-5xl">
+            <ul className="mx-auto space-y-16 sm:grid sm:grid-cols-2 sm:gap-16 sm:space-y-0 lg:grid-cols-3 lg:max-w-5xl">
               {[
                 {
                   twitter: "elliottkember",
@@ -455,10 +455,15 @@ export default function MarketingPage() {
                   name: "Brent Piruccello",
                   image: require("./brent.jpg"),
                 },
+                {
+                  twitter: "maxvoltar",
+                  name: "Tim Van Damme",
+                  image: require("./tim.jpeg"),
+                },
               ].map(({ name, image, twitter }) => (
                 <li key={name}>
                   <div className="space-y-6">
-                    <div className="relative w-40 h-40 mx-auto overflow-hidden rounded-full cover xl:w-56 xl:h-56">
+                    <div className="relative w-40 h-40 mx-auto overflow-hidden shadow-lg rounded-xl cover xl:w-56 xl:h-56">
                       <img
                         alt
                         className="absolute inset-0 object-cover w-full h-full rounded-lg shadow-lg"
