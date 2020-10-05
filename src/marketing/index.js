@@ -1,3 +1,5 @@
+/* eslint-disable no-useless-escape */
+
 import "./marketing.pcss";
 
 import React from "react";
@@ -176,6 +178,7 @@ export default function MarketingPage() {
 
                   <a
                     href="https://play.google.com/store/apps/details?id=com.lantern&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1"
+                    rel="noopener noreferrer"
                     target="_blank"
                   >
                     <img
@@ -325,13 +328,18 @@ export default function MarketingPage() {
               </dt>
               <dd className="text-base text-gray-500 leading-6">
                 To write LED patterns, all you need is the{" "}
-                <a href="https://editor.soulmatelights.com/" target="_blank">
+                <a
+                  href="https://editor.soulmatelights.com/"
+                  rel="noopener noreferrer"
+                  target="_blank"
+                >
                   Soulmate IDE.
                 </a>{" "}
                 Once you’ve got some patterns, just hook up your ESP32. We like
                 the{" "}
                 <a
                   href="https://m5stack.com/products/atom-lite-esp32-development-kit"
+                  rel="noopener noreferrer"
                   target="_blank"
                 >
                   M5 Atom Lite
@@ -345,12 +353,17 @@ export default function MarketingPage() {
               </dt>
               <dd className="text-base text-gray-500 leading-6">
                 Soulmate patterns are made in C++, using the amazing{" "}
-                <a href="http://github.com/fastled/fastled" target="_blank">
+                <a
+                  href="http://github.com/fastled/fastled"
+                  rel="noopener noreferrer"
+                  target="_blank"
+                >
                   FastLED library
                 </a>
                 . But don’t worry - we’ve made a{" "}
                 <a
                   href="https://editor.soulmatelights.com/tutorial"
+                  rel="noopener noreferrer"
                   target="_blank"
                 >
                   tutorial
@@ -381,7 +394,11 @@ export default function MarketingPage() {
               </dt>
               <dd className="text-base text-gray-500 leading-6">
                 Thanks for asking! You can buy a Soulmate from{" "}
-                <a href="https://shop.soulmatelights.com/" target="_blank">
+                <a
+                  href="https://shop.soulmatelights.com/"
+                  rel="noopener noreferrer"
+                  target="_blank"
+                >
                   the Soulmate Store
                 </a>{" "}
                 - buying a Soulmate helps keep the compiler servers running.
@@ -395,6 +412,7 @@ export default function MarketingPage() {
                 Of course it is. Check out the{" "}
                 <a
                   href="https://github.com/Soulmate-Lights/soulmate-core"
+                  rel="noopener noreferrer"
                   target="_blank"
                 >
                   source code
