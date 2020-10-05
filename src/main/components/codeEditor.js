@@ -92,7 +92,7 @@ const codeEditor = ({
 
     setDirty(false);
 
-    if (formatCheckboxRef.current.checked) {
+    if (formatCheckboxRef.current?.checked) {
       const formattedCode = formatCode(editorCode);
       const scroll = monacoEditor.getScrollTop();
       if (formattedCode !== editorCode) {
