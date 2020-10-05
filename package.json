@@ -45,6 +45,7 @@
     "react": "15.x || 16.x",
     "react-dom": "15.x || 16.x",
     "react-emojione": "^5.0.1",
+    "react-helmet": "^6.1.0",
     "react-hot-loader": "^4.12.21",
     "react-icons": "^3.10.0",
     "react-monaco-editor": "^0.36.0",
