@@ -5,6 +5,6 @@ services:
     ports:
       - "8081:8081"
   simulator-builder:
-    image: elliottkember/wokwi-hex
+    image: elliottkember/wokwi-hexi
     ports:
       - "8080:8080"
