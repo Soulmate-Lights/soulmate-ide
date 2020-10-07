@@ -112,8 +112,8 @@
     "build-worker-dev": "parcel build node_modules/monaco-editor/esm/vs/editor/editor.worker.js --no-source-maps",
     "release": "yarn clean && yarn version --patch && yarn react-build-desktop && AWS_PROFILE=soulmate-ide-updates electron-builder -mw --publish always",
     "clean": "rm -rf ./build ./.cache ./dist",
-    "postinstall": "npx electron-builder install-app-deps; git submodule update --init --recursive; yarn install-dependencies",
-    "install-dependencies": "(yarn --cwd services/build-server); (cd services/wokwi-server && npm install)",
+    "postinstall": "npx electron-builder install-app-deps",
+    "install-dependencies": "git submodule update --init --recursive; (yarn --cwd services/build-server); (cd services/wokwi-server && npm install)",
     "web": "NODE_ENV=development parcel index.html --open -p 3000",
     "bump": "yarn version --patch && git push && git push --tags"
   },
