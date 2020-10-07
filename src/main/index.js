@@ -128,14 +128,9 @@ const Main = () => {
                         }) => <Editor id={id} mine />}
                       />
 
-                      <Route
-                        path="/console"
-                        render={({
-                          match: {
-                            params: { id },
-                          },
-                        }) => <Console />}
-                      />
+                      <Route path="/console">
+                        <Console />
+                      </Route>
                     </Switch>
                   </div>
                 </div>
