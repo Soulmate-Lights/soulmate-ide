@@ -105,6 +105,7 @@
     "react-build": "yarn build-worker && parcel build index.html --out-dir build --public-url / --no-source-maps",
     "react-build-desktop": "yarn build-worker && parcel build index.html --out-dir build --public-url . --no-source-maps",
     "start": "yarn && concurrently \"cross-env BROWSER=none yarn react-start\" \"wait-on http://localhost:3000 && electron . \" \"yarn build-worker-dev\"",
+    "start-local": "local=true yarn start",
     "electron-build": "electron-builder",
     "build": "yarn react-build-desktop && yarn electron-build",
     "build-worker": "parcel build node_modules/monaco-editor/esm/vs/editor/editor.worker.js -d build --no-source-maps",

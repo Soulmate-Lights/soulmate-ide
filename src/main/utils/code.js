@@ -174,9 +174,14 @@ export const emptyCode = `void draw() {
   // For more information, visit https://github.com/FastLED/FastLED/wiki/Overview
 }`;
 
-// const simulatorBuildUrl = `http://${server}:8080/build`;
-const simulatorBuildUrl = "https://editor.soulmatelights.com/sketches/build";
-const fullBuildUrl = `http://builder.soulmatelights.com:8081/build`;
+const process = electron.remote.require("process");
+
+const simulatorBuildUrl = process.env.local
+  ? `http://localhost:8080/build`
+  : "https://editor.soulmatelights.com/sketches/build";
+const fullBuildUrl = process.env.local
+  ? `http://localhost:8081/build`
+  : `http://builder.soulmatelights.com:8081/build`;
 import streamWithProgress from "~/utils/streamWithProgress";
 
 const options = {

@@ -94,5 +94,16 @@ export default createContainer(() => {
     localStorage["config"] = JSON.stringify(config);
   }, [config]);
 
-  return { config, setConfig, setConfigFromSoulmateData, types, type, setType };
+  const [useLocalInstall, setUseLocalInstall] = useState(false);
+
+  return {
+    config,
+    setConfig,
+    setConfigFromSoulmateData,
+    types,
+    type,
+    setType,
+    useLocalInstall,
+    setUseLocalInstall,
+  };
 });
