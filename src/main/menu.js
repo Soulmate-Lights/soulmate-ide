@@ -1,4 +1,5 @@
 import classnames from "classnames";
+import { BsTerminal } from "react-icons/bs";
 import { FaUsb } from "react-icons/fa";
 import { FiCloud, FiFolder, FiHome, FiSettings, FiSmile } from "react-icons/fi";
 import { Link, NavLink, useLocation } from "react-router-dom";
@@ -99,6 +100,18 @@ const Menu = () => {
                 >
                   <FaUsb className={iconClass} />
                   USB Upload
+                </NavLink>
+              )}
+
+              {isElectron() && (
+                <NavLink
+                  activeClassName={activeLinkClass}
+                  className={linkClass}
+                  location={location}
+                  to="/console"
+                >
+                  <BsTerminal className={iconClass} />
+                  Console
                 </NavLink>
               )}
 

@@ -9,6 +9,8 @@ import { getFullBuild, prepareSketches } from "~/utils/code";
 import { flashBuild } from "~/utils/flash";
 import { getPort, PortListener } from "~/utils/ports";
 
+const LINE_LIMIT = 300;
+
 const SoulmateContainer = () => {
   const notificationsContainer = NotificationsContainer.useContainer();
   const configContainer = ConfigContainer.useContainer();
@@ -64,7 +66,7 @@ const SoulmateContainer = () => {
         configContainer.setConfigFromSoulmateData(data);
         setName(data?.name || "USB Soulmate");
       }
-      setText((oldText) => [...takeRight(oldText, 100), text]);
+      setText((oldText) => [...takeRight(oldText, LINE_LIMIT), text]);
     });
 
     setListener(listener);

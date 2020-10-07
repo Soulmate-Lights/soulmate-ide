@@ -18,6 +18,7 @@ import isElectron from "~/utils/isElectron";
 
 import Marketing from "../marketing";
 import Config from "./config";
+import Console from "./console";
 import Dashboard from "./dashboard";
 import Editor from "./editor";
 import Flash from "./flash";
@@ -60,86 +61,85 @@ const Main = () => {
             </Route>
 
             <Route>
-              <NotificationsContainer.Provider>
-                <ConfigContainer.Provider>
-                  <SelectionsContainer.Provider>
-                    <SketchesContainer.Provider>
-                      <UserContainer.Provider>
-                        <SoulmateContainer.Provider>
-                          <div
-                            className={classnames(
-                              "h-screen flex overflow-hidden bg-gray-100 dark-mode:bg-gray-300 font-medium"
-                            )}
-                            style={{
-                              WebkitUserSelect: "none",
-                              opacity: blur ? "0.9" : 1,
-                            }}
-                          >
-                            <Menu />
+              <ContainerProvider>
+                <div
+                  className={classnames(
+                    "h-screen flex overflow-hidden bg-gray-100 dark-mode:bg-gray-300 font-medium"
+                  )}
+                  style={{
+                    WebkitUserSelect: "none",
+                    opacity: blur ? "0.9" : 1,
+                  }}
+                >
+                  <Menu />
 
-                            <Notifications />
+                  <Notifications />
 
-                            <div className="flex flex-row flex-grow flex-shrink w-full min-w-0 bg-gray-100 dark-mode:bg-gray-800 dark-mode:text-white">
-                              <Switch>
-                                <Route exact path="/">
-                                  <Dashboard />
-                                </Route>
+                  <div className="flex flex-row flex-grow flex-shrink w-full min-w-0 bg-gray-100 dark-mode:bg-gray-800 dark-mode:text-white">
+                    <Switch>
+                      <Route exact path="/">
+                        <Dashboard />
+                      </Route>
 
-                                <Route exact path="/tutorial">
-                                  <Welcome />
-                                </Route>
+                      <Route exact path="/tutorial">
+                        <Welcome />
+                      </Route>
 
-                                <Route exact path="/my-patterns">
-                                  <MySketches />
-                                </Route>
+                      <Route exact path="/my-patterns">
+                        <MySketches />
+                      </Route>
 
-                                <Route exact path="/gallery">
-                                  <Gallery />
-                                </Route>
+                      <Route exact path="/gallery">
+                        <Gallery />
+                      </Route>
 
-                                <Route exact path="/flash">
-                                  <Flash />
-                                </Route>
+                      <Route exact path="/flash">
+                        <Flash />
+                      </Route>
 
-                                <Route exact path="/config">
-                                  <Config />
-                                </Route>
+                      <Route exact path="/config">
+                        <Config />
+                      </Route>
 
-                                <Route
-                                  path="/gallery/user/:id"
-                                  render={({
-                                    match: {
-                                      params: { id },
-                                    },
-                                  }) => <User id={id} />}
-                                />
+                      <Route
+                        path="/gallery/user/:id"
+                        render={({
+                          match: {
+                            params: { id },
+                          },
+                        }) => <User id={id} />}
+                      />
 
-                                <Route
-                                  path="/gallery/:id"
-                                  render={({
-                                    match: {
-                                      params: { id },
-                                    },
-                                  }) => <Editor id={id} />}
-                                />
+                      <Route
+                        path="/gallery/:id"
+                        render={({
+                          match: {
+                            params: { id },
+                          },
+                        }) => <Editor id={id} />}
+                      />
 
-                                <Route
-                                  path="/my-patterns/:id"
-                                  render={({
-                                    match: {
-                                      params: { id },
-                                    },
-                                  }) => <Editor id={id} mine />}
-                                />
-                              </Switch>
-                            </div>
-                          </div>
-                        </SoulmateContainer.Provider>
-                      </UserContainer.Provider>
-                    </SketchesContainer.Provider>
-                  </SelectionsContainer.Provider>
-                </ConfigContainer.Provider>
-              </NotificationsContainer.Provider>
+                      <Route
+                        path="/my-patterns/:id"
+                        render={({
+                          match: {
+                            params: { id },
+                          },
+                        }) => <Editor id={id} mine />}
+                      />
+
+                      <Route
+                        path="/console"
+                        render={({
+                          match: {
+                            params: { id },
+                          },
+                        }) => <Console />}
+                      />
+                    </Switch>
+                  </div>
+                </div>
+              </ContainerProvider>
             </Route>
           </Switch>
         </LastLocationProvider>
@@ -147,6 +147,20 @@ const Main = () => {
     </BuildsContainer.Provider>
   );
 };
+
+const ContainerProvider = ({ children }) => (
+  <NotificationsContainer.Provider>
+    <ConfigContainer.Provider>
+      <SelectionsContainer.Provider>
+        <SketchesContainer.Provider>
+          <UserContainer.Provider>
+            <SoulmateContainer.Provider>{children}</SoulmateContainer.Provider>
+          </UserContainer.Provider>
+        </SketchesContainer.Provider>
+      </SelectionsContainer.Provider>
+    </ConfigContainer.Provider>
+  </NotificationsContainer.Provider>
+);
 
 const HotMain = hot(module)((params) => <Main {...params} />);
 

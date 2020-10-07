@@ -88,10 +88,11 @@ const Console = ({ className }) => {
       </div>
 
       <button
-        className="absolute p-4 text-lg text-gray-800 bg-white rounded right-2 bottom-2"
+        className="absolute flex flex-row items-center px-4 py-2 text-sm text-gray-800 bg-white rounded right-4 bottom-4 space-x-2"
         onClick={restart}
       >
         <VscDebugRestart />
+        <span>Restart</span>
       </button>
     </div>
   );
