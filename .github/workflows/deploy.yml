@@ -35,6 +35,8 @@ jobs:
 
       - name: Push changes
         run: |
+          git config --global user.name "Github Actions"
+          git config --global user.email "elliott@soulmatelights.com"
           git add public soulmate-ide
           git commit -m "Update UI" || echo "No changes"
           git push
