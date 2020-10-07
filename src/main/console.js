@@ -72,10 +72,10 @@ const Console = ({ className }) => {
 
         {flashing && (
           <p className="relative block w-full h-6 pl-2 my-2 overflow-hidden break-words">
-            <div
+            <span
               className="absolute h-full bg-gray-500 rounded l-0 t-0"
               style={{ width: `${usbFlashingPercentage}%` }}
-            ></div>
+            ></span>
             <span className="absolute z-20 h-full px-2 py-1 text-white">
               {usbFlashingPercentage ? (
                 <>Flashing new firmware ({usbFlashingPercentage || 0}%)</>
