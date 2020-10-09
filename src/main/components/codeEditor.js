@@ -222,8 +222,8 @@ const codeEditor = ({
               "opacity-25": !dirty,
             }
           )}
-          disabled={dirty}
-          onClick={() => save()}
+          disabled={!dirty}
+          onClick={save}
           type="button"
         >
           Preview ({isWindows() ? "CTRL" : "CMD"}+S)
