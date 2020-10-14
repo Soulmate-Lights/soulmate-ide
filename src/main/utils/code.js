@@ -133,7 +133,7 @@ ${ledType === "WS2812B" ? `#define USE_WS2812B true` : ""}
 ${ledType === "WS2812B" ? "#define SOULMATE_COLOR_ORDER GRB" : ""}
 
 #define BUTTON_ON_VALUE LOW
-#define SOULMATE_BUTTON_PIN ${button}
+${button && `#define SOULMATE_BUTTON_PIN ${button}`}
 #define SOULMATE_DATA_PIN ${data}
 #define SOULMATE_CLOCK_PIN ${clock}
 #define SOULMATE_LED_TYPE ${ledType}

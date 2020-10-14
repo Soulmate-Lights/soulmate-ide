@@ -113,7 +113,7 @@ const Config = () => {
                                 onChange={(e) =>
                                   setConfig({
                                     ...config,
-                                    button: parseInt(e.target.value),
+                                    button: e.target.value,
                                   })
                                 }
                                 value={config.button}
