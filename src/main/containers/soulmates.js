@@ -27,16 +27,21 @@ const SoulmateContainer = () => {
   // Web-safe!
   if (!window.ipcRenderer) return {};
 
+  const getBuild = async (sketches, config) => {
+    const preparedCode = prepareSketches(sketches, config);
+    console.log("[flashSketches]", { preparedCode });
+    const build = await getFullBuild(preparedCode);
+
+    return build;
+  };
+
   const flashSketches = async (sketches, config) => {
     console.log("[flashSketches]", { sketches, config });
 
     listener?.close();
     setFlashing(true);
 
-    const preparedCode = prepareSketches(sketches, config);
-    console.log("[flashSketches]", { preparedCode });
-    const build = await getFullBuild(preparedCode);
-
+    const build = await getBuild(sketches, config);
     if (!build) {
       setFlashing(false);
       return false;
@@ -115,6 +120,7 @@ const SoulmateContainer = () => {
   };
 
   return {
+    getBuild,
     flashSketches,
     soulmateLoading,
     port,

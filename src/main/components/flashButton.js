@@ -1,4 +1,5 @@
 import startCase from "lodash/startCase";
+import { BiCloudDownload } from "react-icons/bi";
 import { Link } from "react-router-dom";
 
 import ConfigContainer from "~/containers/config";
@@ -18,6 +19,7 @@ const FlashButton = ({ selectedSketches, disabled = false, className }) => {
     flashSketches,
     soulmateLoading,
     flashing,
+    getBuild,
     usbFlashingPercentage,
     name,
     port,
@@ -29,6 +31,19 @@ const FlashButton = ({ selectedSketches, disabled = false, className }) => {
     if (!result) {
       notificationsContainer.notify("Error flashing!", "error");
     }
+  };
+
+  const download = async () => {
+    const build = await getBuild(selectedSketches, config);
+    const destination = await remote.dialog.showSaveDialog(
+      remote.getCurrentWindow(),
+      { defaultPath: "Firmware.bin" }
+    );
+
+    remote.require("fs").copyFile(build, destination.filePath, (err) => {
+      if (err) return console.error(err);
+      console.log("success!");
+    });
   };
 
   const disableFlashButton =
@@ -88,6 +103,7 @@ const FlashButton = ({ selectedSketches, disabled = false, className }) => {
       <button
         className={classnames(flashButtonClassName, {
           "rounded-l-none": showConfigButton && !soulmateLoading,
+          "rounded-r-none": true,
           "cursor-auto": disableFlashButton,
           "hover:bg-purple-500": !disableFlashButton,
         })}
@@ -96,6 +112,20 @@ const FlashButton = ({ selectedSketches, disabled = false, className }) => {
         type="button"
       >
         {text}
+      </button>
+
+      <button
+        className={classnames(flashButtonClassName, {
+          "rounded-l-none": true,
+          "cursor-auto": disableFlashButton,
+          "hover:bg-purple-700": !disableFlashButton,
+          "bg-purple-700": !disableFlashButton,
+        })}
+        disabled={disableFlashButton}
+        onClick={download}
+        type="button"
+      >
+        <BiCloudDownload />
       </button>
     </div>
   );

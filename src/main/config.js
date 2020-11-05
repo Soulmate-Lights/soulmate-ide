@@ -81,7 +81,7 @@ const Config = () => {
                                 onChange={(e) =>
                                   setConfig({
                                     ...config,
-                                    data: parseInt(e.target.value),
+                                    data: e.target.value,
                                   })
                                 }
                                 value={config.data}
@@ -97,7 +97,7 @@ const Config = () => {
                                 onChange={(e) =>
                                   setConfig({
                                     ...config,
-                                    clock: parseInt(e.target.value),
+                                    clock: e.target.value,
                                   })
                                 }
                                 value={config.clock}
@@ -113,7 +113,7 @@ const Config = () => {
                                 onChange={(e) =>
                                   setConfig({
                                     ...config,
-                                    button: parseInt(e.target.value),
+                                    button: e.target.value,
                                   })
                                 }
                                 value={config.button}
@@ -139,7 +139,7 @@ const Config = () => {
                                 onChange={(e) =>
                                   setConfig({
                                     ...config,
-                                    rows: parseInt(e.target.value),
+                                    rows: e.target.value,
                                   })
                                 }
                                 value={config.rows}
@@ -155,7 +155,7 @@ const Config = () => {
                                 onChange={(e) =>
                                   setConfig({
                                     ...config,
-                                    cols: parseInt(e.target.value),
+                                    cols: e.target.value,
                                   })
                                 }
                                 value={config.cols}
