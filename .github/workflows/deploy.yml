@@ -3,7 +3,7 @@ name: Deploy to web
 on:
   push:
     tags:
-      - "*"
+      - "v*"
 
 jobs:
   update-ui:
