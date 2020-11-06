@@ -8,6 +8,7 @@ import Sketch from "~/components/sketch";
 import SketchesContainer from "~/containers/sketches";
 import UserContainer from "~/containers/user";
 import Logo from "~/images/logo.svg";
+import groupSketches from "~/utils/groupSketches";
 import history from "~/utils/history";
 
 const MySketches = () => {
@@ -16,27 +17,18 @@ const MySketches = () => {
     createSketch,
     fetchSketches,
   } = SketchesContainer.useContainer();
+
+  useEffect(() => {
+    fetchSketches();
+  }, []);
+
   const { userDetails, login } = UserContainer.useContainer();
 
   const [newSketchName, setNewSketchName] = useState("");
   const [creating, setCreating] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  let groupedSketches = _.groupBy(sketches, (sketch) => {
-    return moment(sketch.updated_at).startOf("week").toDate();
-  });
-
-  const sortObjectKeys = (obj) =>
-    _.sortBy(Object.keys(obj), (key) => -moment(key)).reduce((acc, key) => {
-      acc[key] = obj[key];
-      return acc;
-    }, {});
-
-  groupedSketches = sortObjectKeys(groupedSketches);
-
-  useEffect(() => {
-    fetchSketches();
-  }, []);
+  const groups = groupSketches(sketches);
 
   return (
     <div className="flex flex-col flex-grow">
@@ -113,8 +105,7 @@ const MySketches = () => {
       {userDetails && (
         <div className="flex flex-col flex-grow flex-shrink p-8 overflow-auto">
           {!sketches && <Logo className="loading-spinner" />}
-          {_.map(Object.keys(groupedSketches).sort(), (key) => {
-            const sketches = groupedSketches[key];
+          {_.map(groups, ({ key, sketches }) => {
             return (
               <div key={key}>
                 <h3 className="mb-2 text-lg">
