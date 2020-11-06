@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import ConfigContainer from "~/containers/config";
 import NotificationsContainer from "~/containers/notifications";
 import Soulmates from "~/containers/soulmates";
+import UserContainer from "~/containers/user";
 import Logo from "~/images/logo.svg";
 
 const configButtonClassName =
@@ -15,6 +16,7 @@ const flashButtonClassName =
 
 const FlashButton = ({ selectedSketches, disabled = false, className }) => {
   const { type, config } = ConfigContainer.useContainer();
+  const { isAdmin } = UserContainer.useContainer();
   const {
     flashSketches,
     soulmateLoading,
@@ -103,7 +105,7 @@ const FlashButton = ({ selectedSketches, disabled = false, className }) => {
       <button
         className={classnames(flashButtonClassName, {
           "rounded-l-none": showConfigButton && !soulmateLoading,
-          "rounded-r-none": true,
+          "rounded-r-none": isAdmin(),
           "cursor-auto": disableFlashButton,
           "hover:bg-purple-500": !disableFlashButton,
         })}
@@ -114,19 +116,21 @@ const FlashButton = ({ selectedSketches, disabled = false, className }) => {
         {text}
       </button>
 
-      <button
-        className={classnames(flashButtonClassName, {
-          "rounded-l-none": true,
-          "cursor-auto": disableFlashButton,
-          "hover:bg-purple-700": !disableFlashButton,
-          "bg-purple-700": !disableFlashButton,
-        })}
-        disabled={disableFlashButton}
-        onClick={download}
-        type="button"
-      >
-        <BiCloudDownload />
-      </button>
+      {isAdmin() && (
+        <button
+          className={classnames(flashButtonClassName, {
+            "rounded-l-none": true,
+            "cursor-auto": disableFlashButton,
+            "hover:bg-purple-700": !disableFlashButton,
+            "bg-purple-700": !disableFlashButton,
+          })}
+          disabled={disableFlashButton}
+          onClick={download}
+          type="button"
+        >
+          <BiCloudDownload />
+        </button>
+      )}
     </div>
   );
 };
