@@ -1,14 +1,10 @@
-import _ from "lodash";
-import moment from "moment";
 import { Helmet } from "react-helmet";
-import { Link } from "react-router-dom";
 
 import Header from "~/components/Header";
-import Sketch from "~/components/sketch";
+import TimeGroupedSketches from "~/components/timeGroupedSketches";
 import SketchesContainer from "~/containers/sketches";
 import UserContainer from "~/containers/user";
 import Logo from "~/images/logo.svg";
-import groupSketches from "~/utils/groupSketches";
 import history from "~/utils/history";
 
 const MySketches = () => {
@@ -28,8 +24,6 @@ const MySketches = () => {
   const [creating, setCreating] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const groups = groupSketches(sketches);
-
   return (
     <div className="flex flex-col flex-grow">
       <Helmet>
@@ -46,6 +40,7 @@ const MySketches = () => {
               <input
                 autoFocus
                 className="block w-full h-8 py-2 text-sm rounded-r-none form-input focus:z-10"
+                onBlur={() => setCreating(false)}
                 onChange={(e) => setNewSketchName(e.target.value)}
                 onKeyDown={async (e) => {
                   if (e.key === "Escape") {
@@ -102,27 +97,7 @@ const MySketches = () => {
         </div>
       )}
 
-      {userDetails && (
-        <div className="flex flex-col flex-grow flex-shrink p-8 overflow-auto">
-          {!sketches && <Logo className="loading-spinner" />}
-          {_.map(groups, ({ key, sketches }) => {
-            return (
-              <div key={key}>
-                <h3 className="mb-2 text-lg">
-                  {moment(sketches[0].updated_at).fromNow()}
-                </h3>
-                <div className="flex flex-row flex-wrap">
-                  {sketches?.map((sketch) => (
-                    <Link key={sketch.id} to={`/my-patterns/${sketch.id}`}>
-                      <Sketch className="mb-4 mr-4" sketch={sketch} />
-                    </Link>
-                  ))}
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      )}
+      {userDetails && <TimeGroupedSketches mine sketches={sketches} />}
     </div>
   );
 };
