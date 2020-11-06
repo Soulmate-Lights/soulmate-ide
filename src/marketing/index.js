@@ -455,7 +455,7 @@ export default function MarketingPage() {
                   image: require("./kalan.jpg"),
                 },
                 {
-                  twitter: "pirrucello",
+                  twitter: "pirruccello",
                   name: "Brent Piruccello",
                   image: require("./brent.jpg"),
                 },
