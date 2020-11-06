@@ -15,6 +15,7 @@ import SoulmateContainer from "~/containers/soulmates";
 import UserContainer from "~/containers/user";
 import history from "~/utils/history";
 import isElectron from "~/utils/isElectron";
+import isMac from "~/utils/isMac";
 
 import Marketing from "../marketing";
 import Config from "./config";
@@ -40,106 +41,121 @@ const Main = () => {
   const marketing =
     document.location.href === "https://www.soulmatelights.com/";
 
+  const showTopBar = isMac() && isElectron();
+
   return (
-    <BuildsContainer.Provider>
-      <SpecificRouter history={isElectron() ? undefined : history}>
-        <LastLocationProvider>
-          <div
-            className="absolute w-full h-5"
-            style={{ WebkitAppRegion: "drag" }}
-          />
+    <div className="relative flex flex-col flex-grow h-screen dark-mode:bg-gray-300 dark-mode:bg-gray-700">
+      {showTopBar && (
+        <div
+          className={classnames("absolute w-full h-6  border-b ", {
+            "bg-gray-200 dark-mode:bg-gray-700 border-gray-300 dark-mode:border-gray-600": focus,
+            "bg-gray-100 dark-mode:bg-gray-600 dark-mode:border-gray-700 ": !focus,
+          })}
+          style={{ WebkitAppRegion: "drag" }}
+        />
+      )}
 
-          <Switch>
-            {marketing && (
-              <Route exact path="/">
-                <Marketing />
-              </Route>
-            )}
+      <div
+        className={classnames("flex flex-grow flex-col flex-shrink h-screen", {
+          "pt-6": showTopBar,
+        })}
+      >
+        <BuildsContainer.Provider>
+          <SpecificRouter history={isElectron() ? undefined : history}>
+            <LastLocationProvider>
+              <Switch>
+                {marketing && (
+                  <Route exact path="/">
+                    <Marketing />
+                  </Route>
+                )}
 
-            <Route exact path="/marketing">
-              <Marketing />
-            </Route>
+                <Route exact path="/marketing">
+                  <Marketing />
+                </Route>
 
-            <Route>
-              <ContainerProvider>
-                <div
-                  className={classnames(
-                    "h-screen flex overflow-hidden bg-gray-100 dark-mode:bg-gray-300 font-medium"
-                  )}
-                  style={{
-                    WebkitUserSelect: "none",
-                    opacity: blur ? "0.9" : 1,
-                  }}
-                >
-                  <Menu />
+                <Route>
+                  <ContainerProvider>
+                    <div
+                      className={classnames(
+                        "flex flex-shrink flex-grow overflow-hidden bg-gray-100 dark-mode:bg-gray-300 font-medium"
+                      )}
+                      style={{
+                        WebkitUserSelect: "none",
+                        opacity: blur ? "0.9" : 1,
+                      }}
+                    >
+                      <Menu />
 
-                  <Notifications />
+                      <Notifications />
 
-                  <div className="flex flex-row flex-grow flex-shrink w-full min-w-0 bg-gray-100 dark-mode:bg-gray-800 dark-mode:text-white">
-                    <Switch>
-                      <Route exact path="/">
-                        <Dashboard />
-                      </Route>
+                      <div className="flex flex-row flex-grow flex-shrink w-full min-w-0 bg-gray-100 dark-mode:bg-gray-800 dark-mode:text-white">
+                        <Switch>
+                          <Route exact path="/">
+                            <Dashboard />
+                          </Route>
 
-                      <Route exact path="/tutorial">
-                        <Welcome />
-                      </Route>
+                          <Route exact path="/tutorial">
+                            <Welcome />
+                          </Route>
 
-                      <Route exact path="/my-patterns">
-                        <MySketches />
-                      </Route>
+                          <Route exact path="/my-patterns">
+                            <MySketches />
+                          </Route>
 
-                      <Route exact path="/gallery">
-                        <Gallery />
-                      </Route>
+                          <Route exact path="/gallery">
+                            <Gallery />
+                          </Route>
 
-                      <Route exact path="/flash">
-                        <Flash />
-                      </Route>
+                          <Route exact path="/flash">
+                            <Flash />
+                          </Route>
 
-                      <Route exact path="/config">
-                        <Config />
-                      </Route>
+                          <Route exact path="/config">
+                            <Config />
+                          </Route>
 
-                      <Route
-                        path="/gallery/user/:id"
-                        render={({
-                          match: {
-                            params: { id },
-                          },
-                        }) => <User id={id} />}
-                      />
+                          <Route
+                            path="/gallery/user/:id"
+                            render={({
+                              match: {
+                                params: { id },
+                              },
+                            }) => <User id={id} />}
+                          />
 
-                      <Route
-                        path="/gallery/:id"
-                        render={({
-                          match: {
-                            params: { id },
-                          },
-                        }) => <Editor id={id} />}
-                      />
+                          <Route
+                            path="/gallery/:id"
+                            render={({
+                              match: {
+                                params: { id },
+                              },
+                            }) => <Editor id={id} />}
+                          />
 
-                      <Route
-                        path="/my-patterns/:id"
-                        render={({
-                          match: {
-                            params: { id },
-                          },
-                        }) => <Editor id={id} mine />}
-                      />
+                          <Route
+                            path="/my-patterns/:id"
+                            render={({
+                              match: {
+                                params: { id },
+                              },
+                            }) => <Editor id={id} mine />}
+                          />
 
-                      <Route path="/console">
-                        <Console />
-                      </Route>
-                    </Switch>
-                  </div>
-                </div>
-              </ContainerProvider>
-            </Route>
-          </Switch>
-        </LastLocationProvider>
-      </SpecificRouter>
-    </BuildsContainer.Provider>
+                          <Route path="/console">
+                            <Console />
+                          </Route>
+                        </Switch>
+                      </div>
+                    </div>
+                  </ContainerProvider>
+                </Route>
+              </Switch>
+            </LastLocationProvider>
+          </SpecificRouter>
+        </BuildsContainer.Provider>
+      </div>
+    </div>
   );
 };
 

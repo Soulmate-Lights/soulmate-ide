@@ -33,9 +33,7 @@ const Menu = () => {
     >
       <div className="flex flex-col w-72">
         <div className="flex flex-col flex-1 h-0">
-          <div
-            className={classnames("flex-1 flex flex-col pb-4 overflow-y-auto")}
-          >
+          <div className="flex flex-col flex-1 pb-4 overflow-y-auto">
             <div className="flex flex-row items-center h-20 px-6 py-4 border-b dark-mode:border-gray-600">
               <Logo className="w-10 h-10 mr-4" />
 
@@ -43,7 +41,9 @@ const Menu = () => {
                 <span>
                   Soulmate&nbsp;<span className="opacity-50">IDE</span>
                 </span>
-                <span className="text-sm opacity-50">FastLED Emulator</span>
+                <span className="text-sm opacity-50">
+                  FastLED ESP32 Emulator
+                </span>
               </span>
             </div>
 
