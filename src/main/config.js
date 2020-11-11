@@ -1,6 +1,8 @@
 import { Helmet } from "react-helmet";
 
 import ConfigContainer from "~/containers/config";
+import SoulmatesContainer from "~/containers/soulmates";
+import isElectron from "~/utils/isElectron";
 
 import Header from "./components/Header";
 
@@ -12,6 +14,8 @@ const Config = () => {
     setType,
     types,
   } = ConfigContainer.useContainer();
+
+  const { ports, port, setPort } = SoulmatesContainer.useContainer();
 
   const disableCustom = type !== "custom";
   const disableClass = disableCustom ? "bg-gray-100" : "";
@@ -25,6 +29,51 @@ const Config = () => {
 
       <div className="flex flex-col flex-shrink min-h-0 p-8 overflow-auto">
         <div className="space-y-10">
+          {isElectron() && (
+            <div className="md:grid md:grid-cols-3 md:gap-6">
+              <div className="md:col-span-1">
+                <div className="px-4 sm:px-0">
+                  <h3 className="text-lg font-medium leading-6 ">USB Port</h3>
+                  <p className="mt-1 text-sm leading-5 ">
+                    What port is your Soulmate connected to?
+                  </p>
+                </div>
+              </div>
+              <div className="mt-5 md:mt-0 md:col-span-2">
+                <div className="shadow sm:rounded-md sm:overflow-hidden">
+                  <div className="px-4 py-5 text-gray-800 bg-white dark-mode:bg-gray-100 sm:p-6">
+                    <div className="col-span-6 sm:col-span-3">
+                      <label
+                        className="block text-sm font-medium text-gray-700 leading-5"
+                        htmlFor="country"
+                      >
+                        Port
+                      </label>
+
+                      <select
+                        className="block w-full px-3 py-2 mt-1 bg-white border border-gray-300 form-select rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5"
+                        disabled={!port}
+                        onChange={(e) => setPort(e.target.value)}
+                        value={port}
+                      >
+                        {!port && (
+                          <option disabled selected>
+                            No Soulmate connected
+                          </option>
+                        )}
+                        {ports.map((port) => (
+                          <option key={port.path} value={port.path}>
+                            {port.path}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
           <div className="md:grid md:grid-cols-3 md:gap-6">
             <div className="md:col-span-1">
               <div className="px-4 sm:px-0">

@@ -1,7 +1,9 @@
 const serialport = remote?.require("serialport");
 
 export const getPort = async () => {
+  console.log("Waiting for serialport list...");
   const results = await serialport.list();
+  console.log(results);
 
   const port = results.find((result) => {
     if (result.vendorId === "1a86") return true;
@@ -13,6 +15,20 @@ export const getPort = async () => {
 
   if (!port) return false;
   return port.path;
+};
+
+export const getPorts = async () => {
+  const results = await serialport.list();
+
+  const ports = results.filter((result) => {
+    if (result.vendorId === "1a86") return true;
+    if (result.vendorId === "0403") return true;
+    if (result.path.includes("usbserial")) return true;
+    if (result.path.includes("tty.wchusbserial")) return true;
+    if (result.path.includes("cu.SLAB_USBtoUART")) return true;
+  });
+
+  return ports;
 };
 
 export class PortListener {
