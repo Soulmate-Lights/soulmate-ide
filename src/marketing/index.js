@@ -34,7 +34,7 @@ export default function MarketingPage() {
     <div className="full-width">
       <div className="relative overflow-hidden bg-white">
         <div className="mx-auto max-w-screen-xl">
-          <div className="relative z-10 bg-white pb- sm:pb-16 md:pb-20 lg:max-w-2xl lg:w-full lg:pb-28 xl:pb-48">
+          <div className="relative z-10 pb-4 bg-white sm:pb-8 md:pb-20 lg:max-w-2xl lg:w-full lg:pb-28 xl:pb-48">
             <div className="relative px-4 pt-6 sm:px-6 lg:px-8">
               <nav className="relative flex items-center justify-between sm:h-10 lg:justify-start">
                 <div className="flex items-center flex-grow flex-shrink-0 lg:flex-grow-0">
@@ -88,7 +88,7 @@ export default function MarketingPage() {
                   or just writing C++, try Soulmate free today.
                 </p>
 
-                <p className="mt-3 text-base text-gray-500 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0">
+                <p className="pb-4 mt-3 text-base text-gray-500 sm:pb-0 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0">
                   Made by a bunch of friends in California.
                 </p>
               </div>
@@ -194,8 +194,8 @@ export default function MarketingPage() {
         </div>
       </div>
 
-      <div className="bg-gray-200">
-        <div className="w-10/12 px-4 py-16 pb-6 mx-auto max-w-screen-xl sm:py-24 sm:px-6 lg:px-8">
+      <div className="hidden bg-gray-200 sm:block">
+        <div className="w-10/12 px-4 py-8 mx-auto max-w-screen-xl sm:pt-24 sm:px-6 lg:px-8">
           <div className="relative z-10 flex flex-row mb-8 md:mb-2 md:px-6">
             <div className="w-full">
               <div className="text-base max-w-prose lg:max-w-none">
@@ -222,7 +222,7 @@ export default function MarketingPage() {
                   save.
                 </p>
 
-                <div className="w-auto ml-auto mr-8 lg:mr-4">
+                <div className="ml-auto mr-0 lg:mr-4">
                   <div className="flex flex-col justify-center ml-auto">
                     <nav className="relative z-0 inline-flex flex-shrink-0 ml-12 shadow-sm">
                       <a
@@ -271,12 +271,16 @@ export default function MarketingPage() {
               </div>
             </div>
           </div>
-          <Example className="mt-4 mb-8" code={examples[index]} key={index} />
         </div>
+        <Example
+          className="pb-12 md:w-10/12"
+          code={examples[index]}
+          key={index}
+        />
       </div>
 
       <div className="bg-gray-50">
-        <div className="py-12 mx-auto sm:text-center lg:text-left max-w-screen-xl sm:px-12 lg:py-16 lg:px-24 lg:flex lg:items-center lg:justify-between">
+        <div className="px-8 py-12 mx-auto sm:text-center lg:text-left max-w-screen-xl sm:px-12 lg:py-16 lg:px-24 lg:flex lg:items-center lg:justify-between">
           <h2 className="text-3xl font-extrabold tracking-tight text-gray-900 leading-9 sm:text-4xl sm:leading-10">
             Ready to dive in?
             <br />
@@ -294,7 +298,7 @@ export default function MarketingPage() {
               </a>
             </div>
             {!isMobile() && (
-              <div className="shadow rounded-md">
+              <div className="hidden shadow rounded-md sm:block">
                 <a
                   className="inline-flex items-center justify-center px-5 py-3 text-base font-medium text-purple-600 bg-white border border-transparent leading-6 rounded-md hover:text-purple-800 focus:outline-none focus:shadow-outline transition duration-150 ease-in-out"
                   href={
@@ -316,11 +320,11 @@ export default function MarketingPage() {
         </div>
       </div>
 
-      <div className="w-10/12 px-4 py-8 mx-auto max-w-screen-xl sm:py-16 sm:px-6 lg:px-8">
+      <div className="w-10/12 px-0 py-8 mx-auto max-w-screen-xl sm:py-16 sm:px-6 lg:px-8">
         <h2 className="text-3xl font-extrabold text-center text-gray-900 leading-9">
           Frequently asked questions
         </h2>
-        <div className="px-12 mt-12">
+        <div className="px-0 mt-12 sm:px-12">
           <dl className="space-y-10 sm:space-y-0 sm:grid sm:grid-cols-2 sm:grid-rows-2 col-gap-8 sm:row-gap-12 lg:grid-cols-3">
             <div className="px-4 mb-6 space-y-2">
               <dt className="text-lg font-medium text-gray-900 leading-6">
@@ -451,7 +455,7 @@ export default function MarketingPage() {
                   image: require("./kalan.jpg"),
                 },
                 {
-                  twitter: "pirrucello",
+                  twitter: "pirruccello",
                   name: "Brent Piruccello",
                   image: require("./brent.jpg"),
                 },

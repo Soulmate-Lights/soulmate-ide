@@ -7,7 +7,7 @@ import ConfigContainer from "~/containers/config";
 import NotificationsContainer from "~/containers/notifications";
 import { getFullBuild, prepareSketches } from "~/utils/code";
 import { flashBuild } from "~/utils/flash";
-import { getPort, PortListener } from "~/utils/ports";
+import { getPort, getPorts, PortListener } from "~/utils/ports";
 
 const LINE_LIMIT = 300;
 
@@ -15,6 +15,8 @@ const SoulmateContainer = () => {
   const notificationsContainer = NotificationsContainer.useContainer();
   const configContainer = ConfigContainer.useContainer();
   const [soulmateLoading, setSoulmateLoading] = useState(false);
+
+  const [ports, setPorts] = useState([]);
   const [port, setPort] = useState();
   const [name, setName] = useState();
   const [usbFlashingPercentage, setUsbFlashingPercentage] = useState();
@@ -27,16 +29,21 @@ const SoulmateContainer = () => {
   // Web-safe!
   if (!window.ipcRenderer) return {};
 
+  const getBuild = async (sketches, config) => {
+    const preparedCode = prepareSketches(sketches, config);
+    console.log("[flashSketches]", { preparedCode });
+    const build = await getFullBuild(preparedCode);
+
+    return build;
+  };
+
   const flashSketches = async (sketches, config) => {
     console.log("[flashSketches]", { sketches, config });
 
     listener?.close();
     setFlashing(true);
 
-    const preparedCode = prepareSketches(sketches, config);
-    console.log("[flashSketches]", { preparedCode });
-    const build = await getFullBuild(preparedCode);
-
+    const build = await getBuild(sketches, config);
     if (!build) {
       setFlashing(false);
       return false;
@@ -54,6 +61,8 @@ const SoulmateContainer = () => {
     open(port);
     return true;
   };
+
+  // Port stuff
 
   const open = (port) => {
     let receivedData;
@@ -83,21 +92,44 @@ const SoulmateContainer = () => {
     });
   };
 
+  const previousPort = useRef();
+  useEffect(() => {
+    if (!port || port !== previousPort.current) {
+      if (previousPort.current && !port) {
+        notificationsContainer.notify(`Soulmate disconnected.`);
+      }
+
+      previousPort.current = undefined;
+      listener?.close();
+      setName(undefined);
+      setText([]);
+    }
+
+    if (port) {
+      previousPort.current = port;
+      notificationsContainer.notify(`Detecting Soulmate...`);
+      setSoulmateLoading(true);
+      open(port);
+      setText([`Connected to ${port}`]);
+    }
+  }, [port]);
+
   const checkUsb = async () => {
     if (flashing) return;
 
+    console.log("checking ports...");
+
     const newPort = await getPort();
+    console.log(newPort);
+    const newPorts = await getPorts();
+    console.log({ newPorts, newPort });
+
+    setPorts(newPorts);
 
     if (newPort && !port) {
-      notificationsContainer.notify(`Detecting Soulmate...`);
       setPort(newPort);
-      setSoulmateLoading(true);
-
-      open(newPort);
     } else if (!newPort) {
-      listener?.close();
       setPort(undefined);
-      setName(undefined);
     }
   };
 
@@ -107,7 +139,7 @@ const SoulmateContainer = () => {
     }
   }, [name]);
 
-  useInterval(checkUsb, 2000);
+  useInterval(checkUsb, 5000);
   useEffect(() => checkUsb(), []);
 
   const restart = () => {
@@ -115,9 +147,12 @@ const SoulmateContainer = () => {
   };
 
   return {
+    getBuild,
     flashSketches,
     soulmateLoading,
     port,
+    setPort,
+    ports,
     name,
     usbFlashingPercentage,
     flashing,

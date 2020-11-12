@@ -54,13 +54,17 @@ const UserContainer = () => {
     fetchUser();
   };
 
+  const isAdmin = () => {
+    return userDetails?.sub === "google-oauth2|102941484361041922849";
+  };
+
   const logout = async () => {
     delete localStorage.loginSaved;
     await triggerLogout();
     fetchUser();
   };
 
-  return { fetchUser, userDetails, login, logout };
+  return { fetchUser, userDetails, login, logout, isAdmin };
 };
 
 export default createContainer(UserContainer);

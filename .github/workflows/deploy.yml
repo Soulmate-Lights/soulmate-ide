@@ -1,6 +1,9 @@
 name: Deploy to web
 
-on: push
+on:
+  push:
+    tags:
+      - "v*"
 
 jobs:
   update-ui:
