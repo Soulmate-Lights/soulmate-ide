@@ -119,6 +119,9 @@ const Simulator = ({
     height = width * ratio;
   }
 
+  height = parseInt(height / rows) * rows;
+  width = parseInt(width / cols) * cols;
+
   return (
     <div
       className={`${className} relative flex flex-grow flex-shrink min-h-0 overflow-auto`}
