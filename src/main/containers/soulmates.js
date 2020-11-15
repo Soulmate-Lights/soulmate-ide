@@ -143,7 +143,7 @@ const SoulmateContainer = () => {
   useEffect(() => checkUsb(), []);
 
   const restart = () => {
-    listener.port.write('{ "restart": true }\n');
+    listener?.port?.write('{ "restart": true }\n');
   };
 
   return {
