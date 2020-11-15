@@ -12,7 +12,14 @@ const Sketch = ({
 
   useEffect(() => {
     if (autoPlay) {
-      setTimeout(videoRef.current.play);
+      setTimeout(() => {
+        try {
+          videoRef.current?.play();
+        } catch (e) {
+          // Don't quite know why these fail but they do!
+          // https://sentry.io/organizations/soulmate/issues/2010933857/?environment=production&project=5433159&query=is%3Aunresolved
+        }
+      });
     }
   }, []);
 
@@ -30,7 +37,14 @@ const Sketch = ({
         <video
           loop
           muted
-          onMouseEnter={(e) => e.target.play()}
+          onMouseEnter={(e) => {
+            try {
+              e.target.play();
+            } catch (e) {
+              // Don't quite know why these fail but they do!
+              // https://sentry.io/organizations/soulmate/issues/2010933857/?environment=production&project=5433159&query=is%3Aunresolved
+            }
+          }}
           onMouseLeave={(e) => e.target.pause()}
           ref={videoRef}
           style={{ transform: "rotate(180deg)" }}
