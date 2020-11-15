@@ -1,7 +1,7 @@
 import "regenerator-runtime/runtime";
 
-import { AVRRunner } from "./compiler/execute";
-import { WS2812Controller } from "./compiler/ws2812";
+import { AVRRunner } from "./new-compiler/execute";
+import { WS2812Controller } from "./new-compiler/ws2812";
 
 let runner;
 
@@ -19,14 +19,14 @@ const start = ({ build, rows, cols }) => {
   const MHZ = 16000000;
   const cpuNanos = () => Math.round((runner.cpu.cycles / MHZ) * 1000000000);
 
-  runner.portB.addListener(() =>
-    matrixController.feedValue(runner.portB.pinState(6), cpuNanos())
-  );
+  runner.portB.addListener(() => {
+    matrixController.feedValue(runner.portB.pinState(6), cpuNanos());
+  });
 
-  runner.usart.onByteTransmit = (value) => {
-    const serialOutput = String.fromCharCode(value);
-    self.postMessage({ serialOutput });
-  };
+  // runner.usart.onByteTransmit = (value) => {
+  //   const serialOutput = String.fromCharCode(value);
+  //   self.postMessage({ serialOutput });
+  // };
 
   runner.execute((_cpu) => {
     const pixels = matrixController.update(cpuNanos());

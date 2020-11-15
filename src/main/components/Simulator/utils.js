@@ -1,5 +1,6 @@
 export const drawPixels = (pixels, canvas, rows, cols, serpentine) => {
   // if (!canvas.current) return;
+  if (!canvas) return;
   var ctx = canvas.getContext("2d");
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
