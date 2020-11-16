@@ -6,9 +6,8 @@ import { Link } from "react-router-dom";
 
 import Logo from "~/images/logo.svg";
 
-import { calculateDimensions, drawPixels } from "./utils";
-
 let worker;
+import { calculateDimensions, drawPixels } from "./utils";
 
 const Simulator = ({
   build,

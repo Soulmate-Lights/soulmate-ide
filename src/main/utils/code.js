@@ -179,8 +179,6 @@ export const emptyCode = `void draw() {
 
 let simulatorBuildUrl = "https://editor.soulmatelights.com/sketches/build";
 let fullBuildUrl = `http://builder.soulmatelights.com:8081/build`;
-// let simulatorBuildUrl = "https://34.207.160.170:8080/sketches/build";
-// let fullBuildUrl = `http://34.207.160.170:8081/build`;
 
 if (typeof electron !== "undefined") {
   const process = electron.remote.require("process");

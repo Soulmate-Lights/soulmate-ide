@@ -117,12 +117,8 @@ const SoulmateContainer = () => {
   const checkUsb = async () => {
     if (flashing) return;
 
-    console.log("checking ports...");
-
     const newPort = await getPort();
-    console.log(newPort);
     const newPorts = await getPorts();
-    console.log({ newPorts, newPort });
 
     setPorts(newPorts);
 
