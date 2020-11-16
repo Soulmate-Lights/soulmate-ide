@@ -117,4 +117,12 @@ const Welcome = () => {
   );
 };
 
-export default Welcome;
+const WrappedWelcome = (...props) => (
+  <BuildsContainer.Provider>
+    <UserContainer.Provider>
+      <Welcome {...props} />
+    </UserContainer.Provider>
+  </BuildsContainer.Provider>
+);
+
+export default WrappedWelcome;

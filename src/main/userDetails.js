@@ -1,4 +1,4 @@
-import { FiLogIn,FiLogOut } from "react-icons/fi";
+import { FiLogIn, FiLogOut } from "react-icons/fi";
 
 import UserContainer from "~/containers/user";
 
@@ -47,4 +47,10 @@ const UserDetails = ({ className }) => {
   );
 };
 
-export default UserDetails;
+const WrappedUserDetails = (...props) => (
+  <UserContainer.Provider>
+    <UserDetails {...props} />
+  </UserContainer.Provider>
+);
+
+export default WrappedUserDetails;

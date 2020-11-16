@@ -31,7 +31,7 @@ export default function MarketingPage() {
   const [index, setIndex] = useState(0);
 
   return (
-    <div className="full-width">
+    <div className="full-width marketing">
       <div className="relative overflow-hidden bg-white">
         <div className="mx-auto max-w-screen-xl">
           <div className="relative z-10 pb-4 bg-white sm:pb-8 md:pb-20 lg:max-w-2xl lg:w-full lg:pb-28 xl:pb-48">
