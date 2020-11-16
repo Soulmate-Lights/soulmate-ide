@@ -40,7 +40,11 @@ const MySketches = () => {
               <input
                 autoFocus
                 className="block w-full h-8 py-2 text-sm rounded-r-none form-input focus:z-10"
-                onBlur={() => setCreating(false)}
+                onBlur={() =>
+                  setTimeout(() => {
+                    setCreating(false);
+                  }, 1000)
+                }
                 onChange={(e) => setNewSketchName(e.target.value)}
                 onKeyDown={async (e) => {
                   if (e.key === "Escape") {
