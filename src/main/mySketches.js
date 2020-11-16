@@ -14,15 +14,19 @@ const MySketches = () => {
     fetchSketches,
   } = SketchesContainer.useContainer();
 
-  useEffect(() => {
-    fetchSketches();
-  }, []);
+  useEffect(() => fetchSketches(), []);
 
   const { userDetails, login } = UserContainer.useContainer();
 
   const [newSketchName, setNewSketchName] = useState("");
   const [creating, setCreating] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  const createSketchFromName = async () => {
+    setLoading(true);
+    const sketch = await createSketch(newSketchName);
+    history.push(`/my-patterns/${sketch.id}`);
+  };
 
   return (
     <div className="flex flex-col flex-grow">
@@ -40,32 +44,18 @@ const MySketches = () => {
               <input
                 autoFocus
                 className="block w-full h-8 py-2 text-sm rounded-r-none form-input focus:z-10"
-                onBlur={() =>
-                  setTimeout(() => {
-                    setCreating(false);
-                  }, 1000)
-                }
+                onBlur={() => setTimeout(() => setCreating(false), 1000)}
                 onChange={(e) => setNewSketchName(e.target.value)}
                 onKeyDown={async (e) => {
-                  if (e.key === "Escape") {
-                    e.target.blur();
-                  }
-
-                  if (e.key === "Enter" && e.target.value) {
-                    setLoading(true);
-                    const sketch = await createSketch(newSketchName);
-                    history.push(`/my-patterns/${sketch.id}`);
-                  }
+                  const { key } = e;
+                  if (key === "Escape") e.target.blur();
+                  if (key === "Enter" && e.target.value) createSketchFromName();
                 }}
                 placeholder="Give your pattern a name"
               />
               <button
                 className="relative inline-flex items-center h-8 px-4 py-2 -ml-px text-sm font-medium text-gray-700 border border-gray-300 outline-none leading-5 rounded-r-md bg-gray-50 hover:text-gray-500 hover:bg-white focus:outline-none focus:shadow-outline-blue focus:border-blue-300 active:bg-gray-100 active:text-gray-700 transition ease-in-out duration-150 group-focus:shadow-outline-blue"
-                onClick={async () => {
-                  setLoading(true);
-                  const sketch = await createSketch(newSketchName);
-                  history.push(`/my-patterns/${sketch.id}`);
-                }}
+                onClick={createSketchFromName}
               >
                 Create
               </button>
