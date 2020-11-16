@@ -1,9 +1,7 @@
 const serialport = remote?.require("serialport");
 
 export const getPort = async () => {
-  console.log("Waiting for serialport list...");
   const results = await serialport.list();
-  console.log(results);
 
   const port = results.find((result) => {
     if (result.vendorId === "1a86") return true;
