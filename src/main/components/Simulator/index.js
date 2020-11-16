@@ -6,10 +6,7 @@ import { Link } from "react-router-dom";
 
 import Logo from "~/images/logo.svg";
 
-// let worker;
-import hex from "./hex";
-import { AVRRunner } from "./new-compiler/execute";
-import { WS2812Controller } from "./new-compiler/ws2812";
+let worker;
 import { calculateDimensions, drawPixels } from "./utils";
 
 const Simulator = ({
@@ -24,72 +21,30 @@ const Simulator = ({
 
   // Worker callback
 
-  // const workerMessage = (e) => {
-  //   if (e.data.pixels && canvas.current)
-  //     drawPixels(e.data.pixels, canvas.current, rows, cols, serpentine);
+  const workerMessage = (e) => {
+    if (e.data.pixels && canvas.current)
+      drawPixels(e.data.pixels, canvas.current, rows, cols, serpentine);
 
-  //   if (e.data.serialOutput) {
-  //     setSerialOutput(serialOutput + e.data.serialOutput);
-  //     serialOutputRef.current += e.data.serialOutput;
-  //   }
-  // };
+    if (e.data.serialOutput) {
+      setSerialOutput(serialOutput + e.data.serialOutput);
+      serialOutputRef.current += e.data.serialOutput;
+    }
+  };
 
   // Worker control
 
   const start = () => {
-    // worker?.terminate();
-    // worker = new Worker("./worker.js");
-    // worker.addEventListener("message", workerMessage);
-    // worker.postMessage({ build, rows, cols });
-
-    let runner = new AVRRunner(hex);
-    const MHZ = 16000000;
-
-    const cpuNanos = () => Math.round((runner.cpu.cycles / MHZ) * 1000000000);
-    const matrixController = new WS2812Controller(cols * rows);
-
-    // Hook to PORTD register
-    runner.portB.addListener(() => {
-      matrixController.feedValue(runner.portB.pinState(6), cpuNanos());
-    });
-
-    runner.execute((_cpu) => {
-      const pixels = matrixController.update(cpuNanos());
-
-      if (!pixels) return;
-      const pixelsToDraw = [];
-
-      for (let row = 0; row < rows; row++) {
-        for (let col = 0; col < cols; col++) {
-          let value = pixels[row * cols + col];
-
-          if (row == 0 && col == 0) {
-            console.log({
-              b: value & 0xff,
-              r: (value >> 8) & 0xff,
-              g: (value >> 16) & 0xff,
-            });
-          }
-
-          pixelsToDraw.push({
-            y: row,
-            x: row % 2 ? cols - col - 1 : col,
-            b: value & 0xff,
-            r: (value >> 8) & 0xff,
-            g: (value >> 16) & 0xff,
-          });
-        }
-      }
-
-      drawPixels(pixelsToDraw, canvas.current, rows, cols, serpentine);
-    });
+    worker?.terminate();
+    worker = new Worker("./worker.js");
+    worker.addEventListener("message", workerMessage);
+    worker.postMessage({ build, rows, cols });
 
     if (!build) return;
     setSerialOutput("");
   };
 
   const stop = () => {
-    // worker?.terminate();
+    worker?.terminate();
     serialOutputRef.current = "";
   };
 
@@ -175,16 +130,16 @@ const WrappedSimulator = ({
     className={`${className} relative flex flex-grow flex-shrink min-h-0 overflow-auto`}
     style={{ ...style, maxWidth, minWidth }}
   >
-    {/* {!props.build ? (
+    {!props.build ? (
       <div className="flex items-center justify-center flex-grow">
         <Logo
           className="w-8 animate-spin duration-2000 /animate-spin-slow"
           style={{ animationDuration: "2s" }}
         />
       </div>
-    ) : ( */}
-    <Simulator {...props} />
-    {/* )} */}
+    ) : (
+      <Simulator {...props} />
+    )}
   </div>
 );
 

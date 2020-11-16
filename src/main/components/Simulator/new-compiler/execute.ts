@@ -11,7 +11,7 @@ import {
 import { loadHex } from "./intelhex";
 
 // ATmega328p params
-const FLASH = 0x8000;
+const FLASH = 0x40000;
 
 export class AVRRunner {
   readonly program = new Uint16Array(FLASH);
