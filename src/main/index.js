@@ -60,7 +60,7 @@ const Main = () => {
           "pt-6": showTopBar,
         })}
       >
-        <BuildsContainer.Provider>
+        <ContainerProvider>
           <SpecificRouter history={isElectron() ? undefined : history}>
             <LastLocationProvider>
               <Switch>
@@ -75,85 +75,83 @@ const Main = () => {
                 </Route>
 
                 <Route>
-                  <ContainerProvider>
-                    <div
-                      className={classnames(
-                        "flex flex-shrink flex-grow overflow-hidden bg-gray-100 dark-mode:bg-gray-300 font-medium"
-                      )}
-                      style={{
-                        WebkitUserSelect: "none",
-                        opacity: blur ? "0.9" : 1,
-                      }}
-                    >
-                      <Menu />
+                  <div
+                    className={classnames(
+                      "flex flex-shrink flex-grow overflow-hidden bg-gray-100 dark-mode:bg-gray-300 font-medium"
+                    )}
+                    style={{
+                      WebkitUserSelect: "none",
+                      opacity: blur ? "0.9" : 1,
+                    }}
+                  >
+                    <Menu />
 
-                      <Notifications />
+                    <Notifications />
 
-                      <div className="flex flex-row flex-grow flex-shrink w-full min-w-0 bg-gray-100 dark-mode:bg-gray-800 dark-mode:text-white">
-                        <Switch>
-                          <Route exact path="/">
-                            <Dashboard />
-                          </Route>
+                    <div className="flex flex-row flex-grow flex-shrink w-full min-w-0 bg-gray-100 dark-mode:bg-gray-800 dark-mode:text-white">
+                      <Switch>
+                        <Route exact path="/">
+                          <Dashboard />
+                        </Route>
 
-                          <Route exact path="/tutorial">
-                            <Welcome />
-                          </Route>
+                        <Route exact path="/tutorial">
+                          <Welcome />
+                        </Route>
 
-                          <Route exact path="/my-patterns">
-                            <MySketches />
-                          </Route>
+                        <Route exact path="/my-patterns">
+                          <MySketches />
+                        </Route>
 
-                          <Route exact path="/gallery">
-                            <Gallery />
-                          </Route>
+                        <Route exact path="/gallery">
+                          <Gallery />
+                        </Route>
 
-                          <Route exact path="/flash">
-                            <Flash />
-                          </Route>
+                        <Route exact path="/flash">
+                          <Flash />
+                        </Route>
 
-                          <Route exact path="/config">
-                            <Config />
-                          </Route>
+                        <Route exact path="/config">
+                          <Config />
+                        </Route>
 
-                          <Route
-                            path="/gallery/user/:id"
-                            render={({
-                              match: {
-                                params: { id },
-                              },
-                            }) => <User id={id} />}
-                          />
+                        <Route
+                          path="/gallery/user/:id"
+                          render={({
+                            match: {
+                              params: { id },
+                            },
+                          }) => <User id={id} />}
+                        />
 
-                          <Route
-                            path="/gallery/:id"
-                            render={({
-                              match: {
-                                params: { id },
-                              },
-                            }) => <Editor id={id} />}
-                          />
+                        <Route
+                          path="/gallery/:id"
+                          render={({
+                            match: {
+                              params: { id },
+                            },
+                          }) => <Editor id={id} />}
+                        />
 
-                          <Route
-                            path="/my-patterns/:id"
-                            render={({
-                              match: {
-                                params: { id },
-                              },
-                            }) => <Editor id={id} mine />}
-                          />
+                        <Route
+                          path="/my-patterns/:id"
+                          render={({
+                            match: {
+                              params: { id },
+                            },
+                          }) => <Editor id={id} mine />}
+                        />
 
-                          <Route path="/console">
-                            <Console />
-                          </Route>
-                        </Switch>
-                      </div>
+                        <Route path="/console">
+                          <Console />
+                        </Route>
+                      </Switch>
                     </div>
-                  </ContainerProvider>
+                  </div>
                 </Route>
               </Switch>
             </LastLocationProvider>
           </SpecificRouter>
-        </BuildsContainer.Provider>
+        </ContainerProvider>
       </div>
     </div>
   );
@@ -165,7 +163,11 @@ const ContainerProvider = ({ children }) => (
       <SelectionsContainer.Provider>
         <SketchesContainer.Provider>
           <UserContainer.Provider>
-            <SoulmateContainer.Provider>{children}</SoulmateContainer.Provider>
+            <BuildsContainer.Provider>
+              <SoulmateContainer.Provider>
+                {children}
+              </SoulmateContainer.Provider>
+            </BuildsContainer.Provider>
           </UserContainer.Provider>
         </SketchesContainer.Provider>
       </SelectionsContainer.Provider>

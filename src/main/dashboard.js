@@ -19,10 +19,7 @@ const Dashboard = () => {
   const { userDetails, login } = UserContainer.useContainer();
 
   return (
-    <div
-      className="flex flex-col flex-grow w-full"
-      // style={{ WebkitAppRegion: "drag" }}
-    >
+    <div className="flex flex-col flex-grow w-full">
       <Helmet>
         <title>Home &mdash; Soulmate IDE</title>
       </Helmet>
@@ -115,4 +112,10 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+const WrappedDashboard = (...props) => (
+  <UserContainer.Provider>
+    <Dashboard {...props} />
+  </UserContainer.Provider>
+);
+
+export default WrappedDashboard;

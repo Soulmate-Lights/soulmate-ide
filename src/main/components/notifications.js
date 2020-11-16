@@ -34,4 +34,10 @@ const Notifications = () => {
   );
 };
 
-export default Notifications;
+const WrappedNotifications = (...props) => (
+  <NotificationsContainer.Provider>
+    <Notifications {...props} />
+  </NotificationsContainer.Provider>
+);
+
+export default WrappedNotifications;
