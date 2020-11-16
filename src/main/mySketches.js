@@ -14,7 +14,9 @@ const MySketches = () => {
     fetchSketches,
   } = SketchesContainer.useContainer();
 
-  useEffect(() => fetchSketches(), []);
+  useEffect(() => {
+    fetchSketches();
+  }, []);
 
   const { userDetails, login } = UserContainer.useContainer();
 
