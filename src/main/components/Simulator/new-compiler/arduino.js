@@ -16,7 +16,8 @@ export default class Arduino {
   };
 
   set hex(newHex) {
-    console.log("changed hex");
+    if (newHex === this._hex) return;
+
     this.runner?.portB.removeListener(this.listener);
     this.runner?.stop();
 
@@ -29,7 +30,15 @@ export default class Arduino {
     this.runner.usart.onByteTransmit = (value) =>
       this.serialCallback(String.fromCharCode(value));
 
-    this.runner.execute((_cpu) => {
+    this.start();
+  }
+
+  stop = () => {
+    this.runner?.stop();
+  };
+
+  start = () => {
+    this.runner?.execute((_cpu) => {
       const pixels = this.matrixController.update(this.cpuNanos());
 
       if (!pixels) return;
@@ -51,14 +60,5 @@ export default class Arduino {
 
       this.pixelsCallback(pixelsToDraw);
     });
-  }
-
-  stop = () => {
-    console.log("[Arduino] stop()");
-    this.runner?.stop();
-  };
-
-  start = () => {
-    console.log("[Arduino] start()");
   };
 }

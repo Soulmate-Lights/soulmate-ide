@@ -13,19 +13,27 @@ const Simulator = ({
   build,
   config: { rows, cols, serpentine },
   showConfig = true,
+  className,
+  minWidth,
+  maxWidth,
+  style,
 }) => {
   const canvas = useRef();
   const compilerOutputDiv = useRef();
   const [serialOutput, setSerialOutput] = useState("");
   const serialOutputRef = useRef("");
+  const [hasPixels, setHasPixels] = useState(false);
+  const [paused, setPaused] = useState(!document.hasFocus());
 
   // Worker callback
 
-  // let worker;
-
   const workerMessage = (e) => {
-    if (e.data.pixels && canvas.current)
+    if (paused) return;
+    setHasPixels(true);
+
+    if (e.data.pixels && canvas.current) {
       drawPixels(e.data.pixels, canvas.current, rows, cols, serpentine);
+    }
 
     if (e.data.serialOutput) {
       setSerialOutput(serialOutput + e.data.serialOutput);
@@ -35,64 +43,61 @@ const Simulator = ({
 
   // Worker control
 
-  useEffect(() => {
-    start();
-
-    return () => {
-      console.log("Terminating worker");
-      worker?.terminate();
-      worker = undefined;
-    };
-  }, [build, rows, cols]);
-
   const start = () => {
+    if (paused) return;
+    const { hex } = build;
+
     if (!worker) {
-      console.log("Creating worker");
       worker = new Worker("./worker.js");
       worker.addEventListener("message", workerMessage);
+      worker.postMessage({ hex: hex, rows, cols });
+    } else {
+      worker.postMessage({ paused: false, hex: hex, rows, cols });
     }
 
-    // worker.postMessage({ build, rows, cols });
-    // console.log(worker);
-    // if (!worker) return;
-    console.log("Posting worker message");
-    worker.postMessage({ build, rows, cols });
-    if (!build) return;
     setSerialOutput("");
   };
 
   const stop = () => {
-    console.log("Stopping worker");
-    worker.postMessage({ stop: true });
-    // worker?.terminate();
-    // worker = undefined;
-    serialOutputRef.current = "";
+    setHasPixels(false);
+    worker?.terminate();
+    worker = undefined;
   };
 
   // Lifecycle things
 
-  const [paused, setPaused] = useState(!document.hasFocus());
   useEffect(() => {
-    if (!paused) start();
+    start();
     return stop;
-  }, [paused, build]);
+  }, [build, rows, cols]);
 
-  let stopResizeTimeout;
-
-  useEventListener("resize", () => {
-    clearTimeout(stopResizeTimeout);
-    stopResizeTimeout = setTimeout(() => {
-      setPaused(false);
-    }, 400);
-  });
-
-  useEventListener("blur", () => setPaused(true));
-  useEventListener("focus", () => setPaused(false));
+  useEffect(() => {
+    if (!paused) {
+      start();
+    } else {
+      worker?.postMessage({ paused: true });
+      serialOutputRef.current = "";
+    }
+  }, [paused]);
 
   useEffect(() => {
     const ref = compilerOutputDiv.current;
     if (ref) ref.scrollTop = ref.scrollHeight;
   }, [serialOutput]);
+
+  // Event listeners
+
+  let stopResizeTimeout = useRef();
+  useEventListener("resize", () => {
+    setPaused(true);
+    clearTimeout(stopResizeTimeout.current);
+    stopResizeTimeout.current = setTimeout(() => setPaused(false), 500);
+  });
+
+  useEventListener("blur", () => setPaused(true));
+  useEventListener("focus", () => setPaused(false));
+
+  // Calculate canvas width and height from rows / cols
 
   const { width, height } = useCallback(calculateDimensions(rows, cols), [
     rows,
@@ -100,8 +105,11 @@ const Simulator = ({
   ]);
 
   return (
-    <>
-      <span className="absolute inline-flex rounded-md shadow-sm top-4 right-4 space-x-2">
+    <div
+      className={`${className} relative flex flex-grow flex-shrink min-h-0 overflow-auto`}
+      style={{ ...style, maxWidth, minWidth }}
+    >
+      <span className="absolute inline-flex rounded-md top-4 right-4 space-x-2">
         {showConfig && (
           <Link
             className="inline-flex items-center px-3 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 leading-4 rounded-md hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150"
@@ -120,12 +128,19 @@ const Simulator = ({
         </button>
       </span>
       <div className="flex items-center justify-center flex-grow p-10">
-        <canvas
-          className="bg-black"
-          height={height}
-          ref={canvas}
-          width={width}
-        />
+        <div
+          className="flex items-center justify-center overflow-hidden bg-black border-2 border-white rounded-lg shadow-lg dark-mode:border-gray-600"
+          style={{ height, width }}
+        >
+          {!hasPixels ? (
+            <Logo
+              className="w-8 duration-2000 animate-spin-slow"
+              style={{ animationDuration: "2s" }}
+            />
+          ) : (
+            <canvas height={height} ref={canvas} width={width} />
+          )}
+        </div>
       </div>
       {serialOutput && (
         <pre
@@ -136,32 +151,8 @@ const Simulator = ({
           {serialOutputRef.current}
         </pre>
       )}
-    </>
+    </div>
   );
 };
 
-const WrappedSimulator = ({
-  className,
-  minWidth,
-  maxWidth,
-  style,
-  ...props
-}) => (
-  <div
-    className={`${className} relative flex flex-grow flex-shrink min-h-0 overflow-auto`}
-    style={{ ...style, maxWidth, minWidth }}
-  >
-    {!props.build ? (
-      <div className="flex items-center justify-center flex-grow">
-        <Logo
-          className="w-8 animate-spin duration-2000 /animate-spin-slow"
-          style={{ animationDuration: "2s" }}
-        />
-      </div>
-    ) : (
-      <Simulator {...props} />
-    )}
-  </div>
-);
-
-export default WrappedSimulator;
+export default Simulator;
