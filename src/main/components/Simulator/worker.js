@@ -5,10 +5,16 @@ import Arduino from "./new-compiler/arduino";
 let arduino = new Arduino();
 
 self.addEventListener("message", (e) => {
-  console.log(e);
   const { build, rows, cols } = e.data;
-  console.log("Starting hex with build");
-  if (build) start({ build, rows, cols });
+
+  if (e.data.stop) {
+    console.log("Stopping");
+    arduino.stop();
+  } else {
+    if (build) {
+      start({ build, rows, cols });
+    }
+  }
 });
 
 const start = ({ build, rows, cols }) => {

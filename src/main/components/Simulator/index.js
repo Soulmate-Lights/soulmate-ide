@@ -62,9 +62,10 @@ const Simulator = ({
   };
 
   const stop = () => {
-    console.log("Terminating worker");
-    worker?.terminate();
-    worker = undefined;
+    console.log("Stopping worker");
+    worker.postMessage({ stop: true });
+    // worker?.terminate();
+    // worker = undefined;
     serialOutputRef.current = "";
   };
 

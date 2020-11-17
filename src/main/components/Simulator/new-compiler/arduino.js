@@ -52,4 +52,13 @@ export default class Arduino {
       this.pixelsCallback(pixelsToDraw);
     });
   }
+
+  stop = () => {
+    console.log("[Arduino] stop()");
+    this.runner?.stop();
+  };
+
+  start = () => {
+    console.log("[Arduino] start()");
+  };
 }
