@@ -8,6 +8,8 @@ on:
 jobs:
   upload-sourcemaps-to-sentry:
     runs-on: ubuntu-latest
+    env:
+      ACTIONS_ALLOW_UNSECURE_COMMANDS: true
 
     steps:
       - name: Check out Git repository
