@@ -23,10 +23,10 @@ const start = ({ build, rows, cols }) => {
     matrixController.feedValue(runner.portB.pinState(6), cpuNanos());
   });
 
-  // runner.usart.onByteTransmit = (value) => {
-  //   const serialOutput = String.fromCharCode(value);
-  //   self.postMessage({ serialOutput });
-  // };
+  runner.usart.onByteTransmit = (value) => {
+    const serialOutput = String.fromCharCode(value);
+    self.postMessage({ serialOutput });
+  };
 
   runner.execute((_cpu) => {
     const pixels = matrixController.update(cpuNanos());
