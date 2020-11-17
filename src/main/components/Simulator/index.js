@@ -21,6 +21,8 @@ const Simulator = ({
 
   // Worker callback
 
+  // let worker;
+
   const workerMessage = (e) => {
     if (e.data.pixels && canvas.current)
       drawPixels(e.data.pixels, canvas.current, rows, cols, serpentine);
@@ -33,18 +35,36 @@ const Simulator = ({
 
   // Worker control
 
-  const start = () => {
-    worker?.terminate();
-    worker = new Worker("./worker.js");
-    worker.addEventListener("message", workerMessage);
-    worker.postMessage({ build, rows, cols });
+  useEffect(() => {
+    start();
 
+    return () => {
+      console.log("Terminating worker");
+      worker?.terminate();
+      worker = undefined;
+    };
+  }, [build, rows, cols]);
+
+  const start = () => {
+    if (!worker) {
+      console.log("Creating worker");
+      worker = new Worker("./worker.js");
+      worker.addEventListener("message", workerMessage);
+    }
+
+    // worker.postMessage({ build, rows, cols });
+    // console.log(worker);
+    // if (!worker) return;
+    console.log("Posting worker message");
+    worker.postMessage({ build, rows, cols });
     if (!build) return;
     setSerialOutput("");
   };
 
   const stop = () => {
+    console.log("Terminating worker");
     worker?.terminate();
+    worker = undefined;
     serialOutputRef.current = "";
   };
 
