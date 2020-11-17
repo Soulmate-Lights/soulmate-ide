@@ -19,41 +19,6 @@ const dir =
 
 // Flashing
 
-/* Make sure we have pyserial installed */
-const installDependencies = () => {
-  const childProcess = remote.require("child_process");
-  if (remote.require("os").platform() === "darwin") {
-    try {
-      //   console.log("[installDependencies] Trying which pip");
-      //   childProcess.execSync("which pip").toString().replace("\n", "");
-      // } catch (e) {
-      // console.log("Running get-pip.py");
-      childProcess.execSync(`$(which python) ./get-pip.py`, { cwd: dir });
-      //   console.log("Installed pip");
-      // }
-
-      // console.log("[installDependencies] Checking for pyserial");
-      // const pyserialCommandOutput = childProcess.execSync(
-      //   "$(which pip) show pyserial"
-      // );
-      // console.log("[installDependencies]", { pyserialCommandOutput });
-      // const hasPySerial = !pyserialCommandOutput
-      //   .toString()
-      //   .includes("Package(s) not found");
-
-      // if (!hasPySerial) {
-      //   console.log("[installDependencies] installing pyserial...");
-      childProcess.execSync(`~/Library/Python/2.7/bin/pip install pyserial`);
-    } catch (e) {
-      console.log("Error installing dependencies", e);
-    }
-    // }
-  } else {
-    childProcess.execSync(`python ./get-pip.py`, { cwd: dir });
-    childProcess.execSync("pip install pyserial");
-  }
-};
-
 /** Get a progress percentage from a USB flash serial output */
 const getNumberFromFlashOutput = (data) => {
   try {
@@ -70,6 +35,18 @@ const getNumberFromFlashOutput = (data) => {
     return number;
   } catch (e) {
     // nothing
+  }
+};
+
+/* Make sure we have pyserial installed */
+const installDependencies = () => {
+  const childProcess = remote.require("child_process");
+  if (remote.require("os").platform() === "darwin") {
+    childProcess.execSync("$(which python) ./get-pip.py", { cwd: dir });
+    childProcess.execSync("~/Library/Python/2.7/bin/pip install pyserial");
+  } else {
+    childProcess.execSync("python ./get-pip.py", { cwd: dir });
+    childProcess.execSync("pip install pyserial");
   }
 };
 
