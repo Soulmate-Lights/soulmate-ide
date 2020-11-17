@@ -48,6 +48,9 @@ const installDependencies = () => {
       console.log("Error installing dependencies", e);
     }
     // }
+  } else {
+    childProcess.execSync(`python ./get-pip.py`, { cwd: dir });
+    childProcess.execSync("pip install pyserial");
   }
 };
 
@@ -79,7 +82,7 @@ export const flashBuild = async (port, file, progressCallback) => {
     console.log("Error installing dependencies", e);
   }
 
-  const cmd = `$(which python) ./esptool.py --chip esp32 --port ${port} --baud 1500000 --before default_reset --after hard_reset write_flash -z --flash_mode dio --flash_freq 80m --flash_size detect 0xe000 ./ota_data_initial.bin 0x1000 ./bootloader.bin 0x10000 ${file} 0x8000 ./partitions.bin`;
+  const cmd = `python ./esptool.py --chip esp32 --port ${port} --baud 1500000 --before default_reset --after hard_reset write_flash -z --flash_mode dio --flash_freq 80m --flash_size detect 0xe000 ./ota_data_initial.bin 0x1000 ./bootloader.bin 0x10000 ${file} 0x8000 ./partitions.bin`;
 
   console.log("[flashBuild]", { cmd });
 

@@ -135,7 +135,7 @@ const Flash = () => {
           ))}
         </div>
 
-        <div className="flex flex-row items-center px-4 py-4 border-t border-gray-400 dark-mode:bg-gray-600 dark-mode:border-gray-700">
+        <div className="flex flex-row items-center px-4 py-4 border-t border-gray-300 dark-mode:bg-gray-600 dark-mode:border-gray-700">
           <div className="bottom-0 flex flex-col flex-wrap flex-shrink pr-4">
             {selectedSketches.length === 0 && (
               <>Choose up to 20 patterns to upload to your Soulmate.</>
