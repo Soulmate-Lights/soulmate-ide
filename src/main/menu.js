@@ -7,6 +7,7 @@ import { Link, NavLink, useLocation } from "react-router-dom";
 import Logo from "~/images/logo.svg";
 import isElectron from "~/utils/isElectron";
 
+import square from "./Square.jpg";
 import UserDetails from "./userDetails";
 
 const iconClass = "mr-3 h-6 w-6 transition ease-in-out duration-150";
@@ -124,6 +125,40 @@ const Menu = () => {
                 Config
               </NavLink>
             </nav>
+
+            <a
+              className="mx-8 mt-auto mb-4 overflow-hidden text-xs bg-gray-300 rounded-lg dark-mode:bg-gray-800 align-center"
+              href="https://shop.soulmatelights.com/products/square"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              <div
+                className="bg-center bg-cover"
+                style={{ backgroundImage: `url(${square})` }}
+              >
+                <br />
+                <br />
+                <br />
+                <br />
+              </div>
+              <div className="p-2 text-center">
+                <p className="font-semibold">Buy a Soulmate Square!</p>
+                <p className="font-light">$199 + shipping</p>
+              </div>
+            </a>
+
+            {/* <a
+              className="flex flex-row h-16 mx-6 mt-auto mb-8 overflow-hidden text-xs bg-gray-300 rounded-lg align-center"
+              href="https://shop.soulmatelights.com/products/square"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              <img className="flex-grow-0 h-full" src={square} />
+              <div className="flex flex-col flex-shrink-0 p-4">
+                <p>Buy a Square!</p>
+                <p>$199 + shipping</p>
+              </div>
+            </a> */}
           </div>
 
           <UserDetails className={`border-t dark-mode:border-gray-600`} />

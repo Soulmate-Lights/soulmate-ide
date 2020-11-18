@@ -22,7 +22,6 @@ self.addEventListener("message", (e) => {
       cols,
       serpentine: true,
       hex: hex,
-      // canvas: canvas,
       onPixels: (pixels) => self.postMessage({ pixels }),
       onSerial: (serialOutput) => self.postMessage({ serialOutput }),
     });
