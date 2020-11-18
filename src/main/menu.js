@@ -129,6 +129,15 @@ const Menu = () => {
             <a
               className="mx-8 mt-auto mb-4 overflow-hidden text-xs bg-gray-300 rounded-lg dark-mode:bg-gray-800 align-center"
               href="https://shop.soulmatelights.com/products/square"
+              onClick={(e) => {
+                if (isElectron()) {
+                  e.preventDefault();
+                  console.log("hi");
+                  electron.shell.openExternal(
+                    "https://shop.soulmatelights.com/products/square"
+                  );
+                }
+              }}
               rel="noopener noreferrer"
               target="_blank"
             >
@@ -146,19 +155,6 @@ const Menu = () => {
                 <p className="font-light">$199 + shipping</p>
               </div>
             </a>
-
-            {/* <a
-              className="flex flex-row h-16 mx-6 mt-auto mb-8 overflow-hidden text-xs bg-gray-300 rounded-lg align-center"
-              href="https://shop.soulmatelights.com/products/square"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              <img className="flex-grow-0 h-full" src={square} />
-              <div className="flex flex-col flex-shrink-0 p-4">
-                <p>Buy a Square!</p>
-                <p>$199 + shipping</p>
-              </div>
-            </a> */}
           </div>
 
           <UserDetails className={`border-t dark-mode:border-gray-600`} />
