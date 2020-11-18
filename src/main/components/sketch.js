@@ -9,6 +9,7 @@ const Sketch = ({
   ...rest
 }) => {
   const videoRef = useRef();
+  const [hover, setHover] = useState(false);
 
   useEffect(() => {
     if (autoPlay) {
@@ -31,30 +32,28 @@ const Sketch = ({
         `w-${width}`,
         "border border-transparent dark-mode:border-gray-800"
       )}
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
       {...rest}
     >
       <div className={`block w-${width} h-${width} bg-black`}>
-        <video
-          loop
-          muted
-          onMouseEnter={(e) => {
-            try {
-              e.target.play();
-            } catch (e) {
-              // Don't quite know why these fail but they do!
-              // https://sentry.io/organizations/soulmate/issues/2010933857/?environment=production&project=5433159&query=is%3Aunresolved
-            }
-          }}
-          onMouseLeave={(e) => e.target.pause()}
-          ref={videoRef}
-          style={{ transform: "rotate(180deg)" }}
-        >
-          <source
-            id="media-source"
-            src={`${sketch.video_url}#t=0.5`}
-            type="video/mp4"
-          />
-        </video>
+        {hover ? (
+          <video
+            autoPlay
+            loop
+            muted
+            ref={videoRef}
+            style={{ transform: "rotate(180deg)" }}
+          >
+            <source
+              id="media-source"
+              src={`${sketch.video_url}#t=0.5`}
+              type="video/mp4"
+            />
+          </video>
+        ) : (
+          <img src={sketch.thumb_url} />
+        )}
       </div>
       {showTitle && (
         <div className="p-1 text-gray-900 dark-mode:bg-gray-700 dark-mode:text-white">
