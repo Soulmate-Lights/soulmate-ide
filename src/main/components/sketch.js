@@ -36,14 +36,28 @@ const Sketch = ({
       onMouseLeave={() => setHover(false)}
       {...rest}
     >
-      <div className={`block w-${width} h-${width} bg-black`}>
-        {hover ? (
+      <div className={`block w-${width} h-${width} bg-black relative`}>
+        <img
+          src={sketch.thumb_url}
+          style={{
+            transform: "rotate(180deg)",
+            position: "absolute",
+            left: 0,
+            top: 0,
+          }}
+        />
+        {hover && (
           <video
             autoPlay
             loop
             muted
             ref={videoRef}
-            style={{ transform: "rotate(180deg)" }}
+            style={{
+              transform: "rotate(180deg)",
+              position: "absolute",
+              left: 0,
+              top: 0,
+            }}
           >
             <source
               id="media-source"
@@ -51,8 +65,6 @@ const Sketch = ({
               type="video/mp4"
             />
           </video>
-        ) : (
-          <img src={sketch.thumb_url} />
         )}
       </div>
       {showTitle && (
