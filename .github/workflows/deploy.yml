@@ -28,7 +28,7 @@ jobs:
       - uses: actions/cache@v2.1.0
         with:
           path: "soulmate-server/soulmate-ide/.cache"
-          key: ${{ runner.os }}-modules-${{ hashFiles('soulmate-server/soulmate-ide/yarn.lock') }}
+          key: ${{ runner.os }}-deploy-modules-${{ hashFiles('soulmate-server/soulmate-ide/yarn.lock') }}
 
       - name: yarn
         run: yarn

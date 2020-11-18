@@ -17,14 +17,10 @@ jobs:
         with:
           node-version: 10
 
-      - name: Get yarn cache directory path
-        id: yarn-cache-dir-path
-        run: echo "::set-output name=dir::$(yarn cache dir)"
-
       - uses: actions/cache@v2.1.0
         with:
           path: "**/node_modules"
-          key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
+          key: ${{ runner.os }}-lint-modules-${{ hashFiles('**/yarn.lock') }}
 
       - name: yarn
         run: yarn --frozen-lockfile
