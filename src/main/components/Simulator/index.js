@@ -7,7 +7,9 @@ import { Link } from "react-router-dom";
 import Logo from "~/images/logo.svg";
 
 let worker;
-import { calculateDimensions, drawPixels } from "./utils";
+import { drawPixels } from "@elliottkember/leduino";
+
+import { calculateDimensions } from "./utils";
 
 const Simulator = ({
   build,
