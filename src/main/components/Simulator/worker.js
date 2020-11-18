@@ -3,6 +3,7 @@ import "regenerator-runtime/runtime";
 import LEDuino from "@elliottkember/leduino";
 
 let arduino;
+let _hex;
 
 self.addEventListener("message", (e) => {
   const { hex, rows, cols } = e.data;
@@ -13,7 +14,9 @@ self.addEventListener("message", (e) => {
     arduino?.start();
   }
 
-  if (hex) {
+  if (hex && hex !== _hex) {
+    _hex = hex;
+    arduino?.stop();
     arduino = new LEDuino({
       rows,
       cols,

@@ -1047,10 +1047,10 @@
     global-agent "^2.0.2"
     global-tunnel-ng "^2.7.1"
 
-"@elliottkember/leduino@^1.0.3":
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/@elliottkember/leduino/-/leduino-1.0.3.tgz#50232b286da46d97a5354e27e6c9b4b3bb998442"
-  integrity sha512-qFXSM517X+ezx2rGeJOXOSIpARvLLC8AA8BUR3vIrN88K41N6iRX3e3wBTQjKPvhsYbj5xssCv3nDTcoCc+2pg==
+"@elliottkember/leduino@^1.0.4":
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/@elliottkember/leduino/-/leduino-1.0.4.tgz#c90b678cc8e0511c1d7b4ffdf22aa0e5d9f08a3c"
+  integrity sha512-Z0y5U0z4Z2f7CE38cB+bmx3oCnjo23+hNrn4KKpFrYBR4CcThp59EJnffrCq4tHo0NNgxCY8ZfZtN82oFKlFzg==
   dependencies:
     avr8js "^0.12.0"
     babel-core "^6.26.3"

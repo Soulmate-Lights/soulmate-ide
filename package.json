@@ -9,7 +9,7 @@
   "license": "MIT",
   "dependencies": {
     "@auth0/auth0-spa-js": "^1.9.0",
-    "@elliottkember/leduino": "^1.0.3",
+    "@elliottkember/leduino": "^1.0.4",
     "@fullhuman/postcss-purgecss": "^2.3.0",
     "@hot-loader/react-dom": "^16.13.0",
     "@sentry/electron": "^2.0.1",

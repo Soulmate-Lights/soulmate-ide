@@ -1,3 +1,5 @@
+import { dataPin } from "@elliottkember/leduino";
+
 const translation = `
 CRGB* leds = Soulmate.leds;
 #define NUM_LEDS N_LEDS
@@ -12,7 +14,7 @@ export const preparePreviewCode = (code, config) => {
 #include "FastLED.h"
 
 // LEDs pin
-#define DATA_PIN 12
+#define DATA_PIN ${dataPin}
 
 // Matrix size
 #define LED_ROWS ${rows}
