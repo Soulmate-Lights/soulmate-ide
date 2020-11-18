@@ -1,5 +1,3 @@
-const which = remote?.require("which");
-
 if (!window.remote) {
   window.remote = undefined;
 }
@@ -42,8 +40,8 @@ const getNumberFromFlashOutput = (data) => {
 
 /* Make sure we have pyserial installed */
 const installDependencies = () => {
+  const which = remote && remote?.require("which");
   const python = which.sync("python");
-  console.log(python);
   const childProcess = remote.require("child_process");
   if (remote.require("os").platform() === "darwin") {
     childProcess.execSync(`${python} ./get-pip.py`, { cwd: dir });
@@ -58,6 +56,7 @@ const installDependencies = () => {
 
 /** Flash a build file to a USB output */
 export const flashBuild = async (port, file, progressCallback) => {
+  const which = remote && remote?.require("which");
   const python = which.sync("python");
 
   console.log("[flashbuild] Installing dependencices");
