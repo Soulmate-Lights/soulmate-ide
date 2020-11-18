@@ -21,6 +21,7 @@ import Marketing from "../marketing";
 import Config from "./config";
 import Console from "./console";
 import Dashboard from "./dashboard";
+import Download from "./download";
 import Editor from "./editor";
 import Flash from "./flash";
 import Gallery from "./gallery";
@@ -108,7 +109,7 @@ const Main = () => {
                           </Route>
 
                           <Route exact path="/flash">
-                            <Flash />
+                            {isElectron() ? <Flash /> : <Download />}
                           </Route>
 
                           <Route exact path="/config">

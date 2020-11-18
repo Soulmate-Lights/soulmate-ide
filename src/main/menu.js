@@ -91,17 +91,15 @@ const Menu = () => {
                 Gallery
               </NavLink>
 
-              {isElectron() && (
-                <NavLink
-                  activeClassName={activeLinkClass}
-                  className={linkClass}
-                  location={location}
-                  to="/flash"
-                >
-                  <FaUsb className={iconClass} />
-                  USB Upload
-                </NavLink>
-              )}
+              <NavLink
+                activeClassName={activeLinkClass}
+                className={linkClass}
+                location={location}
+                to="/flash"
+              >
+                <FaUsb className={iconClass} />
+                USB Upload
+              </NavLink>
 
               {isElectron() && (
                 <NavLink
