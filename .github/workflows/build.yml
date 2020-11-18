@@ -29,9 +29,11 @@ jobs:
       - uses: actions/cache@v2
         with:
           path: |
-            "**/build"
-            "**/node_modules"
+            **/build
+            **/node_modules
           key: ${{ runner.os }}-build-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-build-
 
       - name: Install Node.js, NPM and Yarn
         uses: actions/setup-node@v1

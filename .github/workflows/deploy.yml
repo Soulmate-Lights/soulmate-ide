@@ -28,9 +28,11 @@ jobs:
       - uses: actions/cache@v2
         with:
           path: |
-            "**/node_modules"
-            "**/.cache"
+            **/node_modules
+            **/.cache
           key: ${{ runner.os }}-deploy-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-deploy-
 
       - name: yarn
         run: yarn
