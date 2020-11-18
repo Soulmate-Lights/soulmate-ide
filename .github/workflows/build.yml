@@ -28,12 +28,12 @@ jobs:
 
       - uses: actions/cache@v2.1.0
         with:
-          path: "build"
+          path: "**/build"
           key: ${{ runner.os }}-build-output-${{ hashFiles('yarn.lock') }}
 
       - uses: actions/cache@v2.1.0
         with:
-          path: "node_modules"
+          path: "**/node_modules"
           key: ${{ runner.os }}-node-modules-${{ hashFiles('yarn.lock') }}
 
       - name: Install Node.js, NPM and Yarn
