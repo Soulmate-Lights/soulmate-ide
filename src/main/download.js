@@ -11,8 +11,6 @@ function isWindows() {
   return navigator.platform.indexOf("Win") > -1;
 }
 
-import Logo from "~/images/logo.svg";
-
 import screenshotDark from "./welcome/dark.png";
 import screenshotLight from "./welcome/light.png";
 const Download = () => {
@@ -52,6 +50,7 @@ const Download = () => {
               <a
                 className="inline-flex items-center px-4 py-2 text-base font-medium text-purple-600 bg-white border border-transparent leading-6 rounded-md hover:text-purple-500 focus:outline-none focus:border-purple-300 focus:shadow-outline-gray active:bg-purple-50 active:text-purple-700 transition duration-150 ease-in-out"
                 href="https://shop.soulmatelights.com/products/square"
+                rel="noopener noreferrer"
                 target="_blank"
               >
                 <FaShoppingCart className="mr-2" />
