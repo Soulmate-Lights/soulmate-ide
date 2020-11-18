@@ -1,5 +1,4 @@
 /* eslint-disable no-useless-escape */
-
 import "./marketing.pcss";
 
 import React from "react";
@@ -10,6 +9,7 @@ import examples from "~/welcome/examples";
 import Example from "./example";
 import hand from "./hand.jpg";
 import logo from "./logo.png";
+import square from "./Square.jpg";
 import theboyz from "./theboyz.jpg";
 
 function isMacintosh() {
@@ -194,8 +194,53 @@ export default function MarketingPage() {
         </div>
       </div>
 
+      <div className="hidden bg-gray-100 sm:block">
+        <div className="w-10/12 px-4 py-8 pt-24 mx-auto max-w-screen-xl md:pt-12 lg:py-24 sm:px-6 lg:px-8">
+          <div className="relative z-10 flex flex-row mb-8 md:mb-2 md:px-6">
+            <div className="w-full">
+              <div className="text-base max-w-prose lg:max-w-none">
+                <p className="font-semibold tracking-wide text-purple-600 uppercase leading-6">
+                  Buy one, quit messing around
+                </p>
+                <h1 className="mt-2 text-3xl font-extrabold tracking-tight text-gray-900 leading-8 sm:text-4xl sm:leading-10">
+                  The Soulmate Square
+                </h1>
+              </div>
+
+              <div className="flex flex-col mt-3 text-gray-500 lg:flex-row lg:row-start-1 lg:col-start-2">
+                <p className="w-full pr-8 mb-8 lg:w-6/12">
+                  The Soulmate Square is our latest creation. Featuring a high
+                  resolution 196-LED display, it's the way to add a splash of
+                  color to your home.{" "}
+                </p>
+                <iframe
+                  className="w-full lg:w-6/12"
+                  frameBorder="0"
+                  height="315"
+                  src="https://www.youtube.com/embed/EDEhrcrNeqY?vq=hd1080&autoplay=1&loop=1&modestbranding=1&showinfo=0&rel=0&iv_load_policy=3&theme=light&fs=0&color=white&controls=0"
+                  width="560"
+                ></iframe>
+              </div>
+
+              <div className="mt-8 text-center">
+                <div className="inline-flex shadow rounded-md">
+                  <a
+                    className="inline-flex items-center justify-center px-5 py-3 text-base font-medium text-white bg-purple-600 border border-transparent leading-6 rounded-md hover:bg-purple-500 focus:outline-none focus:shadow-outline transition duration-150 ease-in-out"
+                    href="https://shop.soulmatelights.com/products/square"
+                    rel="noopener noreferrer"
+                    target="_blank"
+                  >
+                    Go buy a Soulmate!
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div className="hidden bg-gray-200 sm:block">
-        <div className="w-10/12 px-4 py-8 mx-auto max-w-screen-xl sm:pt-24 sm:px-6 lg:px-8">
+        <div className="w-10/12 px-4 py-8 mx-auto max-w-screen-xl sm:pt-18 sm:px-6 lg:px-8">
           <div className="relative z-10 flex flex-row mb-8 md:mb-2 md:px-6">
             <div className="w-full">
               <div className="text-base max-w-prose lg:max-w-none">
