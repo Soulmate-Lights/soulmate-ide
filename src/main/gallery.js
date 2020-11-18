@@ -14,7 +14,7 @@ const Gallery = () => {
   const { allSketches } = SketchesContainer.useContainer();
   const [search, setSearch] = useState("");
 
-  if (!allSketches) return <></>;
+  if (!allSketches) return <Logo className="loading-spinner" />;
 
   const filteredSketches = allSketches?.filter((s) =>
     s.name.toLowerCase().includes(search.toLowerCase())
