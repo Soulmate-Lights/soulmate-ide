@@ -45,8 +45,7 @@ const installDependencies = () => {
   const childProcess = remote.require("child_process");
   if (remote.require("os").platform() === "darwin") {
     childProcess.execSync(`${python} ./get-pip.py`, { cwd: dir });
-    const pip = which.sync("pip");
-    childProcess.execSync(`${pip} install pyserial`);
+    childProcess.execSync(`$(which pip) install pyserial`);
   } else {
     childProcess.execSync(`${python} ./get-pip.py`, { cwd: dir });
     const pip = which.sync("pip");
