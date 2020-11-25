@@ -1,6 +1,7 @@
 import "react-resizable/css/styles.css";
 
 import classnames from "classnames";
+import React, { Suspense } from "react";
 import { hot } from "react-hot-loader";
 import { HashRouter, Route, Router, Switch } from "react-router-dom";
 import { LastLocationProvider } from "react-router-last-location";
@@ -13,22 +14,23 @@ import SelectionsContainer from "~/containers/selection";
 import SketchesContainer from "~/containers/sketches";
 import SoulmateContainer from "~/containers/soulmates";
 import UserContainer from "~/containers/user";
+import Logo from "~/images/logo.svg";
 import history from "~/utils/history";
 import isElectron from "~/utils/isElectron";
 import isMac from "~/utils/isMac";
 
-import Marketing from "../marketing";
-import Config from "./config";
-import Console from "./console";
-import Dashboard from "./dashboard";
-import Download from "./download";
-import Editor from "./editor";
-import Flash from "./flash";
-import Gallery from "./gallery";
-import Menu from "./menu";
-import MySketches from "./mySketches";
-import User from "./user";
-import Welcome from "./welcome";
+const Marketing = React.lazy(() => import("../marketing"));
+const Config = React.lazy(() => import("./config"));
+const Console = React.lazy(() => import("./console"));
+const Dashboard = React.lazy(() => import("./dashboard"));
+const Download = React.lazy(() => import("./download"));
+const Editor = React.lazy(() => import("./editor"));
+const Flash = React.lazy(() => import("./flash"));
+const Gallery = React.lazy(() => import("./gallery"));
+const Menu = React.lazy(() => import("./menu"));
+const MySketches = React.lazy(() => import("./mySketches"));
+const User = React.lazy(() => import("./user"));
+const Welcome = React.lazy(() => import("./welcome"));
 
 const SpecificRouter = isElectron() ? HashRouter : Router;
 
@@ -56,106 +58,115 @@ const Main = () => {
         />
       )}
 
-      <div
-        className={classnames("flex flex-grow flex-col flex-shrink h-screen", {
-          "pt-6": showTopBar,
-        })}
-      >
-        <BuildsContainer.Provider>
-          <SpecificRouter history={isElectron() ? undefined : history}>
-            <LastLocationProvider>
-              <Switch>
-                {marketing && (
-                  <Route exact path="/">
+      <Suspense fallback={<Logo className="loading-spinner" />}>
+        <div
+          className={classnames(
+            "flex flex-grow flex-col flex-shrink h-screen",
+            {
+              "pt-6": showTopBar,
+            }
+          )}
+        >
+          <BuildsContainer.Provider>
+            <SpecificRouter history={isElectron() ? undefined : history}>
+              <LastLocationProvider>
+                <Switch>
+                  {marketing && (
+                    <Route exact path="/">
+                      <Marketing />
+                    </Route>
+                  )}
+
+                  <Route exact path="/marketing">
                     <Marketing />
                   </Route>
-                )}
 
-                <Route exact path="/marketing">
-                  <Marketing />
-                </Route>
+                  <Route>
+                    <ContainerProvider>
+                      <div
+                        className={classnames(
+                          "flex flex-shrink flex-grow overflow-hidden bg-gray-100 dark-mode:bg-gray-300 font-medium"
+                        )}
+                        style={{
+                          WebkitUserSelect: "none",
+                          opacity: blur ? "0.9" : 1,
+                        }}
+                      >
+                        <Menu />
 
-                <Route>
-                  <ContainerProvider>
-                    <div
-                      className={classnames(
-                        "flex flex-shrink flex-grow overflow-hidden bg-gray-100 dark-mode:bg-gray-300 font-medium"
-                      )}
-                      style={{
-                        WebkitUserSelect: "none",
-                        opacity: blur ? "0.9" : 1,
-                      }}
-                    >
-                      <Menu />
+                        <Notifications />
 
-                      <Notifications />
+                        <Suspense
+                          fallback={<Logo className="loading-spinner" />}
+                        >
+                          <div className="flex flex-row flex-grow flex-shrink w-full min-w-0 bg-gray-100 dark-mode:bg-gray-800 dark-mode:text-white">
+                            <Switch>
+                              <Route exact path="/">
+                                <Dashboard />
+                              </Route>
 
-                      <div className="flex flex-row flex-grow flex-shrink w-full min-w-0 bg-gray-100 dark-mode:bg-gray-800 dark-mode:text-white">
-                        <Switch>
-                          <Route exact path="/">
-                            <Dashboard />
-                          </Route>
+                              <Route exact path="/tutorial">
+                                <Welcome />
+                              </Route>
 
-                          <Route exact path="/tutorial">
-                            <Welcome />
-                          </Route>
+                              <Route exact path="/my-patterns">
+                                <MySketches />
+                              </Route>
 
-                          <Route exact path="/my-patterns">
-                            <MySketches />
-                          </Route>
+                              <Route exact path="/gallery">
+                                <Gallery />
+                              </Route>
 
-                          <Route exact path="/gallery">
-                            <Gallery />
-                          </Route>
+                              <Route exact path="/flash">
+                                {isElectron() ? <Flash /> : <Download />}
+                              </Route>
 
-                          <Route exact path="/flash">
-                            {isElectron() ? <Flash /> : <Download />}
-                          </Route>
+                              <Route exact path="/config">
+                                <Config />
+                              </Route>
 
-                          <Route exact path="/config">
-                            <Config />
-                          </Route>
+                              <Route
+                                path="/gallery/user/:id"
+                                render={({
+                                  match: {
+                                    params: { id },
+                                  },
+                                }) => <User id={id} />}
+                              />
 
-                          <Route
-                            path="/gallery/user/:id"
-                            render={({
-                              match: {
-                                params: { id },
-                              },
-                            }) => <User id={id} />}
-                          />
+                              <Route
+                                path="/gallery/:id"
+                                render={({
+                                  match: {
+                                    params: { id },
+                                  },
+                                }) => <Editor id={id} />}
+                              />
 
-                          <Route
-                            path="/gallery/:id"
-                            render={({
-                              match: {
-                                params: { id },
-                              },
-                            }) => <Editor id={id} />}
-                          />
+                              <Route
+                                path="/my-patterns/:id"
+                                render={({
+                                  match: {
+                                    params: { id },
+                                  },
+                                }) => <Editor id={id} mine />}
+                              />
 
-                          <Route
-                            path="/my-patterns/:id"
-                            render={({
-                              match: {
-                                params: { id },
-                              },
-                            }) => <Editor id={id} mine />}
-                          />
-
-                          <Route path="/console">
-                            <Console />
-                          </Route>
-                        </Switch>
+                              <Route path="/console">
+                                <Console />
+                              </Route>
+                            </Switch>
+                          </div>
+                        </Suspense>
                       </div>
-                    </div>
-                  </ContainerProvider>
-                </Route>
-              </Switch>
-            </LastLocationProvider>
-          </SpecificRouter>
-        </BuildsContainer.Provider>
-      </div>
+                    </ContainerProvider>
+                  </Route>
+                </Switch>
+              </LastLocationProvider>
+            </SpecificRouter>
+          </BuildsContainer.Provider>
+        </div>
+      </Suspense>
     </div>
   );
 };
