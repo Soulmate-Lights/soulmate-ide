@@ -9,7 +9,6 @@ import examples from "~/welcome/examples";
 import Example from "./example";
 import hand from "./hand.jpg";
 import logo from "./logo.png";
-import square from "./Square.jpg";
 import theboyz from "./theboyz.jpg";
 
 function isMacintosh() {
