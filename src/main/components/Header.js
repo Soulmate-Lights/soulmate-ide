@@ -54,10 +54,10 @@ const Header = ({ title, sections, subtitle, actions, className }) => {
       </div>
       {actions && (
         <div className="flex items-center flex-shrink-0 pr-8 ml-auto">
-          {compact(actions).map((action) => {
+          {compact(actions).map((action, i) => {
             const { title, onClick, className, ...rest } = action;
 
-            if (!title) return action;
+            if (!title) return <div key={i}>{action}</div>;
 
             return (
               <span className="ml-2 shadow-sm rounded-md" key={title}>

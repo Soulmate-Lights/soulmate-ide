@@ -243,6 +243,7 @@ const Editor = ({ id, mine }) => {
               onClick={(e) => {
                 e.target.select();
               }}
+              readOnly
               value={`https://editor.soulmatelights.com/gallery/${sketch.id}`}
             />
             <span className="inline-flex rounded-md shadow-sm">
