@@ -1,5 +1,6 @@
 import "./progress.pcss";
 
+import { Suspense } from "react";
 import compact from "lodash/compact";
 import uniqBy from "lodash/uniqBy";
 import { AiFillCheckCircle } from "react-icons/ai";
@@ -14,7 +15,7 @@ import UserContainer from "~/containers/user";
 import Logo from "~/images/logo.svg";
 
 import FlashButton from "./components/flashButton";
-import Console from "./console";
+const Console = React.lazy(() => import("./console"));
 
 const Flash = () => {
   const { flashing } = Soulmates.useContainer();
@@ -185,7 +186,9 @@ const Flash = () => {
           resizeHandles={["w"]}
           width={500}
         >
-          <Console className="flex-shrink" />
+          <Suspense fallback={<Logo className="loading-spinner" />}>
+            <Console className="flex-shrink" />
+          </Suspense>
         </ResizableBox>
       )}
     </div>
