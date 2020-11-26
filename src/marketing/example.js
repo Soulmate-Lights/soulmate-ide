@@ -4,10 +4,11 @@ import CodeEditor from "~/components/codeEditor";
 import Simulator from "~/components/Simulator";
 import BuildsContainer from "~/containers/builds";
 
+const config = { rows: 30, cols: 30 };
+
 const Example = ({ code, className }) => {
-  const { getBuild } = useContainer(BuildsContainer);
-  const config = { rows: 30, cols: 30 };
   const [editorCode, setEditorCode] = useState(code);
+  const { getBuild } = useContainer(BuildsContainer);
   const build = getBuild(editorCode, config);
 
   return (

@@ -1,5 +1,4 @@
 import * as SentryReact from "@sentry/react";
-import { useEffect, useState } from "react";
 import { createContainer } from "unstated-next";
 
 import {

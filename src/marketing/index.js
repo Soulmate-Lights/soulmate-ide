@@ -95,7 +95,7 @@ export default function MarketingPage() {
         </div>
         <div className="lg:absolute lg:inset-y-0 lg:right-0 lg:w-1/2">
           <img
-            alt
+            alt="The boys"
             className="object-cover w-full h-56 sm:h-72 md:h-96 lg:w-full lg:h-full"
             src={theboyz}
           />
@@ -112,7 +112,7 @@ export default function MarketingPage() {
                 <figure>
                   <div className="relative pb-7/12 lg:pb-0">
                     <img
-                      alt
+                      alt="hand"
                       className="absolute inset-0 object-cover object-center w-full h-full rounded-lg shadow-lg lg:static lg:h-auto"
                       height={1376}
                       src={hand}
@@ -512,7 +512,7 @@ export default function MarketingPage() {
                   <div className="space-y-6">
                     <div className="relative w-40 h-40 mx-auto overflow-hidden shadow-lg rounded-xl cover xl:w-56 xl:h-56">
                       <img
-                        alt
+                        alt={name}
                         className="absolute inset-0 object-cover w-full h-full rounded-lg shadow-lg"
                         src={image}
                       />

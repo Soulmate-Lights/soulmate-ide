@@ -37,7 +37,10 @@ const Main = () => {
 
       <Suspense fallback={<Logo className="loading-spinner" />}>
         <div
-          className={classnames("flex flex-grow flex-col flex-shrink h-screen", { "pt-6": showTopBar })}
+          className={classnames(
+            "flex flex-grow flex-col flex-shrink h-screen",
+            { "pt-6": showTopBar }
+          )}
         >
           <BuildsContainer.Provider>
             <SpecificRouter history={isElectron() ? undefined : history}>
