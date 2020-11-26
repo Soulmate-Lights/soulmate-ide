@@ -1,8 +1,8 @@
 import "./progress.pcss";
 
-import { Suspense } from "react";
 import compact from "lodash/compact";
 import uniqBy from "lodash/uniqBy";
+import { Suspense } from "react";
 import { AiFillCheckCircle } from "react-icons/ai";
 import { BsLayoutSidebarInsetReverse } from "react-icons/bs";
 import { ResizableBox } from "react-resizable";
