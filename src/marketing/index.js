@@ -1,5 +1,4 @@
 /* eslint-disable no-useless-escape */
-import "./marketing.pcss";
 
 import React from "react";
 import { AiFillApple, AiFillWindows } from "react-icons/ai";
@@ -209,8 +208,8 @@ export default function MarketingPage() {
               <div className="flex flex-col mt-3 text-gray-500 lg:flex-row lg:row-start-1 lg:col-start-2">
                 <p className="w-full pr-8 mb-8 lg:w-6/12">
                   The Soulmate Square is our latest creation. Featuring a high
-                  resolution 196-LED display, it&apos;s the way to add a splash of
-                  color to your home.{" "}
+                  resolution 196-LED display, it&apos;s the way to add a splash
+                  of color to your home.{" "}
                 </p>
                 <iframe
                   className="w-full lg:w-6/12"
