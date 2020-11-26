@@ -127,7 +127,7 @@ const Menu = () => {
             </nav>
 
             <a
-              className="mx-8 mt-auto mb-4 overflow-hidden text-xs bg-gray-300 rounded-lg dark-mode:bg-gray-800 align-center"
+              className="mx-8 mt-4 mt-auto mb-4 overflow-hidden text-xs bg-gray-300 rounded-lg dark-mode:bg-gray-800 align-center"
               href="https://shop.soulmatelights.com/products/square"
               onClick={(e) => {
                 if (isElectron()) {

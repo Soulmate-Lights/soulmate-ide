@@ -6,7 +6,7 @@ import { hot } from "react-hot-loader";
 import { HashRouter, Route, Router, Switch } from "react-router-dom";
 import { LastLocationProvider } from "react-router-last-location";
 
-import Notifications from "~/components/notifications";
+// import Notifications from "~/components/notifications";
 import BuildsContainer from "~/containers/builds";
 import ConfigContainer from "~/containers/config";
 import NotificationsContainer from "~/containers/notifications";
@@ -20,27 +20,28 @@ import isElectron from "~/utils/isElectron";
 import isMac from "~/utils/isMac";
 
 const Marketing = React.lazy(() => import("../marketing"));
-const Config = React.lazy(() => import("./config"));
-const Console = React.lazy(() => import("./console"));
-const Dashboard = React.lazy(() => import("./dashboard"));
-const Download = React.lazy(() => import("./download"));
-const Editor = React.lazy(() => import("./editor"));
-const Flash = React.lazy(() => import("./flash"));
-const Gallery = React.lazy(() => import("./gallery"));
-const Menu = React.lazy(() => import("./menu"));
-const MySketches = React.lazy(() => import("./mySketches"));
-const User = React.lazy(() => import("./user"));
-const Welcome = React.lazy(() => import("./welcome"));
+const Ide = React.lazy(() => import("./ide"));
+// const Config = React.lazy(() => import("./config"));
+// const Console = React.lazy(() => import("./console"));
+// const Dashboard = React.lazy(() => import("./dashboard"));
+// const Download = React.lazy(() => import("./download"));
+// const Editor = React.lazy(() => import("./editor"));
+// const Flash = React.lazy(() => import("./flash"));
+// const Gallery = React.lazy(() => import("./gallery"));
+// const Menu = React.lazy(() => import("./menu"));
+// const MySketches = React.lazy(() => import("./mySketches"));
+// const User = React.lazy(() => import("./user"));
+// const Welcome = React.lazy(() => import("./welcome"));
 
 const SpecificRouter = isElectron() ? HashRouter : Router;
 
 const Main = () => {
-  useEffect(() => {
-    window.ipcRenderer?.on("focus", (event, isFocused) => setFocus(isFocused));
-  }, [window, window.ipcRenderer]);
+  // useEffect(() => {
+  //   window.ipcRenderer?.on("focus", (event, isFocused) => setFocus(isFocused));
+  // }, [window, window.ipcRenderer]);
 
-  const [focus, setFocus] = useState(true);
-  const blur = !focus;
+  // const [focus, setFocus] = useState(true);
+  // const blur = !focus;
   const marketing =
     document.location.href === "https://www.soulmatelights.com/";
 
@@ -82,7 +83,8 @@ const Main = () => {
                   </Route>
 
                   <Route>
-                    <ContainerProvider>
+                    <Ide />
+                    {/* <ContainerProvider>
                       <div
                         className={classnames(
                           "flex flex-shrink flex-grow overflow-hidden bg-gray-100 dark-mode:bg-gray-300 font-medium"
@@ -159,7 +161,7 @@ const Main = () => {
                           </div>
                         </Suspense>
                       </div>
-                    </ContainerProvider>
+                    </ContainerProvider> */}
                   </Route>
                 </Switch>
               </LastLocationProvider>
