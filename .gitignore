@@ -6,3 +6,4 @@ build
 .env
 *.provisionprofile
 yarn-error.log
+.yalc
