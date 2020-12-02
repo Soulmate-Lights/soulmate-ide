@@ -2,6 +2,7 @@ import * as SentryReact from "@sentry/react";
 import { createContainer } from "unstated-next";
 
 import {
+  getToken,
   getTokenOnStartup,
   tokenProperties,
   triggerLogin,
@@ -13,6 +14,16 @@ import SketchesContainer from "./sketches";
 const UserContainer = () => {
   const { reset } = SketchesContainer.useContainer();
   const [userDetails, setUserDetails] = useState(undefined);
+  let [token, setToken] = useState(undefined);
+
+  useEffect(() => {
+    const fetch = async () => {
+      const t = await getToken();
+      console.log("Setting token", token);
+      setToken(t);
+    };
+    fetch();
+  }, []);
 
   const fetchUser = async () => {
     const newUserDetails = await tokenProperties();
@@ -63,7 +74,7 @@ const UserContainer = () => {
     fetchUser();
   };
 
-  return { fetchUser, userDetails, login, logout, isAdmin };
+  return { fetchUser, userDetails, login, logout, isAdmin, token };
 };
 
 export default createContainer(UserContainer);

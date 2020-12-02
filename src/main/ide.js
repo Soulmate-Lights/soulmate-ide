@@ -18,6 +18,7 @@ const Menu = React.lazy(() => import("./menu"));
 const MySketches = React.lazy(() => import("./mySketches"));
 const User = React.lazy(() => import("./user"));
 const Welcome = React.lazy(() => import("./welcome"));
+const Playlists = React.lazy(() => import("./playlists"));
 
 import Notifications from "~/components/notifications";
 import ConfigContainer from "~/containers/config";
@@ -105,6 +106,10 @@ const IDE = () => {
 
               <Route path="/console">
                 <Console />
+              </Route>
+
+              <Route path="/playlists">
+                <Playlists />
               </Route>
             </Switch>
           </div>

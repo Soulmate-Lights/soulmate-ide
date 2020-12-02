@@ -1,6 +1,9 @@
 import isEmpty from "lodash/isEmpty";
 import { createContainer } from "unstated-next";
 
+export const host = "http://localhost:3001";
+export const url = (path) => host + path;
+
 const types = [
   {
     label: "Soulmate Square",

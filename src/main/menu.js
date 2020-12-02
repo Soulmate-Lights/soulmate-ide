@@ -21,8 +21,11 @@ const activeLinkClass = `
   dark-mode:hover:bg-gray-800
   bg-gray-300`;
 
+import UserContainer from "~/containers/user";
+
 const Menu = () => {
   const location = useLocation();
+  const { isAdmin } = UserContainer.useContainer();
 
   return (
     <div
@@ -124,6 +127,19 @@ const Menu = () => {
                 <FiSettings className={iconClass} />
                 Config
               </NavLink>
+
+              {isAdmin() && (
+                <NavLink
+                  activeClassName={activeLinkClass}
+                  className={linkClass}
+                  disabled
+                  location={location}
+                  to="/playlists"
+                >
+                  {/* <FiSettings className={iconClass} /> */}
+                  Playlists
+                </NavLink>
+              )}
             </nav>
 
             <a
