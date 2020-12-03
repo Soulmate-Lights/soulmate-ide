@@ -19,6 +19,7 @@ const MySketches = React.lazy(() => import("./mySketches"));
 const User = React.lazy(() => import("./user"));
 const Welcome = React.lazy(() => import("./welcome"));
 const Playlists = React.lazy(() => import("./playlists"));
+const Playlist = React.lazy(() => import("./playlist"));
 
 import Notifications from "~/components/notifications";
 import ConfigContainer from "~/containers/config";
@@ -107,6 +108,15 @@ const IDE = () => {
               <Route path="/console">
                 <Console />
               </Route>
+
+              <Route
+                path="/playlists/:id"
+                render={({
+                  match: {
+                    params: { id },
+                  },
+                }) => <Playlist id={id} />}
+              />
 
               <Route path="/playlists">
                 <Playlists />

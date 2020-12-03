@@ -2,6 +2,7 @@ import classnames from "classnames";
 import { BsTerminal } from "react-icons/bs";
 import { FaUsb } from "react-icons/fa";
 import { FiCloud, FiFolder, FiHome, FiSettings, FiSmile } from "react-icons/fi";
+import { RiPlayList2Fill } from "react-icons/ri";
 import { Link, NavLink, useLocation } from "react-router-dom";
 
 import Logo from "~/images/logo.svg";
@@ -136,7 +137,7 @@ const Menu = () => {
                   location={location}
                   to="/playlists"
                 >
-                  {/* <FiSettings className={iconClass} /> */}
+                  <RiPlayList2Fill className={iconClass} />
                   Playlists
                 </NavLink>
               )}

@@ -53,7 +53,7 @@ const Header = ({ title, sections, subtitle, actions, className }) => {
         </div>
       </div>
       {actions && (
-        <div className="flex items-center flex-shrink-0 pr-8 ml-auto">
+        <div className="flex items-center flex-shrink-0 pr-8 ml-auto space-x-2">
           {compact(actions).map((action, i) => {
             const { title, onClick, className, ...rest } = action;
 

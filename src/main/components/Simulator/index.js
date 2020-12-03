@@ -111,24 +111,6 @@ const Simulator = ({
       className={`${className} relative flex flex-grow flex-shrink min-h-0 overflow-auto`}
       style={{ ...style, maxWidth, minWidth }}
     >
-      <span className="absolute inline-flex rounded-md top-4 right-4 space-x-2">
-        {showConfig && (
-          <Link
-            className="inline-flex items-center px-3 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 leading-4 rounded-md hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150"
-            onClick={() => setPaused(!paused)}
-            to="/config"
-          >
-            {<FaCog />}
-          </Link>
-        )}
-        <button
-          className="inline-flex items-center px-3 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 leading-4 rounded-md hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150"
-          onClick={() => setPaused(!paused)}
-          type="button"
-        >
-          {paused ? <BsPlayFill /> : <BsFillPauseFill />}
-        </button>
-      </span>
       <div className="flex items-center justify-center flex-grow p-10">
         <div
           className="flex items-center justify-center overflow-hidden bg-black border-2 border-white rounded-lg shadow-lg dark-mode:border-gray-600"

@@ -6,6 +6,7 @@ export const url = (path) => host + path;
 
 const types = [
   {
+    playlists: true,
     label: "Soulmate Square",
     value: "square",
     config: {
@@ -20,6 +21,7 @@ const types = [
     },
   },
   {
+    playlists: true,
     label: "Soulmate Tapestry",
     value: "tapestry",
     config: {
@@ -54,6 +56,8 @@ const types = [
     config: {},
   },
 ];
+
+const playlistTypes = types.filter((t) => t.playlists);
 
 export default createContainer(() => {
   let [type, setType] = useState(localStorage["type"] || "square");
@@ -104,6 +108,7 @@ export default createContainer(() => {
     setConfig,
     setConfigFromSoulmateData,
     types,
+    playlistTypes,
     type,
     setType,
     useLocalInstall,

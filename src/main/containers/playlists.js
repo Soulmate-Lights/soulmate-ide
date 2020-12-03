@@ -7,26 +7,28 @@ import { url } from "./config";
 
 const PLAYLISTS_URL = url("/playlists");
 
-const fetcher = (url) => {
-  console.log(url);
-  const { token } = UserContainer.useContainer();
-  alert(token);
-  return fetch(url, {
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-  }).then((d) => d.json);
-};
-
 const PlaylistContainer = createContainer(() => {
-  const { data, isValidating, error } = useSWR(PLAYLISTS_URL, fetcher);
+  const { token } = UserContainer.useContainer();
+
+  const fetcher = (url) => {
+    return fetch(url, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    }).then((d) => d.json());
+  };
+
+  const { data: playlists, isValidating, error } = useSWR(
+    PLAYLISTS_URL,
+    fetcher
+  );
 
   const models = ["square"];
 
-  const createPlaylist = (name, model, build) => {
+  const createPlaylist = (name, model) => {
     const body = new FormData();
-    body.append("build", build, "playlist.bin");
+    // if (build) body.append("build", build, "playlist.bin");
     body.append("model", model);
     body.append("name", name);
 
@@ -42,6 +44,19 @@ const PlaylistContainer = createContainer(() => {
     });
   };
 
+  const savePlaylist = (id, data) => {
+    fetch(url(`/playlists/${id}`), {
+      method: "PUT",
+      body: JSON.stringify(data),
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+    }).then(() => {
+      mutate(PLAYLISTS_URL);
+    });
+  };
+
   const destroyPlaylist = (id) => {
     fetch(url(`/playlists/${id}`), { method: "DELETE" }).then((response) => {
       mutate(PLAYLISTS_URL);
@@ -51,9 +66,10 @@ const PlaylistContainer = createContainer(() => {
 
   return {
     models,
-    data,
+    playlists,
     createPlaylist,
     destroyPlaylist,
+    savePlaylist,
     isValidating,
     error,
   };

@@ -36,8 +36,8 @@ const Editor = ({ id, mine }) => {
   const [newName, setNewName] = useState(sketch?.name);
 
   const [menuOpen, setMenuOpen] = useState(false);
-  const sketch = getSketch(id);
   const menuRef = useRef();
+  const sketch = getSketch(id);
 
   useEffect(() => {
     const closeMenu = (e) => {
