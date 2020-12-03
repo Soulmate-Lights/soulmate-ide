@@ -10,12 +10,14 @@ const PLAYLISTS_URL = url("/playlists");
 const PlaylistContainer = createContainer(() => {
   const { token } = UserContainer.useContainer();
 
+  const headers = {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${token}`,
+  }
+
   const fetcher = (url) => {
     return fetch(url, {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
+      headers,
     }).then((d) => d.json());
   };
 
@@ -27,17 +29,10 @@ const PlaylistContainer = createContainer(() => {
   const models = ["square"];
 
   const createPlaylist = (name, model) => {
-    const body = new FormData();
-    // if (build) body.append("build", build, "playlist.bin");
-    body.append("model", model);
-    body.append("name", name);
-
     return fetch(PLAYLISTS_URL, {
       method: "POST",
-      body,
-      headers: {
-        token: `Bearer`,
-      },
+      body: JSON.stringify({ model, name }),
+      headers,
     }).then((response) => {
       mutate(PLAYLISTS_URL);
       return response.json();
@@ -48,17 +43,14 @@ const PlaylistContainer = createContainer(() => {
     fetch(url(`/playlists/${id}`), {
       method: "PUT",
       body: JSON.stringify(data),
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
+      headers,
     }).then(() => {
       mutate(PLAYLISTS_URL);
     });
   };
 
   const destroyPlaylist = (id) => {
-    fetch(url(`/playlists/${id}`), { method: "DELETE" }).then((response) => {
+    fetch(url(`/playlists/${id}`), { method: "DELETE", headers }).then((response) => {
       mutate(PLAYLISTS_URL);
       return response.json();
     });

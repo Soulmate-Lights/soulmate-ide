@@ -33,7 +33,7 @@ const Playlists = () => {
 
   const groupedPlaylists = _.groupBy(playlists, (p) => p.model_name);
 
-  const [modelName, setModelName] = useState(undefined);
+  const [modelName, setModelName] = useState(false);
   const [description, setDescription] = useState(undefined);
 
   return (
@@ -109,7 +109,7 @@ const Playlists = () => {
                 placeholder="Choose a type"
                 value={modelName}
               >
-                <option disabled placeholder>
+                <option disabled value={false}>
                   Choose a Soulmate type
                 </option>
                 {playlistTypes.map((type) => (

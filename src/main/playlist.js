@@ -1,4 +1,5 @@
 import CodeEditor from "~/components/codeEditor";
+import history from '~/utils/history';
 import Header from "~/components/header";
 import PlaylistMenu from "~/components/PlaylistMenu";
 import Simulator from "~/components/simulator";
@@ -9,7 +10,7 @@ import { emptyCode } from "~/utils/code";
 const Playlist = (props) => {
   const id = parseInt(props.id);
 
-  const { playlists, savePlaylist } = PlaylistContainer.useContainer();
+  const { playlists, savePlaylist, destroyPlaylist } = PlaylistContainer.useContainer();
   const { getBuild } = BuildsContainer.useContainer();
 
   const playlist = playlists?.find((p) => parseInt(p.id) === parseInt(id));
@@ -18,7 +19,6 @@ const Playlist = (props) => {
   const [index, setIndex] = useState(0);
   const sketch = sketches[index];
   const { config } = playlist;
-  console.log(playlist);
   const build = getBuild(sketch?.code || emptyCode, config);
 
   const [menuOpen, setMenuOpen] = useState(false);
@@ -73,17 +73,17 @@ const Playlist = (props) => {
               </button>
             </div>
             <div className="py-1">
-              <a
-                className="block px-4 py-2 text-sm text-gray-700 leading-5 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:bg-gray-100 focus:text-gray-900"
-                href="#"
+              <button
+                className="flex-grow block w-full px-4 py-2 text-sm text-left text-gray-700 leading-5 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:bg-gray-100 focus:text-gray-900"
                 onClick={() => {
                   setMenuOpen(false);
-                  // confirmAndDelete();
+                  destroyPlaylist(playlist.id);
+                  history.push("/playlists");
                 }}
                 role="menuitem"
               >
                 Delete
-              </a>
+              </button>
             </div>
           </div>
         </div>

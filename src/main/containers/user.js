@@ -16,14 +16,14 @@ const UserContainer = () => {
   const [userDetails, setUserDetails] = useState(undefined);
   let [token, setToken] = useState(undefined);
 
+  const fetch = async () => {
+    const t = await getToken();
+    if (token !== t) setToken(t);
+  };
+
   useEffect(() => {
-    const fetch = async () => {
-      const t = await getToken();
-      console.log("Setting token", token);
-      setToken(t);
-    };
     fetch();
-  }, []);
+  }, [userDetails]);
 
   const fetchUser = async () => {
     const newUserDetails = await tokenProperties();
