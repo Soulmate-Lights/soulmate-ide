@@ -32,12 +32,12 @@ const Editor = ({ id, mine }) => {
   const { config } = ConfigContainer.useContainer();
   const { port } = SoulmatesContainer.useContainer();
 
-  const [renaming, setRenaming] = useState(false);
-  const [newName, setNewName] = useState(sketch?.name);
-
-  const [menuOpen, setMenuOpen] = useState(false);
   const sketch = getSketch(id);
   const menuRef = useRef();
+
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [renaming, setRenaming] = useState(false);
+  const [newName, setNewName] = useState(sketch?.name);
 
   useEffect(() => {
     const closeMenu = (e) => {
