@@ -2,7 +2,7 @@
   "version": "v1",
   "packages": {
     "app-builder-lib": {
-      "signature": "ae65b65af4bc142ffff31dc456a1ed38"
+      "signature": "ecd0ada0083e04c2f29357741c78c632"
     },
     "builder-util": {
       "signature": "75e5276e248400774fe5ae3c81599fdf"
