@@ -122,7 +122,7 @@
     "release": "yarn clean && yarn version --patch && yarn react-build-desktop && AWS_PROFILE=soulmate-ide-updates electron-builder -mw --publish always",
     "clean": "rm -rf ./build ./.cache ./dist",
     "x64": "electron-builder install-app-deps && electron-rebuild @serialport/bindings -v 9.0.3 && electron-rebuild keytar -v 5.0.0",
-    "arm": "npm_config_arch=arm64 yarn add electron && electron-rebuild @serialport/bindings -v 9.0.3 -a arm64 && electron-rebuild keytar -v 5.0.0 -a arm64",
+    "arm": "npm_config_arch=arm64 yarn && electron-rebuild @serialport/bindings -v 9.0.3 -a arm64 && electron-rebuild keytar -v 5.0.0 -a arm64; electron-builder install-app-deps --arch arm64",
     "install-dependencies": "git submodule update --init --recursive; (yarn --cwd services/build-server); (cd services/wokwi-server && npm install)",
     "web": "NODE_ENV=development parcel index.html --open -p 3000",
     "bump": "yarn version --patch && git push && git push --tags"
