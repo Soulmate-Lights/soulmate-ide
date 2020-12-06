@@ -25,7 +25,7 @@ const Gallery = () => {
     (user) => user.id
   );
 
-  users = users.filter((u) => u.uid !== userDetails?.sub);
+  users = users.sort((u) => u.uid !== userDetails?.sub);
 
   users = users?.map((u) => ({
     ...u,
