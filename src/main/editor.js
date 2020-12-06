@@ -58,7 +58,6 @@ const Editor = ({ id, mine }) => {
   const build = getBuild(sketch.code || emptyCode, config);
   let code = sketch.dirtyCode || sketch.code || emptyCode;
   const selection = getSelection(id);
-  const dirty = sketch.dirtyCode !== sketch.code;
 
   const confirmAndDelete = () => {
     if (!confirm("Delete this sketch?")) return;
@@ -158,7 +157,7 @@ const Editor = ({ id, mine }) => {
       <Header
         actions={[
           mine && menu,
-          dirty && {
+          mine && {
             title: mine ? "Save" : "Refresh",
             onClick: () => save(sketch.id, sketch.dirtyCode),
           },
