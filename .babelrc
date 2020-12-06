@@ -18,7 +18,7 @@
         "rootPathPrefix": "~/"
       }
     ],
-    // "@babel/plugin-proposal-optional-chaining",
+    "@babel/plugin-proposal-optional-chaining",
     [
       "auto-import",
       {
@@ -26,15 +26,28 @@
           {
             "default": "React",
             "path": "react",
-            "members": ["useState", "useEffect", "useContext", "useRef"]
+            "members": [
+              "useState",
+              "useEffect",
+              "useContext",
+              "useRef"
+            ]
           },
           {
             "default": "unstated",
             "path": "unstated-next",
-            "members": ["useContainer"]
+            "members": [
+              "useContainer"
+            ]
           },
-          { "default": "PropTypes", "path": "prop-types" },
-          { "default": "classnames", "path": "classnames" }
+          {
+            "default": "PropTypes",
+            "path": "prop-types"
+          },
+          {
+            "default": "classnames",
+            "path": "classnames"
+          }
         ]
       }
     ],
