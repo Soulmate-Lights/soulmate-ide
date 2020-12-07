@@ -1,4 +1,5 @@
 const electron = require("electron");
+const { session } = electron;
 const { app, BrowserWindow, ipcMain, systemPreferences } = electron;
 const path = require("path");
 const isDev = require("electron-is-dev");
@@ -67,6 +68,17 @@ function createWindow() {
   });
 
   mainWindow.once("ready-to-show", mainWindow.show);
+
+  session.defaultSession.webRequest.onHeadersReceived((details, callback) => {
+    callback({
+      responseHeaders: {
+        ...details.responseHeaders,
+        "Content-Security-Policy": [
+          `default-src 'self' 'unsafe-inline' ws://localhost:*/ www.googletagmanager.com www.google-analytics.com lh3.googleusercontent.com rsms.me editor.soulmatelights.com; script-src 'self' www.googletagmanager.com www.google-analytics.com devtools: 'unsafe-eval'; style-src 'self' 'unsafe-inline' rsms.me ; font-src *; img-src 'self' 'unsafe-inline' *.s3.amazonaws.com lh3.googleusercontent.com www.google-analytics.com`,
+        ],
+      },
+    });
+  });
 }
 
 // function openConsoleWindow() {
