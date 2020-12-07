@@ -14,6 +14,3 @@
 (cd ../electron-builder/packages/electron-forge-maker-nsis-web && yalc push)
 (cd ../electron-builder/packages/electron-forge-maker-snap && yalc push)
 (cd ../electron-builder/packages/electron-updater && yalc push)
-
-rm -rf dist
-arch -x86_64 yarn electron-builder --arm64 --x64
