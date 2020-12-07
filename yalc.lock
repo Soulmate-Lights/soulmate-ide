@@ -11,7 +11,7 @@
       "signature": "d9003e9d10807fa06e3c8450fc576953"
     },
     "dmg-builder": {
-      "signature": "738034538cdd40d6498fbc7d00649794"
+      "signature": "ba98e90ee0903c927ca90ec3bffaa4d9"
     },
     "electron-builder": {
       "signature": "ee56501cbc9e2bb4a2287ede83a45634"
@@ -35,7 +35,7 @@
       "signature": "adb57f371a3759779625b55e2f2fc6c1"
     },
     "electron-updater": {
-      "signature": "11bffc84621078ecfb9aa008d9b45da7"
+      "signature": "615ef981fa58c4b6470d92c21f071cb7"
     }
   }
 }

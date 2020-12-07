@@ -4,7 +4,7 @@
     "last 1 Chrome versions",
     "last 1 electron version"
   ],
-  "version": "2.0.80",
+  "version": "2.0.95",
   "main": "src/electron.js",
   "license": "MIT",
   "dependencies": {
@@ -117,7 +117,7 @@
     "start-local": "concurrently \"yarn start-servers\" \"yarn start-app-local\"",
     "start-app-local": "concurrently \"cross-env local=true BROWSER=none yarn react-start\" \"wait-on http://localhost:3000 && electron . \" \"yarn build-worker-dev\"",
     "build": "yarn react-build-desktop && electron-builder",
-    "build-publish": "yarn react-build-desktop && electron-builder -p always",
+    "build-publish": "yarn react-build-desktop && electron-builder -mw -p always",
     "build-worker": "parcel build node_modules/monaco-editor/esm/vs/editor/editor.worker.js -d build --no-source-maps",
     "build-worker-dev": "parcel build node_modules/monaco-editor/esm/vs/editor/editor.worker.js --no-source-maps",
     "release": "yarn clean && yarn version --patch && yarn react-build-desktop && AWS_PROFILE=soulmate-ide-updates electron-builder -mw --publish always",
