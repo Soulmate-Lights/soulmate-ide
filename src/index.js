@@ -32,3 +32,12 @@ self.MonacoEnvironment = {
 monaco.editor.createWebWorker({});
 
 ReactDOM.render(<Main />, document.getElementById("root"));
+
+window.dataLayer = window.dataLayer || [];
+function gtag() {
+  window.dataLayer.push(arguments);
+}
+gtag("js", new Date());
+gtag("config", "UA-131034779-4");
+
+module.hot?.accept();
