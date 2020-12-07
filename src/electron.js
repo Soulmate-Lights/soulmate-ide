@@ -69,33 +69,7 @@ function createWindow() {
   mainWindow.once("ready-to-show", mainWindow.show);
 }
 
-// function openConsoleWindow() {
-//   const consoleWindow = new BrowserWindow({
-//     width: 1200,
-//     height: 800,
-//     show: true,
-//     webPreferences: {
-//       enableRemoteModule: true,
-//       // nodeIntegrationInWorker: true,
-//       // Removed these June 11th for security
-//       // nodeIntegration: true,
-//       // webSecurity: false,
-//       preload: __dirname + "/preload.js",
-//     },
-//   });
-
-//   const consoleUrl = isDev
-//     ? "http://localhost:3000/#console"
-//     : `file://${path.join(__dirname, "../build/index.html#console")}`;
-//   consoleWindow.loadURL(consoleUrl);
-
-//   if (isDev) consoleWindow.webContents.openDevTools();
-
-//   consoleWindow.once("ready-to-show", consoleWindow.show);
-// }
-
 app.on("ready", createWindow);
-// app.on("ready", openConsoleWindow);
 
 if (process.platform !== "darwin") app.on("window-all-closed", app.quit);
 
