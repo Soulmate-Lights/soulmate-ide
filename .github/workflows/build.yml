@@ -51,7 +51,9 @@ jobs:
 
       - name: Install patched electron-builder
         if: startsWith(matrix.os, 'macos')
-        run: yarn run electron-rebuild
+        run: |
+          yarn add electron-rebuild
+          yarn run electron-rebuild
 
       - name: Prepare for app notarization
         if: startsWith(matrix.os, 'macos')
