@@ -52,7 +52,6 @@ jobs:
         run: sh ./set-up-arm-packages.sh
 
       - name: yarn
-        if: startsWith(matrix.os, 'macos')
         run: yarn
 
       - name: postinstall
