@@ -8,3 +8,4 @@ build
 yarn-error.log
 .yalc
 electron-builder.env
+yarn-error.log
