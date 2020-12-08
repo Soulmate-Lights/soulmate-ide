@@ -41,15 +41,15 @@ jobs:
       - name: Install Node.js, NPM and Yarn
         uses: actions/setup-node@v1
         with:
-          node-version: 10
-
-      - name: intel-postinstall
-        if: startsWith(matrix.os, 'macos')
-        run: yarn intel-postinstall
+          node-version: 15
 
       - name: Install patched electron-builder
         if: startsWith(matrix.os, 'macos')
         run: sh ./set-up-arm-packages.sh
+
+      - name: intel-postinstall
+        if: startsWith(matrix.os, 'macos')
+        run: yarn intel-postinstall
 
       - name: Prepare for app notarization
         if: startsWith(matrix.os, 'macos')
