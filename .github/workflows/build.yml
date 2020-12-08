@@ -49,6 +49,10 @@ jobs:
           yarn global add yalc
           sh ./set-up-arm-packages.sh
 
+      - name: Install patched electron-builder
+        if: startsWith(matrix.os, 'macos')
+        run: yarn run electron-rebuild
+
       - name: Prepare for app notarization
         if: startsWith(matrix.os, 'macos')
         # Import Apple API key for app notarization on macOS
