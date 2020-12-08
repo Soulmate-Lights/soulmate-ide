@@ -124,6 +124,7 @@
     "build-worker-dev": "parcel build node_modules/monaco-editor/esm/vs/editor/editor.worker.js --no-source-maps",
     "release": "yarn clean && yarn version --patch && yarn react-build-desktop && AWS_PROFILE=soulmate-ide-updates electron-builder -mw --publish always",
     "clean": "rm -rf ./build ./.cache ./dist",
+    "postinstall": "npx electron-builder install-app-deps",
     "install-arm": "npm_config_arch=$(uname -m) yarn",
     "arm-postinstall": "electron-builder install-app-deps --arch $(uname -m); electron-rebuild .",
     "intel-postinstall": "electron-builder install-app-deps; electron-rebuild .",
