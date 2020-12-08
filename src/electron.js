@@ -10,13 +10,21 @@ const options = {
   release: require("../package.json").version,
   dsn:
     "https://d71092cee93f41a1a5c02404ad236f82@o141622.ingest.sentry.io/5433159",
-  environment: process.env.NODE_ENV,
+  environment: isDev ? "development" : "production",
 };
 
 SentryElectron.init(options);
 
 app.on("ready", () => {
-  autoUpdater.checkForUpdatesAndNotify();
+  if (isDev) {
+    autoUpdater.updateConfigPath = path.join(__dirname, "dev-app-update.yml");
+    const log = require("electron-log");
+    log.transports.file.level = "debug";
+    autoUpdater.logger = log;
+    autoUpdater.checkForUpdates();
+  } else {
+    autoUpdater.checkForUpdatesAndNotify();
+  }
 });
 
 let mainWindow;

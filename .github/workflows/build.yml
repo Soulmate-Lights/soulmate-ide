@@ -1,9 +1,12 @@
+# Commented while we wait for the new Electron versions to ship
+
 name: Build/release
 
 on:
   push:
     tags:
       - "v*"
+      - "osx-test-*"
 
 jobs:
   release:
@@ -13,7 +16,7 @@ jobs:
 
     strategy:
       matrix:
-        os: [macos-latest, windows-latest]
+        os: [windows-latest, macos-11.0]
 
     steps:
       - name: Configure AWS Credentials
@@ -25,6 +28,11 @@ jobs:
 
       - name: Check out Git repository
         uses: actions/checkout@v2
+
+      - uses: actions/setup-python@v2
+        with:
+          python-version: "3.x" # Version range or exact version of a Python version to use, using SemVer's version range syntax
+          architecture: "x64" # optional x64 or x86. Defaults to x64 if not specified
 
       - uses: actions/cache@v2
         with:
@@ -39,6 +47,17 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 10
+
+      - name: Install patched electron-builder
+        if: startsWith(matrix.os, 'macos')
+        run: |
+          yarn global add yalc
+          sh ./set-up-arm-packages.sh
+
+      - name: Install and run electron-rebuild
+        run: |
+          yarn add electron-rebuild
+          yarn run electron-rebuild
 
       - name: Prepare for app notarization
         if: startsWith(matrix.os, 'macos')
