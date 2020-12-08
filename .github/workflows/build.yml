@@ -10,7 +10,7 @@ on:
 
 jobs:
   release:
-    runs-on: self-hosted # ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
     env:
       ACTIONS_ALLOW_UNSECURE_COMMANDS: true
 
