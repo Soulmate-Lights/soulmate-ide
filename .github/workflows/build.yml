@@ -16,7 +16,7 @@ jobs:
 
     strategy:
       matrix:
-        os: [macos-11.0, windows-latest]
+        os: windows-latest # [macos-11.0, ]
 
     steps:
       - name: Configure AWS Credentials
@@ -54,8 +54,7 @@ jobs:
           yarn global add yalc
           sh ./set-up-arm-packages.sh
 
-      - name: Install patched electron-builder
-        if: startsWith(matrix.os, 'macos')
+      - name: Install and run electron-rebuild
         run: |
           yarn add electron-rebuild
           yarn run electron-rebuild
