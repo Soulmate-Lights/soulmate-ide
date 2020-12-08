@@ -82,7 +82,7 @@ const Dashboard = () => {
           </div>
           {!isElectron() && (
             <div className="mt-auto opacity-75 bottom-8 hover:opacity-100 transition-opacity duration-500">
-              {isWindows() &&
+              {isWindows() && (
                 <div className="mx-auto mt-4 sm:flex sm:justify-center">
                   <div className="shadow rounded-md">
                     <a
@@ -102,29 +102,29 @@ const Dashboard = () => {
                     </a>
                   </div>
                 </div>
-              }
+              )}
 
               {isMacintosh() && (
-                  <div className="flex flex-row mt-4 sm:justify-center space-x-4">
-                    <div className="shadow rounded-md">
-                      <a
-                        className="inline-flex items-center px-4 py-2 text-base font-medium text-purple-600 bg-white border border-transparent leading-6 rounded-md hover:text-purple-500 focus:outline-none focus:border-purple-300 focus:shadow-outline-gray active:bg-purple-50 active:text-purple-700 transition duration-150 ease-in-out"
-                        href="https://editor.soulmatelights.com/download/mac"
-                      >
-                        <AiFillApple className="mr-2" />
-                        Download the app (Intel)
-                      </a>
-                    </div>
-                    <div className="shadow rounded-md">
-                      <a
-                        className="inline-flex items-center px-4 py-2 text-base font-medium text-purple-600 bg-white border border-transparent leading-6 rounded-md hover:text-purple-500 focus:outline-none focus:border-purple-300 focus:shadow-outline-gray active:bg-purple-50 active:text-purple-700 transition duration-150 ease-in-out"
-                        href="https://editor.soulmatelights.com/download/mac-arm64"
-                      >
-                        <AiFillApple className="mr-2" />
-                        Download the app (Apple Silicon)
-                      </a>
-                    </div>
+                <div className="flex flex-row mt-4 sm:justify-center space-x-4">
+                  <div className="shadow rounded-md">
+                    <a
+                      className="inline-flex items-center px-4 py-2 text-base font-medium text-purple-600 bg-white border border-transparent leading-6 rounded-md hover:text-purple-500 focus:outline-none focus:border-purple-300 focus:shadow-outline-gray active:bg-purple-50 active:text-purple-700 transition duration-150 ease-in-out"
+                      href="https://editor.soulmatelights.com/download/mac"
+                    >
+                      <AiFillApple className="mr-2" />
+                      Download the app (Intel)
+                    </a>
                   </div>
+                  <div className="shadow rounded-md">
+                    <a
+                      className="inline-flex items-center px-4 py-2 text-base font-medium text-purple-600 bg-white border border-transparent leading-6 rounded-md hover:text-purple-500 focus:outline-none focus:border-purple-300 focus:shadow-outline-gray active:bg-purple-50 active:text-purple-700 transition duration-150 ease-in-out"
+                      href="https://editor.soulmatelights.com/download/mac-arm64"
+                    >
+                      <AiFillApple className="mr-2" />
+                      Download the app (Apple Silicon)
+                    </a>
+                  </div>
+                </div>
               )}
             </div>
           )}
