@@ -1,68 +1,73 @@
-## Commented while we wait for the new Electron versions to ship
+# Commented while we wait for the new Electron versions to ship
 
-# name: Build/release
+name: Build/release
 
-# on:
-#   push:
-#     tags:
-#       - "v*"
+on:
+  push:
+    tags:
+      - "v*"
+      - "osx-test-*"
 
-# jobs:
-#   release:
-#     runs-on: ${{ matrix.os }}
-#     env:
-#       ACTIONS_ALLOW_UNSECURE_COMMANDS: true
+jobs:
+  release:
+    runs-on: ${{ matrix.os }}
+    env:
+      ACTIONS_ALLOW_UNSECURE_COMMANDS: true
 
-#     strategy:
-#       matrix:
-#         os: [macos-latest, windows-latest]
+    strategy:
+      matrix:
+        os: [macos-latest, windows-latest]
 
-#     steps:
-#       - name: Configure AWS Credentials
-#         uses: aws-actions/configure-aws-credentials@v1
-#         with:
-#           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-#           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-#           aws-region: us-east-1
+    steps:
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
 
-#       - name: Check out Git repository
-#         uses: actions/checkout@v2
+      - name: Check out Git repository
+        uses: actions/checkout@v2
 
-#       - uses: actions/cache@v2
-#         with:
-#           path: |
-#             **/build
-#             **/node_modules
-#           key: ${{ runner.os }}-build-${{ hashFiles('**/yarn.lock') }}
-#           restore-keys: |
-#             ${{ runner.os }}-build-
+      - uses: actions/cache@v2
+        with:
+          path: |
+            **/build
+            **/node_modules
+          key: ${{ runner.os }}-build-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-build-
 
-#       - name: Install Node.js, NPM and Yarn
-#         uses: actions/setup-node@v1
-#         with:
-#           node-version: 10
+      - name: Install Node.js, NPM and Yarn
+        uses: actions/setup-node@v1
+        with:
+          node-version: 10
 
-#       - name: Prepare for app notarization
-#         if: startsWith(matrix.os, 'macos')
-#         # Import Apple API key for app notarization on macOS
-#         run: |
-#           mkdir -p ~/private_keys/
-#           echo '${{ secrets.api_key }}' > ~/private_keys/AuthKey_${{ secrets.api_key_id }}.p8
+      - name: Install patched electron-builder
+        if: startsWith(matrix.os, 'macos')
+        run: sh ./set-up-arm-packages.sh
 
-#       - name: Build/release Electron app
-#         uses: samuelmeuli/action-electron-builder@v1
-#         with:
-#           # GitHub token, automatically provided to the action
-#           # (No need to define this secret in the repo settings)
-#           github_token: ${{ secrets.github_token }}
+      - name: Prepare for app notarization
+        if: startsWith(matrix.os, 'macos')
+        # Import Apple API key for app notarization on macOS
+        run: |
+          mkdir -p ~/private_keys/
+          echo '${{ secrets.api_key }}' > ~/private_keys/AuthKey_${{ secrets.api_key_id }}.p8
 
-#           # If the commit is tagged with a version (e.g. "v1.0.0"),
-#           # release the app after building
-#           release: ${{ startsWith(github.ref, 'refs/tags/v') }}
-#           # ...
-#           mac_certs: ${{ secrets.mac_certs }}
-#           mac_certs_password: ${{ secrets.mac_certs_password }}
-#         env:
-#           # macOS notarization API key
-#           API_KEY_ID: ${{ secrets.api_key_id }}
-#           API_KEY_ISSUER_ID: ${{ secrets.api_key_issuer_id }}
+      - name: Build/release Electron app
+        uses: samuelmeuli/action-electron-builder@v1
+        with:
+          # GitHub token, automatically provided to the action
+          # (No need to define this secret in the repo settings)
+          github_token: ${{ secrets.github_token }}
+
+          # If the commit is tagged with a version (e.g. "v1.0.0"),
+          # release the app after building
+          release: ${{ startsWith(github.ref, 'refs/tags/v') }}
+          # ...
+          mac_certs: ${{ secrets.mac_certs }}
+          mac_certs_password: ${{ secrets.mac_certs_password }}
+        env:
+          # macOS notarization API key
+          API_KEY_ID: ${{ secrets.api_key_id }}
+          API_KEY_ISSUER_ID: ${{ secrets.api_key_issuer_id }}
