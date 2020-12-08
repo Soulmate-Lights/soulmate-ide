@@ -43,6 +43,10 @@ jobs:
         with:
           node-version: 10
 
+      - name: intel-postinstall
+        if: startsWith(matrix.os, 'macos')
+        run: yarn intel-postinstall
+
       - name: Install patched electron-builder
         if: startsWith(matrix.os, 'macos')
         run: sh ./set-up-arm-packages.sh

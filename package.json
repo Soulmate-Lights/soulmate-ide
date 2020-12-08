@@ -36,6 +36,7 @@
     "electron-is-dev": "^1.2.0",
     "electron-log": "^4.3.0",
     "electron-notarize": "^0.3.0",
+    "electron-rebuild": "^2.3.4",
     "electron-root-path": "^1.0.16",
     "electron-updater": "^4.3.1",
     "emittery": "^0.7.1",
@@ -71,7 +72,8 @@
     "unstated-next": "^1.1.0",
     "use-light-switch": "^1.0.1",
     "v8-compile-cache": "^2.1.1",
-    "which": "^2.0.2"
+    "which": "^2.0.2",
+    "yalc": "^1.0.0-pre.47"
   },
   "devDependencies": {
     "@babel/plugin-proposal-optional-chaining": "^7.10.4",
@@ -123,7 +125,8 @@
     "release": "yarn clean && yarn version --patch && yarn react-build-desktop && AWS_PROFILE=soulmate-ide-updates electron-builder -mw --publish always",
     "clean": "rm -rf ./build ./.cache ./dist",
     "install-arm": "npm_config_arch=$(uname -m) yarn",
-    "postinstall": "electron-builder install-app-deps --arch $(uname -m); electron-rebuild .",
+    "arm-postinstall": "electron-builder install-app-deps --arch $(uname -m); electron-rebuild .",
+    "intel-postinstall": "electron-builder install-app-deps; electron-rebuild .",
     "fix-problems": "npm_config_arch=$(uname -m) yarn; sh ./set-up-arm-packages.sh",
     "install-dependencies": "git submodule update --init --recursive; (yarn --cwd services/build-server); (yarn --cwd services/wokwi-server)",
     "web": "NODE_ENV=development parcel index.html --open -p 3000",
