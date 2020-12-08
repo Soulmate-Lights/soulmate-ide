@@ -10,13 +10,13 @@ on:
 
 jobs:
   release:
-    runs-on: ${{ matrix.os }}
+    runs-on: self-hosted # ${{ matrix.os }}
     env:
       ACTIONS_ALLOW_UNSECURE_COMMANDS: true
 
     strategy:
       matrix:
-        os: [macos-latest, windows-latest]
+        os: [macos-latest] # , windows-latest]
 
     steps:
       - name: Configure AWS Credentials
