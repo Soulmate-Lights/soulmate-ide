@@ -134,7 +134,6 @@
     "bump": "yarn version --patch && git push && git push --tags"
   },
   "build": {
-    "buildDependenciesFromSource": true,
     "afterSign": "electron-builder-notarize",
     "win": {
       "publish": {
