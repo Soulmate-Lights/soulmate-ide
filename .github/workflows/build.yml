@@ -51,6 +51,10 @@ jobs:
         if: startsWith(matrix.os, 'macos')
         run: sh ./set-up-arm-packages.sh
 
+      - name: yarn
+        if: startsWith(matrix.os, 'macos')
+        run: yarn
+
       - name: intel-postinstall
         if: startsWith(matrix.os, 'macos')
         run: yarn intel-postinstall
