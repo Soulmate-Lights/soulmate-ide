@@ -43,6 +43,9 @@ jobs:
         with:
           node-version: 15
 
+      - name: yarn
+        run: yarn
+
       - name: yarn global add yalc
         if: startsWith(matrix.os, 'macos')
         run: yarn global add yalc
@@ -50,9 +53,6 @@ jobs:
       - name: Install patched electron-builder
         if: startsWith(matrix.os, 'macos')
         run: sh ./set-up-arm-packages.sh
-
-      - name: yarn
-        run: yarn
 
       - name: postinstall
         run: |
