@@ -1,5 +1,5 @@
 (rm -rf ../electron-builder)
-(cd .. && git clone -b Feature/AppleSiliconARM64 https://github.com/mmaietta/electron-builder.git)
+(cd .. && git clone -b elliott/silicon https://github.com/elliottkember/electron-builder.git)
 (cd ../electron-builder && yarn)
 (cd ../electron-builder && yarn compile)
 (cd ../electron-builder/packages/app-builder-lib && yalc push)
