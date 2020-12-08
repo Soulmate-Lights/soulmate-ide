@@ -56,9 +56,7 @@ jobs:
         run: yarn
 
       - name: postinstall
-        run: |
-          electron-builder install-app-deps
-          electron-rebuild .
+        run: yarn intel-postinstall
 
       - name: Prepare for app notarization
         if: startsWith(matrix.os, 'macos')
