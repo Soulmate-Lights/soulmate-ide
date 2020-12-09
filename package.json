@@ -133,6 +133,7 @@
     "bump": "yarn version --patch && git push && git push --tags"
   },
   "build": {
+    "artifactName": "${name}-${version}-${os}-${arch}.${ext}",
     "afterSign": "electron-builder-notarize",
     "win": {
       "publish": {
