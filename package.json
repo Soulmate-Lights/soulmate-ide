@@ -4,7 +4,7 @@
     "last 1 Chrome versions",
     "last 1 electron version"
   ],
-  "version": "2.0.129",
+  "version": "2.0.130",
   "main": "src/electron.js",
   "license": "MIT",
   "dependencies": {
