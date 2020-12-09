@@ -134,6 +134,7 @@
   },
   "build": {
     "afterSign": "electron-builder-notarize",
+    "afterPack": "./afterpack",
     "win": {
       "publish": {
         "provider": "s3",
