@@ -17,14 +17,13 @@ SentryElectron.init(options);
 
 app.on("ready", () => {
   if (isDev) {
-    autoUpdater.updateConfigPath = path.join(__dirname, "dev-app-update.yml");
+    // autoUpdater.updateConfigPath = path.join(__dirname, "dev-app-update.yml");
     const log = require("electron-log");
     log.transports.file.level = "debug";
     autoUpdater.logger = log;
-    autoUpdater.checkForUpdates();
-  } else {
-    autoUpdater.checkForUpdatesAndNotify();
   }
+
+  autoUpdater.checkForUpdatesAndNotify();
 });
 
 let mainWindow;
