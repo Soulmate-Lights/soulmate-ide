@@ -69,7 +69,7 @@ jobs:
 
       - name: Release Mac
         if: startsWith(matrix.os, 'macos')
-        run: "yarn run electron-builder -m --publish onTag"
+        run: "yarn run electron-builder -m --publish always"
         env:
           API_KEY_ID: ${{ secrets.api_key_id }}
           API_KEY_ISSUER_ID: ${{ secrets.api_key_issuer_id }}
@@ -78,7 +78,7 @@ jobs:
 
       - name: Release Windows
         if: startsWith(matrix.os, 'windows')
-        run: "yarn run electron-builder -w --publish onTag"
+        run: "yarn run electron-builder -w --publish always"
 
       - name: List dmgs
         run: "ls dist/*.dmg"
