@@ -47,7 +47,9 @@ jobs:
           node-version: 10 # v15 causes "Error: Command failed: yarn" in Windows?
 
       - name: Yarn
-        run: "yarn install"
+        run: |
+          yarn install
+          yarn clean
 
       - name: Install patched electron-builder
         if: startsWith(matrix.os, 'macos')
