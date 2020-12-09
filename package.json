@@ -157,8 +157,7 @@
       "entitlements": "entitlements.plist",
       "entitlementsInherit": "entitlements.plist",
       "gatekeeperAssess": false,
-      "hardenedRuntime": true,
-      "artifactName": "${productName}-${version}-${arch}.${ext}"
+      "hardenedRuntime": true
     },
     "dmg": {
       "sign": false
