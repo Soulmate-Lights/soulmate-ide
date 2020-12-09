@@ -57,11 +57,6 @@ jobs:
           yarn global add yalc
           sh ./set-up-arm-packages.sh
 
-      - name: Yarn
-        run: |
-          yarn install
-          yarn clean
-
       - name: Prepare for app notarization
         if: startsWith(matrix.os, 'macos')
         # Import Apple API key for app notarization on macOS
