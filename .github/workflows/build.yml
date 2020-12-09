@@ -48,6 +48,9 @@ jobs:
         with:
           node-version: 10 # v15 causes "Error: Command failed: yarn" in Windows
 
+      - name: Yarn
+        run: "yarn install"
+
       - name: Install patched electron-builder
         if: startsWith(matrix.os, 'macos')
         run: |
@@ -60,6 +63,9 @@ jobs:
         run: |
           mkdir -p ~/private_keys/
           echo '${{ secrets.api_key }}' > ~/private_keys/AuthKey_${{ secrets.api_key_id }}.p8
+
+      - name: Build
+        run: "yarn react-build-desktop"
 
       - name: Release Mac
         if: startsWith(matrix.os, 'macos')
