@@ -124,8 +124,8 @@ const Simulator = ({
     stopResizeTimeout.current = setTimeout(() => setPaused(false), 500);
   });
 
-  useEventListener("blur", () => setPaused(true));
-  useEventListener("focus", () => setPaused(false));
+  // useEventListener("blur", () => setPaused(true));
+  // useEventListener("focus", () => setPaused(false));
 
   // Calculate canvas width and height from rows / cols
 
