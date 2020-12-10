@@ -40,13 +40,13 @@ const getNumberFromFlashOutput = (data) => {
 
 /* Make sure we have pyserial installed */
 const installDependencies = () => {
-  const which = remote && remote?.require("which");
-  const python = which.sync("python");
   const childProcess = remote.require("child_process");
   if (remote.require("os").platform() === "darwin") {
-    childProcess.execSync(`${python} ./get-pip.py`, { cwd: dir });
-    childProcess.execSync(`$(which pip) install pyserial`);
+    childProcess.execSync(`/usr/bin/python ./get-pip.py`, { cwd: dir });
+    childProcess.execSync(`/usr/local/bin/pip install pyserial`);
   } else {
+    const which = remote && remote?.require("which");
+    const python = which.sync("python");
     childProcess.execSync(`${python} ./get-pip.py`, { cwd: dir });
     const pip = which.sync("pip");
     childProcess.execSync(`${pip} install pyserial`);
