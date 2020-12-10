@@ -65,6 +65,7 @@ const SoulmateContainer = () => {
   // Port stuff
 
   const open = (port) => {
+    return;
     let receivedData;
 
     const listener = new PortListener(port, (text) => {

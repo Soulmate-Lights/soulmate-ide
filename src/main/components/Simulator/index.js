@@ -1,4 +1,5 @@
 import useEventListener from "@use-it/event-listener";
+import _ from "lodash";
 import { useCallback } from "react";
 import { BsFillPauseFill, BsPlayFill } from "react-icons/bs";
 import { FaCog } from "react-icons/fa";
@@ -13,7 +14,7 @@ import { calculateDimensions } from "./utils";
 
 const Simulator = ({
   build,
-  config: { rows, cols, serpentine },
+  config: { rows, cols, serpentine, mirror },
   showConfig = true,
   className,
   minWidth,
@@ -27,7 +28,32 @@ const Simulator = ({
   const [hasPixels, setHasPixels] = useState(false);
   const [paused, setPaused] = useState(!document.hasFocus());
 
+  const ws = useRef();
+
+  useEffect(() => {
+    ws.current = new WebSocket("ws://10.0.1.16:81");
+    return () => ws.current?.close()
+  }, []);
+
   // Worker callback
+
+  const throttleSend = _.throttle((pixels) => {
+    if (ws.current.readyState !== WebSocket.OPEN) return;
+
+    let d = new Uint8Array(pixels.length * 3);
+    for (let i = 0; i < pixels.length; i += 1) {
+      const index = i * 3;
+      const pixel = pixels[i];
+      d[index] = pixel.r;
+      d[index + 1] = pixel.g;
+      d[index + 2] = pixel.b;
+    }
+    try {
+      ws.current.send(d);
+    } catch (error) {
+      // nothin'
+    }
+  }, 20);
 
   const workerMessage = (e) => {
     if (paused) return;
@@ -36,6 +62,8 @@ const Simulator = ({
     if (e.data.pixels && canvas.current) {
       drawPixels(e.data.pixels, canvas.current, rows, cols, serpentine);
     }
+
+    throttleSend(e.data.pixels);
 
     if (e.data.serialOutput) {
       setSerialOutput(serialOutput + e.data.serialOutput);
@@ -140,7 +168,12 @@ const Simulator = ({
               style={{ animationDuration: "2s" }}
             />
           ) : (
-            <canvas height={height} ref={canvas} width={width} />
+            <canvas
+              height={height}
+              ref={canvas}
+              style={mirror ? { transform: "scaleX(-1)" } : {}}
+              width={width}
+            />
           )}
         </div>
       </div>
