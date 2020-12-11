@@ -34,6 +34,16 @@ const SoulmateContainer = () => {
   const [selectedSoulmate, setSelectedSoulmate] = useState([]);
 
   const addSoulmate = (_event, soulmate) => {
+    const socket = new WebSocket(`ws://${soulmate.addresses[0]}:81`);
+    socket.onopen = () => {
+      socket.onmessage = (e) => {
+        // const { version, rows, cols, serpentine } = JSON.parse(e.data);
+        soulmate.config = JSON.parse(e.data);
+        socket.close();
+      };
+      socket.send(JSON.stringify({ whatup: true }));
+    };
+
     let newSoulmates = [...soulmates, soulmate];
     newSoulmates = uniqBy(newSoulmates, "addresses[0]");
     setSoulmates(newSoulmates);

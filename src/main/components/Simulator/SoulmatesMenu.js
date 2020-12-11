@@ -3,6 +3,9 @@ import {
   RiCheckboxBlankCircleLine,
   RiCheckboxCircleLine,
 } from "react-icons/ri";
+import { TiCancel } from "react-icons/ti";
+
+const canStream = (soulmate) => parseInt(soulmate.config?.version) > 8;
 
 const SoulmatesMenu = ({ soulmates, selectedSoulmate, onChange }) => {
   const [open, setOpen] = useState();
@@ -50,41 +53,71 @@ const SoulmatesMenu = ({ soulmates, selectedSoulmate, onChange }) => {
         </button>
       </div>
       {/*
-Dropdown panel, show/hide based on dropdown state.
+        Dropdown panel, show/hide based on dropdown state.
 
-Entering: "transition ease-out duration-100"
-From: "transform opacity-0 scale-95"
-To: "transform opacity-100 scale-100"
-Leaving: "transition ease-in duration-75"
-From: "transform opacity-100 scale-100"
-To: "transform opacity-0 scale-95"
-*/}
+        Entering: "transition ease-out duration-100"
+        From: "transform opacity-0 scale-95"
+        To: "transform opacity-100 scale-100"
+        Leaving: "transition ease-in duration-75"
+        From: "transform opacity-100 scale-100"
+        To: "transform opacity-0 scale-95"
+      */}
       {open && (
-        <div className="absolute right-0 w-56 mt-2 text-gray-700 bg-white shadow-lg origin-top-left rounded-md ring-1 ring-black ring-opacity-5 zIndex-10">
+        <div className="absolute right-0 z-10 w-auto pr-8 mt-2 text-gray-700 bg-white shadow-lg origin-top-left rounded-md ring-1 ring-black ring-opacity-5">
           <div
-            aria-labelledby="options-menu"
+            aria-labelledby="options-menu "
             aria-orientation="vertical"
             className="py-1"
             role="menu"
           >
-            <div className="px-4 py-2">
-              <p className="text-sm">Mirror to:</p>
+            <div className="px-4 pt-2 pb-1">
+              <p className="text-sm text-gray-500">Mirror simulator to:</p>
             </div>
-            {soulmates.map((soulmate, i) => (
-              <div
-                className="flex flex-row items-center block px-4 py-2 text-sm cursor-pointer hover:bg-gray-100 hover:text-gray-900 space-x-2"
-                key={i}
-                onClick={() => onChange(soulmate)}
-                role="menuitem"
-              >
-                {soulmate === selectedSoulmate ? (
-                  <RiCheckboxCircleLine />
-                ) : (
-                  <RiCheckboxBlankCircleLine />
-                )}
-                <span>{soulmate.name}</span>
-              </div>
-            ))}
+            {soulmates.map((soulmate, i) => {
+              const enabled = canStream(soulmate);
+              return (
+                <div
+                  className={classnames(
+                    "whitespace-pre",
+                    "flex flex-row items-center block px-4 py-2 text-sm space-x-1",
+                    {
+                      "text-gray-400": !enabled,
+                      "cursor-pointer hover:bg-gray-100 hover:text-gray-900": enabled,
+                    }
+                  )}
+                  key={i}
+                  onClick={() => {
+                    if (enabled) {
+                      onChange(soulmate);
+                    }
+                  }}
+                  role="menuitem"
+                >
+                  {enabled ? (
+                    <>
+                      {soulmate === selectedSoulmate ? (
+                        <RiCheckboxCircleLine />
+                      ) : (
+                        <RiCheckboxBlankCircleLine />
+                      )}
+                    </>
+                  ) : (
+                    <TiCancel className="w-5 h-5" />
+                  )}
+
+                  <span>
+                    {soulmate.name}
+
+                    {!enabled && soulmate.config && (
+                      <span className="font-mono text-xs">
+                        {" "}
+                        (v{soulmate.config.version})
+                      </span>
+                    )}
+                  </span>
+                </div>
+              );
+            })}
           </div>
         </div>
       )}

@@ -17,7 +17,6 @@ let worker;
 
 const Simulator = ({
   build,
-  config: { rows, cols, serpentine, mirror },
   config,
   showConfig = true,
   className,
@@ -25,6 +24,7 @@ const Simulator = ({
   maxWidth,
   style,
 }) => {
+  const { rows, cols, serpentine, mirror } = config || {};
   const canvas = useRef();
   const compilerOutputDiv = useRef();
   const [serialOutput, setSerialOutput] = useState("");
@@ -46,17 +46,10 @@ const Simulator = ({
 
   const ws = useRef();
   useEffect(() => {
-    if (!selectedSoulmate?.addresses) return;
+    if (!selectedSoulmate) return;
+    if (selectedSoulmate.config) setConfig(selectedSoulmate.config);
+    if (!selectedSoulmate.addresses) return;
     ws.current = new WebSocket(`ws://${selectedSoulmate.addresses[0]}:81`);
-    ws.current.onopen = () => {
-      ws.current.onmessage = (e) => {
-        const { rows, cols, serpentine } = JSON.parse(e.data);
-        if (rows && cols && serpentine)
-          setConfig({ ...config, rows, cols, serpentine });
-      };
-      ws.current.send(JSON.stringify({ whatup: true }));
-    };
-
     return () => ws.current?.close();
   }, [selectedSoulmate]);
 
