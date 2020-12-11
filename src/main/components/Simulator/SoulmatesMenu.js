@@ -4,7 +4,7 @@ import {
   RiCheckboxCircleLine,
 } from "react-icons/ri";
 
-const SoulmatesMenu = ({ soulmates, chosenSoulmate, onChange }) => {
+const SoulmatesMenu = ({ soulmates, selectedSoulmate, onChange }) => {
   const [open, setOpen] = useState();
   const wrapperRef = useRef();
 
@@ -77,7 +77,7 @@ To: "transform opacity-0 scale-95"
                 onClick={() => onChange(soulmate)}
                 role="menuitem"
               >
-                {soulmate === chosenSoulmate ? (
+                {soulmate === selectedSoulmate ? (
                   <RiCheckboxCircleLine />
                 ) : (
                   <RiCheckboxBlankCircleLine />

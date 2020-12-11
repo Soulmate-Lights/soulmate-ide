@@ -31,16 +31,19 @@ const SoulmateContainer = () => {
   // TODO: Save the soulmate configs here somewhere - maybe in the soulmate objects themselves.
   // Do we need a Soulmate class?!
   const [soulmates, setSoulmates] = useState([]);
+  const [selectedSoulmate, setSelectedSoulmate] = useState([]);
 
   const addSoulmate = (_event, soulmate) => {
     let newSoulmates = [...soulmates, soulmate];
     newSoulmates = uniqBy(newSoulmates, "addresses[0]");
     setSoulmates(newSoulmates);
   };
+
   useEffect(() => {
     ipcRenderer.on("soulmate", addSoulmate);
     return () => ipcRenderer.removeListener("soulmate", addSoulmate);
   }, [soulmates]);
+
   useEffect(() => {
     ipcRenderer.send("scan", {});
     setTimeout(() => {
@@ -52,22 +55,17 @@ const SoulmateContainer = () => {
     ipcRenderer.send("scan", {});
   }, 5000);
 
-  //
-
   // Web-safe!
   if (!window.ipcRenderer) return {};
 
   const getBuild = async (sketches, config) => {
     const preparedCode = prepareSketches(sketches, config);
-    console.log("[flashSketches]", { preparedCode });
     const build = await getFullBuild(preparedCode);
 
     return build;
   };
 
   const flashSketches = async (sketches, config) => {
-    console.log("[flashSketches]", { sketches, config });
-
     listener?.close();
     setFlashing(true);
 
@@ -76,8 +74,6 @@ const SoulmateContainer = () => {
       setFlashing(false);
       return false;
     }
-
-    console.log("[flashSketches]", { build, port });
 
     await flashBuild(port, build, (progress) => {
       setUsbFlashingPercentage(progress);
@@ -165,6 +161,7 @@ const SoulmateContainer = () => {
 
   useInterval(checkUsb, 5000);
   useEffect(() => {
+    // This has to be on its own line so it doesn't return and break the hook
     checkUsb();
   }, []);
 
@@ -185,6 +182,8 @@ const SoulmateContainer = () => {
     text,
     restart,
     soulmates,
+    selectedSoulmate,
+    setSelectedSoulmate,
   };
 };
 

@@ -2,16 +2,16 @@
   "version": "v1",
   "packages": {
     "app-builder-lib": {
-      "signature": "ecd0ada0083e04c2f29357741c78c632"
+      "signature": "fdce25ae85ba9686701864635b75bd0c"
     },
     "builder-util": {
-      "signature": "75e5276e248400774fe5ae3c81599fdf"
+      "signature": "6eae6ddb9e6fcd9f0227ab464b6d49f7"
     },
     "builder-util-runtime": {
       "signature": "d9003e9d10807fa06e3c8450fc576953"
     },
     "dmg-builder": {
-      "signature": "0e0499aeb2391bdcfcd0fa9986bed0c0"
+      "signature": "74c020668a0a9c5429ac7f95cf625c1e"
     },
     "electron-builder": {
       "signature": "ee56501cbc9e2bb4a2287ede83a45634"
@@ -35,7 +35,7 @@
       "signature": "adb57f371a3759779625b55e2f2fc6c1"
     },
     "electron-updater": {
-      "signature": "d2026768bcca7cd41044599897dbd200"
+      "signature": "ee51f3f4369560360cff0d149cc11d87"
     }
   }
 }

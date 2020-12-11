@@ -31,32 +31,34 @@ const Simulator = ({
   const serialOutputRef = useRef("");
   const [hasPixels, setHasPixels] = useState(false);
 
-  const { soulmates } = SoulmatesContainer.useContainer();
-  const [chosenSoulmate, setChosenSoulmate] = useState();
+  const {
+    soulmates,
+    selectedSoulmate,
+    setSelectedSoulmate,
+  } = SoulmatesContainer.useContainer();
   const { setConfig } = ConfigContainer.useContainer();
 
   const [paused, setPaused] = useState(!document.hasFocus());
-  useEventListener("blur", () => !chosenSoulmate && setPaused(true));
+  useEventListener("blur", () => !selectedSoulmate && setPaused(true));
   useEventListener("focus", () => setPaused(false));
 
   // Websocket streaming
 
   const ws = useRef();
   useEffect(() => {
-    if (!chosenSoulmate) return;
-    ws.current = new WebSocket(`ws://${chosenSoulmate.addresses[0]}:81`);
+    if (!selectedSoulmate?.addresses) return;
+    ws.current = new WebSocket(`ws://${selectedSoulmate.addresses[0]}:81`);
     ws.current.onopen = () => {
       ws.current.onmessage = (e) => {
         const { rows, cols, serpentine } = JSON.parse(e.data);
-        if (rows && cols) {
+        if (rows && cols && serpentine)
           setConfig({ ...config, rows, cols, serpentine });
-        }
       };
       ws.current.send(JSON.stringify({ whatup: true }));
     };
 
     return () => ws.current?.close();
-  }, [chosenSoulmate]);
+  }, [selectedSoulmate]);
 
   // Websocket sending
 
@@ -171,8 +173,8 @@ const Simulator = ({
     >
       <span className="absolute inline-flex rounded-md top-4 right-4 space-x-2">
         <SoulmatesMenu
-          chosenSoulmate={chosenSoulmate}
-          onChange={(soulmate) => setChosenSoulmate(soulmate)}
+          onChange={(soulmate) => setSelectedSoulmate(soulmate)}
+          selectedSoulmate={selectedSoulmate}
           soulmates={soulmates}
         />
         {showConfig && (
