@@ -67,7 +67,7 @@ function createWindow() {
 
   ipcMain.on("scan", () => {
     bonjour.find({ type: "http" }, (service) => {
-      if (service.host.toLowerCase().indexOf("soulmate") > -1) {
+      if (service.host.toLowerCase().includes("soulmate")) {
         mainWindow.webContents.send("soulmate", service);
       }
     });

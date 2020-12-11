@@ -1,3 +1,4 @@
+import { drawPixels } from "@elliottkember/leduino";
 import useEventListener from "@use-it/event-listener";
 import _ from "lodash";
 import { useCallback } from "react";
@@ -5,16 +6,19 @@ import { BsFillPauseFill, BsPlayFill } from "react-icons/bs";
 import { FaCog } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
+import ConfigContainer from "~/containers/config";
+import SoulmatesContainer from "~/containers/soulmates";
 import Logo from "~/images/logo.svg";
 
-let worker;
-import { drawPixels } from "@elliottkember/leduino";
-
+import SoulmatesMenu from "./SoulmatesMenu";
 import { calculateDimensions } from "./utils";
+
+let worker;
 
 const Simulator = ({
   build,
   config: { rows, cols, serpentine, mirror },
+  config,
   showConfig = true,
   className,
   minWidth,
@@ -26,18 +30,38 @@ const Simulator = ({
   const [serialOutput, setSerialOutput] = useState("");
   const serialOutputRef = useRef("");
   const [hasPixels, setHasPixels] = useState(false);
+
+  const { soulmates } = SoulmatesContainer.useContainer();
+  const [chosenSoulmate, setChosenSoulmate] = useState();
+  const { setConfig } = ConfigContainer.useContainer();
+
   const [paused, setPaused] = useState(!document.hasFocus());
+  useEventListener("blur", () => !chosenSoulmate && setPaused(true));
+  useEventListener("focus", () => setPaused(false));
+
+  // Websocket streaming
 
   const ws = useRef();
-
   useEffect(() => {
-    ws.current = new WebSocket("ws://10.0.1.64:81");
-    return () => ws.current?.close()
-  }, []);
+    if (!chosenSoulmate) return;
+    ws.current = new WebSocket(`ws://${chosenSoulmate.addresses[0]}:81`);
+    ws.current.onopen = () => {
+      ws.current.onmessage = (e) => {
+        const { rows, cols, serpentine } = JSON.parse(e.data);
+        if (rows && cols) {
+          setConfig({ ...config, rows, cols, serpentine });
+        }
+      };
+      ws.current.send(JSON.stringify({ whatup: true }));
+    };
 
-  // Worker callback
+    return () => ws.current?.close();
+  }, [chosenSoulmate]);
+
+  // Websocket sending
 
   const throttleSend = _.throttle((pixels) => {
+    if (!ws.current) return;
     if (ws.current.readyState !== WebSocket.OPEN) return;
 
     let d = new Uint8Array(pixels.length * 4);
@@ -56,7 +80,9 @@ const Simulator = ({
     } catch (error) {
       // nothin'
     }
-  }, 5);
+  }, 1000 / 30);
+
+  // Worker callback
 
   const workerMessage = (e) => {
     if (paused) return;
@@ -113,6 +139,8 @@ const Simulator = ({
     }
   }, [paused]);
 
+  // Auto scrolling compiler output
+
   useEffect(() => {
     const ref = compilerOutputDiv.current;
     if (ref) ref.scrollTop = ref.scrollHeight;
@@ -127,29 +155,33 @@ const Simulator = ({
     stopResizeTimeout.current = setTimeout(() => setPaused(false), 500);
   });
 
-  // useEventListener("blur", () => setPaused(true));
-  // useEventListener("focus", () => setPaused(false));
-
   // Calculate canvas width and height from rows / cols
 
-  const { width, height } = useCallback(calculateDimensions(rows, cols), [
+  let { width, height } = useCallback(calculateDimensions(rows, cols), [
     rows,
     cols,
   ]);
 
+  width = Math.min(width, 500);
+
   return (
     <div
-      className={`${className} relative flex flex-grow flex-shrink min-h-0 overflow-auto`}
+      className={`${className} relative flex flex-grow flex-shrink min-h-0`}
       style={{ ...style, maxWidth, minWidth }}
     >
       <span className="absolute inline-flex rounded-md top-4 right-4 space-x-2">
+        <SoulmatesMenu
+          chosenSoulmate={chosenSoulmate}
+          onChange={(soulmate) => setChosenSoulmate(soulmate)}
+          soulmates={soulmates}
+        />
         {showConfig && (
           <Link
             className="inline-flex items-center px-3 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 leading-4 rounded-md hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150"
             onClick={() => setPaused(!paused)}
             to="/config"
           >
-            {<FaCog />}
+            <FaCog />
           </Link>
         )}
         <button
@@ -180,6 +212,7 @@ const Simulator = ({
           )}
         </div>
       </div>
+
       {serialOutput && (
         <pre
           className="absolute bottom-0 left-0 right-0 p-4 overflow-scroll text-xs text-white break-all bg-gray-800 max-h-40"

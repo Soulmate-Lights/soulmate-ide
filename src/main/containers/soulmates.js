@@ -1,5 +1,6 @@
 import useInterval from "@use-it/interval";
 import takeRight from "lodash/takeRight";
+import uniqBy from "lodash/uniqBy";
 import { useState } from "react";
 import { createContainer } from "unstated-next";
 
@@ -25,6 +26,33 @@ const SoulmateContainer = () => {
   // var listener;
   const [listener, setListener] = useState();
   const [text, setText] = useState([]);
+
+  // Wifi Soulmates
+  // TODO: Save the soulmate configs here somewhere - maybe in the soulmate objects themselves.
+  // Do we need a Soulmate class?!
+  const [soulmates, setSoulmates] = useState([]);
+
+  const addSoulmate = (_event, soulmate) => {
+    let newSoulmates = [...soulmates, soulmate];
+    newSoulmates = uniqBy(newSoulmates, "addresses[0]");
+    setSoulmates(newSoulmates);
+  };
+  useEffect(() => {
+    ipcRenderer.on("soulmate", addSoulmate);
+    return () => ipcRenderer.removeListener("soulmate", addSoulmate);
+  }, [soulmates]);
+  useEffect(() => {
+    ipcRenderer.send("scan", {});
+    setTimeout(() => {
+      ipcRenderer.send("scan", {});
+    }, 1000);
+  }, []);
+
+  useInterval(() => {
+    ipcRenderer.send("scan", {});
+  }, 5000);
+
+  //
 
   // Web-safe!
   if (!window.ipcRenderer) return {};
@@ -65,7 +93,6 @@ const SoulmateContainer = () => {
   // Port stuff
 
   const open = (port) => {
-    return;
     let receivedData;
 
     const listener = new PortListener(port, (text) => {
@@ -157,6 +184,7 @@ const SoulmateContainer = () => {
     flashing,
     text,
     restart,
+    soulmates,
   };
 };
 
