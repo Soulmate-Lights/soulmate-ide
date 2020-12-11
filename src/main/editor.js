@@ -235,10 +235,10 @@ const Editor = ({ id, mine }) => {
             onSave={(code) => save(sketch.id, code)}
             selection={selection}
           />
-          <div className="flex flex-row items-center p-4 text-sm border-t ">
+          <div className="flex flex-row items-center p-4 text-sm border-t dark-mode:border-gray-700">
             <span className="px-4 font-light">Public URL</span>
             <input
-              className="flex-grow h-8 px-2 py-1 border rounded-l"
+              className="flex-grow h-8 px-2 py-1 text-gray-900 border rounded-l dark-mode:bg-gray-200 dark-mode:border-gray-700"
               onClick={(e) => {
                 e.target.select();
               }}
@@ -262,7 +262,7 @@ const Editor = ({ id, mine }) => {
           </div>
         </div>
 
-        <div className="flex flex-col border-l">
+        <div className="flex flex-col border-l dark-mode:border-gray-700">
           <Simulator
             build={build}
             className="flex flex-col flex-grow"
