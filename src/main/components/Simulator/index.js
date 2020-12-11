@@ -31,7 +31,7 @@ const Simulator = ({
   const ws = useRef();
 
   useEffect(() => {
-    ws.current = new WebSocket("ws://10.0.1.16:81");
+    ws.current = new WebSocket("ws://10.0.1.64:81");
     return () => ws.current?.close()
   }, []);
 
@@ -40,20 +40,23 @@ const Simulator = ({
   const throttleSend = _.throttle((pixels) => {
     if (ws.current.readyState !== WebSocket.OPEN) return;
 
-    let d = new Uint8Array(pixels.length * 3);
+    let d = new Uint8Array(pixels.length * 4);
+
     for (let i = 0; i < pixels.length; i += 1) {
-      const index = i * 3;
+      const index = i * 4;
       const pixel = pixels[i];
-      d[index] = pixel.r;
-      d[index + 1] = pixel.g;
-      d[index + 2] = pixel.b;
+      d[index] = i == 0 ? 1 : 0;
+      d[index + 1] = pixel.r;
+      d[index + 2] = pixel.g;
+      d[index + 3] = pixel.b;
     }
+
     try {
       ws.current.send(d);
     } catch (error) {
       // nothin'
     }
-  }, 20);
+  }, 5);
 
   const workerMessage = (e) => {
     if (paused) return;
