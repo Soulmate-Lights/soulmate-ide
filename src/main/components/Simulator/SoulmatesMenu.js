@@ -1,9 +1,22 @@
-import { BiExport } from "react-icons/bi";
+import { FaRegPlayCircle } from "react-icons/fa";
 import {
   RiCheckboxBlankCircleFill,
   RiCheckboxCircleFill,
   RiCheckboxIndeterminateFill,
 } from "react-icons/ri";
+
+{
+  /*
+  TODO maybe: extra dropdown animation classes
+  Dropdown panel, show/hide based on dropdown state.
+  Entering: "transition ease-out duration-100"
+  From: "transform opacity-0 scale-95"
+  To: "transform opacity-100 scale-100"
+  Leaving: "transition ease-in duration-75"
+  From: "transform opacity-100 scale-100"
+  To: "transform opacity-0 scale-95"
+*/
+}
 
 const canStream = (soulmate) => parseInt(soulmate.config?.version) >= 8;
 
@@ -36,7 +49,7 @@ const SoulmatesMenu = ({ soulmates, selectedSoulmate, onChange }) => {
           onClick={() => setOpen(!open)}
           type="button"
         >
-          <BiExport className="w-4 h-4" />
+          <FaRegPlayCircle className="w-4 h-4" />
           <svg
             aria-hidden="true"
             className="w-5 h-5 ml-2 -mr-1"
@@ -52,16 +65,7 @@ const SoulmatesMenu = ({ soulmates, selectedSoulmate, onChange }) => {
           </svg>
         </button>
       </div>
-      {/*
-        Dropdown panel, show/hide based on dropdown state.
 
-        Entering: "transition ease-out duration-100"
-        From: "transform opacity-0 scale-95"
-        To: "transform opacity-100 scale-100"
-        Leaving: "transition ease-in duration-75"
-        From: "transform opacity-100 scale-100"
-        To: "transform opacity-0 scale-95"
-      */}
       {open && (
         <div className="absolute right-0 z-10 w-auto mt-2 text-gray-700 bg-white shadow-lg origin-top-left rounded-md ring-1 ring-black ring-opacity-5">
           <div
@@ -94,17 +98,19 @@ const SoulmatesMenu = ({ soulmates, selectedSoulmate, onChange }) => {
                   }
                   role="menuitem"
                 >
-                  {enabled ? (
-                    <>
-                      {soulmate === selectedSoulmate ? (
-                        <RiCheckboxCircleFill className="w-4 h-4 mr-1" />
-                      ) : (
-                        <RiCheckboxBlankCircleFill className="w-4 h-4 mr-1" />
-                      )}
-                    </>
-                  ) : (
-                    <RiCheckboxIndeterminateFill className="w-4 h-4 mr-1" />
-                  )}
+                  <span>
+                    {enabled ? (
+                      <>
+                        {soulmate === selectedSoulmate ? (
+                          <RiCheckboxCircleFill className="w-4 h-4 mr-1 text-purple-600" />
+                        ) : (
+                          <RiCheckboxBlankCircleFill className="w-4 h-4 mr-1 text-purple-600" />
+                        )}
+                      </>
+                    ) : (
+                      <RiCheckboxIndeterminateFill className="w-4 h-4 mr-1" />
+                    )}
+                  </span>
 
                   <span>
                     {soulmate.name}
