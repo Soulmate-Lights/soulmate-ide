@@ -1,11 +1,11 @@
 import { BiExport } from "react-icons/bi";
 import {
-  RiCheckboxBlankCircleLine,
-  RiCheckboxCircleLine,
+  RiCheckboxBlankCircleFill,
+  RiCheckboxCircleFill,
+  RiCheckboxIndeterminateFill,
 } from "react-icons/ri";
-import { TiCancel } from "react-icons/ti";
 
-const canStream = (soulmate) => parseInt(soulmate.config?.version) > 8;
+const canStream = (soulmate) => parseInt(soulmate.config?.version) >= 8;
 
 const SoulmatesMenu = ({ soulmates, selectedSoulmate, onChange }) => {
   const [open, setOpen] = useState();
@@ -63,11 +63,11 @@ const SoulmatesMenu = ({ soulmates, selectedSoulmate, onChange }) => {
         To: "transform opacity-0 scale-95"
       */}
       {open && (
-        <div className="absolute right-0 z-10 w-auto pr-8 mt-2 text-gray-700 bg-white shadow-lg origin-top-left rounded-md ring-1 ring-black ring-opacity-5">
+        <div className="absolute right-0 z-10 w-auto mt-2 text-gray-700 bg-white shadow-lg origin-top-left rounded-md ring-1 ring-black ring-opacity-5">
           <div
-            aria-labelledby="options-menu "
+            aria-labelledby="options-menu"
             aria-orientation="vertical"
-            className="py-1"
+            className="w-full py-1"
             role="menu"
           >
             <div className="px-4 pt-2 pb-1">
@@ -79,30 +79,31 @@ const SoulmatesMenu = ({ soulmates, selectedSoulmate, onChange }) => {
                 <div
                   className={classnames(
                     "whitespace-pre",
-                    "flex flex-row items-center block px-4 py-2 text-sm space-x-1",
+                    "flex flex-row items-center block pl-4 pr-8 py-2 text-sm space-x-1",
                     {
                       "text-gray-400": !enabled,
                       "cursor-pointer hover:bg-gray-100 hover:text-gray-900": enabled,
                     }
                   )}
                   key={i}
-                  onClick={() => {
-                    if (enabled) {
-                      onChange(soulmate);
-                    }
-                  }}
+                  onClick={() =>
+                    enabled &&
+                    onChange(
+                      soulmate === selectedSoulmate ? undefined : soulmate
+                    )
+                  }
                   role="menuitem"
                 >
                   {enabled ? (
                     <>
                       {soulmate === selectedSoulmate ? (
-                        <RiCheckboxCircleLine />
+                        <RiCheckboxCircleFill className="w-4 h-4 mr-1" />
                       ) : (
-                        <RiCheckboxBlankCircleLine />
+                        <RiCheckboxBlankCircleFill className="w-4 h-4 mr-1" />
                       )}
                     </>
                   ) : (
-                    <TiCancel className="w-5 h-5" />
+                    <RiCheckboxIndeterminateFill className="w-4 h-4 mr-1" />
                   )}
 
                   <span>
