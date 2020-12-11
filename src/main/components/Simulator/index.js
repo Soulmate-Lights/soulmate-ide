@@ -24,18 +24,16 @@ const Simulator = ({
   maxWidth,
   style,
 }) => {
-  const { rows, cols, serpentine, mirror } = config || {};
   const canvas = useRef();
   const compilerOutputDiv = useRef();
   const [serialOutput, setSerialOutput] = useState("");
   const serialOutputRef = useRef("");
   const [hasPixels, setHasPixels] = useState(false);
 
-  const {
-    soulmates,
-    selectedSoulmate,
-    setSelectedSoulmate,
-  } = SoulmatesContainer.useContainer();
+  const { selectedSoulmate } = SoulmatesContainer.useContainer();
+
+  const { rows, cols, serpentine, mirror } = config || {};
+
   const { setConfig } = ConfigContainer.useContainer();
 
   const [paused, setPaused] = useState(!document.hasFocus());
@@ -47,7 +45,7 @@ const Simulator = ({
   const ws = useRef();
   useEffect(() => {
     if (!selectedSoulmate) return;
-    if (selectedSoulmate.config) setConfig(selectedSoulmate.config);
+    // if (selectedSoulmate.config) setConfig(selectedSoulmate.config);
     if (!selectedSoulmate.addresses) return;
     ws.current = new WebSocket(`ws://${selectedSoulmate.addresses[0]}:81`);
     return () => ws.current?.close();
@@ -165,11 +163,7 @@ const Simulator = ({
       style={{ ...style, maxWidth, minWidth }}
     >
       <span className="absolute inline-flex rounded-md top-4 right-4 space-x-2">
-        <SoulmatesMenu
-          onChange={(soulmate) => setSelectedSoulmate(soulmate)}
-          selectedSoulmate={selectedSoulmate}
-          soulmates={soulmates}
-        />
+        <SoulmatesMenu buttonClassName="" menuClassName="" />
         {showConfig && (
           <Link
             className="inline-flex items-center px-3 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 leading-4 rounded-md hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150"

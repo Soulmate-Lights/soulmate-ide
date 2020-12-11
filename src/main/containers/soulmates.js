@@ -10,6 +10,8 @@ import { getFullBuild, prepareSketches } from "~/utils/code";
 import { flashBuild } from "~/utils/flash";
 import { getPort, getPorts, PortListener } from "~/utils/ports";
 
+import { flashbuildToWifiSoulmate } from "../utils/flash";
+
 const LINE_LIMIT = 300;
 
 const SoulmateContainer = () => {
@@ -31,7 +33,7 @@ const SoulmateContainer = () => {
   // TODO: Save the soulmate configs here somewhere - maybe in the soulmate objects themselves.
   // Do we need a Soulmate class?!
   const [soulmates, setSoulmates] = useState([]);
-  const [selectedSoulmate, setSelectedSoulmate] = useState([]);
+  const [selectedSoulmate, setSelectedSoulmate] = useState(undefined);
 
   const addSoulmate = (_event, soulmate) => {
     const socket = new WebSocket(`ws://${soulmate.addresses[0]}:81`);
@@ -48,6 +50,12 @@ const SoulmateContainer = () => {
     newSoulmates = uniqBy(newSoulmates, "addresses[0]");
     setSoulmates(newSoulmates);
   };
+
+  useEffect(() => {
+    if (!selectedSoulmate) return;
+    setName(selectedSoulmate?.name);
+    configContainer.setConfigFromSoulmateData(selectedSoulmate.config);
+  }, [selectedSoulmate]);
 
   useEffect(() => {
     ipcRenderer.on("soulmate", addSoulmate);
@@ -85,10 +93,21 @@ const SoulmateContainer = () => {
       return false;
     }
 
-    await flashBuild(port, build, (progress) => {
-      setUsbFlashingPercentage(progress);
-      setFlashing(progress < 100);
-    });
+    if (selectedSoulmate) {
+      await flashbuildToWifiSoulmate(
+        selectedSoulmate.addresses[0],
+        build,
+        (progress) => {
+          setUsbFlashingPercentage(progress);
+          setFlashing(progress < 100);
+        }
+      );
+    } else {
+      await flashBuild(port, build, (progress) => {
+        setUsbFlashingPercentage(progress);
+        setFlashing(progress < 100);
+      });
+    }
 
     setUsbFlashingPercentage(undefined);
     setFlashing(false);
@@ -107,7 +126,7 @@ const SoulmateContainer = () => {
         const data = JSON.parse(text);
         receivedData = data;
         configContainer.setConfigFromSoulmateData(data);
-        setName(data?.name || "USB Soulmate");
+        setName(data?.name || "No Name");
       }
       setText((oldText) => [...takeRight(oldText, LINE_LIMIT), text]);
     });

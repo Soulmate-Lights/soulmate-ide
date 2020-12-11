@@ -99,7 +99,7 @@ const Menu = () => {
                 to="/flash"
               >
                 <FaUsb className={iconClass} />
-                USB Upload
+                Upload
               </NavLink>
 
               {isElectron() && (
