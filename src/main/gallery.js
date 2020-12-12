@@ -1,6 +1,7 @@
 import _ from "lodash";
 import uniqBy from "lodash/uniqBy";
 import { Helmet } from "react-helmet";
+import { IoPersonCircleOutline } from "react-icons/io5";
 import { Link } from "react-router-dom";
 
 import Header from "~/components/Header";
@@ -59,22 +60,26 @@ const Gallery = () => {
           {users.map((user) => (
             <li className="border-b dark-mode:border-gray-800" key={user.id}>
               <Link
-                className="block rounded hover:bg-gray-50 dark-mode:hover:bg-gray-700 focus:outline-none focus:bg-gray-50 transition duration-150 ease-in-out"
+                className="block rounded hover:bg-gray-50 dark-mode:hover:bg-gray-700 focus:outline-none transition duration-150 ease-in-out"
                 to={`/gallery/user/${user.id}`}
               >
                 <div className="flex items-center px-4 py-4 sm:px-6">
                   <div className="flex items-center flex-1 min-w-0">
                     <div className="flex-shrink-0">
-                      <img
-                        alt="Profile picture"
-                        className="w-12 h-12 rounded-full"
-                        src={user.image}
-                      />
+                      {user.image ? (
+                        <img
+                          alt="Profile picture"
+                          className="w-12 h-12 bg-white rounded-full shadow"
+                          src={user.image}
+                        />
+                      ) : (
+                        <IoPersonCircleOutline className="w-12 h-12" />
+                      )}
                     </div>
                     <div className="flex-1 min-w-0 px-4 md:grid md:grid-cols-3 md:gap-4">
                       <div className="flex flex-col justify-center max-w-10">
                         <div className="text-sm font-medium text-gray-800 truncate leading-5 dark-mode:text-white">
-                          {user.name}
+                          {user.name || "Unknown user"}
                         </div>
                         <div className="flex items-center mt-2 text-sm text-gray-500 leading-5">
                           <span className="truncate">

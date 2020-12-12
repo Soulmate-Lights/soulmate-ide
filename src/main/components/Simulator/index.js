@@ -2,11 +2,11 @@ import { drawPixels } from "@elliottkember/leduino";
 import useEventListener from "@use-it/event-listener";
 import _ from "lodash";
 import { useCallback } from "react";
-import { BsFillPauseFill, BsPlayFill } from "react-icons/bs";
+import { BsFillPauseFill, BsFillPlayFill, BsPlayFill } from "react-icons/bs";
 import { FaCog } from "react-icons/fa";
+import { FiCast } from "react-icons/fi";
 import { Link } from "react-router-dom";
 
-import ConfigContainer from "~/containers/config";
 import SoulmatesContainer from "~/containers/soulmates";
 import Logo from "~/images/logo.svg";
 
@@ -33,8 +33,6 @@ const Simulator = ({
   const { selectedSoulmate } = SoulmatesContainer.useContainer();
 
   const { rows, cols, serpentine, mirror } = config || {};
-
-  const { setConfig } = ConfigContainer.useContainer();
 
   const [paused, setPaused] = useState(!document.hasFocus());
   useEventListener("blur", () => !selectedSoulmate && setPaused(true));
@@ -163,7 +161,39 @@ const Simulator = ({
       style={{ ...style, maxWidth, minWidth }}
     >
       <span className="absolute inline-flex rounded-md top-4 right-4 space-x-2">
-        <SoulmatesMenu buttonClassName="" menuClassName="" />
+        <SoulmatesMenu
+          button={
+            <button
+              aria-expanded="true"
+              aria-haspopup="true"
+              className={classnames(
+                "inline-flex items-center justify-center w-full px-3 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500 space-x-2"
+              )}
+              id="options-menu"
+              type="button"
+            >
+              <FiCast className="w-4 h-4" />
+              {selectedSoulmate && (
+                <span className="text-xs">{selectedSoulmate?.name}</span>
+              )}
+              <svg
+                aria-hidden="true"
+                className="w-5 h-5"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  clipRule="evenodd"
+                  d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                  fillRule="evenodd"
+                />
+              </svg>
+            </button>
+          }
+          buttonClassName=""
+          menuClassName=""
+        />
         {showConfig && (
           <Link
             className="inline-flex items-center px-3 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 leading-4 rounded-md hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150"

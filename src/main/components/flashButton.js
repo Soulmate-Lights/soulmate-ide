@@ -27,7 +27,7 @@ const FlashButton = ({ selectedSketches, disabled = false, className }) => {
     getBuild,
     usbFlashingPercentage,
     name,
-    port,
+    usbConnected,
     selectedSoulmate,
   } = Soulmates.useContainer();
   const notificationsContainer = NotificationsContainer.useContainer();
@@ -58,14 +58,14 @@ const FlashButton = ({ selectedSketches, disabled = false, className }) => {
       flashing ||
       soulmateLoading ||
       disabled ||
-      !port);
+      !usbConnected);
   const showConfigButton =
-    !soulmateLoading && !flashing && (port || selectedSoulmate);
+    !soulmateLoading && !flashing && (usbConnected || selectedSoulmate);
 
   let text;
   if (soulmateLoading) {
     text = "Loading...";
-  } else if (!port && !selectedSoulmate) {
+  } else if (!usbConnected && !selectedSoulmate) {
     text = "No soulmate connected";
   } else if (usbFlashingPercentage >= 0) {
     text = (
@@ -81,7 +81,7 @@ const FlashButton = ({ selectedSketches, disabled = false, className }) => {
     text = (
       <span className="flex flex-row items-center">
         <Logo className="w-6 h-6 mr-4 spinner" />
-        Building...
+        Uploading...
       </span>
     );
   } else {

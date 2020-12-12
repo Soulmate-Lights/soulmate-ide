@@ -51,7 +51,7 @@
     "react-emojione": "^5.0.1",
     "react-helmet": "^6.1.0",
     "react-hot-loader": "^4.12.21",
-    "react-icons": "^3.10.0",
+    "react-icons": "^4.1.0",
     "react-monaco-editor": "^0.36.0",
     "react-resizable": "^1.11.0",
     "react-router-dom": "^5.2.0",

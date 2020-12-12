@@ -21,8 +21,13 @@ const SoulmateContainer = () => {
 
   const [ports, setPorts] = useState([]);
   const [port, setPort] = useState();
+  const usbConnected = !!port;
+
+  // This one's only used for USB soulmates right now
   const [name, setName] = useState();
   const [usbFlashingPercentage, setUsbFlashingPercentage] = useState();
+
+  // Wifi and USB soulmates
   const [flashing, setFlashing] = useState(false);
 
   // var listener;
@@ -202,6 +207,7 @@ const SoulmateContainer = () => {
     getBuild,
     flashSketches,
     soulmateLoading,
+    usbConnected,
     port,
     setPort,
     ports,
