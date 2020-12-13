@@ -181,5 +181,8 @@
     "extraFiles": [
       "builder"
     ]
+  },
+  "engines": {
+    "node": ">=10.6.0"
   }
 }

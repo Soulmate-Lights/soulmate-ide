@@ -1,3 +1,4 @@
+
 import startCase from "lodash/startCase";
 import { BiCloudDownload } from "react-icons/bi";
 import { FaChevronUp } from "react-icons/fa";
@@ -12,10 +13,10 @@ import Logo from "~/images/logo.svg";
 import SoulmatesMenu from "./Simulator/SoulmatesMenu";
 
 const configButtonClassName =
-  "text-center py-0 px-6 flex flex-col border border-transparent rounded-md rounded-r-none text-white bg-gray-800 focus:outline-none focus:border-gray-700 focus:shadow-outline-gray active:bg-gray-700 transition ease-in-out duration-150 text-xs items-center justify-center leading-snug h-15";
+  "cursor-pointer text-center py-0 px-6 flex flex-col border border-transparent rounded-md rounded-r-none text-white bg-gray-800 focus:outline-none focus:border-gray-700 focus:shadow-outline-gray active:bg-gray-700 transition ease-in-out duration-150 text-xs items-center justify-center leading-snug h-15";
 
 const flashButtonClassName =
-  "inline-flex items-center px-6 py-3 border border-transparent text-base leading-6 font-medium rounded-md text-white bg-purple-600  focus:outline-none focus:border-purple-700 focus:shadow-outline-purple active:bg-purple-700 transition ease-in-out duration-150 h-15 justify-center";
+  "cursor-pointer inline-flex items-center px-6 py-3 border border-transparent text-base leading-6 font-medium rounded-md text-white bg-purple-600  focus:outline-none focus:border-purple-700 focus:shadow-outline-purple active:bg-purple-700 transition ease-in-out duration-150 h-15 justify-center";
 
 const FlashButton = ({ selectedSketches, disabled = false, className }) => {
   const { type, config } = ConfigContainer.useContainer();
