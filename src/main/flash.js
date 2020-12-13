@@ -18,7 +18,7 @@ import FlashButton from "./components/flashButton";
 const Console = React.lazy(() => import("./console"));
 
 const Flash = () => {
-  const { flashing } = Soulmates.useContainer();
+  const { flashing, usbConnected } = Soulmates.useContainer();
   const { userDetails } = UserContainer.useContainer();
   const { allSketches, sketches } = SketchesContainer.useContainer();
   const [search, setSearch] = useState("");
@@ -86,7 +86,7 @@ const Flash = () => {
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Search"
             />,
-            {
+            usbConnected && {
               title: <BsLayoutSidebarInsetReverse />,
               className: classnames({ "bg-gray-200": showConsole }),
               onClick: () => setShowConsole(!showConsole),
@@ -136,43 +136,36 @@ const Flash = () => {
           ))}
         </div>
 
-        <div className="flex flex-row items-center px-4 py-4 border-t border-gray-300 dark-mode:bg-gray-600 dark-mode:border-gray-700">
-          <div className="bottom-0 flex flex-col flex-wrap flex-shrink pr-4">
-            {selectedSketches.length === 0 && (
-              <>Choose up to 20 patterns to upload to your Soulmate.</>
-            )}
-
-            {selectedSketches.length > 0 && (
-              <div className="bottom-0 flex flex-row flex-wrap items-center flex-shrink leading-none">
-                Sketches to upload
-                <span className="inline px-2 py-1 ml-1 text-xs text-white bg-gray-400 rounded-full">
-                  {selectedSketches.length}
-                </span>
-              </div>
-            )}
-
-            <div className="bottom-0 flex flex-row flex-wrap flex-shrink overflow-auto max-h-48">
-              {selectedSketches.map((sketch) => (
-                <div
-                  className="relative mt-4 mr-4 text-xs cursor-pointer"
-                  key={sketch.id}
-                >
-                  <Sketch
-                    key={sketch.id}
-                    onClick={() => toggle(sketch)}
-                    sketch={sketch}
-                    width={16}
-                  />
-                  <AiFillCheckCircle className="absolute text-lg text-white top-2 right-2" />
+        <div className="flex flex-col">
+          {selectedSketches.length > 0 && (
+            <div className="flex flex-row items-center px-4 py-4 border-t border-gray-300 dark-mode:bg-gray-600 dark-mode:border-gray-700">
+              <div className="bottom-0 flex flex-col flex-wrap flex-shrink pr-4">
+                <div className="bottom-0 flex flex-row flex-wrap flex-shrink overflow-auto max-h-48">
+                  {selectedSketches.map((sketch) => (
+                    <div
+                      className="relative mr-4 text-xs cursor-pointer"
+                      key={sketch.id}
+                    >
+                      <Sketch
+                        key={sketch.id}
+                        onClick={() => toggle(sketch)}
+                        sketch={sketch}
+                        width={16}
+                      />
+                      <AiFillCheckCircle className="absolute text-lg text-white top-2 right-2" />
+                    </div>
+                  ))}
                 </div>
-              ))}
+              </div>
             </div>
-          </div>
+          )}
 
-          <FlashButton
-            className="items-end flex-shrink-0 h-full ml-auto"
-            selectedSketches={selectedSketches}
-          />
+          <div className="flex-shrink-0 w-full p-4 ml-auto border-t border-gray-300 dark-mode:bg-gray-600 dark-mode:border-gray-700">
+            <FlashButton
+              className="flex-shrink w-auto ml-auto"
+              selectedSketches={selectedSketches}
+            />
+          </div>
         </div>
       </div>
 

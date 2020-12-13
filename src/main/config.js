@@ -284,6 +284,30 @@ const Config = () => {
                       </div>
                     </div>
 
+                    <div className="mt-6">
+                      <div className="col-span-6 sm:col-span-3">
+                        <label
+                          className="block text-sm font-medium text-gray-700 leading-5"
+                          htmlFor="first_name"
+                        >
+                          Mirror
+                        </label>
+                        <input
+                          checked={config.mirror}
+                          disabled={disableCustom}
+                          id="mirror"
+                          onChange={(e) => {
+                            setConfig({
+                              ...config,
+                              mirror: e.target.checked,
+                            });
+                          }}
+                          type="checkbox"
+                          // className="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5"
+                        />
+                      </div>
+                    </div>
+
                     <div className="mt-6 col-span-6 sm:col-span-3">
                       <label
                         className="block text-sm font-medium text-gray-700 leading-5"

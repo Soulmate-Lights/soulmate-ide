@@ -86,19 +86,19 @@ export const flashBuild = async (port, file, progressCallback) => {
 };
 
 /* We don't actually use this right now */
-// export const flashbuildToWifiSoulmate = async (ip, build, progressCallback) => {
-//   const url = `http://${ip}/ota`;
-//   var body = new FormData();
-//   const contents = fs.readFileSync(build);
-//   body.append("image", new Blob([contents]), "firmware.bin");
-//   await fetch(url, {
-//     method: "POST",
-//     body: body,
-//     mode: "no-cors",
-//     headers: {
-//       "Content-Length": fs.statSync(build).size,
-//     },
-//   });
+export const flashbuildToWifiSoulmate = async (ip, build, progressCallback) => {
+  const url = `http://${ip}/ota`;
+  var body = new FormData();
+  const contents = fs.readFileSync(build);
+  body.append("image", new Blob([contents]), "firmware.bin");
+  await fetch(url, {
+    method: "POST",
+    body: body,
+    mode: "no-cors",
+    headers: {
+      "Content-Length": fs.statSync(build).size,
+    },
+  });
 
-//   progressCallback(100);
-// };
+  progressCallback(100);
+};

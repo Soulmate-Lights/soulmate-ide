@@ -1,10 +1,11 @@
 import classnames from "classnames";
 import { BsTerminal } from "react-icons/bs";
-import { FaUsb } from "react-icons/fa";
 import { FiCloud, FiFolder, FiHome, FiSettings, FiSmile } from "react-icons/fi";
+import { HiOutlineLightningBolt } from "react-icons/hi";
 import { RiPlayList2Fill } from "react-icons/ri";
 import { Link, NavLink, useLocation } from "react-router-dom";
 
+import SoulmatesContainer from "~/containers/soulmates";
 import Logo from "~/images/logo.svg";
 import isElectron from "~/utils/isElectron";
 
@@ -27,6 +28,7 @@ import UserContainer from "~/containers/user";
 const Menu = () => {
   const location = useLocation();
   const { isAdmin } = UserContainer.useContainer();
+  const { usbConnected } = SoulmatesContainer.useContainer();
 
   return (
     <div
@@ -102,11 +104,11 @@ const Menu = () => {
                 location={location}
                 to="/flash"
               >
-                <FaUsb className={iconClass} />
-                USB Upload
+                <HiOutlineLightningBolt className={iconClass} />
+                Upload
               </NavLink>
 
-              {isElectron() && (
+              {isElectron() && usbConnected && (
                 <NavLink
                   activeClassName={activeLinkClass}
                   className={linkClass}

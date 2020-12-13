@@ -9,6 +9,7 @@
   "license": "MIT",
   "dependencies": {
     "@auth0/auth0-spa-js": "^1.9.0",
+    "@babel/core": "^7.12.10",
     "@elliottkember/leduino": "^1.0.4",
     "@fullhuman/postcss-purgecss": "^2.3.0",
     "@hot-loader/react-dom": "^16.13.0",
@@ -24,9 +25,7 @@
     "@wokwi/gcc-output-parser": "^0.2.1",
     "ansicolor": "^1.1.93",
     "array-move": "^3.0.1",
-    "autoprefixer": "^9.8.6",
     "avr8js": "^0.12.0",
-    "babel-plugin-auto-import": "^1.0.5",
     "bonjour": "^3.5.0",
     "classnames": "^2.2.6",
     "containers": "^0.0.1",
@@ -35,7 +34,6 @@
     "electron-context-menu": "^2.0.1",
     "electron-is-dev": "^1.2.0",
     "electron-log": "^4.3.0",
-    "electron-notarize": "^0.3.0",
     "electron-root-path": "^1.0.16",
     "electron-updater": "^4.3.1",
     "emittery": "^0.7.1",
@@ -55,7 +53,7 @@
     "react-emojione": "^5.0.1",
     "react-helmet": "^6.1.0",
     "react-hot-loader": "^4.12.21",
-    "react-icons": "^3.10.0",
+    "react-icons": "^4.1.0",
     "react-monaco-editor": "^0.36.0",
     "react-resizable": "^1.11.0",
     "react-router-dom": "^5.2.0",
@@ -84,8 +82,10 @@
     "@babel/runtime": "^7.10.2",
     "@sentry/cli": "^1.57.0",
     "@svgr/parcel-plugin-svgr": "^5.4.0",
+    "autoprefixer": "^9.8.6",
     "babel-core": "^7.0.0-bridge.0",
     "babel-eslint": "^10.1.0",
+    "babel-plugin-auto-import": "^1.0.5",
     "babel-plugin-root-import": "^6.5.0",
     "babel-preset-env": "^1.7.0",
     "concurrently": "^5.2.0",
@@ -93,6 +93,7 @@
     "electron": "^11.0.3",
     "electron-builder": "^22.9.1",
     "electron-builder-notarize": "^1.2.0",
+    "electron-notarize": "^0.3.0",
     "electron-rebuild": "^2.3.4",
     "eslint": "^7.9.0",
     "eslint-plugin-auto-import": "^0.1.0",
@@ -107,6 +108,9 @@
     "prettier": "^2.0.5",
     "typescript": "^4.0.2",
     "wait-on": "^5.0.0"
+  },
+  "resolutions": {
+    "babel-core": "7.0.0-bridge.0"
   },
   "alias": {
     "@auth0/auth0-spa-js": "./node_modules/@auth0/auth0-spa-js/dist/lib/auth0-spa-js.cjs.js",
@@ -127,10 +131,8 @@
     "build-worker-dev": "parcel build node_modules/monaco-editor/esm/vs/editor/editor.worker.js --no-source-maps",
     "release": "yarn clean && yarn version --patch && yarn react-build-desktop && AWS_PROFILE=soulmate-ide-updates electron-builder -mw --publish always",
     "clean": "rm -rf ./build ./.cache ./dist",
-    "postinstall": "electron-builder install-app-deps",
+    "postinstall": "./postinstall.sh",
     "install-arm": "npm_config_arch=$(uname -m) yarn",
-    "arm-postinstall": "electron-builder install-app-deps --arch $(uname -m); electron-rebuild .",
-    "intel-postinstall": "electron-builder install-app-deps; electron-rebuild .",
     "fix-problems": "npm_config_arch=$(uname -m) yarn; sh ./set-up-arm-packages.sh",
     "build-with-dependencies-from-source": "yarn run electron-builder --config.buildDependenciesFromSource=true -mwl",
     "install-dependencies": "git submodule update --init --recursive; (yarn --cwd services/build-server); (yarn --cwd services/wokwi-server)",
@@ -184,5 +186,8 @@
     "extraFiles": [
       "builder"
     ]
+  },
+  "engines": {
+    "node": ">=10.6.0"
   }
 }

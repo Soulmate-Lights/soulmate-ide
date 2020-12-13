@@ -78,7 +78,16 @@ export default createContainer(() => {
   );
 
   const setConfigFromSoulmateData = (data) => {
-    setType("custom");
+    console.log({
+      rows: data.rows,
+      cols: data.cols,
+      button: data.button,
+      clock: data.clock,
+      data: data.data,
+      ledType: data.ledType,
+      serpentine: data.serpentine,
+      milliamps: data.milliamps,
+    });
     setConfig({
       rows: data.rows,
       cols: data.cols,
