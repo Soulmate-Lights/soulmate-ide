@@ -222,19 +222,21 @@ const Editor = ({ id, mine }) => {
         }
       />
 
-      <div className="flex flex-row flex-grow flex-shrink w-full min-h-0">
-        <div className="flex flex-col flex-grow flex-shrink min-w-0 ">
-          <CodeEditor
-            build={build}
-            className="relative flex-grow flex-shrink min-w-0 bg-white"
-            code={code}
-            onChange={(code) => persistCode(sketch.id, code)}
-            onChangeSelection={(selection) =>
-              setSelection(sketch.id, selection)
-            }
-            onSave={(code) => save(sketch.id, code)}
-            selection={selection}
-          />
+      <div className="flex flex-row flex-grow flex-shrink min-w-0 min-h-0">
+        <div className="flex flex-col flex-grow flex-shrink min-w-0">
+          <div className="relative flex-grow block flex">
+            <CodeEditor
+              build={build}
+              className="relative flex-grow flex-shrink min-w-0 bg-white"
+              code={code}
+              onChange={(code) => persistCode(sketch.id, code)}
+              onChangeSelection={(selection) =>
+                setSelection(sketch.id, selection)
+              }
+              onSave={(code) => save(sketch.id, code)}
+              selection={selection}
+            />
+          </div>
           <div className="flex flex-row items-center p-4 text-sm border-t dark-mode:border-gray-700">
             <span className="px-4 font-light">Public URL</span>
             <input

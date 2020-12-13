@@ -181,7 +181,9 @@ export const emptyCode = `void draw() {
 }`;
 
 let simulatorBuildUrl = "https://editor.soulmatelights.com/sketches/build";
-let fullBuildUrl = `http://builder.soulmatelights.com:8081/build`;
+// let simulatorBuildUrl = "http://soulmate-balancer-158908611.us-east-1.elb.amazonaws.com:8080"
+// let fullBuildUrl = `http://builder.soulmatelights.com:8081/build`;
+let fullBuildUrl = `http://soulmate-balancer-158908611.us-east-1.elb.amazonaws.com:8081/build`;
 
 if (typeof electron !== "undefined") {
   const process = electron.remote.require("process");

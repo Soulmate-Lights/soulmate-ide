@@ -102,6 +102,7 @@ const Welcome = () => {
               code={code}
               key={index}
               onSave={save}
+              build={build}
             />
 
             <Simulator
