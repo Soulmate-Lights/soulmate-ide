@@ -4,23 +4,6 @@ import classnames from "classnames";
 import React, { Suspense } from "react";
 import { Route, Switch } from "react-router-dom";
 
-import Logo from "~/images/logo.svg";
-import isElectron from "~/utils/isElectron";
-
-const Config = React.lazy(() => import("./config"));
-const Console = React.lazy(() => import("./console"));
-const Dashboard = React.lazy(() => import("./dashboard"));
-const Download = React.lazy(() => import("./download"));
-const Editor = React.lazy(() => import("./editor"));
-const Flash = React.lazy(() => import("./flash"));
-const Gallery = React.lazy(() => import("./gallery"));
-const Menu = React.lazy(() => import("./menu"));
-const MySketches = React.lazy(() => import("./mySketches"));
-const User = React.lazy(() => import("./user"));
-const Welcome = React.lazy(() => import("./welcome"));
-const Playlists = React.lazy(() => import("./playlists"));
-const Playlist = React.lazy(() => import("./playlist"));
-
 import Notifications from "~/components/notifications";
 import ConfigContainer from "~/containers/config";
 import NotificationsContainer from "~/containers/notifications";
@@ -28,6 +11,22 @@ import SelectionsContainer from "~/containers/selection";
 import SketchesContainer from "~/containers/sketches";
 import SoulmateContainer from "~/containers/soulmates";
 import UserContainer from "~/containers/user";
+import Logo from "~/images/logo.svg";
+import isElectron from "~/utils/isElectron";
+
+import Config from "./config";
+import Console from "./console";
+import Dashboard from "./dashboard";
+import Download from "./download";
+import Editor from "./editor";
+import Flash from "./flash";
+import Gallery from "./gallery";
+import Menu from "./menu";
+import MySketches from "./mySketches";
+import Playlist from "./playlist";
+import Playlists from "./playlists";
+import User from "./user";
+import Welcome from "./welcome";
 
 const IDE = () => {
   useEffect(() => {

@@ -136,7 +136,9 @@ const SoulmateContainer = () => {
   }, [name]);
 
   useInterval(checkUsb, 5000);
-  useEffect(() => checkUsb(), []);
+  useEffect(() => {
+    checkUsb();
+  }, []);
 
   const restart = () => {
     listener?.port?.write('{ "restart": true }\n');

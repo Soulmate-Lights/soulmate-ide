@@ -25,7 +25,7 @@ const Gallery = () => {
     (user) => user.id
   );
 
-  users = users.filter((u) => u.uid !== userDetails?.sub);
+  users = users.sort((u) => u.uid !== userDetails?.sub);
 
   users = users?.map((u) => ({
     ...u,
@@ -66,7 +66,7 @@ const Gallery = () => {
                   <div className="flex items-center flex-1 min-w-0">
                     <div className="flex-shrink-0">
                       <img
-                        alt
+                        alt="Profile picture"
                         className="w-12 h-12 rounded-full"
                         src={user.image}
                       />

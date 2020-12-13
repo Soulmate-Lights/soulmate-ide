@@ -41,7 +41,7 @@ const Config = () => {
               </div>
               <div className="mt-5 md:mt-0 md:col-span-2">
                 <div className="shadow sm:rounded-md sm:overflow-hidden">
-                  <div className="px-4 py-5 text-gray-800 bg-white dark-mode:bg-gray-100 sm:p-6">
+                  <div className="px-4 py-5 text-gray-800 bg-gray-50 dark-mode:bg-gray-100 sm:p-6">
                     <div className="col-span-6 sm:col-span-3">
                       <label
                         className="block text-sm font-medium text-gray-700 leading-5"
@@ -51,7 +51,7 @@ const Config = () => {
                       </label>
 
                       <select
-                        className="block w-full px-3 py-2 mt-1 bg-white border border-gray-300 form-select rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5"
+                        className="block w-full px-3 py-2 mt-1 border border-gray-300 bg-gray-50 form-select rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5"
                         disabled={!port}
                         onChange={(e) => setPort(e.target.value)}
                         value={port}
@@ -87,7 +87,7 @@ const Config = () => {
             </div>
             <div className="mt-5 md:mt-0 md:col-span-2">
               <div className="shadow sm:rounded-md sm:overflow-hidden">
-                <div className="px-4 py-5 text-gray-800 bg-white dark-mode:bg-gray-100 sm:p-6">
+                <div className="px-4 py-5 text-gray-800 bg-gray-50 dark-mode:bg-gray-100 sm:p-6">
                   <div className="col-span-6 sm:col-span-3">
                     <label
                       className="block text-sm font-medium text-gray-700 leading-5"
@@ -96,7 +96,7 @@ const Config = () => {
                       Soulmate type
                     </label>
                     <select
-                      className="block w-full px-3 py-2 mt-1 bg-white border border-gray-300 form-select rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5"
+                      className="block w-full px-3 py-2 mt-1 border border-gray-300 bg-gray-50 form-select rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5"
                       id="country"
                       onChange={(e) => setType(e.target.value)}
                       value={type}
@@ -127,7 +127,7 @@ const Config = () => {
             <div className="mt-5 md:mt-0 md:col-span-2">
               <form action="#" method="POST">
                 <div className="shadow sm:rounded-md sm:overflow-hidden">
-                  <div className="px-4 py-5 text-gray-800 bg-white dark-mode:bg-gray-100 sm:p-6">
+                  <div className="px-4 py-5 text-gray-800 bg-gray-50 dark-mode:bg-gray-100 sm:p-6">
                     <div className="grid grid-cols-2 gap-6">
                       <div className="flex-grow w-full col-span-2 sm:col-span-2">
                         <label
@@ -142,7 +142,7 @@ const Config = () => {
                               Data
                             </span>
                             <input
-                              className={`w-24 h-10 form-input flex-1 block rounded-none rounded-r-md transition duration-150 ease-in-out sm:text-sm ${disableClass}`}
+                              className={`w-24 h-10 border form-input flex-1 block rounded-none rounded-r-md transition duration-150 ease-in-out sm:text-sm ${disableClass}`}
                               disabled={disableCustom}
                               onChange={(e) =>
                                 setConfig({
@@ -158,7 +158,7 @@ const Config = () => {
                               Clock
                             </span>
                             <input
-                              className={`w-24 h-10 form-input flex-1 block rounded-none rounded-r-md transition duration-150 ease-in-out sm:text-sm ${disableClass}`}
+                              className={`w-24 h-10 border form-input flex-1 block rounded-none rounded-r-md transition duration-150 ease-in-out sm:text-sm ${disableClass}`}
                               disabled={disableCustom}
                               onChange={(e) =>
                                 setConfig({
@@ -174,7 +174,7 @@ const Config = () => {
                               Button
                             </span>
                             <input
-                              className={`w-24 h-10 form-input flex-1 block rounded-none rounded-r-md transition duration-150 ease-in-out sm:text-sm ${disableClass}`}
+                              className={`w-24 h-10 border form-input flex-1 block rounded-none rounded-r-md transition duration-150 ease-in-out sm:text-sm ${disableClass}`}
                               disabled={disableCustom}
                               onChange={(e) =>
                                 setConfig({
@@ -200,7 +200,7 @@ const Config = () => {
                               Rows
                             </span>
                             <input
-                              className={`w-24 h-10 mr-8 form-input flex-1 block rounded-none rounded-r-md transition duration-150 ease-in-out sm:text-sm ${disableClass}`}
+                              className={`w-24 h-10 border mr-8 form-input flex-1 block rounded-none rounded-r-md transition duration-150 ease-in-out sm:text-sm ${disableClass}`}
                               disabled={disableCustom}
                               onChange={(e) =>
                                 setConfig({
@@ -216,7 +216,7 @@ const Config = () => {
                               Cols
                             </span>
                             <input
-                              className={`w-24 h-10 form-input flex-1 block rounded-none rounded-r-md transition duration-150 ease-in-out sm:text-sm ${disableClass}`}
+                              className={`w-24 h-10 border form-input flex-1 block rounded-none rounded-r-md transition duration-150 ease-in-out sm:text-sm ${disableClass}`}
                               disabled={disableCustom}
                               onChange={(e) =>
                                 setConfig({
@@ -286,7 +286,7 @@ const Config = () => {
                         LED type
                       </label>
                       <select
-                        className={`mt-1 block form-select w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5 ${disableClass}`}
+                        className={`mt-1 block form-select w-full py-2 px-3 border border-gray-300 bg-gray-50 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5 ${disableClass}`}
                         disabled={disableCustom}
                         id="country"
                         onChange={(e) => {

@@ -143,8 +143,10 @@ const Menu = () => {
               )}
             </nav>
 
+            <div className="mt-8" />
+
             <a
-              className="mx-8 mt-4 mt-auto mb-4 overflow-hidden text-xs bg-gray-300 rounded-lg dark-mode:bg-gray-800 align-center"
+              className="flex flex-col flex-shrink mx-8 mt-auto mb-4 overflow-hidden text-xs bg-gray-300 rounded-lg dark-mode:bg-gray-800 align-center"
               href="https://shop.soulmatelights.com/products/square"
               onClick={(e) => {
                 if (isElectron()) {
@@ -159,7 +161,7 @@ const Menu = () => {
               target="_blank"
             >
               <div
-                className="bg-center bg-cover"
+                className="flex-shrink min-h-0 bg-center bg-cover"
                 style={{ backgroundImage: `url(${square})` }}
               >
                 <br />
@@ -167,7 +169,7 @@ const Menu = () => {
                 <br />
                 <br />
               </div>
-              <div className="p-2 text-center">
+              <div className="flex-shrink-0 p-2 text-center">
                 <p className="font-semibold">Buy a Soulmate Square!</p>
                 <p className="font-light">$199 + shipping</p>
               </div>

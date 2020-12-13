@@ -182,10 +182,11 @@ const codeEditor = ({
 
       {build?.stderr && (
         <pre className="bottom-0 left-0 right-0 z-10 flex-shrink-0 px-6 py-3 overflow-auto text-sm text-red-800 break-all bg-red-200 border-t border-red-800 max-h-64">
+          {!build.stderr.includes('\n') && <p>{build.stderr}</p>}
           {parser.parseString(build.stderr).map(
-            ({ line, text, type }) =>
+            ({ line, text, type }, i) =>
               type === "error" && (
-                <p className="py-1" key={line}>
+                <p className="py-1" key={i}>
                   <strong>{startCase(type)}:</strong> Line {line - LINE_OFFSET}:{" "}
                   {text}
                 </p>
@@ -214,21 +215,20 @@ const codeEditor = ({
         </label>
       )}
 
-      <span className="absolute inline-flex bottom-4 rounded-md shadow-sm right-8">
-        <button
-          className={classnames(
-            "inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-purple-600 border border-transparent leading-5 rounded-md hover:bg-purple-500 focus:outline-none focus:border-purple-700 focus:shadow-outline-purple active:bg-purple-700 transition ease-in-out duration-150",
-            {
-              "opacity-25": !dirty,
-            }
-          )}
-          disabled={!dirty}
-          onClick={save}
-          type="button"
-        >
-          Preview ({isWindows() ? "CTRL" : "CMD"}+S)
-        </button>
-      </span>
+      {dirty && (
+        <span className="absolute inline-flex bottom-4 rounded-md shadow-sm right-8">
+          <button
+            className={classnames(
+              "inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-purple-600 border border-transparent leading-5 rounded-md hover:bg-purple-500 focus:outline-none focus:border-purple-700 focus:shadow-outline-purple active:bg-purple-700 transition ease-in-out duration-150"
+            )}
+            disabled={!dirty}
+            onClick={save}
+            type="button"
+          >
+            Preview ({isWindows() ? "CTRL" : "CMD"}+S)
+          </button>
+        </span>
+      )}
     </div>
   );
 };

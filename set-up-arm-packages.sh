@@ -1,0 +1,18 @@
+(rm -rf ../electron-builder)
+(cd .. && git clone -b elliott/silicon https://github.com/elliottkember/electron-builder.git)
+(cd ../electron-builder && yarn)
+(cd ../electron-builder && yarn compile)
+(cd ../electron-builder/packages/app-builder-lib && yalc push)
+(cd ../electron-builder/packages/builder-util && yalc push)
+(cd ../electron-builder/packages/builder-util-runtime && yalc push)
+(cd ../electron-builder/packages/dmg-builder && yalc push)
+(cd ../electron-builder/packages/electron-builder && yalc push)
+(cd ../electron-builder/packages/electron-publish && yalc push)
+(cd ../electron-builder/packages/electron-builder-squirrel-windows && yalc push)
+(cd ../electron-builder/packages/electron-forge-maker-appimage && yalc push)
+(cd ../electron-builder/packages/electron-forge-maker-nsis && yalc push)
+(cd ../electron-builder/packages/electron-forge-maker-nsis-web && yalc push)
+(cd ../electron-builder/packages/electron-forge-maker-snap && yalc push)
+(cd ../electron-builder/packages/electron-updater && yalc push)
+
+yalc link app-builder-lib builder-util builder-util-runtime dmg-builder electron-builder electron-publish electron-builder-squirrel-windows electron-forge-maker-appimage electron-forge-maker-nsis electron-forge-maker-nsis-web electron-forge-maker-snap electron-updater

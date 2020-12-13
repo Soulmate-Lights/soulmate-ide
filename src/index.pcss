@@ -51,7 +51,19 @@
   text-decoration: underline;
 }
 
-input {
-  color: #333 !important;
-  border-width: 1px;
+@media(prefers-color-scheme: dark) {
+  input {
+    @apply text-gray-800;
+  }
+}
+
+body .monaco-editor .lines-content,
+body .monaco-editor .view-line,
+body .monaco-editor .view-lines {
+	user-select: auto;
+	-ms-user-select: auto;
+	-khtml-user-select: auto;
+	-moz-user-select: auto;
+	-o-user-select: auto;
+	-webkit-user-select: auto;
 }

@@ -32,12 +32,12 @@ const Editor = ({ id, mine }) => {
   const { config } = ConfigContainer.useContainer();
   const { port } = SoulmatesContainer.useContainer();
 
-  const [renaming, setRenaming] = useState(false);
-  const [newName, setNewName] = useState(sketch?.name);
-
-  const [menuOpen, setMenuOpen] = useState(false);
   const menuRef = useRef();
   const sketch = getSketch(id);
+
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [renaming, setRenaming] = useState(false);
+  const [newName, setNewName] = useState(sketch?.name);
 
   useEffect(() => {
     const closeMenu = (e) => {
@@ -58,7 +58,6 @@ const Editor = ({ id, mine }) => {
   const build = getBuild(sketch.code || emptyCode, config);
   let code = sketch.dirtyCode || sketch.code || emptyCode;
   const selection = getSelection(id);
-  const dirty = sketch.dirtyCode !== sketch.code;
 
   const confirmAndDelete = () => {
     if (!confirm("Delete this sketch?")) return;
@@ -158,7 +157,7 @@ const Editor = ({ id, mine }) => {
       <Header
         actions={[
           mine && menu,
-          dirty && {
+          mine && {
             title: mine ? "Save" : "Refresh",
             onClick: () => save(sketch.id, sketch.dirtyCode),
           },
@@ -223,23 +222,25 @@ const Editor = ({ id, mine }) => {
         }
       />
 
-      <div className="flex flex-row flex-grow flex-shrink w-full min-h-0">
-        <div className="flex flex-col flex-grow flex-shrink min-w-0 ">
-          <CodeEditor
-            build={build}
-            className="relative flex-grow flex-shrink min-w-0 bg-white"
-            code={code}
-            onChange={(code) => persistCode(sketch.id, code)}
-            onChangeSelection={(selection) =>
-              setSelection(sketch.id, selection)
-            }
-            onSave={(code) => save(sketch.id, code)}
-            selection={selection}
-          />
-          <div className="flex flex-row items-center p-4 text-sm border-t ">
+      <div className="flex flex-row flex-grow flex-shrink min-w-0 min-h-0">
+        <div className="flex flex-col flex-grow flex-shrink min-w-0">
+          <div className="relative flex flex-grow block">
+            <CodeEditor
+              build={build}
+              className="relative flex-grow flex-shrink min-w-0 bg-white"
+              code={code}
+              onChange={(code) => persistCode(sketch.id, code)}
+              onChangeSelection={(selection) =>
+                setSelection(sketch.id, selection)
+              }
+              onSave={(code) => save(sketch.id, code)}
+              selection={selection}
+            />
+          </div>
+          <div className="flex flex-row items-center p-4 text-sm border-t dark-mode:border-gray-700">
             <span className="px-4 font-light">Public URL</span>
             <input
-              className="flex-grow h-8 px-2 py-1 border rounded-l"
+              className="flex-grow h-8 px-2 py-1 text-gray-900 border rounded-l dark-mode:bg-gray-200 dark-mode:border-gray-700"
               onClick={(e) => {
                 e.target.select();
               }}
@@ -263,7 +264,7 @@ const Editor = ({ id, mine }) => {
           </div>
         </div>
 
-        <div className="flex flex-col border-l">
+        <div className="flex flex-col border-l dark-mode:border-gray-700">
           <Simulator
             build={build}
             className="flex flex-col flex-grow"
