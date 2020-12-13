@@ -51,7 +51,7 @@ const Config = () => {
                       </label>
 
                       <select
-                        className="block w-full px-3 py-2 mt-1 border border-gray-300 bg-gray-50 form-select rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5"
+                        className="block w-full px-3 py-2 mt-1 border-gray-300 bg-gray-50 form-select rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5"
                         disabled={!port}
                         onChange={(e) => setPort(e.target.value)}
                         value={port}
@@ -96,7 +96,7 @@ const Config = () => {
                       Soulmate type
                     </label>
                     <select
-                      className="block w-full px-3 py-2 mt-1 border border-gray-300 bg-gray-50 form-select rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5"
+                      className="block w-full px-3 py-2 mt-1 border-gray-300 bg-gray-50 form-select rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5"
                       id="country"
                       onChange={(e) => setType(e.target.value)}
                       value={type}
@@ -142,7 +142,7 @@ const Config = () => {
                               Data
                             </span>
                             <input
-                              className={`w-24 h-10 border form-input flex-1 block rounded-none rounded-r-md transition duration-150 ease-in-out sm:text-sm ${disableClass}`}
+                              className={`w-24 h-10 form-input flex-1 block rounded-none rounded-r-md transition duration-150 ease-in-out sm:text-sm ${disableClass}`}
                               disabled={disableCustom}
                               onChange={(e) =>
                                 setConfig({
@@ -150,6 +150,7 @@ const Config = () => {
                                   data: e.target.value,
                                 })
                               }
+                              type="text"
                               value={config.data}
                             />
                           </div>
@@ -158,7 +159,7 @@ const Config = () => {
                               Clock
                             </span>
                             <input
-                              className={`w-24 h-10 border form-input flex-1 block rounded-none rounded-r-md transition duration-150 ease-in-out sm:text-sm ${disableClass}`}
+                              className={`w-24 h-10 form-input flex-1 block rounded-none rounded-r-md transition duration-150 ease-in-out sm:text-sm ${disableClass}`}
                               disabled={disableCustom}
                               onChange={(e) =>
                                 setConfig({
@@ -166,6 +167,7 @@ const Config = () => {
                                   clock: e.target.value,
                                 })
                               }
+                              type="text"
                               value={config.clock}
                             />
                           </div>
@@ -174,7 +176,7 @@ const Config = () => {
                               Button
                             </span>
                             <input
-                              className={`w-24 h-10 border form-input flex-1 block rounded-none rounded-r-md transition duration-150 ease-in-out sm:text-sm ${disableClass}`}
+                              className={`w-24 h-10 form-input flex-1 block rounded-none rounded-r-md transition duration-150 ease-in-out sm:text-sm ${disableClass}`}
                               disabled={disableCustom}
                               onChange={(e) =>
                                 setConfig({
@@ -182,6 +184,7 @@ const Config = () => {
                                   button: e.target.value,
                                 })
                               }
+                              type="text"
                               value={config.button}
                             />
                           </div>
@@ -200,7 +203,7 @@ const Config = () => {
                               Rows
                             </span>
                             <input
-                              className={`w-24 h-10 border mr-8 form-input flex-1 block rounded-none rounded-r-md transition duration-150 ease-in-out sm:text-sm ${disableClass}`}
+                              className={`w-24 h-10 mr-8 form-input flex-1 block rounded-none rounded-r-md transition duration-150 ease-in-out sm:text-sm ${disableClass}`}
                               disabled={disableCustom}
                               onChange={(e) =>
                                 setConfig({
@@ -208,6 +211,7 @@ const Config = () => {
                                   rows: e.target.value,
                                 })
                               }
+                              type="text"
                               value={config.rows}
                             />
                           </div>
@@ -216,7 +220,7 @@ const Config = () => {
                               Cols
                             </span>
                             <input
-                              className={`w-24 h-10 border form-input flex-1 block rounded-none rounded-r-md transition duration-150 ease-in-out sm:text-sm ${disableClass}`}
+                              className={`w-24 h-10 form-input flex-1 block rounded-none rounded-r-md transition duration-150 ease-in-out sm:text-sm ${disableClass}`}
                               disabled={disableCustom}
                               onChange={(e) =>
                                 setConfig({
@@ -224,6 +228,7 @@ const Config = () => {
                                   cols: e.target.value,
                                 })
                               }
+                              type="text"
                               value={config.cols}
                             />
                           </div>
@@ -240,7 +245,7 @@ const Config = () => {
                           Power (milliamps)
                         </label>
                         <input
-                          className={`mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5 ${disableClass}`}
+                          className={`mt-1 form-input block w-full py-2 px-3 border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5 ${disableClass}`}
                           disabled={disableCustom}
                           id="first_name"
                           onChange={(e) => {
@@ -249,6 +254,7 @@ const Config = () => {
                               milliamps: parseInt(e.target.value),
                             });
                           }}
+                          type="text"
                           value={config.milliamps}
                         />
                       </div>
@@ -286,7 +292,7 @@ const Config = () => {
                         LED type
                       </label>
                       <select
-                        className={`mt-1 block form-select w-full py-2 px-3 border border-gray-300 bg-gray-50 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5 ${disableClass}`}
+                        className={`mt-1 block form-select w-full py-2 px-3 border-gray-300 bg-gray-50 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5 ${disableClass}`}
                         disabled={disableCustom}
                         id="country"
                         onChange={(e) => {
