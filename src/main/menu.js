@@ -1,4 +1,3 @@
-import classnames from "classnames";
 import { BsTerminal } from "react-icons/bs";
 import { FiCloud, FiFolder, FiHome, FiSettings, FiSmile } from "react-icons/fi";
 import { HiOutlineLightningBolt } from "react-icons/hi";
@@ -11,6 +10,8 @@ import isElectron from "~/utils/isElectron";
 
 import square from "./Square.jpg";
 import UserDetails from "./userDetails";
+
+const shopUrl = "https://shop.soulmatelights.com/products/square";
 
 const iconClass = "mr-3 h-6 w-6 transition ease-in-out duration-150";
 const linkClass = `group flex items-center px-4 py-2 text-sm leading-5 font-medium rounded-md
@@ -32,11 +33,9 @@ const Menu = () => {
 
   return (
     <div
-      className={classnames(
-        "flex flex-shrink-0 border-r",
-        "bg-gray-200",
-        "dark-mode:border-gray-600 dark-mode:bg-gray-700 dark-mode:text-white"
-      )}
+      className={
+        "flex flex-shrink-0 border-r bg-gray-200 dark-mode:border-gray-600 dark-mode:bg-gray-700 dark-mode:text-white"
+      }
     >
       <div className="flex flex-col w-72">
         <div className="flex flex-col flex-1 h-0">
@@ -149,14 +148,11 @@ const Menu = () => {
 
             <a
               className="flex flex-col flex-shrink mx-8 mt-auto mb-4 overflow-hidden text-xs bg-gray-300 rounded-lg dark-mode:bg-gray-800 align-center"
-              href="https://shop.soulmatelights.com/products/square"
+              href={shopUrl}
               onClick={(e) => {
                 if (isElectron()) {
                   e.preventDefault();
-                  console.log("hi");
-                  electron.shell.openExternal(
-                    "https://shop.soulmatelights.com/products/square"
-                  );
+                  electron.shell.openExternal(shopUrl);
                 }
               }}
               rel="noopener noreferrer"
