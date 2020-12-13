@@ -182,7 +182,7 @@ const codeEditor = ({
 
       {build?.stderr && (
         <pre className="bottom-0 left-0 right-0 z-10 flex-shrink-0 px-6 py-3 overflow-auto text-sm text-red-800 break-all bg-red-200 border-t border-red-800 max-h-64">
-          {typeof build.stderr == 'string' && <p>{build.stderr}</p>}
+          {!build.stderr.includes('\n') && <p>{build.stderr}</p>}
           {parser.parseString(build.stderr).map(
             ({ line, text, type }, i) =>
               type === "error" && (
