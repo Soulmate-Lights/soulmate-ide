@@ -10,10 +10,13 @@ const PLAYLISTS_URL = url("/playlists");
 const PlaylistContainer = createContainer(() => {
   const { token } = UserContainer.useContainer();
 
+  const [newPlaylistName, setNewPlaylistName] = useState("");
+  const [newPlaylistSketches, setNewPlaylistSketches] = useState([]);
+
   const headers = {
     "Content-Type": "application/json",
     Authorization: `Bearer ${token}`,
-  }
+  };
 
   const fetcher = (url) => {
     return fetch(url, {
@@ -28,10 +31,10 @@ const PlaylistContainer = createContainer(() => {
 
   const models = ["square"];
 
-  const createPlaylist = (name, model) => {
+  const createPlaylist = (name, model, sketches) => {
     return fetch(PLAYLISTS_URL, {
       method: "POST",
-      body: JSON.stringify({ model, name }),
+      body: JSON.stringify({ model, name, sketches }),
       headers,
     }).then((response) => {
       mutate(PLAYLISTS_URL);
@@ -39,21 +42,30 @@ const PlaylistContainer = createContainer(() => {
     });
   };
 
-  const savePlaylist = (id, data) => {
+  const savePlaylist = (id, data, build) => {
+    var formData = new FormData();
+    formData.append("sketches", JSON.stringify(data.sketches));
+    if (build) {
+      const contents = fs.readFileSync(build);
+      formData.append("build", new Blob([contents]), "firmware.bin");
+    }
+
     fetch(url(`/playlists/${id}`), {
       method: "PUT",
-      body: JSON.stringify(data),
-      headers,
+      body: formData,
+      headers: { Authorization: `Bearer ${token}` },
     }).then(() => {
       mutate(PLAYLISTS_URL);
     });
   };
 
   const destroyPlaylist = (id) => {
-    fetch(url(`/playlists/${id}`), { method: "DELETE", headers }).then((response) => {
-      mutate(PLAYLISTS_URL);
-      return response.json();
-    });
+    fetch(url(`/playlists/${id}`), { method: "DELETE", headers }).then(
+      (response) => {
+        mutate(PLAYLISTS_URL);
+        return response.json();
+      }
+    );
   };
 
   return {
@@ -64,6 +76,10 @@ const PlaylistContainer = createContainer(() => {
     savePlaylist,
     isValidating,
     error,
+    newPlaylistName,
+    setNewPlaylistName,
+    newPlaylistSketches,
+    setNewPlaylistSketches,
   };
 });
 

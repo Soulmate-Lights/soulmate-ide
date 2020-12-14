@@ -10,8 +10,8 @@ import ReactDOM from "react-dom";
 
 import Main from "./main";
 
-require("./index.pcss");
 require("@tailwindcss/ui");
+require("./index.pcss");
 
 SentryReact.init({
   dsn:

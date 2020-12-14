@@ -3,12 +3,17 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 import Header from "~/components/header";
+import Sketch from "~/components/sketch";
 import ConfigContainer from "~/containers/config";
 import PlaylistContainer from "~/containers/playlists";
 import history from "~/utils/history";
 
 const Playlists = () => {
-  const { playlists, createPlaylist } = PlaylistContainer.useContainer();
+  const {
+    playlists,
+    createPlaylist,
+    newPlaylistSketches,
+  } = PlaylistContainer.useContainer();
 
   const { playlistTypes } = ConfigContainer.useContainer();
 
@@ -22,7 +27,7 @@ const Playlists = () => {
     if (!name) return alert("Please choose a name");
     if (!modelName) return alert("Please choose a model type");
 
-    createPlaylist(name, modelName)
+    createPlaylist(name, modelName, newPlaylistSketches)
       .then((playlist) => history.push(`/playlists/${playlist.id}`))
       .then(reset)
       .catch((e) => {
@@ -64,8 +69,14 @@ const Playlists = () => {
                                     {playlist.name}
                                   </div>
 
-                                  <p className="text-xs">
+                                  <p className="text-sm">
                                     {playlist.description}
+                                  </p>
+
+                                  <p className="text-xs">
+                                    {playlist.url
+                                      ? "Published"
+                                      : "Not published"}
                                   </p>
                                 </div>
                               </div>
@@ -94,12 +105,17 @@ const Playlists = () => {
           </ul>
         </div>
 
+        <div className="flex flex-row space-x-2 space-y-2">
+          {newPlaylistSketches.map((sketch) => (
+            <Sketch key={sketch.id} sketch={sketch} />
+          ))}
+        </div>
+
         <div className="w-6/12 text-gray-900 bg-white shadow sm:rounded-lg">
           <div className="px-4 py-5 sm:p-6">
             <h3 className="text-lg font-medium text-gray-900 leading-6">
               Create a playlist
             </h3>
-
             <div>
               <select
                 className="block w-full py-2 pl-3 pr-10 mt-1 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
@@ -119,7 +135,6 @@ const Playlists = () => {
                 ))}
               </select>
             </div>
-
             <div className="mt-5 sm:flex sm:items-center">
               <div className="w-full">
                 <input
@@ -133,7 +148,6 @@ const Playlists = () => {
                 />
               </div>
             </div>
-
             <div className="mt-5 sm:flex sm:items-center">
               <div className="w-full">
                 <input
@@ -162,12 +176,4 @@ const Playlists = () => {
   );
 };
 
-const WrappedComponent = () => (
-  <PlaylistContainer.Provider>
-    <ConfigContainer.Provider>
-      <Playlists />
-    </ConfigContainer.Provider>
-  </PlaylistContainer.Provider>
-);
-
-export default WrappedComponent;
+export default Playlists;

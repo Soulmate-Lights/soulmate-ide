@@ -81,6 +81,7 @@ const SoulmateContainer = () => {
   // Web-safe!
   if (!window.ipcRenderer) return {};
 
+  // TODO: Move this into a util function
   const getBuild = async (sketches, config) => {
     const preparedCode = prepareSketches(sketches, config);
     const build = await getFullBuild(preparedCode);

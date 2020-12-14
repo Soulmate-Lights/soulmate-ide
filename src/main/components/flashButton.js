@@ -1,4 +1,3 @@
-
 import startCase from "lodash/startCase";
 import { BiCloudDownload } from "react-icons/bi";
 import { FaChevronUp } from "react-icons/fa";
@@ -13,12 +12,9 @@ import Logo from "~/images/logo.svg";
 import SoulmatesMenu from "./Simulator/SoulmatesMenu";
 
 const configButtonClassName =
-  "cursor-pointer text-center py-0 px-6 flex flex-col border border-transparent rounded-md rounded-r-none text-white bg-gray-800 focus:outline-none focus:border-gray-700 focus:shadow-outline-gray active:bg-gray-700 transition ease-in-out duration-150 text-xs items-center justify-center leading-snug h-15";
+  "footer-button py-0 px-6 flex flex-col border border-transparent rounded-md rounded-r-none text-white bg-gray-800 focus:outline-none focus:border-gray-700 focus:shadow-outline-gray active:bg-gray-700 transition ease-in-out duration-150 text-xs items-center justify-center leading-snug h-15";
 
-const flashButtonClassName =
-  "cursor-pointer inline-flex items-center px-6 py-3 border border-transparent text-base leading-6 font-medium rounded-md text-white bg-purple-600  focus:outline-none focus:border-purple-700 focus:shadow-outline-purple active:bg-purple-700 transition ease-in-out duration-150 h-15 justify-center";
-
-const FlashButton = ({ selectedSketches, disabled = false, className }) => {
+const FlashButton = ({ selectedSketches, disabled = false }) => {
   const { type, config } = ConfigContainer.useContainer();
   const { isAdmin } = UserContainer.useContainer();
   const {
@@ -90,12 +86,7 @@ const FlashButton = ({ selectedSketches, disabled = false, className }) => {
   }
 
   return (
-    <div
-      className={classnames(
-        className,
-        "flex space-x-4 items-center justify-end"
-      )}
-    >
+    <div className="flex items-center justify-end flex-shrink w-auto ml-auto space-x-4">
       <div className="flex flex-row items-center block">
         {showConfigButton && (
           <Link className={configButtonClassName} to="/config">
@@ -112,7 +103,7 @@ const FlashButton = ({ selectedSketches, disabled = false, className }) => {
           </Link>
         )}
         <button
-          className={classnames(flashButtonClassName, {
+          className={classnames("footer-button", {
             "rounded-l-none": showConfigButton && !soulmateLoading,
             "rounded-r-none": true,
             "cursor-auto": disableFlashButton,
@@ -130,13 +121,16 @@ const FlashButton = ({ selectedSketches, disabled = false, className }) => {
         <SoulmatesMenu
           button={
             <button
-              className={classnames(flashButtonClassName, {
-                "rounded-l-none": true,
-                "cursor-auto": disableFlashButton,
-                "hover:bg-purple-500": true,
-                "bg-purple-800": true,
-                "whitespace-pre": true,
-              })}
+              className={classnames(
+                {
+                  "rounded-l-none": true,
+                  "cursor-auto": disableFlashButton,
+                  "hover:bg-purple-500": true,
+                  "bg-purple-800": true,
+                  "whitespace-pre": true,
+                },
+                "footer-button"
+              )}
               type="button"
             >
               <FaChevronUp />
@@ -150,7 +144,7 @@ const FlashButton = ({ selectedSketches, disabled = false, className }) => {
 
       {isAdmin() && (
         <button
-          className={classnames(flashButtonClassName, "space-x-2", {
+          className={classnames("footer-button", "space-x-2", {
             "cursor-auto": disableFlashButton,
             "hover:bg-purple-700": !disableFlashButton,
             "bg-purple-700": !disableFlashButton,

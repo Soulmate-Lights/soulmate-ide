@@ -16,6 +16,7 @@ import isElectron from "~/utils/isElectron";
 
 import Config from "./config";
 import Console from "./console";
+import PlaylistContainer from "./containers/playlists";
 import Dashboard from "./dashboard";
 import Download from "./download";
 import Editor from "./editor";
@@ -134,7 +135,11 @@ const ContainerProvider = ({ children }) => (
       <SelectionsContainer.Provider>
         <SketchesContainer.Provider>
           <UserContainer.Provider>
-            <SoulmateContainer.Provider>{children}</SoulmateContainer.Provider>
+            <PlaylistContainer.Provider>
+              <SoulmateContainer.Provider>
+                {children}
+              </SoulmateContainer.Provider>
+            </PlaylistContainer.Provider>
           </UserContainer.Provider>
         </SketchesContainer.Provider>
       </SelectionsContainer.Provider>

@@ -1,17 +1,23 @@
 import CodeEditor from "~/components/codeEditor";
-import history from '~/utils/history';
 import Header from "~/components/header";
 import PlaylistMenu from "~/components/PlaylistMenu";
 import Simulator from "~/components/simulator";
 import BuildsContainer from "~/containers/builds";
 import PlaylistContainer from "~/containers/playlists";
+import SoulmatesContainer from "~/containers/soulmates";
 import { emptyCode } from "~/utils/code";
+import history from "~/utils/history";
 
 const Playlist = (props) => {
   const id = parseInt(props.id);
 
-  const { playlists, savePlaylist, destroyPlaylist } = PlaylistContainer.useContainer();
+  const {
+    playlists,
+    savePlaylist,
+    destroyPlaylist,
+  } = PlaylistContainer.useContainer();
   const { getBuild } = BuildsContainer.useContainer();
+  const soulmates = SoulmatesContainer.useContainer();
 
   const playlist = playlists?.find((p) => parseInt(p.id) === parseInt(id));
   if (!playlist) return <>Loading...</>;
@@ -23,6 +29,21 @@ const Playlist = (props) => {
 
   const [menuOpen, setMenuOpen] = useState(false);
   const menuRef = useRef();
+
+  const save = () => {
+    savePlaylist(playlist.id, { sketches });
+  };
+
+  const [publishing, setPublishing] = useState(false);
+
+  const publish = async () => {
+    setPublishing(true);
+    const build = await soulmates.getBuild(sketches, config);
+    // TODO: Catch errors here
+    console.log(build);
+    await savePlaylist(playlist.id, { sketches }, build);
+    setPublishing(false);
+  };
 
   const menu = (
     <div className="relative inline-block text-left" ref={menuRef}>
@@ -94,7 +115,11 @@ const Playlist = (props) => {
   return (
     <div className="flex-grow">
       <Header
-        actions={[{ title: "Save" }, { title: "Publish" }, menu]}
+        actions={[
+          { title: "Save", onClick: save },
+          { title: publishing ? "Publishing..." : "Publish", onClick: publish },
+          menu,
+        ]}
         sections={[{ title: "Playlists", to: "/playlists" }]}
         title={playlist.name}
       />
@@ -116,12 +141,14 @@ const Playlist = (props) => {
             className="relative flex-grow flex-shrink w-6/12 min-w-0 bg-white"
             code={sketch?.code || emptyCode}
             key={index}
-            onChange={(code) => {
-              sketches[index].code = code;
-              setSketches(sketches);
-            }}
+            // onChange={(code) => {
+            //   sketches[index].code = code;
+            //   setSketches(sketches);
+            // }}
             onSave={(code) => {
               sketches[index].code = code;
+              setSketches(sketches);
+              console.log("Saving");
               savePlaylist(playlist.id, { sketches });
             }}
           />
