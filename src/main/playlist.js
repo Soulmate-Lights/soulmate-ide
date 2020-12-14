@@ -160,6 +160,7 @@ const Playlist = (props) => {
           index={index}
           onChange={(sketches) => {
             setSketches(sketches);
+            savePlaylist(playlist.id, { sketches });
             setDirty(true);
           }}
           setIndex={setIndex}

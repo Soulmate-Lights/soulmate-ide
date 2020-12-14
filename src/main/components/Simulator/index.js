@@ -2,7 +2,7 @@ import { drawPixels } from "@elliottkember/leduino";
 import useEventListener from "@use-it/event-listener";
 import _ from "lodash";
 import { useCallback } from "react";
-import { BsFillPauseFill, BsFillPlayFill, BsPlayFill } from "react-icons/bs";
+import { BsFillPauseFill, BsPlayFill } from "react-icons/bs";
 import { FaCog } from "react-icons/fa";
 import { FiCast } from "react-icons/fi";
 import { Link } from "react-router-dom";

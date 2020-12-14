@@ -98,11 +98,11 @@ const Welcome = () => {
         ) : (
           <>
             <CodeEditor
+              build={build}
               className="relative flex-grow flex-shrink w-7/12 min-w-0 bg-white"
               code={code}
               key={index}
               onSave={save}
-              build={build}
             />
 
             <Simulator
