@@ -40,6 +40,9 @@ const SoulmateContainer = () => {
   const [soulmates, setSoulmates] = useState([]);
   const [selectedSoulmate, setSelectedSoulmate] = useState(undefined);
 
+  // Web-safe!
+  if (!window.ipcRenderer) return {};
+
   const addSoulmate = (_event, soulmate) => {
     const socket = new WebSocket(`ws://${soulmate.addresses[0]}:81`);
     socket.onopen = () => {
@@ -77,9 +80,6 @@ const SoulmateContainer = () => {
   useInterval(() => {
     ipcRenderer.send("scan", {});
   }, 5000);
-
-  // Web-safe!
-  if (!window.ipcRenderer) return {};
 
   // TODO: Move this into a util function
   const getBuild = async (sketches, config) => {

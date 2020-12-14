@@ -26,13 +26,16 @@ const Playlist = (props) => {
   const [index, setIndex] = useState(0);
   const sketch = sketches[index];
   const { config } = playlist;
-  const build = getBuild(sketch?.code || emptyCode, config);
+  const build = getBuild(playlist.sketches[index]?.code || emptyCode, config);
 
   const [menuOpen, setMenuOpen] = useState(false);
   const menuRef = useRef();
 
+  const [dirty, setDirty] = useState(false);
+
   const save = () => {
     savePlaylist(playlist.id, { sketches });
+    setDirty(false);
   };
 
   useEffect(() => {
@@ -47,7 +50,11 @@ const Playlist = (props) => {
     const build = await soulmates.getBuild(sketches, config);
     // TODO: Catch errors here
     console.log(build);
-    await savePlaylist(playlist.id, { sketches }, build);
+    if (!build) {
+      alert("There was an error building.");
+    } else {
+      await savePlaylist(playlist.id, { sketches }, build);
+    }
     setPublishing(false);
   };
 
@@ -119,10 +126,10 @@ const Playlist = (props) => {
   );
 
   return (
-    <div className="flex-grow">
+    <div className="flex flex-col flex-grow flex-shrink h-full">
       <Header
         actions={[
-          { title: "Save", onClick: save },
+          dirty && { title: "Save", onClick: save },
           { title: publishing ? "Publishing..." : "Publish", onClick: publish },
           playlist.url && {
             title: "Un-publish",
@@ -139,35 +146,41 @@ const Playlist = (props) => {
             <span className="px-4 py-2 m-2 text-sm bg-gray-200 rounded-full border-1">
               {playlist.url ? "published" : "not published"}
             </span>
+            {dirty && (
+              <span className="px-4 py-2 m-2 text-sm bg-red-200 rounded-full border-1">
+                Has changes
+              </span>
+            )}
           </>
         }
       />
 
-      <div className="flex flex-row flex-grow h-full">
+      <div className="flex flex-row flex-grow flex-shrink min-h-0">
         <PlaylistMenu
           index={index}
           onChange={(sketches) => {
             setSketches(sketches);
-            savePlaylist(playlist.id, { sketches });
+            setDirty(true);
           }}
           setIndex={setIndex}
           sketches={sketches}
         />
 
-        <div className="flex flex-row flex-grow">
+        <div className="flex flex-row flex-grow flex-shrink min-w-0 min-h-0">
           <CodeEditor
             build={build}
-            className="relative flex-grow flex-shrink w-6/12 min-w-0 bg-white"
+            className="relative flex-grow flex-shrink w-6/12 min-w-0 min-h-0 bg-white"
             code={sketch?.code || emptyCode}
             key={index}
-            // onChange={(code) => {
-            //   sketches[index].code = code;
-            //   setSketches(sketches);
-            // }}
-            onSave={(code) => {
+            onChange={(code) => {
               sketches[index].code = code;
               setSketches(sketches);
-              console.log("Saving");
+              setDirty(true);
+            }}
+            onSave={(code) => {
+              setDirty(false);
+              sketches[index].code = code;
+              setSketches(sketches);
               savePlaylist(playlist.id, { sketches });
             }}
           />

@@ -38,10 +38,10 @@ const PlaylistContainer = createContainer(() => {
     mutate(PLAYLISTS_URL);
   }, [token]);
 
-  const createPlaylist = (name, model, sketches) => {
+  const createPlaylist = (name, description, model, sketches) => {
     return fetch(PLAYLISTS_URL, {
       method: "POST",
-      body: JSON.stringify({ model, name, sketches }),
+      body: JSON.stringify({ description, model, name, sketches }),
       headers: headers(),
     }).then((response) => {
       mutate(PLAYLISTS_URL);
@@ -49,7 +49,7 @@ const PlaylistContainer = createContainer(() => {
     });
   };
 
-  const savePlaylist = (id, data, build) => {
+  const savePlaylist = async (id, data, build) => {
     var formData = new FormData();
     formData.append("sketches", JSON.stringify(data.sketches));
 
@@ -60,13 +60,13 @@ const PlaylistContainer = createContainer(() => {
         "firmware.bin"
       );
 
-    fetch(url(`/my-playlists/${id}`), {
+    await fetch(url(`/my-playlists/${id}`), {
       method: "PUT",
       body: formData,
       headers: { Authorization: `Bearer ${bearer.current}` },
-    }).then(() => {
-      mutate(PLAYLISTS_URL);
     });
+
+    mutate(PLAYLISTS_URL);
   };
 
   const destroyPlaylist = (id) => {

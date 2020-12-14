@@ -25,10 +25,9 @@ const Playlists = () => {
   };
 
   const onClickSave = () => {
-    if (!name) return alert("Please choose a name");
-    if (!modelName) return alert("Please choose a model type");
+    if (!name || !modelName || !description) return;
 
-    createPlaylist(name, modelName, newPlaylistSketches)
+    createPlaylist(name, description, modelName, newPlaylistSketches)
       .then((playlist) => history.push(`/playlists/${playlist.id}`))
       .then(reset)
       .catch((e) => {
