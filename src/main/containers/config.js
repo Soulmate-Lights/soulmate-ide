@@ -1,11 +1,14 @@
 import isEmpty from "lodash/isEmpty";
 import { createContainer } from "unstated-next";
 
-export const host = remote.require("electron-is-dev")
-  ? "http://localhost:3001"
-  : "http://editor.soulmatelights.com";
+const devHost = "http://localhost:3001";
+const productionHost = "http://editor.soulmatelights.com";
 
-// export const host = "https://editor.soulmatelights.com";
+export const host = remote.require("electron-is-dev")
+  ? devHost
+  : productionHost;
+
+// Figure out a better way of doing these?
 export const url = (path) => host + path;
 
 const types = [

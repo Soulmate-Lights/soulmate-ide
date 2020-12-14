@@ -15,6 +15,7 @@ const Playlist = (props) => {
     playlists,
     savePlaylist,
     destroyPlaylist,
+    unpublishPlaylist,
   } = PlaylistContainer.useContainer();
   const { getBuild } = BuildsContainer.useContainer();
   const soulmates = SoulmatesContainer.useContainer();
@@ -33,6 +34,11 @@ const Playlist = (props) => {
   const save = () => {
     savePlaylist(playlist.id, { sketches });
   };
+
+  useEffect(() => {
+    // After deleting, select first sketch
+    if (index >= sketches.length) setIndex(sketches.length - 1);
+  }, [sketches, index]);
 
   const [publishing, setPublishing] = useState(false);
 
@@ -118,10 +124,23 @@ const Playlist = (props) => {
         actions={[
           { title: "Save", onClick: save },
           { title: publishing ? "Publishing..." : "Publish", onClick: publish },
+          playlist.url && {
+            title: "Un-publish",
+            onClick: () => {
+              unpublishPlaylist(playlist.id);
+            },
+          },
           menu,
         ]}
         sections={[{ title: "Playlists", to: "/playlists" }]}
-        title={playlist.name}
+        title={
+          <>
+            {playlist.name}
+            <span className="px-4 py-2 m-2 text-sm bg-gray-200 rounded-full border-1">
+              {playlist.url ? "published" : "not published"}
+            </span>
+          </>
+        }
       />
 
       <div className="flex flex-row flex-grow h-full">
