@@ -6,6 +6,7 @@ const productionHost = "https://editor.soulmatelights.com";
 let host = productionHost;
 // import isElectron from "~/utils/isElectron";
 // if (isElectron()) {
+
 //   host =
 //     remote && remote?.require("electron-is-dev") ? devHost : productionHost;
 // }
