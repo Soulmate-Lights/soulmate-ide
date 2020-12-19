@@ -49,6 +49,7 @@ const SoulmatesMenu = ({
     };
   });
 
+  if (!soulmates) return null;
   if (soulmates.length === 0) return null;
 
   return (
