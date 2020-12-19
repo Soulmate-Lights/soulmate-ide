@@ -56,7 +56,11 @@ const installDependencies = () => {
 /** Flash a build file to a USB output */
 export const flashBuild = async (port, file, progressCallback) => {
   const which = remote && remote?.require("which");
-  const python = which.sync("python");
+
+  let python = "/usr/bin/python";
+  if (remote.require("os").platform() !== "darwin") {
+    python = which.sync("python");
+  }
 
   console.log("[flashbuild] Installing dependencices");
   try {
