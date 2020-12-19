@@ -224,7 +224,7 @@ const Editor = ({ id, mine }) => {
 
       <div className="flex flex-row flex-grow flex-shrink min-w-0 min-h-0">
         <div className="flex flex-col flex-grow flex-shrink min-w-0">
-          <div className="relative flex-grow block flex">
+          <div className="relative flex flex-grow block">
             <CodeEditor
               build={build}
               className="relative flex-grow flex-shrink min-w-0 bg-white"
