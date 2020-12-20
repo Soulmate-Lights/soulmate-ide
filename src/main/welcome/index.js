@@ -118,10 +118,4 @@ const Welcome = () => {
   );
 };
 
-export default (props) => (
-  <BuildsContainer.Provider>
-    <UserContainer.Provider>
-      <Welcome {...props} />
-    </UserContainer.Provider>
-  </BuildsContainer.Provider>
-);
+export default Welcome;

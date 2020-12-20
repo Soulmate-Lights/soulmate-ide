@@ -278,12 +278,4 @@ const Editor = ({ id, mine }) => {
   );
 };
 
-export default (props) => (
-  <NotificationsContainer.Provider>
-    <BuildsContainer.Provider>
-      <ConfigContainer.Provider>
-        <Editor {...props} />
-      </ConfigContainer.Provider>
-    </BuildsContainer.Provider>
-  </NotificationsContainer.Provider>
-);
+export default Editor;

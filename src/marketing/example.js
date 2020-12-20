@@ -41,8 +41,4 @@ const Example = ({ code, className }) => {
   );
 };
 
-export default (props) => (
-  <BuildsContainer.Provider>
-    <Example {...props} />
-  </BuildsContainer.Provider>
-);
+export default Example;

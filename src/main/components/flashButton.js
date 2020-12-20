@@ -167,8 +167,4 @@ const FlashButton = ({ selectedSketches, disabled = false, className }) => {
   );
 };
 
-export default (props) => (
-  <NotificationsContainer.Provider>
-    <FlashButton {...props} />
-  </NotificationsContainer.Provider>
-);
+export default FlashButton;

@@ -19,6 +19,14 @@ const Ide = React.lazy(() => import("./ide"));
 
 const SpecificRouter = isElectron() ? HashRouter : Router;
 
+const MainProvider = ({ children }) => (
+  <NotificationsContainer.Provider>
+    <ConfigContainer.Provider>
+      <BuildsContainer.Provider>{children}</BuildsContainer.Provider>
+    </ConfigContainer.Provider>
+  </NotificationsContainer.Provider>
+);
+
 const Main = () => {
   const marketing =
     document.location.href === "https://www.soulmatelights.com/";
@@ -44,23 +52,21 @@ const Main = () => {
             { "pt-6": showTopBar }
           )}
         >
-          <NotificationsContainer.Provider>
-            <ConfigContainer.Provider>
-              <SpecificRouter history={isElectron() ? undefined : history}>
-                <LastLocationProvider>
-                  <Switch>
-                    <Route exact path={marketing ? "/" : "/marketing"}>
-                      <Marketing />
-                    </Route>
+          <MainProvider>
+            <SpecificRouter history={isElectron() ? undefined : history}>
+              <LastLocationProvider>
+                <Switch>
+                  <Route exact path={marketing ? "/" : "/marketing"}>
+                    <Marketing />
+                  </Route>
 
-                    <Route>
-                      <Ide />
-                    </Route>
-                  </Switch>
-                </LastLocationProvider>
-              </SpecificRouter>
-            </ConfigContainer.Provider>
-          </NotificationsContainer.Provider>
+                  <Route>
+                    <Ide />
+                  </Route>
+                </Switch>
+              </LastLocationProvider>
+            </SpecificRouter>
+          </MainProvider>
         </div>
       </Suspense>
     </div>
