@@ -247,6 +247,6 @@ const Simulator = ({
 
 export default (props) => (
   <SoulmatesContainer.Provider>
-    {/* <Simulator {...props} /> */}
+    <Simulator {...props} />
   </SoulmatesContainer.Provider>
 );
