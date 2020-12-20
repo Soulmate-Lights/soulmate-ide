@@ -338,4 +338,9 @@ const Config = () => {
     </div>
   );
 };
-export default Config;
+
+export default (props) => (
+  <ConfigContainer.Provider>
+    <Config {...props} />
+  </ConfigContainer.Provider>
+);

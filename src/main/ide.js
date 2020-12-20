@@ -6,8 +6,6 @@ import { Route, Switch } from "react-router-dom";
 
 import Notifications from "~/components/notifications";
 import ConfigContainer from "~/containers/config";
-import NotificationsContainer from "~/containers/notifications";
-import SelectionsContainer from "~/containers/selection";
 import SketchesContainer from "~/containers/sketches";
 import SoulmateContainer from "~/containers/soulmates";
 import UserContainer from "~/containers/user";
@@ -114,17 +112,11 @@ const IDE = () => {
 };
 
 const ContainerProvider = ({ children }) => (
-  <NotificationsContainer.Provider>
-    <ConfigContainer.Provider>
-      <SelectionsContainer.Provider>
-        <SketchesContainer.Provider>
-          <UserContainer.Provider>
-            <SoulmateContainer.Provider>{children}</SoulmateContainer.Provider>
-          </UserContainer.Provider>
-        </SketchesContainer.Provider>
-      </SelectionsContainer.Provider>
-    </ConfigContainer.Provider>
-  </NotificationsContainer.Provider>
+  <SketchesContainer.Provider>
+    <UserContainer.Provider>
+      <SoulmateContainer.Provider>{children}</SoulmateContainer.Provider>
+    </UserContainer.Provider>
+  </SketchesContainer.Provider>
 );
 
 export default IDE;

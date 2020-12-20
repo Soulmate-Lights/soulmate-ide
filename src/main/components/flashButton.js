@@ -1,4 +1,3 @@
-
 import startCase from "lodash/startCase";
 import { BiCloudDownload } from "react-icons/bi";
 import { FaChevronUp } from "react-icons/fa";
@@ -168,4 +167,8 @@ const FlashButton = ({ selectedSketches, disabled = false, className }) => {
   );
 };
 
-export default FlashButton;
+export default (props) => (
+  <NotificationsContainer.Provider>
+    <FlashButton {...props} />
+  </NotificationsContainer.Provider>
+);

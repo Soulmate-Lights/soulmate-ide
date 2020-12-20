@@ -38,7 +38,7 @@ const SoulmatesMenu = ({
   const wrapperRef = useRef();
 
   const handleClickOutside = (event) => {
-    if (!wrapperRef.current.contains(event.target)) setOpen(false);
+    if (!wrapperRef.current?.contains(event.target)) setOpen(false);
   };
 
   useEffect(() => {

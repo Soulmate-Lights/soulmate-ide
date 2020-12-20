@@ -7,7 +7,6 @@ import Simulator from "~/components/Simulator";
 import BuildsContainer from "~/containers/builds";
 import ConfigContainer from "~/containers/config";
 import NotificationsContainer from "~/containers/notifications";
-import SelectionsContainer from "~/containers/selection";
 import SketchesContainer from "~/containers/sketches";
 import SoulmatesContainer from "~/containers/soulmates";
 import Logo from "~/images/logo.svg";
@@ -27,7 +26,6 @@ const Editor = ({ id, mine }) => {
     rename,
   } = SketchesContainer.useContainer();
   const { notify } = NotificationsContainer.useContainer();
-  const { getSelection, setSelection } = SelectionsContainer.useContainer();
   const { getBuild } = BuildsContainer.useContainer();
   const { config } = ConfigContainer.useContainer();
   const { port } = SoulmatesContainer.useContainer();
@@ -57,7 +55,6 @@ const Editor = ({ id, mine }) => {
 
   const build = getBuild(sketch.code || emptyCode, config);
   let code = sketch.dirtyCode || sketch.code || emptyCode;
-  const selection = getSelection(id);
 
   const confirmAndDelete = () => {
     if (!confirm("Delete this sketch?")) return;
@@ -230,11 +227,7 @@ const Editor = ({ id, mine }) => {
               className="relative flex-grow flex-shrink min-w-0 bg-white"
               code={code}
               onChange={(code) => persistCode(sketch.id, code)}
-              onChangeSelection={(selection) =>
-                setSelection(sketch.id, selection)
-              }
               onSave={(code) => save(sketch.id, code)}
-              selection={selection}
             />
           </div>
           <div className="flex flex-row items-center p-4 text-sm border-t dark-mode:border-gray-700">
@@ -285,4 +278,12 @@ const Editor = ({ id, mine }) => {
   );
 };
 
-export default Editor;
+export default (props) => (
+  <NotificationsContainer.Provider>
+    <BuildsContainer.Provider>
+      <ConfigContainer.Provider>
+        <Editor {...props} />
+      </ConfigContainer.Provider>
+    </BuildsContainer.Provider>
+  </NotificationsContainer.Provider>
+);

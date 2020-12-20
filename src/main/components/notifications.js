@@ -34,4 +34,8 @@ const Notifications = () => {
   );
 };
 
-export default Notifications;
+export default () => (
+  <NotificationsContainer.Provider>
+    <Notifications />
+  </NotificationsContainer.Provider>
+);

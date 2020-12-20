@@ -46,21 +46,19 @@ const Main = () => {
         >
           <NotificationsContainer.Provider>
             <ConfigContainer.Provider>
-              <BuildsContainer.Provider>
-                <SpecificRouter history={isElectron() ? undefined : history}>
-                  <LastLocationProvider>
-                    <Switch>
-                      <Route exact path={marketing ? "/" : "/marketing"}>
-                        <Marketing />
-                      </Route>
+              <SpecificRouter history={isElectron() ? undefined : history}>
+                <LastLocationProvider>
+                  <Switch>
+                    <Route exact path={marketing ? "/" : "/marketing"}>
+                      <Marketing />
+                    </Route>
 
-                      <Route>
-                        <Ide />
-                      </Route>
-                    </Switch>
-                  </LastLocationProvider>
-                </SpecificRouter>
-              </BuildsContainer.Provider>
+                    <Route>
+                      <Ide />
+                    </Route>
+                  </Switch>
+                </LastLocationProvider>
+              </SpecificRouter>
             </ConfigContainer.Provider>
           </NotificationsContainer.Provider>
         </div>
