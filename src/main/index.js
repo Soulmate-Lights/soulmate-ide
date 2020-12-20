@@ -7,6 +7,8 @@ import { HashRouter, Route, Router, Switch } from "react-router-dom";
 import { LastLocationProvider } from "react-router-last-location";
 
 import BuildsContainer from "~/containers/builds";
+import ConfigContainer from "~/containers/config";
+import NotificationsContainer from "~/containers/notifications";
 import Logo from "~/images/logo.svg";
 import history from "~/utils/history";
 import isElectron from "~/utils/isElectron";
@@ -42,21 +44,25 @@ const Main = () => {
             { "pt-6": showTopBar }
           )}
         >
-          <BuildsContainer.Provider>
-            <SpecificRouter history={isElectron() ? undefined : history}>
-              <LastLocationProvider>
-                <Switch>
-                  <Route exact path={marketing ? "/" : "/marketing"}>
-                    <Marketing />
-                  </Route>
+          <NotificationsContainer.Provider>
+            <ConfigContainer.Provider>
+              <BuildsContainer.Provider>
+                <SpecificRouter history={isElectron() ? undefined : history}>
+                  <LastLocationProvider>
+                    <Switch>
+                      <Route exact path={marketing ? "/" : "/marketing"}>
+                        <Marketing />
+                      </Route>
 
-                  <Route>
-                    <Ide />
-                  </Route>
-                </Switch>
-              </LastLocationProvider>
-            </SpecificRouter>
-          </BuildsContainer.Provider>
+                      <Route>
+                        <Ide />
+                      </Route>
+                    </Switch>
+                  </LastLocationProvider>
+                </SpecificRouter>
+              </BuildsContainer.Provider>
+            </ConfigContainer.Provider>
+          </NotificationsContainer.Provider>
         </div>
       </Suspense>
     </div>
