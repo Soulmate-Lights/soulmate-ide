@@ -32,7 +32,7 @@ const Example = ({ code, className }) => {
 
       <Simulator
         build={build}
-        className="flex flex-col flex-shrink w-5/12 bg-gray-300 dark-mode:bg-gray-800"
+        classpame="flex flex-col flex-shrink w-5/12 bg-gray-300 dark-mode:bg-gray-800"
         config={config}
         maxWidth={350}
         showConfig={false}
@@ -41,4 +41,8 @@ const Example = ({ code, className }) => {
   );
 };
 
-export default Example;
+export default (props) => (
+  <BuildsContainer.Provider>
+    <Example {...props} />
+  </BuildsContainer.Provider>
+);
