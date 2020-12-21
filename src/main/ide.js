@@ -134,11 +134,9 @@ const IDE = () => {
 const WrappedIde = (props) => (
   <SWRConfig value={{ fetcher }}>
     <UserContainer.Provider>
-      <SoulmateContainer.Provider>
-        <PlaylistContainer.Provider>
-          <IDE {...props} />
-        </PlaylistContainer.Provider>
-      </SoulmateContainer.Provider>
+      <PlaylistContainer.Provider>
+        <IDE {...props} />
+      </PlaylistContainer.Provider>
     </UserContainer.Provider>
   </SWRConfig>
 );

@@ -9,6 +9,7 @@ import { LastLocationProvider } from "react-router-last-location";
 import BuildsContainer from "~/containers/builds";
 import ConfigContainer from "~/containers/config";
 import NotificationsContainer from "~/containers/notifications";
+import SoulmatesContainer from "~/containers/soulmates";
 import Logo from "~/images/logo.svg";
 import history from "~/utils/history";
 import isElectron from "~/utils/isElectron";
@@ -22,7 +23,9 @@ const SpecificRouter = isElectron() ? HashRouter : Router;
 const MainProvider = ({ children }) => (
   <NotificationsContainer.Provider>
     <ConfigContainer.Provider>
-      <BuildsContainer.Provider>{children}</BuildsContainer.Provider>
+      <SoulmatesContainer.Provider>
+        <BuildsContainer.Provider>{children}</BuildsContainer.Provider>
+      </SoulmatesContainer.Provider>
     </ConfigContainer.Provider>
   </NotificationsContainer.Provider>
 );
