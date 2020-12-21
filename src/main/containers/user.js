@@ -1,8 +1,8 @@
 import * as SentryReact from "@sentry/react";
-import { mutate } from 'swr';
+import { mutate } from "swr";
 import { createContainer } from "unstated-next";
 
-import { SKETCHES_URL } from '~/urls';
+import { SKETCHES_URL } from "~/urls";
 import {
   getToken,
   getTokenOnStartup,
