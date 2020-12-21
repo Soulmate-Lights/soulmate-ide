@@ -1,5 +1,4 @@
 import useSWR, { mutate } from "swr";
-import Logo from "~/images/logo.svg";
 
 import CodeEditor from "~/components/codeEditor";
 import Header from "~/components/header";
@@ -8,6 +7,7 @@ import Simulator from "~/components/simulator";
 import BuildsContainer from "~/containers/builds";
 import PlaylistContainer from "~/containers/playlists";
 import SoulmatesContainer from "~/containers/soulmates";
+import Logo from "~/images/logo.svg";
 import { PLAYLISTS_URL } from "~/urls";
 import { post, postDelete, put } from "~/utils";
 import { emptyCode } from "~/utils/code";
