@@ -23,7 +23,6 @@ const FlashButton = ({ selectedSketches, disabled = false }) => {
     flashing,
     getBuild,
     usbFlashingPercentage,
-    name,
     usbConnected,
     selectedSoulmate,
   } = Soulmates.useContainer();
@@ -82,9 +81,7 @@ const FlashButton = ({ selectedSketches, disabled = false }) => {
       </span>
     );
   } else {
-    text = `Flash to ${
-      selectedSoulmate?.config.name || selectedSoulmate?.name || name
-    }`;
+    text = `Flash to ${selectedSoulmate?.config.name || "New Soulmate"}`;
   }
 
   return (

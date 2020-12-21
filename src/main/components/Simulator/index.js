@@ -177,7 +177,7 @@ const Simulator = ({
               <FiCast className="w-4 h-4" />
               {selectedSoulmate && (
                 <span className="text-xs">
-                  {selectedSoulmate?.config?.name || selectedSoulmate?.name}
+                  {selectedSoulmate?.config?.name || "New Soulmate"}
                 </span>
               )}
               <svg

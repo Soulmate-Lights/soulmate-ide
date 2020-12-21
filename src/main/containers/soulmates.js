@@ -25,13 +25,11 @@ const SoulmateContainer = () => {
   const usbConnected = !!port;
 
   // This one's only used for USB soulmates right now
-  const [name, setName] = useState();
   const [usbFlashingPercentage, setUsbFlashingPercentage] = useState();
 
   // Wifi and USB soulmates
   const [flashing, setFlashing] = useState(false);
 
-  // var listener;
   const [listener, setListener] = useState();
   const [text, setText] = useState([]);
 
@@ -67,7 +65,6 @@ const SoulmateContainer = () => {
 
   useEffect(() => {
     if (!selectedSoulmate) return;
-    setName(selectedSoulmate?.name);
     configContainer.setConfigFromSoulmateData(selectedSoulmate.config);
   }, [selectedSoulmate]);
 
@@ -138,7 +135,10 @@ const SoulmateContainer = () => {
         const data = JSON.parse(text);
         receivedData = data;
         configContainer.setConfigFromSoulmateData(data);
-        setName(data?.name || "New Soulmate");
+        console.log(data);
+        notificationsContainer.notify(
+          `${data?.name || "USB Soulmate"} connected!`
+        );
       }
       setText((oldText) => [...takeRight(oldText, LINE_LIMIT), text]);
     });
@@ -148,7 +148,6 @@ const SoulmateContainer = () => {
     setTimeout(() => {
       if (!receivedData) {
         setSoulmateLoading(false);
-        setName("USB Soulmate");
       }
     }, 2000);
 
@@ -166,7 +165,6 @@ const SoulmateContainer = () => {
 
       previousPort.current = undefined;
       listener?.close();
-      setName(undefined);
       setText([]);
     }
 
@@ -194,12 +192,6 @@ const SoulmateContainer = () => {
     }
   };
 
-  useEffect(() => {
-    if (name) {
-      notificationsContainer.notify(`${name} connected!`);
-    }
-  }, [name]);
-
   useInterval(checkUsb, 5000);
   useEffect(() => {
     // This has to be on its own line so it doesn't return and break the hook
@@ -218,7 +210,6 @@ const SoulmateContainer = () => {
     port,
     setPort,
     ports,
-    name,
     usbFlashingPercentage,
     flashing,
     text,
