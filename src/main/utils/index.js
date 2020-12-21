@@ -1,19 +1,9 @@
+import { getToken } from "~/utils/auth";
 const server = "https://editor.soulmatelights.com";
 // const server = "http://localhost:3001";
 
-export const fetchJson = (url, token) => {
-  let headers = {};
-  if (token) {
-    headers = {
-      Authorization: `Bearer ${token}`,
-    };
-  }
-  return fetch(server + url, {
-    headers,
-  }).then((result) => result.json());
-};
-
-export const post = (url, token, body = {}) => {
+export const post = async (url, body = {}) => {
+  const token = await getToken();
   return fetch(server + url, {
     method: "post",
     headers: {
@@ -24,7 +14,8 @@ export const post = (url, token, body = {}) => {
   }).then((response) => response.json());
 };
 
-export const postDelete = (url, token, body = {}) => {
+export const postDelete = async (url, body = {}) => {
+  const token = await getToken();
   return fetch(server + url, {
     method: "delete",
     headers: {
@@ -32,5 +23,26 @@ export const postDelete = (url, token, body = {}) => {
       Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify({ ...body }),
+  });
+};
+
+export const put = async (url, body = {}) => {
+  const token = await getToken();
+  return fetch(server + url, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body,
   }).then((response) => response.json());
+};
+
+export const fetcher = async (url) => {
+  const token = await getToken();
+  return fetch(url, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  }).then((d) => d.json());
 };

@@ -12,8 +12,8 @@ import isDev from "~/utils/isDev";
 
 import Main from "./main";
 
-require("./index.pcss");
 require("@tailwindcss/ui");
+require("./index.pcss");
 
 SentryReact.init({
   dsn:

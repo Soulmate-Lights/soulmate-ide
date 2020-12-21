@@ -1,12 +1,13 @@
 import uniqBy from "lodash/uniqBy";
+import useSWR from "swr";
 
 import Header from "~/components/Header";
 import TimeGroupedSketches from "~/components/timeGroupedSketches";
-import SketchesContainer from "~/containers/sketches";
 import Logo from "~/images/logo.svg";
+import { ALL_SKETCHES_URL } from "~/urls";
 
 const User = ({ id }) => {
-  const { allSketches } = SketchesContainer.useContainer();
+  const { data: allSketches } = useSWR(ALL_SKETCHES_URL);
 
   let users = uniqBy(
     allSketches?.map((sketch) => sketch.user),

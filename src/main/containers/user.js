@@ -1,18 +1,28 @@
 import * as SentryReact from "@sentry/react";
+import { mutate } from "swr";
 import { createContainer } from "unstated-next";
 
+import { SKETCHES_URL } from "~/urls";
 import {
+  getToken,
   getTokenOnStartup,
   tokenProperties,
   triggerLogin,
   triggerLogout,
 } from "~/utils/auth";
 
-import SketchesContainer from "./sketches";
-
 const UserContainer = () => {
-  const { reset } = SketchesContainer.useContainer();
   const [userDetails, setUserDetails] = useState(undefined);
+  let [token, setToken] = useState(undefined);
+
+  const fetch = async () => {
+    const t = await getToken();
+    if (token !== t) setToken(t);
+  };
+
+  useEffect(() => {
+    fetch();
+  }, [userDetails]);
 
   const fetchUser = async () => {
     const newUserDetails = await tokenProperties();
@@ -28,7 +38,7 @@ const UserContainer = () => {
     }
 
     setUserDetails(newUserDetails);
-    reset();
+    mutate(SKETCHES_URL);
   };
 
   useEffect(() => {
@@ -44,7 +54,7 @@ const UserContainer = () => {
       if (!localStorage.loginPending) {
         setUserDetails(false);
       }
-      reset();
+      mutate(SKETCHES_URL);
     }
   }, [localStorage.loginSaved, localStorage.token]);
 
@@ -63,7 +73,7 @@ const UserContainer = () => {
     fetchUser();
   };
 
-  return { fetchUser, userDetails, login, logout, isAdmin };
+  return { fetchUser, userDetails, login, logout, isAdmin, token };
 };
 
 export default createContainer(UserContainer);

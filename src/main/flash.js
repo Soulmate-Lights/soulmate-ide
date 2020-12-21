@@ -9,18 +9,29 @@ import { ResizableBox } from "react-resizable";
 
 import Header from "~/components/Header";
 import Sketch from "~/components/sketch";
-import SketchesContainer from "~/containers/sketches";
+import ConfigContainer from "~/containers/config";
 import Soulmates from "~/containers/soulmates";
 import UserContainer from "~/containers/user";
 import Logo from "~/images/logo.svg";
+import history from "~/utils/history";
 
 import FlashButton from "./components/flashButton";
+import PlaylistContainer from "./containers/playlists";
 const Console = React.lazy(() => import("./console"));
 
+import useSWR from "swr";
+
+import { ALL_SKETCHES_URL, SKETCHES_URL } from "~/urls";
+
 const Flash = () => {
+  const { data: sketches } = useSWR(SKETCHES_URL);
+  const { data: allSketches } = useSWR(ALL_SKETCHES_URL);
+
   const { flashing, usbConnected } = Soulmates.useContainer();
-  const { userDetails } = UserContainer.useContainer();
-  const { allSketches, sketches } = SketchesContainer.useContainer();
+  const { userDetails, isAdmin } = UserContainer.useContainer();
+  const { setNewPlaylistSketches } = PlaylistContainer.useContainer();
+  const { type } = ConfigContainer.useContainer();
+
   const [search, setSearch] = useState("");
   const [selected, setSelected] = useState([]);
   const [showConsole, setShowConsole] = useState(false);
@@ -161,10 +172,21 @@ const Flash = () => {
           )}
 
           <div className="flex-shrink-0 w-full p-4 ml-auto border-t border-gray-300 dark-mode:bg-gray-600 dark-mode:border-gray-700">
-            <FlashButton
-              className="flex-shrink w-auto ml-auto"
-              selectedSketches={selectedSketches}
-            />
+            <div className="flex items-center justify-end space-x-4">
+              <FlashButton selectedSketches={selectedSketches} />
+              {isAdmin() && type === "square" && (
+                <button
+                  className="footer-button"
+                  onClick={() => {
+                    console.log(selectedSketches);
+                    setNewPlaylistSketches(selectedSketches);
+                    history.push("/playlists");
+                  }}
+                >
+                  Create playlist
+                </button>
+              )}
+            </div>
           </div>
         </div>
       </div>

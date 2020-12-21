@@ -3,16 +3,20 @@ import "react-resizable/css/styles.css";
 import classnames from "classnames";
 import React, { Suspense } from "react";
 import { Route, Switch } from "react-router-dom";
+import { SWRConfig } from "swr";
+import useSWR from "swr";
 
 import Notifications from "~/components/notifications";
-import SketchesContainer from "~/containers/sketches";
 import SoulmateContainer from "~/containers/soulmates";
 import UserContainer from "~/containers/user";
 import Logo from "~/images/logo.svg";
+import { ALL_SKETCHES_URL, SKETCHES_URL } from "~/urls";
+import { fetcher } from "~/utils";
 import isElectron from "~/utils/isElectron";
 
 import Config from "./config";
 import Console from "./console";
+import PlaylistContainer from "./containers/playlists";
 import Dashboard from "./dashboard";
 import Download from "./download";
 import Editor from "./editor";
@@ -20,10 +24,15 @@ import Flash from "./flash";
 import Gallery from "./gallery";
 import Menu from "./menu";
 import MySketches from "./mySketches";
+import Playlist from "./playlist";
+import Playlists from "./playlists";
 import User from "./user";
 import Welcome from "./welcome";
 
 const IDE = () => {
+  useSWR(SKETCHES_URL, fetcher);
+  useSWR(ALL_SKETCHES_URL, fetcher);
+
   const [focus, setFocus] = useState(true);
   const blur = !focus;
 
@@ -102,6 +111,19 @@ const IDE = () => {
             <Route path="/console">
               <Console />
             </Route>
+
+            <Route
+              path="/playlists/:id"
+              render={({
+                match: {
+                  params: { id },
+                },
+              }) => <Playlist id={id} />}
+            />
+
+            <Route path="/playlists">
+              <Playlists />
+            </Route>
           </Switch>
         </div>
       </Suspense>
@@ -110,13 +132,15 @@ const IDE = () => {
 };
 
 const WrappedIde = (props) => (
-  <SketchesContainer.Provider>
+  <SWRConfig value={{ fetcher }}>
     <UserContainer.Provider>
       <SoulmateContainer.Provider>
-        <IDE {...props} />
+        <PlaylistContainer.Provider>
+          <IDE {...props} />
+        </PlaylistContainer.Provider>
       </SoulmateContainer.Provider>
     </UserContainer.Provider>
-  </SketchesContainer.Provider>
+  </SWRConfig>
 );
 
 export default WrappedIde;

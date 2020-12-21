@@ -3,16 +3,17 @@ import uniqBy from "lodash/uniqBy";
 import { Helmet } from "react-helmet";
 import { IoPersonCircleOutline } from "react-icons/io5";
 import { Link } from "react-router-dom";
+import useSWR from "swr";
 
 import Header from "~/components/Header";
 import Sketch from "~/components/sketch";
-import SketchesContainer from "~/containers/sketches";
 import UserContainer from "~/containers/user";
 import Logo from "~/images/logo.svg";
+import { ALL_SKETCHES_URL } from "~/urls";
 
 const Gallery = () => {
   const { userDetails } = UserContainer.useContainer();
-  const { allSketches } = SketchesContainer.useContainer();
+  const { data: allSketches } = useSWR(ALL_SKETCHES_URL);
   const [search, setSearch] = useState("");
 
   if (!allSketches) return <Logo className="loading-spinner" />;

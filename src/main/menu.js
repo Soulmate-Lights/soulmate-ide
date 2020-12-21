@@ -1,7 +1,7 @@
-import classnames from "classnames";
 import { BsTerminal } from "react-icons/bs";
 import { FiCloud, FiFolder, FiHome, FiSettings, FiSmile } from "react-icons/fi";
 import { HiOutlineLightningBolt } from "react-icons/hi";
+import { RiPlayList2Fill } from "react-icons/ri";
 import { Link, NavLink, useLocation } from "react-router-dom";
 
 import SoulmatesContainer from "~/containers/soulmates";
@@ -10,6 +10,8 @@ import isElectron from "~/utils/isElectron";
 
 import square from "./Square.jpg";
 import UserDetails from "./userDetails";
+
+const shopUrl = "https://shop.soulmatelights.com/products/square";
 
 const iconClass = "mr-3 h-6 w-6 transition ease-in-out duration-150";
 const linkClass = `group flex items-center px-4 py-2 text-sm leading-5 font-medium rounded-md
@@ -22,17 +24,18 @@ const activeLinkClass = `
   dark-mode:hover:bg-gray-800
   bg-gray-300`;
 
+import UserContainer from "~/containers/user";
+
 const Menu = () => {
   const location = useLocation();
+  const { isAdmin } = UserContainer.useContainer();
   const { usbConnected } = SoulmatesContainer.useContainer();
 
   return (
     <div
-      className={classnames(
-        "flex flex-shrink-0 border-r",
-        "bg-gray-200",
-        "dark-mode:border-gray-600 dark-mode:bg-gray-700 dark-mode:text-white"
-      )}
+      className={
+        "flex flex-shrink-0 border-r bg-gray-200 dark-mode:border-gray-600 dark-mode:bg-gray-700 dark-mode:text-white"
+      }
     >
       <div className="flex flex-col w-72">
         <div className="flex flex-col flex-1 h-0">
@@ -126,20 +129,30 @@ const Menu = () => {
                 <FiSettings className={iconClass} />
                 Config
               </NavLink>
+
+              {isAdmin() && (
+                <NavLink
+                  activeClassName={activeLinkClass}
+                  className={linkClass}
+                  disabled
+                  location={location}
+                  to="/playlists"
+                >
+                  <RiPlayList2Fill className={iconClass} />
+                  Playlists
+                </NavLink>
+              )}
             </nav>
 
             <div className="mt-8" />
 
             <a
               className="flex flex-col flex-shrink mx-8 mt-auto mb-4 overflow-hidden text-xs bg-gray-300 rounded-lg dark-mode:bg-gray-800 align-center"
-              href="https://shop.soulmatelights.com/products/square"
+              href={shopUrl}
               onClick={(e) => {
                 if (isElectron()) {
                   e.preventDefault();
-                  console.log("hi");
-                  electron.shell.openExternal(
-                    "https://shop.soulmatelights.com/products/square"
-                  );
+                  electron.shell.openExternal(shopUrl);
                 }
               }}
               rel="noopener noreferrer"
