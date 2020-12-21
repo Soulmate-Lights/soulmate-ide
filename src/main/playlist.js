@@ -196,32 +196,36 @@ const Playlist = (props) => {
           sketches={sketches}
         />
 
-        <div className="flex flex-row flex-grow flex-shrink min-w-0 min-h-0">
-          <CodeEditor
-            build={build}
-            className="relative flex-grow flex-shrink w-6/12 min-w-0 min-h-0 bg-white"
-            code={sketch?.code || emptyCode}
-            key={index}
-            onChange={(code) => {
-              sketches[index].code = code;
-              setSketches(sketches);
-              setDirty(true);
-            }}
-            onSave={(code) => {
-              setDirty(false);
-              sketches[index].code = code;
-              setSketches(sketches);
-              savePlaylist(playlist.id, { sketches });
-            }}
-          />
+        {sketches && sketches[index] ? (
+          <div className="flex flex-row flex-grow flex-shrink min-w-0 min-h-0">
+            <CodeEditor
+              build={build}
+              className="relative flex-grow flex-shrink w-6/12 min-w-0 min-h-0 bg-white"
+              code={sketch?.code || emptyCode}
+              key={index}
+              onChange={(code) => {
+                sketches[index].code = code;
+                setSketches(sketches);
+                setDirty(true);
+              }}
+              onSave={(code) => {
+                setDirty(false);
+                sketches[index].code = code;
+                setSketches(sketches);
+                savePlaylist(playlist.id, { sketches });
+              }}
+            />
 
-          <Simulator
-            build={build}
-            className="flex flex-col flex-grow"
-            config={config}
-            minWidth={320}
-          />
-        </div>
+            <Simulator
+              build={build}
+              className="flex flex-col flex-grow"
+              config={config}
+              minWidth={320}
+            />
+          </div>
+        ) : (
+          <Logo className="loading-spinner" />
+        )}
       </div>
     </div>
   );
