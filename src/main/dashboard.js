@@ -1,6 +1,8 @@
 import { Helmet } from "react-helmet";
 import { AiFillApple, AiFillWindows } from "react-icons/ai";
 import { Link } from "react-router-dom";
+import UserContainer from "~/containers/user";
+import isElectron from "~/utils/isElectron";
 
 import packagedotjson from "../../package.json";
 
@@ -11,9 +13,6 @@ function isMacintosh() {
 function isWindows() {
   return navigator.platform.indexOf("Win") > -1;
 }
-
-import UserContainer from "~/containers/user";
-import isElectron from "~/utils/isElectron";
 
 const Dashboard = () => {
   const { userDetails, login } = UserContainer.useContainer();
@@ -138,10 +137,4 @@ const Dashboard = () => {
   );
 };
 
-const WrappedDashboard = (...props) => (
-  <UserContainer.Provider>
-    <Dashboard {...props} />
-  </UserContainer.Provider>
-);
-
-export default WrappedDashboard;
+export default Dashboard;

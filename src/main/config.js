@@ -344,4 +344,5 @@ const Config = () => {
     </div>
   );
 };
+
 export default Config;

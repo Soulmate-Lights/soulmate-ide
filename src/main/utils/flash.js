@@ -42,8 +42,8 @@ const getNumberFromFlashOutput = (data) => {
 const installDependencies = () => {
   const childProcess = remote.require("child_process");
   if (remote.require("os").platform() === "darwin") {
-    childProcess.execSync(`/usr/bin/python ./get-pip.py`, { cwd: dir });
-    childProcess.execSync(`/usr/local/bin/pip install pyserial`);
+    childProcess.execSync("/usr/bin/python ./get-pip.py", { cwd: dir });
+    childProcess.execSync("/usr/bin/python -m pip install pyserial");
   } else {
     const which = remote && remote?.require("which");
     const python = which.sync("python");
@@ -56,7 +56,10 @@ const installDependencies = () => {
 /** Flash a build file to a USB output */
 export const flashBuild = async (port, file, progressCallback) => {
   const which = remote && remote?.require("which");
-  const python = which.sync("python");
+  let python = "/usr/bin/python";
+  if (remote.require("os").platform() !== "darwin") {
+    python = which.sync("python");
+  }
 
   console.log("[flashbuild] Installing dependencices");
   try {

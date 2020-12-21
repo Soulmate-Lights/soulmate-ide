@@ -7,6 +7,8 @@ import { HashRouter, Route, Router, Switch } from "react-router-dom";
 import { LastLocationProvider } from "react-router-last-location";
 
 import BuildsContainer from "~/containers/builds";
+import ConfigContainer from "~/containers/config";
+import NotificationsContainer from "~/containers/notifications";
 import Logo from "~/images/logo.svg";
 import history from "~/utils/history";
 import isElectron from "~/utils/isElectron";
@@ -16,6 +18,14 @@ const Marketing = React.lazy(() => import("../marketing"));
 const Ide = React.lazy(() => import("./ide"));
 
 const SpecificRouter = isElectron() ? HashRouter : Router;
+
+const MainProvider = ({ children }) => (
+  <NotificationsContainer.Provider>
+    <ConfigContainer.Provider>
+      <BuildsContainer.Provider>{children}</BuildsContainer.Provider>
+    </ConfigContainer.Provider>
+  </NotificationsContainer.Provider>
+);
 
 const Main = () => {
   const marketing =
@@ -42,7 +52,7 @@ const Main = () => {
             { "pt-6": showTopBar }
           )}
         >
-          <BuildsContainer.Provider>
+          <MainProvider>
             <SpecificRouter history={isElectron() ? undefined : history}>
               <LastLocationProvider>
                 <Switch>
@@ -56,7 +66,7 @@ const Main = () => {
                 </Switch>
               </LastLocationProvider>
             </SpecificRouter>
-          </BuildsContainer.Provider>
+          </MainProvider>
         </div>
       </Suspense>
     </div>
