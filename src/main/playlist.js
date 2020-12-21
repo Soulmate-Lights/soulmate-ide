@@ -3,7 +3,7 @@ import useSWR, { mutate } from "swr";
 import CodeEditor from "~/components/codeEditor";
 import Header from "~/components/Header";
 import PlaylistMenu from "~/components/PlaylistMenu";
-import Simulator from "~/components/simulator";
+import Simulator from "~/components/Simulator";
 import BuildsContainer from "~/containers/builds";
 import SoulmatesContainer from "~/containers/soulmates";
 import Logo from "~/images/logo.svg";
