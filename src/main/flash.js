@@ -5,6 +5,7 @@ import uniqBy from "lodash/uniqBy";
 import { Suspense } from "react";
 import { AiFillCheckCircle } from "react-icons/ai";
 import { BsLayoutSidebarInsetReverse } from "react-icons/bs";
+import { RiPlayList2Fill } from "react-icons/ri";
 import { ResizableBox } from "react-resizable";
 
 import Header from "~/components/Header";
@@ -182,6 +183,7 @@ const Flash = () => {
                     history.push("/playlists");
                   }}
                 >
+                  <RiPlayList2Fill className="w-6 h-6 mr-2" />
                   Create playlist
                 </button>
               )}
