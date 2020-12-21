@@ -7,6 +7,7 @@ import Header from "~/components/header";
 import Sketch from "~/components/sketch";
 import ConfigContainer from "~/containers/config";
 import PlaylistContainer from "~/containers/playlists";
+import Logo from "~/images/logo.svg";
 import { PLAYLISTS_URL } from "~/urls";
 import { post } from "~/utils";
 import history from "~/utils/history";
@@ -49,6 +50,8 @@ const Playlists = () => {
   };
 
   const groupedPlaylists = _.groupBy(playlists, (p) => p.model_name);
+
+  if (!playlists) return <Logo className="loading-spinner" />;
 
   return (
     <div className="flex flex-col w-full space-y-8">

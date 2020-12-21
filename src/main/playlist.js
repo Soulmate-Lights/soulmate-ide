@@ -1,4 +1,5 @@
 import useSWR, { mutate } from "swr";
+import Logo from "~/images/logo.svg";
 
 import CodeEditor from "~/components/codeEditor";
 import Header from "~/components/header";
@@ -84,7 +85,7 @@ const Playlist = (props) => {
     setPublishing(false);
   };
 
-  if (!playlist) return <>Loading...</>;
+  if (!playlist) return <Logo className="loading-spinner" />;
 
   const menu = (
     <div className="relative inline-block text-left" ref={menuRef}>

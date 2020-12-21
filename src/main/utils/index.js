@@ -23,7 +23,7 @@ export const postDelete = async (url, body = {}) => {
       Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify({ ...body }),
-  }).then((response) => response.json());
+  });
 };
 
 export const put = async (url, body = {}) => {
