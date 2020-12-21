@@ -32,6 +32,7 @@ if (!isElectron() && !window.auth && !auth0) {
 
         const user = await auth0.getUser();
         localStorage.user = JSON.stringify(user);
+        window.location.reload();
       } catch (e) {
         SentryReact.captureException(e);
       }
@@ -54,7 +55,7 @@ export const getToken = async () => {
     return window.auth.tokenProperties?.access_token;
   } else {
     const claim = await window.auth0?.getIdTokenClaims();
-    return claim.__raw;
+    return claim?.__raw;
   }
 };
 
