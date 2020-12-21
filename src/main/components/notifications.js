@@ -4,7 +4,6 @@ import NotificationsContainer from "~/containers/notifications";
 
 const Notifications = () => {
   const notificationsContainer = NotificationsContainer.useContainer();
-  console.log("Render notifications");
 
   return (
     <TransitionGroup className="absolute z-50 top-10 right-10 space-y-4">
