@@ -8,6 +8,7 @@ on:
 jobs:
   update-ui:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     env:
       ACTIONS_ALLOW_UNSECURE_COMMANDS: true
     steps:

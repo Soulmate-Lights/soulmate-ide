@@ -8,6 +8,7 @@ on:
 jobs:
   upload-sourcemaps-to-sentry:
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     env:
       ACTIONS_ALLOW_UNSECURE_COMMANDS: true
 
