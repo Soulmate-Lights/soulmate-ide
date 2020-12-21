@@ -3,6 +3,7 @@ import { AiFillApple, AiFillWindows } from "react-icons/ai";
 import { Link } from "react-router-dom";
 
 import UserContainer from "~/containers/user";
+import isDev from "~/utils/isDev";
 import isElectron from "~/utils/isElectron";
 
 import packagedotjson from "../../package.json";
@@ -130,7 +131,7 @@ const Dashboard = () => {
           )}
 
           <div className="p-4 text-xs text-center opacity-25 dark-mode:text-white">
-            Version {packagedotjson.version}
+            Version {packagedotjson.version} {isDev && "(dev)"}
           </div>
         </main>
       </div>
