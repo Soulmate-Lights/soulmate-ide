@@ -178,7 +178,6 @@ const Flash = () => {
                 <button
                   className="footer-button"
                   onClick={() => {
-                    console.log(selectedSketches);
                     setNewPlaylistSketches(selectedSketches);
                     history.push("/playlists");
                   }}

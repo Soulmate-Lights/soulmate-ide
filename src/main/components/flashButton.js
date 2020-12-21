@@ -82,7 +82,9 @@ const FlashButton = ({ selectedSketches, disabled = false }) => {
       </span>
     );
   } else {
-    text = `Flash to ${selectedSoulmate?.name || name}`;
+    text = `Flash to ${
+      selectedSoulmate?.config.name || selectedSoulmate?.name || name
+    }`;
   }
 
   return (
@@ -95,7 +97,7 @@ const FlashButton = ({ selectedSketches, disabled = false }) => {
             ) : (
               <>
                 <span>{startCase(type)}</span>
-                <span>
+                <span className="whitespace-pre">
                   {config.rows} x {config.cols}
                 </span>
               </>

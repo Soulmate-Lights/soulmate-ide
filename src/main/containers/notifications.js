@@ -5,7 +5,6 @@ function Notifications() {
   const notificationsRef = useRef(notifications);
 
   function notify(text, type = "notice") {
-    console.log(text);
     setNotifications([...notifications, { text, type }]);
 
     setTimeout(() => {

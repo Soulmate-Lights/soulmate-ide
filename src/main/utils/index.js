@@ -31,7 +31,6 @@ export const put = async (url, body = {}) => {
   return fetch(server + url, {
     method: "PUT",
     headers: {
-      "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     },
     body,

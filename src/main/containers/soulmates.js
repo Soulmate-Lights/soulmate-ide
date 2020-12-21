@@ -1,4 +1,5 @@
 import useInterval from "@use-it/interval";
+import map from "lodash/map";
 import takeRight from "lodash/takeRight";
 import uniqBy from "lodash/uniqBy";
 import { useState } from "react";
@@ -44,6 +45,11 @@ const SoulmateContainer = () => {
   if (!window.ipcRenderer) return {};
 
   const addSoulmate = (_event, soulmate) => {
+    const addresses = map(soulmates, "addresses[0]");
+    if (addresses.includes(soulmate.addresses[0])) {
+      return;
+    }
+
     const socket = new WebSocket(`ws://${soulmate.addresses[0]}:81`);
     socket.onopen = () => {
       socket.onmessage = (e) => {
