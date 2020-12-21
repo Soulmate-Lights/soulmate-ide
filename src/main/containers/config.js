@@ -54,7 +54,7 @@ const types = [
       button: 39,
       data: 27,
       clock: 26,
-      milliamps: 200,
+      milliamps: 100,
       chipType: "atom",
       ledType: "WS2812B",
       serpentine: false,

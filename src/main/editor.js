@@ -327,11 +327,13 @@ const Editor = ({ id, mine }) => {
           />
 
           {isElectron() && port && (
-            <FlashButton
-              className="m-4"
-              disabled={!build || build?.stderr}
-              selectedSketches={[sketch]}
-            />
+            <div className="p-4">
+              <FlashButton
+                className="m-4"
+                disabled={!build || build?.stderr}
+                selectedSketches={[sketch]}
+              />
+            </div>
           )}
         </div>
       </div>

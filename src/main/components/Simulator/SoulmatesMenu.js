@@ -137,9 +137,8 @@ const SoulmatesMenu = ({
                   <span>
                     {soulmate.name}
 
-                    <span className="font-mono text-xs">
-                      {" "}
-                      (v{soulmate.config.version})
+                    <span className="ml-2 font-mono text-xs">
+                      (v{soulmate.config?.version})
                     </span>
                   </span>
                 </div>
