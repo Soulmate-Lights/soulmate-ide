@@ -7,7 +7,6 @@ import { SWRConfig } from "swr";
 import useSWR from "swr";
 
 import Notifications from "~/components/notifications";
-import SoulmateContainer from "~/containers/soulmates";
 import UserContainer from "~/containers/user";
 import Logo from "~/images/logo.svg";
 import { ALL_SKETCHES_URL, SKETCHES_URL } from "~/urls";
