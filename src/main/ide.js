@@ -5,7 +5,6 @@ import React, { Suspense } from "react";
 import { Route, Switch } from "react-router-dom";
 
 import Notifications from "~/components/notifications";
-import ConfigContainer from "~/containers/config";
 import SketchesContainer from "~/containers/sketches";
 import SoulmateContainer from "~/containers/soulmates";
 import UserContainer from "~/containers/user";
@@ -110,7 +109,7 @@ const IDE = () => {
   );
 };
 
-export default (props) => (
+const WrappedIde = (props) => (
   <SketchesContainer.Provider>
     <UserContainer.Provider>
       <SoulmateContainer.Provider>
@@ -119,3 +118,5 @@ export default (props) => (
     </UserContainer.Provider>
   </SketchesContainer.Provider>
 );
+
+export default WrappedIde;
