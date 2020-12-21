@@ -1,5 +1,6 @@
 import { Helmet } from "react-helmet";
 import { HiOutlineLink } from "react-icons/hi";
+import useSWR, { mutate } from "swr";
 
 import CodeEditor from "~/components/codeEditor";
 import Header from "~/components/Header";
@@ -7,9 +8,10 @@ import Simulator from "~/components/Simulator";
 import BuildsContainer from "~/containers/builds";
 import ConfigContainer from "~/containers/config";
 import NotificationsContainer from "~/containers/notifications";
-import SketchesContainer from "~/containers/sketches";
 import SoulmatesContainer from "~/containers/soulmates";
 import Logo from "~/images/logo.svg";
+import { ALL_SKETCHES_URL, SKETCHES_URL } from "~/urls";
+import { fetcher, post, postDelete } from "~/utils";
 import { emptyCode } from "~/utils/code";
 import history from "~/utils/history";
 import isElectron from "~/utils/isElectron";
@@ -17,21 +19,80 @@ import isElectron from "~/utils/isElectron";
 import FlashButton from "./components/flashButton";
 
 const Editor = ({ id, mine }) => {
-  const {
-    getSketch,
-    save,
-    togglePublic,
-    persistCode,
-    deleteSketch,
-    rename,
-  } = SketchesContainer.useContainer();
+  const { data: sketches } = useSWR(SKETCHES_URL, fetcher);
+  const { data: allSketches } = useSWR(ALL_SKETCHES_URL, fetcher);
+
+  const sketch =
+    sketches?.find((s) => s.id === parseInt(id)) ||
+    allSketches?.find((s) => s.id === parseInt(id));
+
+  const updateSketch = (id, options) => {
+    if (sketches) {
+      let sketchIndex = sketches?.findIndex((s) => s.id === id);
+      if (sketchIndex > -1) {
+        sketches[sketchIndex] = { ...sketches[sketchIndex], ...options };
+        mutate(SKETCHES_URL, [...sketches], false);
+      }
+    }
+    let allSketchIndex = allSketches?.findIndex((s) => s.id === id);
+    if (allSketchIndex > -1) {
+      allSketches[allSketchIndex] = {
+        ...allSketches[allSketchIndex],
+        ...options,
+      };
+      mutate(ALL_SKETCHES_URL, [...allSketches], false);
+    }
+  };
+
+  const save = async (id, code, config) => {
+    updateSketch(id, { code, dirtyCode: undefined, config, dirty: false });
+
+    let sketchIndex = sketches?.findIndex((s) => s.id === id);
+
+    if (sketchIndex > -1) {
+      await post("/sketches/save", { id, code, config });
+    }
+
+    mutate(SKETCHES_URL);
+  };
+
+  const togglePublic = async (id) => {
+    const sketch = sketches.find((s) => s.id === id);
+    const isPublic = !sketch.public;
+    updateSketch(id, { public: isPublic });
+    await post("/sketches/save", { id, public: isPublic });
+    mutate(SKETCHES_URL);
+  };
+
+  const persistCode = (id, code) => {
+    if (!id) return;
+    updateSketch(id, {
+      dirtyCode: code,
+      dirty: sketch.code !== code,
+    });
+  };
+
+  const deleteSketch = async (id) => {
+    mutate(
+      SKETCHES_URL,
+      sketches.filter((s) => s.id !== id),
+      false
+    );
+    await postDelete(`/sketches/${id}`);
+    mutate(SKETCHES_URL);
+  };
+
+  const rename = async (id, name) => {
+    updateSketch(id, { name });
+    post("/sketches/save", { id, name });
+  };
+
   const { notify } = NotificationsContainer.useContainer();
   const { getBuild } = BuildsContainer.useContainer();
   const { config } = ConfigContainer.useContainer();
   const { port } = SoulmatesContainer.useContainer();
 
   const menuRef = useRef();
-  const sketch = getSketch(id);
 
   const [menuOpen, setMenuOpen] = useState(false);
   const [renaming, setRenaming] = useState(false);

@@ -1,37 +1,45 @@
 import _ from "lodash";
 import React from "react";
 import { Link } from "react-router-dom";
+import useSWR from "swr";
 
 import Header from "~/components/header";
 import Sketch from "~/components/sketch";
 import ConfigContainer from "~/containers/config";
 import PlaylistContainer from "~/containers/playlists";
+import { PLAYLISTS_URL } from "~/urls";
+import { post } from "~/utils";
 import history from "~/utils/history";
 
 const Playlists = () => {
   const {
-    playlists,
-    createPlaylist,
     newPlaylistSketches,
     setNewPlaylistSketches,
   } = PlaylistContainer.useContainer();
 
+  const { data: playlists } = useSWR(PLAYLISTS_URL);
+
   const { playlistTypes } = ConfigContainer.useContainer();
 
   const [name, setName] = useState("");
+  const [modelName, setModelName] = useState(false);
+  const [description, setDescription] = useState(undefined);
 
-  const reset = () => {
-    setName("");
-  };
+  const reset = () => setName("");
 
-  const onClickSave = () => {
+  const onClickSave = async () => {
     if (!name || !modelName || !description) return;
 
-    createPlaylist(name, description, modelName, newPlaylistSketches)
+    post("/my-playlists", {
+      name,
+      description,
+      model: modelName,
+      sketches: newPlaylistSketches,
+    })
       .then((playlist) => history.push(`/playlists/${playlist.id}`))
       .then(reset)
       .catch((e) => {
-        alert("err");
+        alert("Error creating playlist");
         console.log({ error: e });
       });
   };
@@ -41,9 +49,6 @@ const Playlists = () => {
   };
 
   const groupedPlaylists = _.groupBy(playlists, (p) => p.model_name);
-
-  const [modelName, setModelName] = useState(false);
-  const [description, setDescription] = useState(undefined);
 
   return (
     <div className="flex flex-col w-full space-y-8">

@@ -1,3 +1,5 @@
+import useSWR, { mutate } from "swr";
+
 import CodeEditor from "~/components/codeEditor";
 import Header from "~/components/header";
 import PlaylistMenu from "~/components/PlaylistMenu";
@@ -5,51 +7,75 @@ import Simulator from "~/components/simulator";
 import BuildsContainer from "~/containers/builds";
 import PlaylistContainer from "~/containers/playlists";
 import SoulmatesContainer from "~/containers/soulmates";
+import { PLAYLISTS_URL } from "~/urls";
+import { post, postDelete, put } from "~/utils";
 import { emptyCode } from "~/utils/code";
 import history from "~/utils/history";
 
-const Playlist = (props) => {
-  const id = parseInt(props.id);
+const savePlaylist = async (id, data, build) => {
+  var formData = new FormData();
+  formData.append("sketches", JSON.stringify(data.sketches));
+  if (build) {
+    const blob = new Blob([fs.readFileSync(build)]);
+    formData.append("build", blob, "firmware.bin");
+  }
+  await put(`/my-playlists/${id}`, formData);
+  mutate(PLAYLISTS_URL);
+};
 
-  const {
-    playlists,
-    savePlaylist,
-    destroyPlaylist,
-    unpublishPlaylist,
-  } = PlaylistContainer.useContainer();
+const destroyPlaylist = async (id) => {
+  await postDelete(`/my-playlists/${id}`);
+  mutate(PLAYLISTS_URL);
+};
+
+const unpublishPlaylist = async (id) => {
+  await post(`/my-playlists/${id}/unpublish`);
+  mutate(PLAYLISTS_URL);
+};
+
+const Playlist = (props) => {
   const { getBuild } = BuildsContainer.useContainer();
   const soulmates = SoulmatesContainer.useContainer();
 
-  const playlist = playlists?.find((p) => parseInt(p.id) === parseInt(id));
-  if (!playlist) return <>Loading...</>;
-  const [sketches, setSketches] = useState(playlist.sketches || []);
-  const [index, setIndex] = useState(0);
-  const sketch = sketches[index];
-  const { config } = playlist;
-  const build = getBuild(playlist.sketches[index]?.code || emptyCode, config);
+  const id = parseInt(props.id);
+  const { data: playlists } = useSWR(PLAYLISTS_URL);
 
+  const [publishing, setPublishing] = useState(false);
+  const playlist = playlists?.find((p) => parseInt(p.id) === parseInt(id));
+  const [sketches, setSketches] = useState(playlist?.sketches);
+  const [index, setIndex] = useState(0);
   const [menuOpen, setMenuOpen] = useState(false);
   const menuRef = useRef();
-
   const [dirty, setDirty] = useState(false);
+
+  useEffect(() => {
+    if (!sketches && playlist?.sketches) {
+      setSketches(playlist.sketches);
+      setIndex(0);
+    }
+  }, [playlist?.sketches]);
+
+  useEffect(() => {
+    if (index >= sketches?.length) setIndex(sketches.length - 1);
+  }, [sketches, index]);
+
+  const sketch = sketches ? sketches[index] : {};
+  const { config } = playlist || {};
+
+  let build;
+  if (playlist?.sketches) {
+    build = getBuild(playlist.sketches[index]?.code || emptyCode, config);
+  }
 
   const save = () => {
     savePlaylist(playlist.id, { sketches });
     setDirty(false);
   };
 
-  useEffect(() => {
-    // After deleting, select first sketch
-    if (index >= sketches.length) setIndex(sketches.length - 1);
-  }, [sketches, index]);
-
-  const [publishing, setPublishing] = useState(false);
-
   const publish = async () => {
     setPublishing(true);
     const build = await soulmates.getBuild(sketches, config);
     // TODO: Catch errors here
-    console.log(build);
     if (!build) {
       alert("There was an error building.");
     } else {
@@ -57,6 +83,8 @@ const Playlist = (props) => {
     }
     setPublishing(false);
   };
+
+  if (!playlist) return <>Loading...</>;
 
   const menu = (
     <div className="relative inline-block text-left" ref={menuRef}>

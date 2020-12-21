@@ -10,7 +10,6 @@ import { ResizableBox } from "react-resizable";
 import Header from "~/components/Header";
 import Sketch from "~/components/sketch";
 import ConfigContainer from "~/containers/config";
-import SketchesContainer from "~/containers/sketches";
 import Soulmates from "~/containers/soulmates";
 import UserContainer from "~/containers/user";
 import Logo from "~/images/logo.svg";
@@ -20,12 +19,19 @@ import FlashButton from "./components/flashButton";
 import PlaylistContainer from "./containers/playlists";
 const Console = React.lazy(() => import("./console"));
 
+import useSWR from "swr";
+
+import { ALL_SKETCHES_URL, SKETCHES_URL } from "~/urls";
+
 const Flash = () => {
+  const { data: sketches } = useSWR(SKETCHES_URL);
+  const { data: allSketches } = useSWR(ALL_SKETCHES_URL);
+
   const { flashing, usbConnected } = Soulmates.useContainer();
   const { userDetails, isAdmin } = UserContainer.useContainer();
-  const { allSketches, sketches } = SketchesContainer.useContainer();
   const { setNewPlaylistSketches } = PlaylistContainer.useContainer();
   const { type } = ConfigContainer.useContainer();
+
   const [search, setSearch] = useState("");
   const [selected, setSelected] = useState([]);
   const [showConsole, setShowConsole] = useState(false);

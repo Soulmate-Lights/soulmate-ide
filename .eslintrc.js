@@ -42,7 +42,7 @@ module.exports = {
     strict: 0,
     "react/prop-types": 0,
     "no-unused-vars": ["error", { argsIgnorePattern: "^_" }],
-    "simple-import-sort/sort": "error",
+    "simple-import-sort/imports": "error",
     "tailwind/class-order": "error",
     "react/jsx-sort-props": "error",
   },

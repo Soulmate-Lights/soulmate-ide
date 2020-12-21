@@ -95,6 +95,8 @@ const Simulator = ({
 
   const start = () => {
     if (paused) return;
+    if (!build) return;
+
     const { hex } = build;
 
     if (!worker) {

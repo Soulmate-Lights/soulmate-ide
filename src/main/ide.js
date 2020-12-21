@@ -3,10 +3,9 @@ import "react-resizable/css/styles.css";
 import classnames from "classnames";
 import React, { Suspense } from "react";
 import { Route, Switch } from "react-router-dom";
+import { SWRConfig } from "swr";
 
 import Notifications from "~/components/notifications";
-import ConfigContainer from "~/containers/config";
-import SketchesContainer from "~/containers/sketches";
 import SoulmateContainer from "~/containers/soulmates";
 import UserContainer from "~/containers/user";
 import Logo from "~/images/logo.svg";
@@ -106,6 +105,19 @@ const IDE = () => {
             <Route path="/console">
               <Console />
             </Route>
+
+            <Route
+              path="/playlists/:id"
+              render={({
+                match: {
+                  params: { id },
+                },
+              }) => <Playlist id={id} />}
+            />
+
+            <Route path="/playlists">
+              <Playlists />
+            </Route>
           </Switch>
         </div>
       </Suspense>
@@ -113,12 +125,18 @@ const IDE = () => {
   );
 };
 
-export default (props) => (
-  <SketchesContainer.Provider>
+import { fetcher } from "~/utils";
+
+const WrappedIde = (props) => (
+  <SWRConfig value={{ fetcher }}>
     <UserContainer.Provider>
       <SoulmateContainer.Provider>
-        <IDE {...props} />
+        <PlaylistContainer.Provider>
+          <IDE {...props} />
+        </PlaylistContainer.Provider>
       </SoulmateContainer.Provider>
     </UserContainer.Provider>
-  </SketchesContainer.Provider>
+  </SWRConfig>
 );
+
+export default WrappedIde;

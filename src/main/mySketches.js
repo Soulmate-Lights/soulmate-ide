@@ -1,25 +1,23 @@
 import { Helmet } from "react-helmet";
+import useSWR, { mutate } from "swr";
 
 import Header from "~/components/Header";
 import TimeGroupedSketches from "~/components/timeGroupedSketches";
-import SketchesContainer from "~/containers/sketches";
 import UserContainer from "~/containers/user";
 import Logo from "~/images/logo.svg";
+import { SKETCHES_URL } from "~/urls";
+import { fetcher, post } from "~/utils";
 import history from "~/utils/history";
 
+const createSketch = async (name) => {
+  const newSketch = await post("/sketches/create", { name });
+  mutate(SKETCHES_URL);
+  return newSketch;
+};
+
 const MySketches = () => {
-  const {
-    sketches,
-    createSketch,
-    fetchSketches,
-  } = SketchesContainer.useContainer();
-
-  useEffect(() => {
-    fetchSketches();
-  }, []);
-
+  const { data: sketches } = useSWR(SKETCHES_URL, fetcher);
   const { userDetails, login } = UserContainer.useContainer();
-
   const [newSketchName, setNewSketchName] = useState("");
   const [creating, setCreating] = useState(false);
   const [loading, setLoading] = useState(false);
