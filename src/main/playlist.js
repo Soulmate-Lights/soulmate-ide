@@ -5,7 +5,6 @@ import Header from "~/components/header";
 import PlaylistMenu from "~/components/PlaylistMenu";
 import Simulator from "~/components/simulator";
 import BuildsContainer from "~/containers/builds";
-import PlaylistContainer from "~/containers/playlists";
 import SoulmatesContainer from "~/containers/soulmates";
 import Logo from "~/images/logo.svg";
 import { PLAYLISTS_URL } from "~/urls";
@@ -65,7 +64,8 @@ const Playlist = (props) => {
 
   let build;
   if (playlist?.sketches) {
-    build = getBuild(playlist.sketches[index]?.code || emptyCode, config);
+    const code = playlist.sketches[index]?.code || emptyCode;
+    build = getBuild(code, config);
   }
 
   const save = () => {
@@ -228,11 +228,9 @@ const Playlist = (props) => {
 };
 
 const WrappedPlaylist = (props) => (
-  <PlaylistContainer.Provider>
-    <BuildsContainer.Provider>
-      <Playlist {...props} />
-    </BuildsContainer.Provider>
-  </PlaylistContainer.Provider>
+  <BuildsContainer.Provider>
+    <Playlist {...props} />
+  </BuildsContainer.Provider>
 );
 
 export default WrappedPlaylist;
