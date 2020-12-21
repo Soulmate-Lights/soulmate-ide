@@ -44,7 +44,7 @@ jobs:
         if: startsWith(matrix.os, 'windows')
         uses: actions/setup-node@v1
         with:
-          node-version: 10 # v15 causes "Error: Command failed: yarn" in Windows?
+          node-version: 12 # v15 causes "Error: Command failed: yarn" in Windows?
 
       - name: Yarn
         run: |
