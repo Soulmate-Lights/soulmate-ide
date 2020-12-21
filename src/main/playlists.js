@@ -3,7 +3,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import useSWR from "swr";
 
-import Header from "~/components/header";
+import Header from "~/components/Header";
 import Sketch from "~/components/sketch";
 import ConfigContainer from "~/containers/config";
 import PlaylistContainer from "~/containers/playlists";

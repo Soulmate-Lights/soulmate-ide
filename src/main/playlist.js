@@ -1,7 +1,7 @@
 import useSWR, { mutate } from "swr";
 
 import CodeEditor from "~/components/codeEditor";
-import Header from "~/components/header";
+import Header from "~/components/Header";
 import PlaylistMenu from "~/components/PlaylistMenu";
 import Simulator from "~/components/simulator";
 import BuildsContainer from "~/containers/builds";
