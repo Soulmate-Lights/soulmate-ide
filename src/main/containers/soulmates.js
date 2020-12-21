@@ -138,7 +138,7 @@ const SoulmateContainer = () => {
         const data = JSON.parse(text);
         receivedData = data;
         configContainer.setConfigFromSoulmateData(data);
-        setName(data?.name || "No Name");
+        setName(data?.name || "New Soulmate");
       }
       setText((oldText) => [...takeRight(oldText, LINE_LIMIT), text]);
     });

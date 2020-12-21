@@ -195,12 +195,12 @@ const Flash = () => {
       {showConsole && (
         <ResizableBox
           axis="x"
-          className="flex flex-grow h-full"
+          className="flex flex-grow flex-shrink-0 h-full"
           draggableOpts={{ resizeHandles: ["e"] }}
           maxConstraints={[800]}
-          minConstraints={[400]}
+          minConstraints={[300]}
           resizeHandles={["w"]}
-          width={500}
+          width={300}
         >
           <Suspense fallback={<Logo className="loading-spinner" />}>
             <Console className="flex-shrink" />
