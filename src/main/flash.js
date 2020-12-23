@@ -7,6 +7,7 @@ import { AiFillCheckCircle } from "react-icons/ai";
 import { BsLayoutSidebarInsetReverse } from "react-icons/bs";
 import { RiPlayList2Fill } from "react-icons/ri";
 import { ResizableBox } from "react-resizable";
+import { useHistory } from "react-router-dom";
 
 import Header from "~/components/Header";
 import Sketch from "~/components/sketch";
@@ -14,10 +15,9 @@ import ConfigContainer from "~/containers/config";
 import Soulmates from "~/containers/soulmates";
 import UserContainer from "~/containers/user";
 import Logo from "~/images/logo.svg";
-import history from "~/utils/history";
 
+// import history from "~/utils/history";
 import FlashButton from "./components/flashButton";
-import PlaylistContainer from "./containers/playlists";
 const Console = React.lazy(() => import("./console"));
 
 import useSWR from "swr";
@@ -25,12 +25,12 @@ import useSWR from "swr";
 import { ALL_SKETCHES_URL, SKETCHES_URL } from "~/utils/urls";
 
 const Flash = () => {
+  let history = useHistory();
   const { data: sketches } = useSWR(SKETCHES_URL);
   const { data: allSketches } = useSWR(ALL_SKETCHES_URL);
 
   const { flashing, usbConnected } = Soulmates.useContainer();
   const { userDetails, isAdmin } = UserContainer.useContainer();
-  const { setNewPlaylistSketches } = PlaylistContainer.useContainer();
   const { type } = ConfigContainer.useContainer();
 
   const [search, setSearch] = useState("");
@@ -179,8 +179,12 @@ const Flash = () => {
                 <button
                   className="footer-button"
                   onClick={() => {
-                    setNewPlaylistSketches(selectedSketches);
-                    history.push("/playlists");
+                    history.push({
+                      pathname: "/playlists",
+                      state: {
+                        sketches: selectedSketches,
+                      },
+                    });
                   }}
                 >
                   <RiPlayList2Fill className="w-6 h-6 mr-2" />

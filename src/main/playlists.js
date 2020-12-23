@@ -1,22 +1,20 @@
 import _ from "lodash";
 import React from "react";
 import { Link } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import useSWR from "swr";
 
 import Header from "~/components/Header";
 import Sketch from "~/components/sketch";
 import ConfigContainer from "~/containers/config";
-import PlaylistContainer from "~/containers/playlists";
 import Logo from "~/images/logo.svg";
-import { PLAYLISTS_URL } from "~/utils/urls";
 import { post } from "~/utils";
 import history from "~/utils/history";
+import { PLAYLISTS_URL } from "~/utils/urls";
 
 const Playlists = () => {
-  const {
-    newPlaylistSketches,
-    setNewPlaylistSketches,
-  } = PlaylistContainer.useContainer();
+  const { state } = useLocation();
+  const [sketches, setSketches] = useState(state?.sketches || []);
 
   const { data: playlists } = useSWR(PLAYLISTS_URL);
 
@@ -35,7 +33,7 @@ const Playlists = () => {
       name,
       description,
       model: modelName,
-      sketches: newPlaylistSketches,
+      sketches: sketches,
     })
       .then((playlist) => history.push(`/playlists/${playlist.id}`))
       .then(reset)
@@ -46,7 +44,7 @@ const Playlists = () => {
   };
 
   const onClickCancel = () => {
-    setNewPlaylistSketches([]);
+    setSketches([]);
   };
 
   const groupedPlaylists = _.groupBy(playlists, (p) => p.model_name);
@@ -57,7 +55,7 @@ const Playlists = () => {
     <div className="flex flex-col w-full space-y-8">
       <Header title="Playlists" />
       <div className="flex flex-col items-center w-full space-y-2">
-        {newPlaylistSketches.length == 0 && (
+        {sketches.length == 0 && (
           <div className="w-6/12 align-center rounded-md">
             <ul>
               {Object.entries(groupedPlaylists)?.map(
@@ -119,10 +117,10 @@ const Playlists = () => {
           </div>
         )}
 
-        {newPlaylistSketches.length > 0 && (
+        {sketches.length > 0 && (
           <>
             <div className="flex flex-row items-start justify-start space-x-2">
-              {newPlaylistSketches.map((sketch) => (
+              {sketches.map((sketch) => (
                 <Sketch className="flex" key={sketch.id} sketch={sketch} />
               ))}
             </div>

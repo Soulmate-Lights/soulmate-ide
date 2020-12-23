@@ -8,10 +8,7 @@ function Notifications() {
     setNotifications([...notifications, { text, type }]);
 
     setTimeout(() => {
-      const newNotifications = notificationsRef.current.filter(
-        (t) => t.text !== text
-      );
-      setNotifications(newNotifications);
+      setNotifications(notificationsRef.current.filter((t) => t.text !== text));
     }, 2000);
   }
 

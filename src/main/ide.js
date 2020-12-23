@@ -15,7 +15,6 @@ import { ALL_SKETCHES_URL, SKETCHES_URL } from "~/utils/urls";
 
 import Config from "./config";
 import Console from "./console";
-import PlaylistContainer from "./containers/playlists";
 import Dashboard from "./dashboard";
 import Download from "./download";
 import Editor from "./editor";
@@ -133,9 +132,7 @@ const IDE = () => {
 const WrappedIde = (props) => (
   <SWRConfig value={{ fetcher }}>
     <UserContainer.Provider>
-      <PlaylistContainer.Provider>
-        <IDE {...props} />
-      </PlaylistContainer.Provider>
+      <IDE {...props} />
     </UserContainer.Provider>
   </SWRConfig>
 );
