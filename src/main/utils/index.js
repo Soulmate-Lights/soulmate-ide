@@ -1,10 +1,9 @@
+import { url } from "~/urls";
 import { getToken } from "~/utils/auth";
-const server = "https://editor.soulmatelights.com";
-// const server = "http://localhost:3001";
 
-export const post = async (url, body = {}) => {
+export const post = async (path, body = {}) => {
   const token = await getToken();
-  return fetch(server + url, {
+  return fetch(url(path), {
     method: "post",
     headers: {
       "Content-Type": "application/json",
@@ -14,9 +13,9 @@ export const post = async (url, body = {}) => {
   }).then((response) => response.json());
 };
 
-export const postDelete = async (url, body = {}) => {
+export const postDelete = async (path, body = {}) => {
   const token = await getToken();
-  return fetch(server + url, {
+  return fetch(url(path), {
     method: "delete",
     headers: {
       "Content-Type": "application/json",
@@ -26,9 +25,9 @@ export const postDelete = async (url, body = {}) => {
   });
 };
 
-export const put = async (url, body = {}) => {
+export const put = async (path, body = {}) => {
   const token = await getToken();
-  return fetch(server + url, {
+  return fetch(url(path), {
     method: "PUT",
     headers: {
       Authorization: `Bearer ${token}`,
