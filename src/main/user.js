@@ -4,7 +4,7 @@ import useSWR from "swr";
 import Header from "~/components/Header";
 import TimeGroupedSketches from "~/components/timeGroupedSketches";
 import Logo from "~/images/logo.svg";
-import { ALL_SKETCHES_URL } from "~/urls";
+import { ALL_SKETCHES_URL } from "~/utils/urls";
 
 const User = ({ id }) => {
   const { data: allSketches } = useSWR(ALL_SKETCHES_URL);

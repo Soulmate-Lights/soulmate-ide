@@ -1,5 +1,5 @@
-import { url } from "~/urls";
 import { getToken } from "~/utils/auth";
+import { url } from "~/utils/urls";
 
 export const post = async (path, body = {}) => {
   const token = await getToken();

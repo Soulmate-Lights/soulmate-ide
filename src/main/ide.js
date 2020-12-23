@@ -9,9 +9,9 @@ import useSWR from "swr";
 import Notifications from "~/components/notifications";
 import UserContainer from "~/containers/user";
 import Logo from "~/images/logo.svg";
-import { ALL_SKETCHES_URL, SKETCHES_URL } from "~/urls";
 import { fetcher } from "~/utils";
 import isElectron from "~/utils/isElectron";
+import { ALL_SKETCHES_URL, SKETCHES_URL } from "~/utils/urls";
 
 import Config from "./config";
 import Console from "./console";

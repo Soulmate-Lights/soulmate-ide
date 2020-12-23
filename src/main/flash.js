@@ -22,7 +22,7 @@ const Console = React.lazy(() => import("./console"));
 
 import useSWR from "swr";
 
-import { ALL_SKETCHES_URL, SKETCHES_URL } from "~/urls";
+import { ALL_SKETCHES_URL, SKETCHES_URL } from "~/utils/urls";
 
 const Flash = () => {
   const { data: sketches } = useSWR(SKETCHES_URL);

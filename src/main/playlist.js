@@ -7,10 +7,10 @@ import Simulator from "~/components/Simulator";
 import BuildsContainer from "~/containers/builds";
 import SoulmatesContainer from "~/containers/soulmates";
 import Logo from "~/images/logo.svg";
-import { PLAYLISTS_URL } from "~/urls";
 import { post, postDelete, put } from "~/utils";
 import { emptyCode } from "~/utils/code";
 import history from "~/utils/history";
+import { PLAYLISTS_URL } from "~/utils/urls";
 
 const savePlaylist = async (id, data, build) => {
   var formData = new FormData();

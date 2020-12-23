@@ -8,7 +8,7 @@ import Sketch from "~/components/sketch";
 import ConfigContainer from "~/containers/config";
 import PlaylistContainer from "~/containers/playlists";
 import Logo from "~/images/logo.svg";
-import { PLAYLISTS_URL } from "~/urls";
+import { PLAYLISTS_URL } from "~/utils/urls";
 import { post } from "~/utils";
 import history from "~/utils/history";
 

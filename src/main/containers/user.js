@@ -2,7 +2,6 @@ import * as SentryReact from "@sentry/react";
 import { mutate } from "swr";
 import { createContainer } from "unstated-next";
 
-import { SKETCHES_URL } from "~/urls";
 import {
   getToken,
   getTokenOnStartup,
@@ -10,6 +9,7 @@ import {
   triggerLogin,
   triggerLogout,
 } from "~/utils/auth";
+import { SKETCHES_URL } from "~/utils/urls";
 
 const UserContainer = () => {
   const [userDetails, setUserDetails] = useState(undefined);

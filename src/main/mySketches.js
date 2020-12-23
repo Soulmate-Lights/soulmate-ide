@@ -5,9 +5,9 @@ import Header from "~/components/Header";
 import TimeGroupedSketches from "~/components/timeGroupedSketches";
 import UserContainer from "~/containers/user";
 import Logo from "~/images/logo.svg";
-import { SKETCHES_URL } from "~/urls";
 import { fetcher, post } from "~/utils";
 import history from "~/utils/history";
+import { SKETCHES_URL } from "~/utils/urls";
 
 const createSketch = async (name) => {
   const newSketch = await post("/sketches/create", { name });
