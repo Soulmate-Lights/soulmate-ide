@@ -1,6 +1,7 @@
 import startCase from "lodash/startCase";
 import { BiCloudDownload } from "react-icons/bi";
 import { FaChevronUp } from "react-icons/fa";
+import { RiPlayList2Fill } from "react-icons/ri";
 import { Link } from "react-router-dom";
 
 import ConfigContainer from "~/containers/config";
@@ -14,7 +15,11 @@ import SoulmatesMenu from "./Simulator/SoulmatesMenu";
 const configButtonClassName =
   "footer-button py-0 px-6 flex flex-col border border-transparent rounded-md rounded-r-none text-white bg-gray-800 focus:outline-none focus:border-gray-700 focus:shadow-outline-gray active:bg-gray-700 transition ease-in-out duration-150 text-xs items-center justify-center leading-snug h-15";
 
-const FlashButton = ({ selectedSketches, disabled = false }) => {
+const FlashButton = ({
+  selectedSketches,
+  showMenu = true,
+  disabled = false,
+}) => {
   const { type, config } = ConfigContainer.useContainer();
   const { isAdmin } = UserContainer.useContainer();
   const {
@@ -85,28 +90,50 @@ const FlashButton = ({ selectedSketches, disabled = false }) => {
   }
 
   return (
-    <div className="flex items-center justify-end flex-shrink w-auto ml-auto space-x-4">
-      <div className="flex flex-row items-center block">
-        {showConfigButton && (
-          <Link className={configButtonClassName} to="/config">
-            {soulmateLoading ? (
-              "Loading..."
-            ) : (
-              <>
-                <span>{startCase(type)}</span>
-                <span className="whitespace-pre">
-                  {config.rows} x {config.cols}
-                </span>
-              </>
-            )}
-          </Link>
-        )}
+    <div className="flex items-center justify-end flex-shrink w-auto w-full ml-auto space-x-4">
+      <div className="flex flex-row items-center flex-grow block">
+        <div className="flex flex-row items-start justify-start flex-grow mr-auto space-x-4">
+          {isAdmin() && showMenu && (
+            <button
+              className={classnames("footer-button", "space-x-2", {
+                "cursor-auto": disableFlashButton,
+                "hover:bg-purple-700": !disableFlashButton,
+                "bg-purple-700": !disableFlashButton,
+                "whitespace-pre": true,
+              })}
+              disabled={disableFlashButton}
+              onClick={download}
+              type="button"
+            >
+              <BiCloudDownload className="w-8 h-8" />
+              <span>Download build</span>
+            </button>
+          )}
+
+          {isAdmin() && type === "square" && (
+            <button
+              className="footer-button"
+              onClick={() => {
+                history.push({
+                  pathname: "/playlists",
+                  state: {
+                    sketches: selectedSketches,
+                  },
+                });
+              }}
+            >
+              <RiPlayList2Fill className="w-6 h-6 mr-2" />
+              Create playlist
+            </button>
+          )}
+        </div>
+
         <button
           className={classnames("footer-button", {
-            "rounded-l-none": showConfigButton && !soulmateLoading,
-            "rounded-r-none": true,
+            "rounded-r-none": showMenu,
             "cursor-auto": disableFlashButton,
             "hover:bg-purple-500": !disableFlashButton,
+            "bg-gray-400": disableFlashButton,
             "flex-grow-0": true,
             "whitespace-pre": true,
           })}
@@ -117,46 +144,31 @@ const FlashButton = ({ selectedSketches, disabled = false }) => {
           {text}
         </button>
 
-        <SoulmatesMenu
-          button={
-            <button
-              className={classnames(
-                {
-                  "rounded-l-none": true,
-                  "cursor-auto": disableFlashButton,
-                  "hover:bg-purple-500": true,
-                  "bg-purple-800": true,
-                  "whitespace-pre": true,
-                },
-                "footer-button"
-              )}
-              type="button"
-            >
-              <FaChevronUp />
-            </button>
-          }
-          buttonClassName="bg-purple-500 text-white"
-          menuClassName="bottom-full mb-2"
-          text="Flash to"
-        />
+        {showMenu && (
+          <SoulmatesMenu
+            button={
+              <button
+                className={classnames(
+                  {
+                    "rounded-l-none": true,
+                    "cursor-auto": disableFlashButton,
+                    "hover:bg-purple-500": true,
+                    "bg-purple-800": true,
+                    "whitespace-pre": true,
+                  },
+                  "footer-button"
+                )}
+                type="button"
+              >
+                <FaChevronUp />
+              </button>
+            }
+            buttonClassName="bg-purple-500 text-white"
+            menuClassName="bottom-full mb-2"
+            text="Flash to"
+          />
+        )}
       </div>
-
-      {isAdmin() && (
-        <button
-          className={classnames("footer-button", "space-x-2", {
-            "cursor-auto": disableFlashButton,
-            "hover:bg-purple-700": !disableFlashButton,
-            "bg-purple-700": !disableFlashButton,
-            "whitespace-pre": true,
-          })}
-          disabled={disableFlashButton}
-          onClick={download}
-          type="button"
-        >
-          <BiCloudDownload className="w-8 h-8" />
-          <span>Download build</span>
-        </button>
-      )}
     </div>
   );
 };

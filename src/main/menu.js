@@ -19,6 +19,7 @@ hover:bg-gray-300
 dark-mode:hover:text-white
 dark-mode:hover:bg-gray-600
   transition ease-in-out duration-150`;
+
 const activeLinkClass = `
   dark-mode:bg-gray-800
   dark-mode:hover:bg-gray-800
@@ -122,12 +123,12 @@ const Menu = () => {
               <NavLink
                 activeClassName={activeLinkClass}
                 className={linkClass}
-                disabled
+                disabled={!usbConnected}
                 location={location}
                 to="/config"
               >
                 <FiSettings className={iconClass} />
-                Config
+                Configure Soulmate
               </NavLink>
 
               {isAdmin() && (

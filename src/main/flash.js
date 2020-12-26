@@ -175,22 +175,6 @@ const Flash = () => {
           <div className="flex-shrink-0 w-full p-4 ml-auto border-t border-gray-300 dark-mode:bg-gray-600 dark-mode:border-gray-700">
             <div className="flex items-center justify-end space-x-4">
               <FlashButton selectedSketches={selectedSketches} />
-              {isAdmin() && type === "square" && (
-                <button
-                  className="footer-button"
-                  onClick={() => {
-                    history.push({
-                      pathname: "/playlists",
-                      state: {
-                        sketches: selectedSketches,
-                      },
-                    });
-                  }}
-                >
-                  <RiPlayList2Fill className="w-6 h-6 mr-2" />
-                  Create playlist
-                </button>
-              )}
             </div>
           </div>
         </div>

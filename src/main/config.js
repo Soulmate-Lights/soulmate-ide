@@ -1,10 +1,18 @@
 import { Helmet } from "react-helmet";
+import { RiUsbLine } from "react-icons/ri";
 
 import ConfigContainer from "~/containers/config";
 import SoulmatesContainer from "~/containers/soulmates";
 import isElectron from "~/utils/isElectron";
 
+import FlashButton from "./components/flashButton";
 import Header from "./components/Header";
+
+const sketch = `
+  void draw() {
+    fill_solid(leds, N_LEDS, CRGB::Green);
+  }
+`;
 
 const Config = () => {
   const {
@@ -13,12 +21,31 @@ const Config = () => {
     type,
     setType,
     types,
+    usbConnected,
   } = ConfigContainer.useContainer();
 
   const { ports, port, setPort } = SoulmatesContainer.useContainer();
 
   const disableCustom = type !== "custom";
   const disableClass = disableCustom ? "bg-gray-100" : "";
+
+  if (!usbConnected) {
+    return (
+      <div className="flex flex-col w-full">
+        <Helmet>
+          <title>Config &mdash; Soulmate IDE</title>
+        </Helmet>
+        <Header title="Config" />
+
+        <div className="flex flex-col items-center p-8 mx-auto my-auto text-center bg-white rounded-lg shadow w-72">
+          <RiUsbLine className="w-24 h-24 mb-4 opacity-80" />
+          <span>
+            Connect your Soulmate with a USB cable to change configuration.
+          </span>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col w-full">
@@ -337,6 +364,20 @@ const Config = () => {
                   </div>
                 </div>
               </form>
+            </div>
+          </div>
+
+          <div className="md:grid md:grid-cols-3 md:gap-6">
+            <div className="md:col-span-1"></div>
+
+            <div className="mt-5 md:mt-0 md:col-span-2">
+              <div className="sm:rounded-md sm:overflow-hidden">
+                <div className="flex justify-end col-span-6 sm:col-span-3">
+                  <div className="flex flex-row space-x-4">
+                    <FlashButton selectedSketches={[sketch]} showMenu={false} />
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
