@@ -54,14 +54,16 @@ const Playlists = () => {
   return (
     <div className="flex flex-col w-full space-y-8">
       <Header title="Playlists" />
-      <div className="flex flex-col items-center w-full space-y-2">
+      <div className="flex flex-col items-center w-full text-gray-700 space-y-2">
         {sketches.length == 0 && (
           <div className="w-6/12 align-center rounded-md">
             <ul>
               {Object.entries(groupedPlaylists)?.map(
                 ([model_name, playlists]) => (
                   <div key={model_name}>
-                    <span>{_.capitalize(model_name)}</span>
+                    <span className="dark-mode:text-white">
+                      {_.capitalize(model_name)}
+                    </span>
                     <ul
                       className="my-4 overflow-hidden rounded shadow"
                       key={model_name}
@@ -69,14 +71,14 @@ const Playlists = () => {
                       {playlists.map((playlist) => (
                         <li key={playlist.id}>
                           <Link
-                            className="block bg-white hover:bg-gray-50 dark-mode:hover:bg-gray-700 focus:outline-none focus:bg-gray-50 transition duration-150 ease-in-out"
+                            className="block bg-white hover:bg-gray-50 dark-mode:hover:bg-gray-700 hover:text-white focus:outline-none focus:bg-gray-50 transition duration-150 ease-in-out"
                             to={`/playlists/${playlist.id}`}
                           >
                             <div className="flex items-center px-4 py-4 sm:px-6">
                               <div className="flex items-center flex-1 min-w-0">
                                 <div className="flex-1 min-w-0">
                                   <div className="flex flex-col justify-center max-w-10">
-                                    <div className="text-sm font-medium text-gray-800 truncate leading-5 dark-mode:text-white">
+                                    <div className="text-sm font-medium truncate leading-5">
                                       {playlist.name}
                                     </div>
 

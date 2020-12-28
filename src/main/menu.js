@@ -38,18 +38,15 @@ const Menu = () => {
         "flex flex-shrink-0 border-r bg-gray-200 dark-mode:border-gray-600 dark-mode:bg-gray-700 dark-mode:text-white"
       }
     >
-      <div className="flex flex-col w-72">
+      <div className="flex flex-col w-64">
         <div className="flex flex-col flex-1 h-0">
           <div className="flex flex-col flex-1 pb-4 overflow-y-auto">
-            <div className="flex flex-row items-center h-20 px-6 py-4 border-b dark-mode:border-gray-600">
-              <Logo className="w-10 h-10 mr-4" />
+            <div className="flex flex-row items-center flex-grow-0 flex-shrink-0 h-16 px-6 border-b dark-mode:border-gray-600">
+              <Logo className="w-6 h-6 mr-2" />
 
-              <span className="flex flex-col">
+              <span className="flex flex-col flex-shrink">
                 <span>
                   Soulmate&nbsp;<span className="opacity-50">IDE</span>
-                </span>
-                <span className="text-sm opacity-50">
-                  FastLED ESP32 Emulator
                 </span>
               </span>
             </div>
@@ -128,7 +125,7 @@ const Menu = () => {
                 to="/config"
               >
                 <FiSettings className={iconClass} />
-                Configure Soulmate
+                Configure
               </NavLink>
 
               {isAdmin() && (

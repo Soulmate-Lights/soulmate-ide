@@ -24,19 +24,23 @@ const Sketch = ({
     }
   }, []);
 
+  const size = `sm:w-${width / 2} sm:h-${
+    width / 2
+  } md:h-${width} md:w-${width}`;
+
   return (
     <div
       className={classnames(
         className,
+        size,
         "flex flex-col text-center bg-white shadow overflow-hidden",
-        `w-${width}`,
-        "border border-transparent dark-mode:border-gray-800"
+        "rounded-lg overflow-hidden shadow border border-gray-700"
       )}
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
       {...rest}
     >
-      <div className={`block w-${width} h-${width} bg-black relative`}>
+      <div className={`block ${size} bg-black relative rounded`}>
         <img
           src={sketch.thumb_url}
           style={{
@@ -51,7 +55,6 @@ const Sketch = ({
             autoPlay
             loop
             muted
-            ref={videoRef}
             style={{
               transform: "rotate(180deg)",
               position: "absolute",
@@ -68,7 +71,7 @@ const Sketch = ({
         )}
       </div>
       {showTitle && (
-        <div className="p-1 text-gray-900 dark-mode:bg-gray-700 dark-mode:text-white">
+        <div className="z-10 p-1 text-gray-900 dark-mode:bg-gray-700 dark-mode:text-white">
           <h3 className="text-xs font-medium truncate leading-5">
             {sketch.name}
           </h3>

@@ -40,7 +40,7 @@ const Main = () => {
     <div className="relative flex flex-col flex-grow h-screen dark-mode:bg-gray-300 dark-mode:bg-gray-700">
       {showTopBar && (
         <div
-          className={classnames("absolute w-full h-6  border-b ", {
+          className={classnames("absolute w-full h-7 border-b ", {
             "bg-gray-200 dark-mode:bg-gray-700 border-gray-300 dark-mode:border-gray-600": focus,
             "bg-gray-100 dark-mode:bg-gray-600 dark-mode:border-gray-700": !focus,
           })}
@@ -52,7 +52,7 @@ const Main = () => {
         <div
           className={classnames(
             "flex flex-grow flex-col flex-shrink h-screen",
-            { "pt-6": showTopBar }
+            { "pt-7": showTopBar }
           )}
         >
           <MainProvider>

@@ -5,19 +5,27 @@ import uniqBy from "lodash/uniqBy";
 import { useState } from "react";
 import { createContainer } from "unstated-next";
 
-import ConfigContainer from "~/containers/config";
 import NotificationsContainer from "~/containers/notifications";
 import { getFullBuild, prepareSketches } from "~/utils/code";
 import { flashBuild } from "~/utils/flash";
+import isElectron from "~/utils/isElectron";
 import { getPort, getPorts, PortListener } from "~/utils/ports";
 
 import { flashbuildToWifiSoulmate } from "../utils/flash";
 
+if (typeof window.ipcRenderer === "undefined" || !window.ipcRenderer)
+  window.ipcRenderer = undefined;
+
 const LINE_LIMIT = 300;
+
+const defaultConfig = {
+  rows: 10,
+  cols: 10,
+  serpentine: true,
+};
 
 const SoulmateContainer = () => {
   const notificationsContainer = NotificationsContainer.useContainer();
-  const configContainer = ConfigContainer.useContainer();
   const [soulmateLoading, setSoulmateLoading] = useState(false);
 
   const [ports, setPorts] = useState([]);
@@ -33,14 +41,31 @@ const SoulmateContainer = () => {
   const [listener, setListener] = useState();
   const [text, setText] = useState([]);
 
+  const [config, setConfig] = useState(defaultConfig);
+
+  const setConfigFromSoulmateData = (data) => {
+    setConfig({
+      rows: data.rows,
+      cols: data.cols,
+      button: data.button,
+      clock: data.clock,
+      data: data.data,
+      ledType: data.ledType,
+      serpentine: data.serpentine,
+      milliamps: data.milliamps,
+    });
+  };
+
   // Wifi Soulmates
   // TODO: Save the soulmate configs here somewhere - maybe in the soulmate objects themselves.
   // Do we need a Soulmate class?!
   const [soulmates, setSoulmates] = useState([]);
   const [selectedSoulmate, setSelectedSoulmate] = useState(undefined);
 
-  // Web-safe!
-  if (!window.ipcRenderer) return {};
+  useEffect(() => {
+    if (!selectedSoulmate) return;
+    setConfigFromSoulmateData(selectedSoulmate.config);
+  }, [selectedSoulmate]);
 
   const addSoulmate = (_event, soulmate) => {
     const addresses = map(soulmates, "addresses[0]");
@@ -64,24 +89,19 @@ const SoulmateContainer = () => {
   };
 
   useEffect(() => {
-    if (!selectedSoulmate) return;
-    configContainer.setConfigFromSoulmateData(selectedSoulmate.config);
-  }, [selectedSoulmate]);
-
-  useEffect(() => {
-    ipcRenderer.on("soulmate", addSoulmate);
-    return () => ipcRenderer.removeListener("soulmate", addSoulmate);
+    ipcRenderer?.on("soulmate", addSoulmate);
+    return () => ipcRenderer?.removeListener("soulmate", addSoulmate);
   }, [soulmates]);
 
   useEffect(() => {
-    ipcRenderer.send("scan", {});
+    ipcRenderer?.send("scan", {});
     setTimeout(() => {
-      ipcRenderer.send("scan", {});
+      ipcRenderer?.send("scan", {});
     }, 1000);
   }, []);
 
   useInterval(() => {
-    ipcRenderer.send("scan", {});
+    ipcRenderer?.send("scan", {});
   }, 5000);
 
   // TODO: Move this into a util function
@@ -93,10 +113,12 @@ const SoulmateContainer = () => {
   };
 
   const flashSketches = async (sketches, config) => {
-    listener?.close();
     setFlashing(true);
 
     const build = await getBuild(sketches, config);
+
+    listener?.close();
+
     if (!build) {
       setFlashing(false);
       return false;
@@ -127,6 +149,7 @@ const SoulmateContainer = () => {
   // Port stuff
 
   const open = (port) => {
+    if (!isElectron()) return;
     let receivedData;
 
     const listener = new PortListener(port, (text) => {
@@ -134,8 +157,7 @@ const SoulmateContainer = () => {
         setSoulmateLoading(false);
         const data = JSON.parse(text);
         receivedData = data;
-        configContainer.setConfigFromSoulmateData(data);
-        console.log(data);
+        setConfigFromSoulmateData(data);
         notificationsContainer.notify(
           `${data?.name || "USB Soulmate"} connected!`
         );
@@ -158,10 +180,13 @@ const SoulmateContainer = () => {
 
   const previousPort = useRef();
   useEffect(() => {
+    if (!isElectron()) return;
     if (!port || port !== previousPort.current) {
       if (previousPort.current && !port) {
         notificationsContainer.notify(`Soulmate disconnected.`);
       }
+
+      setConfig(defaultConfig);
 
       previousPort.current = undefined;
       listener?.close();
@@ -179,6 +204,7 @@ const SoulmateContainer = () => {
 
   const checkUsb = async () => {
     if (flashing) return;
+    if (!isElectron()) return;
 
     const newPort = await getPort();
     const newPorts = await getPorts();
@@ -202,11 +228,18 @@ const SoulmateContainer = () => {
     listener?.port?.write('{ "restart": true }\n');
   };
 
+  // Web-safe!
+  // if (!isElectron())
+  //   return {
+  //     config,
+  //   };
+
   return {
     getBuild,
     flashSketches,
     soulmateLoading,
     usbConnected,
+    config,
     port,
     setPort,
     ports,

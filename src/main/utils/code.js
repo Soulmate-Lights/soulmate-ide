@@ -82,15 +82,17 @@ void loop() {
 
 export const prepareSketches = (sketches, config) => {
   const {
-    rows = 70,
-    cols = 15,
-    ledType = "APA102",
-    milliamps = 700,
+    rows,
+    cols,
+    ledType,
+    milliamps,
     button,
     data,
     clock,
     serpentine,
   } = config;
+
+  if (!rows || !cols) throw "Oh no";
 
   const sanitizedSketchName = (name) => {
     return name.replace(/"/g, "");

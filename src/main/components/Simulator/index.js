@@ -17,7 +17,6 @@ let worker;
 
 const Simulator = ({
   build,
-  config,
   showConfig = true,
   className,
   minWidth,
@@ -30,10 +29,8 @@ const Simulator = ({
   const serialOutputRef = useRef("");
   const [hasPixels, setHasPixels] = useState(false);
 
-  const { selectedSoulmate } = SoulmatesContainer.useContainer();
-
-  const { rows, cols, serpentine, mirror } = config || {};
-
+  const { selectedSoulmate, config } = SoulmatesContainer.useContainer();
+  const { rows, cols, serpentine, mirror } = config;
   const [paused, setPaused] = useState(!document.hasFocus());
   useEventListener("blur", () => !selectedSoulmate && setPaused(true));
   useEventListener("focus", () => setPaused(false));
@@ -198,7 +195,7 @@ const Simulator = ({
           buttonClassName=""
           menuClassName=""
         />
-        {showConfig && (
+        {/* {showConfig && (
           <Link
             className="inline-flex items-center px-3 py-2 text-sm font-medium text-gray-700 bg-white border order-gray-300 leading-4 rounded-md hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue ctive:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150"
             onClick={() => setPaused(!paused)}
@@ -206,7 +203,7 @@ const Simulator = ({
           >
             <FaCog />
           </Link>
-        )}
+        )} */}
         <button
           className="inline-flex items-center px-3 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 eading-4 rounded-md hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue ctive:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150"
           onClick={() => setPaused(!paused)}

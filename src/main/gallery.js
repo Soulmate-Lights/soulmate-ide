@@ -56,7 +56,7 @@ const Gallery = () => {
 
       {!users && <Logo className="loading-spinner" />}
 
-      <div className="p-8 overflow-auto">
+      <div className="p-4 overflow-auto">
         <ul>
           {users.map((user) => (
             <li className="border-b dark-mode:border-gray-800" key={user.id}>

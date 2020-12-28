@@ -1,4 +1,3 @@
-import isEmpty from "lodash/isEmpty";
 import { createContainer } from "unstated-next";
 
 const types = [
@@ -50,64 +49,19 @@ const types = [
   {
     label: "Custom",
     value: "custom",
-    config: {},
+    config: {
+      button: 39,
+      data: 32,
+      clock: 26,
+    },
   },
 ];
 
 const playlistTypes = types.filter((t) => t.playlists);
 
 export default createContainer(() => {
-  let [type, setType] = useState(localStorage["type"] || "square");
-
-  const [config, setConfig] = useState(
-    localStorage["config"]
-      ? JSON.parse(localStorage["config"])
-      : {
-          button: 39,
-          data: 32,
-          clock: 26,
-          rows: 14,
-          cols: 14,
-          milliamps: 4000,
-          ledType: "APA102",
-          serpentine: true,
-        }
-  );
-
-  const setConfigFromSoulmateData = (data) => {
-    setConfig({
-      rows: data.rows,
-      cols: data.cols,
-      button: data.button,
-      clock: data.clock,
-      data: data.data,
-      ledType: data.ledType,
-      serpentine: data.serpentine,
-      milliamps: data.milliamps,
-    });
-  };
-
-  useEffect(() => {
-    localStorage["type"] = type;
-    const config = types.find((t) => t.value === type).config;
-    if (!isEmpty(config)) setConfig(config);
-  }, [type]);
-
-  useEffect(() => {
-    localStorage["config"] = JSON.stringify(config);
-  }, [config]);
-
-  const [useLocalInstall, setUseLocalInstall] = useState(false);
-
   return {
-    config,
-    setConfig,
-    setConfigFromSoulmateData,
     types,
     playlistTypes,
-    type,
-    setType,
-    useLocalInstall,
-    setUseLocalInstall,
   };
 });
