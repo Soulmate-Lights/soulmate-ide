@@ -34,7 +34,7 @@ const Sketch = ({
         className,
         size,
         "flex flex-col text-center bg-white shadow overflow-hidden",
-        "rounded-lg overflow-hidden shadow border border-gray-700"
+        "rounded-lg overflow-hidden shadow border border-gray-300 dark-mode:border-gray-700"
       )}
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
@@ -71,7 +71,7 @@ const Sketch = ({
         )}
       </div>
       {showTitle && (
-        <div className="z-10 p-1 text-gray-900 dark-mode:bg-gray-700 dark-mode:text-white">
+        <div className="z-10 p-1 text-gray-900 bg-white opacity-90 dark-mode:bg-gray-700 dark-mode:text-white">
           <h3 className="text-xs font-medium truncate leading-5">
             {sketch.name}
           </h3>
