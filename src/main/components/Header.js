@@ -22,7 +22,7 @@ const Header = ({ title, sections, subtitle, actions, className }) => {
               {compact(sections).map(({ title, to }, i) => (
                 <React.Fragment key={i}>
                   <Link
-                    className="flex flex-row items-center text-gray-500 dark-mode:text-white hover:text-gray-700 dark-mode:hover:text-gray-300 transition duration-150 ease-in-out"
+                    className="flex flex-row items-center leading-snug text-gray-500 border-b dark-mode:text-white hover:text-gray-700 dark-mode:hover:text-gray-300 transition duration-150 ease-in-out"
                     key={to}
                     to={to}
                   >
