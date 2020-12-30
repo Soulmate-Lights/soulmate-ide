@@ -148,6 +148,7 @@
       }
     },
     "mac": {
+      "minimumSystemVersion": "10.12.0",
       "target": [
         {
           "target": "default",
