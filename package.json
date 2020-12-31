@@ -132,6 +132,7 @@
     "release": "yarn clean && yarn version --patch && yarn react-build-desktop && AWS_PROFILE=soulmate-ide-updates electron-builder -mw --publish always",
     "clean": "rm -rf ./build ./.cache ./dist",
     "postinstall": "./postinstall.sh",
+    "install-dependencies": "git submodule update --init --recursive; (yarn --cwd services/build-server); (yarn --cwd services/wokwi-server)",
     "install-arm": "npm_config_arch=$(uname -m) yarn",
     "build-with-dependencies-from-source": "yarn run electron-builder --config.buildDependenciesFromSource=true -mwl",
     "web": "NODE_ENV=development parcel index.html --open -p 3000",
