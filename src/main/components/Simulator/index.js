@@ -3,9 +3,7 @@ import useEventListener from "@use-it/event-listener";
 import _ from "lodash";
 import { useCallback } from "react";
 import { BsFillPauseFill, BsPlayFill } from "react-icons/bs";
-import { FaCog } from "react-icons/fa";
 import { FiCast } from "react-icons/fi";
-import { Link } from "react-router-dom";
 
 import SoulmatesContainer from "~/containers/soulmates";
 import Logo from "~/images/logo.svg";
@@ -15,14 +13,7 @@ import { calculateDimensions } from "./utils";
 
 let worker;
 
-const Simulator = ({
-  build,
-  showConfig = true,
-  className,
-  minWidth,
-  maxWidth,
-  style,
-}) => {
+const Simulator = ({ build, className, minWidth, maxWidth, style }) => {
   const canvas = useRef();
   const compilerOutputDiv = useRef();
   const [serialOutput, setSerialOutput] = useState("");

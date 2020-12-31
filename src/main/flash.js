@@ -6,11 +6,9 @@ import { Suspense } from "react";
 import { AiFillCheckCircle } from "react-icons/ai";
 import { BsLayoutSidebarInsetReverse } from "react-icons/bs";
 import { ResizableBox } from "react-resizable";
-import { useHistory } from "react-router-dom";
 
 import Header from "~/components/Header";
 import Sketch from "~/components/sketch";
-import ConfigContainer from "~/containers/config";
 import Soulmates from "~/containers/soulmates";
 import UserContainer from "~/containers/user";
 import Logo from "~/images/logo.svg";
@@ -24,13 +22,11 @@ import useSWR from "swr";
 import { ALL_SKETCHES_URL, SKETCHES_URL } from "~/utils/urls";
 
 const Flash = () => {
-  let history = useHistory();
   const { data: sketches } = useSWR(SKETCHES_URL);
   const { data: allSketches } = useSWR(ALL_SKETCHES_URL);
 
   const { flashing, usbConnected } = Soulmates.useContainer();
-  const { userDetails, isAdmin } = UserContainer.useContainer();
-  const { type } = ConfigContainer.useContainer();
+  const { userDetails } = UserContainer.useContainer();
 
   const [search, setSearch] = useState("");
   const [selected, setSelected] = useState([]);

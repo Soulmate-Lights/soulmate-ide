@@ -34,7 +34,7 @@ const Right = (props) => (
 );
 
 const Config = () => {
-  const { type, setType, types } = ConfigContainer.useContainer();
+  const { type, types } = ConfigContainer.useContainer();
 
   const {
     config: _config,
