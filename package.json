@@ -134,7 +134,6 @@
     "postinstall": "./postinstall.sh",
     "install-arm": "npm_config_arch=$(uname -m) yarn",
     "build-with-dependencies-from-source": "yarn run electron-builder --config.buildDependenciesFromSource=true -mwl",
-    "install-dependencies": "git submodule update --init --recursive; (yarn --cwd services/build-server); (yarn --cwd services/wokwi-server)",
     "web": "NODE_ENV=development parcel index.html --open -p 3000",
     "bump": "yarn version --patch && git push && git push --tags"
   },
