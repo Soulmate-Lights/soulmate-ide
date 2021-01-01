@@ -1,5 +1,3 @@
-import isEmpty from "lodash/isEmpty";
-
 const ErrorNotification = ({ trace, dismiss }) => (
   <div className="fixed inset-0 z-10 overflow-y-auto">
     <div className="flex items-end justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
@@ -94,7 +92,7 @@ Leaving: "ease-in duration-200"
                 There was an error building your sketches. This sometimes
                 happens when two sketches conflict with each other.
                 {trace !== "{}" && (
-                  <>Here's some more information that may be helpful:</>
+                  "Here's some more information that may be helpful:"
                 )}
               </p>
             </div>
@@ -116,7 +114,7 @@ Leaving: "ease-in duration-200"
             onClick={dismiss}
             type="button"
           >
-            That's OK, I'll try something else
+            {"That's OK, I'll try something else"}
           </button>
         </div>
       </div>
