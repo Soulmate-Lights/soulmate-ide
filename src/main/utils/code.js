@@ -229,7 +229,10 @@ export async function getFullBuild(source) {
 
   console.log("[getFullBuild]", { res });
 
-  if (!res.ok) return false;
+  if (!res.ok) {
+    const result = await res.text();
+    throw result;
+  }
 
   const path = electron.remote.app.getPath("temp");
   const filename = parseInt(Math.random() * 10000000);

@@ -56,7 +56,8 @@ const Flash = () => {
   const selectedSketches = selected.map(
     (id) =>
       // [...(allSketches || []), ...(sketches || [])].find((s) => s.id === id)
-      allSketches?.find((s) => s.id === id) || sketches.find((s) => s.id === id)
+      allSketches?.find((s) => s.id === id) ||
+      sketches?.find((s) => s.id === id)
   );
 
   let users = uniqBy(
@@ -174,7 +175,6 @@ const Flash = () => {
           </div>
         </div>
       </div>
-
       {showConsole && (
         <ResizableBox
           axis="x"

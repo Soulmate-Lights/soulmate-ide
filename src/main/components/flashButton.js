@@ -1,6 +1,7 @@
-import { FaChevronUp } from "react-icons/fa";
+import { FaChevronUp, FaUsb } from "react-icons/fa";
 import { RiPlayList2Fill } from "react-icons/ri";
 
+import ErrorNotification from "~/components/ErrorNotification";
 import NotificationsContainer from "~/containers/notifications";
 import Soulmates from "~/containers/soulmates";
 import UserContainer from "~/containers/user";
@@ -28,10 +29,14 @@ const FlashButton = ({
   } = Soulmates.useContainer();
   const notificationsContainer = NotificationsContainer.useContainer();
 
+  const [error, setError] = useState(false);
+
   const flash = async () => {
-    const result = await flashSketches(selectedSketches, config);
-    if (!result) {
+    try {
+      await flashSketches(selectedSketches, config);
+    } catch (e) {
       notificationsContainer.notify("Error flashing!", "error");
+      setError(e);
     }
   };
 
@@ -42,12 +47,10 @@ const FlashButton = ({
       soulmateLoading ||
       disabled ||
       !usbConnected);
-  // const showConfigButton =
-  //   !soulmateLoading && !flashing && (usbConnected || selectedSoulmate);
 
   let text;
   if (soulmateLoading) {
-    text = "Loading...";
+    text = <Logo className="w-4 spin" />;
   } else if (!usbConnected && !selectedSoulmate) {
     text = "No soulmate connected";
   } else if (usbFlashingPercentage >= 0) {
@@ -68,7 +71,16 @@ const FlashButton = ({
       </span>
     );
   } else {
-    text = `Flash to ${selectedSoulmate?.config.name || "New Soulmate"}`;
+    let name = selectedSoulmate?.config.name;
+    if (!name) {
+      name = usbConnected ? "USB Soulmate" : "New Soulmate";
+    }
+    text = (
+      <>
+        <span>Flash to {name}</span>
+        {usbConnected && <FaUsb className="w-6 h-6" />}
+      </>
+    );
   }
 
   return (
@@ -94,11 +106,11 @@ const FlashButton = ({
         </div>
 
         <button
-          className={classnames("footer-button", {
-            "rounded-r-none": showMenu,
+          className={classnames("footer-button space-x-4", {
+            "rounded-r-none": showMenu && !usbConnected,
             "cursor-auto": disableFlashButton,
             "hover:bg-purple-500": !disableFlashButton,
-            "bg-gray-400": disableFlashButton,
+            "bg-purple-500": disableFlashButton,
             "flex-grow-0": true,
             "whitespace-pre": true,
           })}
@@ -109,7 +121,7 @@ const FlashButton = ({
           {text}
         </button>
 
-        {showMenu && (
+        {showMenu && !usbConnected && (
           <SoulmatesMenu
             button={
               <button
@@ -134,6 +146,10 @@ const FlashButton = ({
           />
         )}
       </div>
+
+      {error && (
+        <ErrorNotification dismiss={() => setError(false)} trace={error} />
+      )}
     </div>
   );
 };

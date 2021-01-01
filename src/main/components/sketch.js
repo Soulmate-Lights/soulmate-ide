@@ -40,7 +40,7 @@ const Sketch = ({
       onMouseLeave={() => setHover(false)}
       {...rest}
     >
-      <div className={`block ${size} bg-black relative rounded`}>
+      <div className={`block ${size} bg-black relative`}>
         <img
           src={sketch.thumb_url}
           style={{

@@ -24,6 +24,8 @@ const defaultConfig = {
   serpentine: true,
 };
 
+// usbConnected
+
 const SoulmateContainer = () => {
   const notificationsContainer = NotificationsContainer.useContainer();
   const [soulmateLoading, setSoulmateLoading] = useState(false);
@@ -115,7 +117,13 @@ const SoulmateContainer = () => {
   const flashSketches = async (sketches, config) => {
     setFlashing(true);
 
-    const build = await getBuild(sketches, config);
+    let build;
+    try {
+      build = await getBuild(sketches, config);
+    } catch (e) {
+      setFlashing(false);
+      throw e;
+    }
 
     listener?.close();
 

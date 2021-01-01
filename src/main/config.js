@@ -59,7 +59,6 @@ const Config = () => {
 
   const { isAdmin } = UserContainer.useContainer();
   const disableCustom = type !== "custom";
-  const custom = type === "custom";
   const disableClass = disableCustom ? "bg-gray-100" : "";
 
   const isUsingCustomChip =
@@ -130,296 +129,294 @@ const Config = () => {
             </Section>
           )}
 
-          {custom && (
-            <>
-              <Section>
-                <Left>
-                  <h3 className="text-lg font-medium leading-6 ">LED setup</h3>
-                  <p className="mt-1 text-sm leading-5 ">
-                    How many LEDs are you running?
-                  </p>
-                </Left>
-                <Right>
-                  <div className="flex-grow w-full col-span-2 sm:col-span-2">
-                    <label
-                      className="block text-sm font-medium text-gray-700 leading-5"
-                      htmlFor="country"
-                    >
-                      LED type
-                    </label>
-                    <select
-                      className={`bg-white mt-1 block form-select w-full py-2 px-3 border-gray-300  rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5 ${disableClass}`}
-                      disabled={disableCustom}
-                      id="country"
-                      onChange={(e) => {
-                        setConfig({
-                          ...config,
-                          ledType: e.target.value,
-                        });
-                      }}
-                      value={config.ledType}
-                    >
-                      <option value="APA102">APA102 - 4 wires</option>
-                      <option value="WS2812B">WS2812B - 3 wires</option>
-                    </select>
-                  </div>
-                  <div className="flex-grow w-full col-span-2 sm:col-span-2">
-                    <label
-                      className="block text-sm font-medium text-gray-700 leading-5"
-                      htmlFor="company_website"
-                    >
-                      Dimensions
-                    </label>
+          <>
+            <Section>
+              <Left>
+                <h3 className="text-lg font-medium leading-6 ">LED setup</h3>
+                <p className="mt-1 text-sm leading-5 ">
+                  How many LEDs are you running?
+                </p>
+              </Left>
+              <Right>
+                <div className="flex-grow w-full col-span-2 sm:col-span-2">
+                  <label
+                    className="block text-sm font-medium text-gray-700 leading-5"
+                    htmlFor="country"
+                  >
+                    LED type
+                  </label>
+                  <select
+                    className={`bg-white mt-1 block form-select w-full py-2 px-3 border-gray-300  rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5 ${disableClass}`}
+                    disabled={disableCustom}
+                    id="country"
+                    onChange={(e) => {
+                      setConfig({
+                        ...config,
+                        ledType: e.target.value,
+                      });
+                    }}
+                    value={config.ledType}
+                  >
+                    <option value="APA102">APA102 - 4 wires</option>
+                    <option value="WS2812B">WS2812B - 3 wires</option>
+                  </select>
+                </div>
+                <div className="flex-grow w-full col-span-2 sm:col-span-2">
+                  <label
+                    className="block text-sm font-medium text-gray-700 leading-5"
+                    htmlFor="company_website"
+                  >
+                    Dimensions
+                  </label>
 
-                    <div className="flex w-full mt-1">
-                      <div className="flex flex-row items-center w-6/12">
-                        <span className="inline-flex items-center h-10 px-3 text-gray-500 border border-r-0 border-gray-300 rounded-l-md bg-gray-50">
-                          Rows
-                        </span>
-                        <input
-                          className={`w-24 h-10 mr-8 form-input flex-1 block rounded-none rounded-r-md transition duration-150 ease-in-out sm:text-sm
+                  <div className="flex w-full mt-1">
+                    <div className="flex flex-row items-center w-6/12">
+                      <span className="inline-flex items-center h-10 px-3 text-gray-500 border border-r-0 border-gray-300 rounded-l-md bg-gray-50">
+                        Rows
+                      </span>
+                      <input
+                        className={`w-24 h-10 mr-8 form-input flex-1 block rounded-none rounded-r-md transition duration-150 ease-in-out sm:text-sm
                           focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out
                           ${disableClass}`}
-                          disabled={disableCustom}
-                          onChange={(e) =>
-                            setConfig({
-                              ...config,
-                              rows: e.target.value,
-                            })
-                          }
-                          type="text"
-                          value={config.rows}
-                        />
-                      </div>
-                      <div className="flex flex-row items-center w-6/12">
-                        <span className="inline-flex items-center h-10 px-3 text-gray-500 border border-r-0 border-gray-300 rounded-l-md bg-gray-50">
-                          Columns
-                        </span>
-                        <input
-                          className={`w-24 h-10 form-input flex-1 block rounded-none rounded-r-md transition duration-150 ease-in-out sm:text-sm
+                        disabled={disableCustom}
+                        onChange={(e) =>
+                          setConfig({
+                            ...config,
+                            rows: e.target.value,
+                          })
+                        }
+                        type="text"
+                        value={config.rows}
+                      />
+                    </div>
+                    <div className="flex flex-row items-center w-6/12">
+                      <span className="inline-flex items-center h-10 px-3 text-gray-500 border border-r-0 border-gray-300 rounded-l-md bg-gray-50">
+                        Columns
+                      </span>
+                      <input
+                        className={`w-24 h-10 form-input flex-1 block rounded-none rounded-r-md transition duration-150 ease-in-out sm:text-sm
 
                           focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out
 
 
                            ${disableClass}`}
-                          disabled={disableCustom}
-                          onChange={(e) =>
-                            setConfig({
-                              ...config,
-                              cols: e.target.value,
-                            })
-                          }
-                          type="text"
-                          value={config.cols}
-                        />
-                      </div>
+                        disabled={disableCustom}
+                        onChange={(e) =>
+                          setConfig({
+                            ...config,
+                            cols: e.target.value,
+                          })
+                        }
+                        type="text"
+                        value={config.cols}
+                      />
                     </div>
                   </div>
+                </div>
 
-                  <div>
-                    <div className="col-span-6 sm:col-span-3">
-                      <label
-                        className="block text-sm font-medium text-gray-700 leading-5"
-                        htmlFor="first_name"
-                      >
-                        Power (milliamps)
-                        <input
-                          className={`mt-1 form-input block w-full py-2 px-3 border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5 ${disableClass}`}
-                          disabled={disableCustom}
-                          id="first_name"
-                          onChange={(e) => {
-                            setConfig({
-                              ...config,
-                              milliamps: parseInt(e.target.value) || 0,
-                            });
-                          }}
-                          type="text"
-                          value={config.milliamps}
-                        />
-                      </label>
-                    </div>
-                  </div>
-
-                  <div className="flex flex-row space-x-8">
+                <div>
+                  <div className="col-span-6 sm:col-span-3">
                     <label
-                      className="flex flex-row items-center block text-sm font-medium text-gray-700 leading-5"
+                      className="block text-sm font-medium text-gray-700 leading-5"
                       htmlFor="first_name"
                     >
+                      Power (milliamps)
                       <input
-                        checked={config.serpentine}
-                        className="mr-2"
+                        className={`mt-1 form-input block w-full py-2 px-3 border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5 ${disableClass}`}
                         disabled={disableCustom}
-                        id="serpentine"
+                        id="first_name"
                         onChange={(e) => {
                           setConfig({
                             ...config,
-                            serpentine: e.target.checked,
+                            milliamps: parseInt(e.target.value) || 0,
                           });
                         }}
-                        type="checkbox"
+                        type="text"
+                        value={config.milliamps}
                       />
-                      Serpentine layout
-                    </label>
-                    <label
-                      className="flex flex-row items-center block text-sm font-medium text-gray-700 leading-5"
-                      htmlFor="first_name"
-                    >
-                      <input
-                        checked={config.mirror}
-                        className="mr-2"
-                        disabled={disableCustom}
-                        id="mirror"
-                        onChange={(e) => {
-                          setConfig({
-                            ...config,
-                            mirror: e.target.checked,
-                          });
-                        }}
-                        type="checkbox"
-                      />
-                      Mirror
                     </label>
                   </div>
-                </Right>
-              </Section>
+                </div>
 
+                <div className="flex flex-row space-x-8">
+                  <label
+                    className="flex flex-row items-center block text-sm font-medium text-gray-700 leading-5"
+                    htmlFor="first_name"
+                  >
+                    <input
+                      checked={config.serpentine}
+                      className="mr-2"
+                      disabled={disableCustom}
+                      id="serpentine"
+                      onChange={(e) => {
+                        setConfig({
+                          ...config,
+                          serpentine: e.target.checked,
+                        });
+                      }}
+                      type="checkbox"
+                    />
+                    Serpentine layout
+                  </label>
+                  <label
+                    className="flex flex-row items-center block text-sm font-medium text-gray-700 leading-5"
+                    htmlFor="first_name"
+                  >
+                    <input
+                      checked={config.mirror}
+                      className="mr-2"
+                      disabled={disableCustom}
+                      id="mirror"
+                      onChange={(e) => {
+                        setConfig({
+                          ...config,
+                          mirror: e.target.checked,
+                        });
+                      }}
+                      type="checkbox"
+                    />
+                    Mirror
+                  </label>
+                </div>
+              </Right>
+            </Section>
+
+            <Section>
+              <Left>
+                <h3 className="text-lg font-medium leading-6 ">
+                  Soulmate config
+                </h3>
+                <p className="mt-1 text-sm leading-5 ">
+                  What kind of chip are you using?
+                </p>
+              </Left>
+              <div className="mt-5 md:mt-0 md:col-span-2">
+                <div className="text-gray-800 ">
+                  <button
+                    className={classnames(
+                      "button",
+                      "w-6/12 p-5 rounded-lg",
+                      "rounded-r-none",
+                      "focus:outline-none",
+                      "border border-gray-200",
+                      "bg-gray-50",
+                      {
+                        "shadow-inner bg-purple-500 border-purple-600 text-white": !isUsingCustomChip,
+                      }
+                    )}
+                    onClick={() => {
+                      setConfig({
+                        button: 39,
+                        data: 32,
+                        clock: 26,
+                      });
+                    }}
+                  >
+                    M5 Atom (Soulmate)
+                  </button>
+                  <button
+                    className={classnames(
+                      "button",
+                      "w-6/12 p-5 rounded-lg",
+                      "rounded-l-none",
+                      "focus:outline-none",
+                      "border border-gray-200",
+                      "bg-gray-50",
+                      {
+                        "shadow-inner bg-purple-500 border-purple-600 text-white": isUsingCustomChip,
+                      }
+                    )}
+                    onClick={() => {
+                      setConfig({
+                        button: "",
+                        data: "",
+                        clock: "",
+                      });
+                    }}
+                  >
+                    My own ESP32
+                  </button>
+                </div>
+              </div>
+            </Section>
+
+            {isUsingCustomChip && (
               <Section>
                 <Left>
                   <h3 className="text-lg font-medium leading-6 ">
-                    Soulmate config
+                    Custom config
                   </h3>
                   <p className="mt-1 text-sm leading-5 ">
-                    What kind of chip are you using?
+                    Customize which pins this Soulmate will be using.
                   </p>
                 </Left>
-                <div className="mt-5 md:mt-0 md:col-span-2">
-                  <div className="text-gray-800 ">
-                    <button
-                      className={classnames(
-                        "button",
-                        "w-6/12 p-5 rounded-lg",
-                        "rounded-r-none",
-                        "focus:outline-none",
-                        "border border-gray-200",
-                        "bg-gray-50",
-                        {
-                          "shadow-inner bg-purple-500 border-purple-600 text-white": !isUsingCustomChip,
-                        }
-                      )}
-                      onClick={() => {
-                        setConfig({
-                          button: 39,
-                          data: 32,
-                          clock: 26,
-                        });
-                      }}
-                    >
-                      M5 Atom (Soulmate)
-                    </button>
-                    <button
-                      className={classnames(
-                        "button",
-                        "w-6/12 p-5 rounded-lg",
-                        "rounded-l-none",
-                        "focus:outline-none",
-                        "border border-gray-200",
-                        "bg-gray-50",
-                        {
-                          "shadow-inner bg-purple-500 border-purple-600 text-white": isUsingCustomChip,
-                        }
-                      )}
-                      onClick={() => {
-                        setConfig({
-                          button: "",
-                          data: "",
-                          clock: "",
-                        });
-                      }}
-                    >
-                      My own ESP32
-                    </button>
-                  </div>
-                </div>
-              </Section>
 
-              {isUsingCustomChip && (
-                <Section>
-                  <Left>
-                    <h3 className="text-lg font-medium leading-6 ">
-                      Custom config
-                    </h3>
-                    <p className="mt-1 text-sm leading-5 ">
-                      Customize which pins this Soulmate will be using.
-                    </p>
-                  </Left>
-
-                  <Right>
-                    {isUsingCustomChip && (
-                      <div className="grid grid-cols-2 gap-6">
-                        <div className="flex-grow w-full col-span-2 sm:col-span-2">
-                          <div className="flex w-full mt-1 space-x-4">
+                <Right>
+                  {isUsingCustomChip && (
+                    <div className="grid grid-cols-2 gap-6">
+                      <div className="flex-grow w-full col-span-2 sm:col-span-2">
+                        <div className="flex w-full mt-1 space-x-4">
+                          <div className="flex flex-row items-center w-6/12">
+                            <span className="inline-flex items-center h-10 px-3 text-gray-500 border border-r-0 border-gray-300 rounded-l-md bg-gray-50">
+                              Data
+                            </span>
+                            <input
+                              className={`w-24 h-10 form-input flex-1 block rounded-none rounded-r-md transition duration-150 ease-in-out sm:text-sm focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out ${disableClass}`}
+                              disabled={disableCustom}
+                              onChange={(e) =>
+                                setConfig({
+                                  ...config,
+                                  data: e.target.value,
+                                })
+                              }
+                              type="text"
+                              value={config.data}
+                            />
+                          </div>
+                          {config.ledType == "APA102" && (
                             <div className="flex flex-row items-center w-6/12">
                               <span className="inline-flex items-center h-10 px-3 text-gray-500 border border-r-0 border-gray-300 rounded-l-md bg-gray-50">
-                                Data
+                                Clock
                               </span>
                               <input
-                                className={`w-24 h-10 form-input flex-1 block rounded-none rounded-r-md transition duration-150 ease-in-out sm:text-sm focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out ${disableClass}`}
+                                className={`w-24 h-10 form-input flex-1 block rounded-none rounded-r-md transition duration-150 ease-in-out sm:text-sm ${disableClass}`}
                                 disabled={disableCustom}
                                 onChange={(e) =>
                                   setConfig({
                                     ...config,
-                                    data: e.target.value,
+                                    clock: e.target.value,
                                   })
                                 }
                                 type="text"
-                                value={config.data}
+                                value={config.clock}
                               />
                             </div>
-                            {config.ledType == "APA102" && (
-                              <div className="flex flex-row items-center w-6/12">
-                                <span className="inline-flex items-center h-10 px-3 text-gray-500 border border-r-0 border-gray-300 rounded-l-md bg-gray-50">
-                                  Clock
-                                </span>
-                                <input
-                                  className={`w-24 h-10 form-input flex-1 block rounded-none rounded-r-md transition duration-150 ease-in-out sm:text-sm ${disableClass}`}
-                                  disabled={disableCustom}
-                                  onChange={(e) =>
-                                    setConfig({
-                                      ...config,
-                                      clock: e.target.value,
-                                    })
-                                  }
-                                  type="text"
-                                  value={config.clock}
-                                />
-                              </div>
-                            )}
-                            <div className="flex flex-row items-center w-6/12">
-                              <span className="inline-flex items-center h-10 px-3 text-gray-500 border border-r-0 border-gray-300 rounded-l-md bg-gray-50">
-                                Button
-                              </span>
-                              <input
-                                className={`w-24 h-10 form-input flex-1 block rounded-none rounded-r-md transition duration-150 ease-in-out sm:text-sm focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out ${disableClass}`}
-                                disabled={disableCustom}
-                                onChange={(e) =>
-                                  setConfig({
-                                    ...config,
-                                    button: e.target.value,
-                                  })
-                                }
-                                type="text"
-                                value={config.button}
-                              />
-                            </div>
+                          )}
+                          <div className="flex flex-row items-center w-6/12">
+                            <span className="inline-flex items-center h-10 px-3 text-gray-500 border border-r-0 border-gray-300 rounded-l-md bg-gray-50">
+                              Button
+                            </span>
+                            <input
+                              className={`w-24 h-10 form-input flex-1 block rounded-none rounded-r-md transition duration-150 ease-in-out sm:text-sm focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out ${disableClass}`}
+                              disabled={disableCustom}
+                              onChange={(e) =>
+                                setConfig({
+                                  ...config,
+                                  button: e.target.value,
+                                })
+                              }
+                              type="text"
+                              value={config.button}
+                            />
                           </div>
                         </div>
                       </div>
-                    )}
-                  </Right>
-                </Section>
-              )}
-            </>
-          )}
+                    </div>
+                  )}
+                </Right>
+              </Section>
+            )}
+          </>
 
           <div className="md:grid md:grid-cols-3 md:gap-6">
             <div className="md:col-span-1"></div>
@@ -428,6 +425,17 @@ const Config = () => {
               <div className="sm:rounded-md sm:overflow-hidden">
                 <div className="flex justify-end col-span-6 sm:col-span-3">
                   <div className="flex flex-row space-x-4">
+                    {_config != config && (
+                      <button
+                        className="text-gray-500 bg-white footer-button"
+                        onClick={() => {
+                          setConfig(_config);
+                        }}
+                      >
+                        Cancel
+                      </button>
+                    )}
+
                     <button
                       className="footer-button"
                       onClick={() => {
