@@ -24,9 +24,11 @@ const defaultConfig = {
   serpentine: true,
 };
 
-// usbConnected
+// TODO:
+// 1. Change list of soulmates exported to [usbSoulmate, wifiSoulmate, wifiSoulmate]
+// 2. Make it so you can stream to Soulmates even when USB's connected
 
-const SoulmateContainer = () => {
+const SoulmatesContainer = () => {
   const notificationsContainer = NotificationsContainer.useContainer();
   const [soulmateLoading, setSoulmateLoading] = useState(false);
 
@@ -126,12 +128,12 @@ const SoulmateContainer = () => {
       throw e;
     }
 
-    listener?.close();
-
     if (!build) {
       setFlashing(false);
       return false;
     }
+
+    listener?.close();
 
     if (selectedSoulmate) {
       await flashbuildToWifiSoulmate(
@@ -158,16 +160,17 @@ const SoulmateContainer = () => {
 
     setUsbFlashingPercentage(undefined);
     setFlashing(false);
-    open(port);
+    if (port) openPort(port);
     return true;
   };
 
-  // Port stuff
+  // USB Soulmate stuff
 
-  const open = (port) => {
+  const openPort = (port) => {
+    if (!isElectron()) return;
+
     setSelectedSoulmate(undefined);
     setConfig(false);
-    if (!isElectron()) return;
     let receivedData;
 
     const listener = new PortListener(port, (text) => {
@@ -196,9 +199,11 @@ const SoulmateContainer = () => {
     });
   };
 
+  // Reading from USB soulmate
   const previousPort = useRef();
   useEffect(() => {
     if (!isElectron()) return;
+
     if (!port || port !== previousPort.current) {
       if (previousPort.current && !port) {
         notificationsContainer.notify(`Soulmate disconnected.`);
@@ -215,7 +220,7 @@ const SoulmateContainer = () => {
       previousPort.current = port;
       notificationsContainer.notify(`Detecting Soulmate...`);
       setSoulmateLoading(true);
-      open(port);
+      openPort(port);
       setText([`Connected to ${port}`]);
     }
   }, [port]);
@@ -238,8 +243,7 @@ const SoulmateContainer = () => {
 
   useInterval(checkUsb, 5000);
   useEffect(() => {
-    // This has to be on its own line so it doesn't return and break the hook
-    checkUsb();
+    checkUsb(); // This has to be on its own line so it doesn't return and break the hook
   }, []);
 
   const restart = () => {
@@ -269,5 +273,4 @@ const SoulmateContainer = () => {
   };
 };
 
-const container = createContainer(SoulmateContainer);
-export default container;
+export default createContainer(SoulmatesContainer);
