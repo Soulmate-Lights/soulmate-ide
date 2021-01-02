@@ -54,7 +54,7 @@ const Download = () => {
                 target="_blank"
               >
                 <FaShoppingCart className="mr-2" />
-                Buy a Soulmate Square ($199)
+                Buy a Soulmate Square ($149)
               </a>
             </div>
           </div>

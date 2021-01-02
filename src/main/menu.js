@@ -167,7 +167,7 @@ const Menu = () => {
               </div>
               <div className="flex-shrink-0 p-2 text-center">
                 <p className="font-semibold">Buy a Soulmate Square!</p>
-                <p className="font-light">$199 + shipping</p>
+                <p className="font-light">$149 + shipping</p>
               </div>
             </a>
           </div>
