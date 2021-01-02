@@ -2,16 +2,12 @@ import { emojify } from "@twuni/emojify";
 import { FaChevronUp, FaUsb } from "react-icons/fa";
 import { RiPlayList2Fill } from "react-icons/ri";
 
-// import ErrorNotification from "~/components/ErrorNotification";
 import NotificationsContainer from "~/containers/notifications";
 import Soulmates from "~/containers/soulmates";
 import UserContainer from "~/containers/user";
 import Logo from "~/images/logo.svg";
 
 import SoulmatesMenu from "./Simulator/SoulmatesMenu";
-
-// const configButtonClassName =
-//   "footer-button py-0 px-6 flex flex-col border border-transparent rounded-md rounded-r-none text-white bg-gray-800 focus:outline-none focus:border-gray-700 focus:shadow-outline-gray active:bg-gray-700 transition ease-in-out duration-150 text-xs items-center justify-center leading-snug h-15";
 
 const FlashButton = ({
   selectedSketches,

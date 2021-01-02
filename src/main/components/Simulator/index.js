@@ -31,7 +31,6 @@ const Simulator = ({ build, className, minWidth, maxWidth, style }) => {
   const ws = useRef();
   useEffect(() => {
     if (!selectedSoulmate) return;
-    // if (selectedSoulmate.config) setConfig(selectedSoulmate.config);
     if (!selectedSoulmate.addresses) return;
     ws.current = new WebSocket(`ws://${selectedSoulmate.addresses[0]}:81`);
     return () => ws.current?.close();
