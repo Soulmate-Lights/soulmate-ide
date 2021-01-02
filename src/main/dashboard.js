@@ -17,7 +17,7 @@ function isWindows() {
 }
 
 const Dashboard = () => {
-  const { userDetails, login } = UserContainer.useContainer();
+  const { userDetails, login, x } = UserContainer.useContainer();
 
   return (
     <div className="flex flex-col flex-grow w-full">
@@ -104,7 +104,6 @@ const Dashboard = () => {
                   </div>
                 </div>
               )}
-
               {isMacintosh() && (
                 <div className="flex flex-row mt-4 sm:justify-center space-x-4">
                   <div className="shadow rounded-md">

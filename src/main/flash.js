@@ -62,13 +62,13 @@ const Flash = () => {
 
   let users = uniqBy(
     filteredSketches?.map((sketch) => sketch.user),
-    (user) => user.id
+    (user) => user?.id
   );
 
   users = users
     ?.map((u) => ({
       ...u,
-      sketches: filteredSketches.filter((s) => s.user.id === u.id),
+      sketches: filteredSketches.filter((s) => s.user?.id === u.id),
     }))
     .filter((u) => u.uid !== userDetails.sub);
 
