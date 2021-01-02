@@ -157,6 +157,8 @@ const SoulmateContainer = () => {
   // Port stuff
 
   const open = (port) => {
+    setSelectedSoulmate(undefined);
+    setConfig(false);
     if (!isElectron()) return;
     let receivedData;
 
@@ -242,6 +244,8 @@ const SoulmateContainer = () => {
   //     config,
   //   };
 
+  const needsSetup = !!port && !config;
+
   return {
     getBuild,
     flashSketches,
@@ -258,6 +262,7 @@ const SoulmateContainer = () => {
     soulmates,
     selectedSoulmate,
     setSelectedSoulmate,
+    needsSetup,
   };
 };
 

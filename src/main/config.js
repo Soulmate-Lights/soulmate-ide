@@ -44,7 +44,9 @@ const Config = () => {
     usbFlashingPercentage,
   } = SoulmatesContainer.useContainer();
 
-  const [config, setConfig] = useState(_config);
+  const [config, setConfig] = useState(
+    _config || { button: 39, data: 32, clock: 26 }
+  );
 
   useEffect(() => {
     setConfig(_config);
@@ -59,7 +61,7 @@ const Config = () => {
 
   const { isAdmin } = UserContainer.useContainer();
   const disableCustom = type !== "custom";
-  const disableClass = disableCustom ? "bg-gray-100" : "";
+  const disableClass = ""; // disableCustom ? "bg-gray-100" : "";
 
   const isUsingCustomChip =
     config.button !== 39 || config.data !== 32 || config.clock !== 26;
@@ -105,9 +107,24 @@ const Config = () => {
                     className="block text-sm font-medium text-gray-700 leading-5"
                     htmlFor="country"
                   >
-                    Soulmate type
+                    Flash a pre-configured type of Soulmate (Admin only)
                   </label>
-                  <select
+
+                  <p className="mt-4">
+                    {types.map((t) => (
+                      <button
+                        className="h-auto p-2 mr-2 button"
+                        key={t}
+                        onClick={() => {
+                          flashSketches([sketch], t.config);
+                        }}
+                      >
+                        {t.label}
+                      </button>
+                    ))}
+                  </p>
+
+                  {/* <select
                     className="block w-full px-3 py-2 mt-1 bg-white border-gray-300  form-select rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5"
                     id="country"
                     onChange={(e) => {
@@ -123,7 +140,7 @@ const Config = () => {
                         {type.label}
                       </option>
                     ))}
-                  </select>
+                  </select> */}
                 </div>
               </Right>
             </Section>
@@ -147,7 +164,7 @@ const Config = () => {
                   </label>
                   <select
                     className={`bg-white mt-1 block form-select w-full py-2 px-3 border-gray-300  rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5 ${disableClass}`}
-                    disabled={disableCustom}
+                    // disabled={disableCustom}
                     id="country"
                     onChange={(e) => {
                       setConfig({
@@ -157,6 +174,9 @@ const Config = () => {
                     }}
                     value={config.ledType}
                   >
+                    <option disabled value="">
+                      Choose a chipset
+                    </option>
                     <option value="APA102">APA102 - 4 wires</option>
                     <option value="WS2812B">WS2812B - 3 wires</option>
                   </select>
@@ -178,7 +198,7 @@ const Config = () => {
                         className={`w-24 h-10 mr-8 form-input flex-1 block rounded-none rounded-r-md transition duration-150 ease-in-out sm:text-sm
                           focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out
                           ${disableClass}`}
-                        disabled={disableCustom}
+                        // disabled={disableCustom}
                         onChange={(e) =>
                           setConfig({
                             ...config,
@@ -200,7 +220,7 @@ const Config = () => {
 
 
                            ${disableClass}`}
-                        disabled={disableCustom}
+                        // disabled={disableCustom}
                         onChange={(e) =>
                           setConfig({
                             ...config,
@@ -223,7 +243,7 @@ const Config = () => {
                       Power (milliamps)
                       <input
                         className={`mt-1 form-input block w-full py-2 px-3 border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5 ${disableClass}`}
-                        disabled={disableCustom}
+                        // disabled={disableCustom}
                         id="first_name"
                         onChange={(e) => {
                           setConfig({
@@ -246,7 +266,7 @@ const Config = () => {
                     <input
                       checked={config.serpentine}
                       className="mr-2"
-                      disabled={disableCustom}
+                      // disabled={disableCustom}
                       id="serpentine"
                       onChange={(e) => {
                         setConfig({
@@ -265,7 +285,7 @@ const Config = () => {
                     <input
                       checked={config.mirror}
                       className="mr-2"
-                      disabled={disableCustom}
+                      // disabled={disableCustom}
                       id="mirror"
                       onChange={(e) => {
                         setConfig({
@@ -294,7 +314,6 @@ const Config = () => {
                 <div className="text-gray-800 ">
                   <button
                     className={classnames(
-                      "button",
                       "w-6/12 p-5 rounded-lg",
                       "rounded-r-none",
                       "focus:outline-none",
@@ -316,7 +335,6 @@ const Config = () => {
                   </button>
                   <button
                     className={classnames(
-                      "button",
                       "w-6/12 p-5 rounded-lg",
                       "rounded-l-none",
                       "focus:outline-none",
@@ -362,7 +380,7 @@ const Config = () => {
                             </span>
                             <input
                               className={`w-24 h-10 form-input flex-1 block rounded-none rounded-r-md transition duration-150 ease-in-out sm:text-sm focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out ${disableClass}`}
-                              disabled={disableCustom}
+                              // disabled={disableCustom}
                               onChange={(e) =>
                                 setConfig({
                                   ...config,
@@ -380,7 +398,7 @@ const Config = () => {
                               </span>
                               <input
                                 className={`w-24 h-10 form-input flex-1 block rounded-none rounded-r-md transition duration-150 ease-in-out sm:text-sm ${disableClass}`}
-                                disabled={disableCustom}
+                                // disabled={disableCustom}
                                 onChange={(e) =>
                                   setConfig({
                                     ...config,
@@ -398,7 +416,7 @@ const Config = () => {
                             </span>
                             <input
                               className={`w-24 h-10 form-input flex-1 block rounded-none rounded-r-md transition duration-150 ease-in-out sm:text-sm focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out ${disableClass}`}
-                              disabled={disableCustom}
+                              // disabled={disableCustom}
                               onChange={(e) =>
                                 setConfig({
                                   ...config,
