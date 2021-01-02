@@ -146,7 +146,7 @@ const IDE = () => {
         <Route path="/config" />
         <Route>
           {needsSetup && (
-            <div className="flex items-center flex-grow-0 px-4 text-sm border-t border-gray-400 align-center dark-mode:border-gray-600">
+            <div className="flex items-center flex-grow-0 px-4 text-sm border-t border-gray-200 align-center dark-mode:border-gray-600">
               <Logo className="w-6 ml-2 mr-6" />
               <span className="leading-6 dark-mode:text-white">
                 A new Soulmate is connected to <strong>{port}</strong>.

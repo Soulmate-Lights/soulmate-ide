@@ -1,3 +1,4 @@
+import { emojify } from "@twuni/emojify";
 import { FaChevronUp, FaUsb } from "react-icons/fa";
 import { RiPlayList2Fill } from "react-icons/ri";
 
@@ -77,7 +78,7 @@ const FlashButton = ({
     }
     text = (
       <>
-        <span>Flash to {name}</span>
+        <span>Flash to {emojify(name)}</span>
         {usbConnected && <FaUsb className="w-6 h-6" />}
       </>
     );
