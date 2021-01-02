@@ -119,16 +119,18 @@ const Menu = () => {
                 </NavLink>
               )}
 
-              <NavLink
-                activeClassName={activeLinkClass}
-                className={linkClass}
-                disabled={!usbConnected}
-                location={location}
-                to="/config"
-              >
-                <FiSettings className={iconClass} />
-                Configure
-              </NavLink>
+              {isElectron() && (
+                <NavLink
+                  activeClassName={activeLinkClass}
+                  className={linkClass}
+                  disabled={!usbConnected}
+                  location={location}
+                  to="/config"
+                >
+                  <FiSettings className={iconClass} />
+                  Configure
+                </NavLink>
+              )}
 
               {isAdmin() && (
                 <NavLink
@@ -153,12 +155,14 @@ const Menu = () => {
                   <span>{config?.name || "New Soulmate"}</span>
 
                   <div className="flex self-end justify-center ml-auto">
-                    <span
-                      className="p-1 mx-2 border rounded opacity-50"
-                      style={{ fontSize: 10 }}
-                    >
-                      {config?.rows} x {config?.cols}
-                    </span>
+                    {config?.rows && config.cols && (
+                      <span
+                        className="p-1 mx-2 border rounded opacity-50"
+                        style={{ fontSize: 10 }}
+                      >
+                        {config?.rows} x {config?.cols}
+                      </span>
+                    )}
                     <Link
                       className="px-2 py-1 ml-auto justify-self-end button"
                       to="/config"
