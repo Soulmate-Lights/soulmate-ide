@@ -88,7 +88,7 @@ const FlashButton = ({
     <div className="flex items-center justify-end flex-shrink w-auto w-full ml-auto space-x-4">
       <div className="flex flex-row items-center flex-grow block">
         <div className="flex flex-row items-start justify-start flex-grow mr-auto space-x-4">
-          {isAdmin() && (
+          {isAdmin() && selectedSketches.length > 1 && (
             <button
               className="footer-button"
               onClick={() => {
