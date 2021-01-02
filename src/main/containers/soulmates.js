@@ -42,11 +42,12 @@ const SoulmateContainer = () => {
 
   const [listener, setListener] = useState();
   const [text, setText] = useState([]);
-
   const [config, setConfig] = useState(defaultConfig);
+  const [error, setError] = useState(false);
 
   const setConfigFromSoulmateData = (data) => {
     setConfig({
+      name: data.name,
       rows: data.rows,
       cols: data.cols,
       button: data.button,
@@ -65,8 +66,11 @@ const SoulmateContainer = () => {
   const [selectedSoulmate, setSelectedSoulmate] = useState(undefined);
 
   useEffect(() => {
-    if (!selectedSoulmate) return;
-    setConfigFromSoulmateData(selectedSoulmate.config);
+    if (!selectedSoulmate) {
+      setConfig(defaultConfig);
+    } else {
+      setConfigFromSoulmateData(selectedSoulmate.config);
+    }
   }, [selectedSoulmate]);
 
   const addSoulmate = (_event, soulmate) => {
@@ -121,6 +125,7 @@ const SoulmateContainer = () => {
     try {
       build = await getBuild(sketches, config);
     } catch (e) {
+      setError(e);
       setFlashing(false);
       throw e;
     }
@@ -142,10 +147,18 @@ const SoulmateContainer = () => {
         }
       );
     } else {
-      await flashBuild(port, build, (progress) => {
-        setUsbFlashingPercentage(progress);
-        setFlashing(progress < 100);
-      });
+      try {
+        await flashBuild(port, build, (progress) => {
+          setUsbFlashingPercentage(progress);
+          setFlashing(progress < 100);
+        }).catch((e) => {
+          console.log("I HAVE CAUGHT THE ERROR", e);
+          setError(e);
+        });
+      } catch (e) {
+        setError(e);
+        throw e;
+      }
     }
 
     setUsbFlashingPercentage(undefined);
@@ -263,6 +276,8 @@ const SoulmateContainer = () => {
     selectedSoulmate,
     setSelectedSoulmate,
     needsSetup,
+    error,
+    setError,
   };
 };
 

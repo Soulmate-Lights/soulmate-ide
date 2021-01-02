@@ -17,7 +17,7 @@ function isWindows() {
 }
 
 const Dashboard = () => {
-  const { userDetails, login, x } = UserContainer.useContainer();
+  const { userDetails, login } = UserContainer.useContainer();
 
   return (
     <div className="flex flex-col flex-grow w-full">

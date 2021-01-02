@@ -1,8 +1,8 @@
-import isEmpty from "lodash/isEmpty";
+import flatten from "lodash/flatten";
 
 const ErrorNotification = ({ trace, dismiss }) => (
   <div className="fixed inset-0 z-10 overflow-y-auto">
-    <div className="flex items-end justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
+    <div className="flex items-end justify-center min-h-screen px-4 px-10 pt-4 pb-20 text-center sm:block">
       {/*
 Background overlay, show/hide based on modal state.
 
@@ -36,7 +36,7 @@ Leaving: "ease-in duration-200"
       <div
         aria-labelledby="modal-headline"
         aria-modal="true"
-        className="inline-block px-4 pt-5 pb-4 overflow-hidden text-left align-bottom bg-white rounded-lg shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-6"
+        className="inline-block px-4 pt-5 pb-4 overflow-hidden text-left align-bottom bg-white rounded-lg shadow-xl transform transition-all sm:my-8 sm:align-middle sm:w-full sm:p-6"
         role="dialog"
       >
         <div className="absolute top-0 right-0 hidden pt-4 pr-4 sm:block">
@@ -82,7 +82,7 @@ Leaving: "ease-in duration-200"
               />
             </svg>
           </div>
-          <div className="mt-3 sm:mt-0 sm:ml-4 sm:text-left">
+          <div className="flex-grow-0 flex-shrink mt-3 sm:mt-0 sm:ml-4 sm:text-left">
             <h3
               className="text-lg font-medium text-gray-900 leading-6"
               id="modal-headline"
@@ -93,20 +93,18 @@ Leaving: "ease-in duration-200"
               <p className="text-sm text-gray-500">
                 There was an error building your sketches. This sometimes
                 happens when two sketches conflict with each other.
-                {trace !== "{}" && (
-                  <>Here's some more information that may be helpful:</>
-                )}
+                {trace && "Here's some more information that may be helpful:"}
               </p>
             </div>
 
-            {trace !== "{}" && (
-              <pre className="px-4 py-2 my-4 text-sm text-gray-500 border-red-200 rounded-lg bg-red-50 border-1">
-                {trace
-                  .trim()
-                  .split("\n")
-                  .map((line) => line.trim())
-                  .join("\n")}
-              </pre>
+            {trace && (
+              <div className="flex-shrink w-full px-4 py-2 my-4 mr-8 overflow-hidden font-mono text-xs text-gray-500 border-red-200 rounded-lg bg-red-50 border-1 wrap">
+                {flatten([trace.split("\n")])?.map((line, i) => (
+                  <p className="break-none" key={i}>
+                    {line?.trim()}
+                  </p>
+                ))}
+              </div>
             )}
           </div>
         </div>
@@ -116,7 +114,7 @@ Leaving: "ease-in duration-200"
             onClick={dismiss}
             type="button"
           >
-            That's OK, I'll try something else
+            {"That's OK, I'll try something else"}
           </button>
         </div>
       </div>

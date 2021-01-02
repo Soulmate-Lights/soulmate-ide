@@ -34,7 +34,7 @@ const Right = (props) => (
 );
 
 const Config = () => {
-  const { type, types } = ConfigContainer.useContainer();
+  const { types } = ConfigContainer.useContainer();
 
   const {
     config: _config,
@@ -52,16 +52,7 @@ const Config = () => {
     setConfig(_config);
   }, [_config]);
 
-  // useEffect(() => {
-  //   const t = types.find((t) => t.value === type);
-  //   if (t) {
-  //     setConfig(t.config);
-  //   }
-  // }, [type]);
-
   const { isAdmin } = UserContainer.useContainer();
-  const disableCustom = type !== "custom";
-  const disableClass = ""; // disableCustom ? "bg-gray-100" : "";
 
   const isUsingCustomChip =
     config.button !== 39 || config.data !== 32 || config.clock !== 26;
@@ -114,7 +105,7 @@ const Config = () => {
                     {types.map((t) => (
                       <button
                         className="h-auto p-2 mr-2 button"
-                        key={t}
+                        key={t.label}
                         onClick={() => {
                           flashSketches([sketch], t.config);
                         }}
@@ -123,24 +114,6 @@ const Config = () => {
                       </button>
                     ))}
                   </p>
-
-                  {/* <select
-                    className="block w-full px-3 py-2 mt-1 bg-white border-gray-300  form-select rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5"
-                    id="country"
-                    onChange={(e) => {
-                      const type = types.find(
-                        (t) => t.value === e.target.value
-                      );
-                      setConfig(type.config);
-                    }}
-                    value={type}
-                  >
-                    {types.map((type) => (
-                      <option key={type.value} value={type.value}>
-                        {type.label}
-                      </option>
-                    ))}
-                  </select> */}
                 </div>
               </Right>
             </Section>
@@ -163,8 +136,7 @@ const Config = () => {
                     LED type
                   </label>
                   <select
-                    className={`bg-white mt-1 block form-select w-full py-2 px-3 border-gray-300  rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5 ${disableClass}`}
-                    // disabled={disableCustom}
+                    className="block w-full px-3 py-2 mt-1 bg-white border-gray-300 form-select rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5"
                     id="country"
                     onChange={(e) => {
                       setConfig({
@@ -195,10 +167,7 @@ const Config = () => {
                         Rows
                       </span>
                       <input
-                        className={`w-24 h-10 mr-8 form-input flex-1 block rounded-none rounded-r-md transition duration-150 ease-in-out sm:text-sm
-                          focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out
-                          ${disableClass}`}
-                        // disabled={disableCustom}
+                        className="flex-1 block w-24 h-10 mr-8 rounded-none form-input rounded-r-md transition duration-150 ease-in-out sm:text-sm focus:shadow-outline-blue focus:border-blue-300"
                         onChange={(e) =>
                           setConfig({
                             ...config,
@@ -214,13 +183,7 @@ const Config = () => {
                         Columns
                       </span>
                       <input
-                        className={`w-24 h-10 form-input flex-1 block rounded-none rounded-r-md transition duration-150 ease-in-out sm:text-sm
-
-                          focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out
-
-
-                           ${disableClass}`}
-                        // disabled={disableCustom}
+                        className="flex-1 block w-24 h-10 rounded-none form-input rounded-r-md transition duration-150 ease-in-out sm:text-sm focus:shadow-outline-blue focus:border-blue-300"
                         onChange={(e) =>
                           setConfig({
                             ...config,
@@ -242,8 +205,7 @@ const Config = () => {
                     >
                       Power (milliamps)
                       <input
-                        className={`mt-1 form-input block w-full py-2 px-3 border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5 ${disableClass}`}
-                        // disabled={disableCustom}
+                        className="block w-full px-3 py-2 mt-1 border-gray-300 form-input rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5"
                         id="first_name"
                         onChange={(e) => {
                           setConfig({
@@ -266,7 +228,6 @@ const Config = () => {
                     <input
                       checked={config.serpentine}
                       className="mr-2"
-                      // disabled={disableCustom}
                       id="serpentine"
                       onChange={(e) => {
                         setConfig({
@@ -285,7 +246,6 @@ const Config = () => {
                     <input
                       checked={config.mirror}
                       className="mr-2"
-                      // disabled={disableCustom}
                       id="mirror"
                       onChange={(e) => {
                         setConfig({
@@ -379,8 +339,7 @@ const Config = () => {
                               Data
                             </span>
                             <input
-                              className={`w-24 h-10 form-input flex-1 block rounded-none rounded-r-md transition duration-150 ease-in-out sm:text-sm focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out ${disableClass}`}
-                              // disabled={disableCustom}
+                              className="flex-1 block w-24 h-10 rounded-none form-input rounded-r-md transition duration-150 ease-in-out sm:text-sm focus:shadow-outline-blue focus:border-blue-300"
                               onChange={(e) =>
                                 setConfig({
                                   ...config,
@@ -397,8 +356,7 @@ const Config = () => {
                                 Clock
                               </span>
                               <input
-                                className={`w-24 h-10 form-input flex-1 block rounded-none rounded-r-md transition duration-150 ease-in-out sm:text-sm ${disableClass}`}
-                                // disabled={disableCustom}
+                                className="flex-1 block w-24 h-10 rounded-none form-input rounded-r-md transition duration-150 ease-in-out sm:text-sm"
                                 onChange={(e) =>
                                   setConfig({
                                     ...config,
@@ -415,8 +373,7 @@ const Config = () => {
                               Button
                             </span>
                             <input
-                              className={`w-24 h-10 form-input flex-1 block rounded-none rounded-r-md transition duration-150 ease-in-out sm:text-sm focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out ${disableClass}`}
-                              // disabled={disableCustom}
+                              className="flex-1 block w-24 h-10 rounded-none form-input rounded-r-md transition duration-150 ease-in-out sm:text-sm focus:shadow-outline-blue focus:border-blue-300"
                               onChange={(e) =>
                                 setConfig({
                                   ...config,
@@ -443,7 +400,7 @@ const Config = () => {
               <div className="sm:rounded-md sm:overflow-hidden">
                 <div className="flex justify-end col-span-6 sm:col-span-3">
                   <div className="flex flex-row space-x-4">
-                    {_config != config && (
+                    {_config != config && !flashing && (
                       <button
                         className="text-gray-500 bg-white footer-button"
                         onClick={() => {

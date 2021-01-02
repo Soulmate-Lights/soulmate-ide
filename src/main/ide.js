@@ -8,6 +8,7 @@ import { Route, Switch } from "react-router-dom";
 import { SWRConfig } from "swr";
 import useSWR from "swr";
 
+import ErrorNotification from "~/components/ErrorNotification";
 import Notifications from "~/components/notifications";
 import SoulmatesContainer from "~/containers/soulmates";
 import UserContainer from "~/containers/user";
@@ -35,7 +36,12 @@ const IDE = () => {
   useSWR(SKETCHES_URL, fetcher);
   useSWR(ALL_SKETCHES_URL, fetcher);
 
-  const { needsSetup, port } = SoulmatesContainer.useContainer();
+  const {
+    needsSetup,
+    port,
+    error,
+    setError,
+  } = SoulmatesContainer.useContainer();
 
   const [focus, setFocus] = useState(true);
   const blur = !focus;
@@ -155,6 +161,10 @@ const IDE = () => {
           )}
         </Route>
       </Switch>
+
+      {error && (
+        <ErrorNotification dismiss={() => setError(false)} trace={error} />
+      )}
     </div>
   );
 };

@@ -1,7 +1,7 @@
 import { FaChevronUp, FaUsb } from "react-icons/fa";
 import { RiPlayList2Fill } from "react-icons/ri";
 
-import ErrorNotification from "~/components/ErrorNotification";
+// import ErrorNotification from "~/components/ErrorNotification";
 import NotificationsContainer from "~/containers/notifications";
 import Soulmates from "~/containers/soulmates";
 import UserContainer from "~/containers/user";
@@ -29,14 +29,14 @@ const FlashButton = ({
   } = Soulmates.useContainer();
   const notificationsContainer = NotificationsContainer.useContainer();
 
-  const [error, setError] = useState(false);
+  // const [error, setError] = useState(false);
 
   const flash = async () => {
     try {
       await flashSketches(selectedSketches, config);
     } catch (e) {
       notificationsContainer.notify("Error flashing!", "error");
-      setError(e);
+      // setError(e);
     }
   };
 
@@ -71,7 +71,7 @@ const FlashButton = ({
       </span>
     );
   } else {
-    let name = selectedSoulmate?.config.name;
+    let name = selectedSoulmate?.config.name || config?.name;
     if (!name) {
       name = usbConnected ? "USB Soulmate" : "New Soulmate";
     }
@@ -146,10 +146,10 @@ const FlashButton = ({
           />
         )}
       </div>
-
+      {/*
       {error && (
         <ErrorNotification dismiss={() => setError(false)} trace={error} />
-      )}
+      )} */}
     </div>
   );
 };

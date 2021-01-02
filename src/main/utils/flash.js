@@ -73,17 +73,31 @@ export const flashBuild = async (port, file, progressCallback) => {
   console.log("[flashBuild]", { cmd });
 
   const child = childProcess.exec(cmd, { cwd: dir });
-  child.on("error", console.log);
-  child.stderr.on("data", console.log);
+  // let error = false;
+  let errorOutput = [];
+  // child.on("error", (e) => {
+  //   // console.log("childProcess threw an error");
+  //   // console.log(e);
+  //   // throw e;
+  //   // debugger;
+  //   // error = e;
+  // });
+  child.stderr.on("data", (line) => {
+    errorOutput = [...errorOutput, line];
+  });
   child.stdout.on("data", (data) => {
     const number = getNumberFromFlashOutput(data);
     if (number) progressCallback(number);
   });
 
-  await new Promise((resolve, _reject) => {
-    child.on("close", () => {
+  await new Promise((resolve, reject) => {
+    child.on("close", (code) => {
       progressCallback(100);
-      resolve();
+      if (code != 0) {
+        reject(errorOutput);
+      } else {
+        resolve();
+      }
     });
   });
 };

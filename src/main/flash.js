@@ -55,9 +55,8 @@ const Flash = () => {
 
   const selectedSketches = selected.map(
     (id) =>
-      // [...(allSketches || []), ...(sketches || [])].find((s) => s.id === id)
-      allSketches?.find((s) => s.id === id) ||
-      sketches?.find((s) => s.id === id)
+      allSketches?.find((s) => s?.id === id) ||
+      sketches?.find((s) => s?.id === id)
   );
 
   let users = uniqBy(
@@ -149,20 +148,23 @@ const Flash = () => {
             <div className="flex flex-row items-center px-4 py-4 border-t border-gray-300 dark-mode:bg-gray-600 dark-mode:border-gray-700">
               <div className="bottom-0 flex flex-col flex-wrap flex-shrink pr-4">
                 <div className="bottom-0 flex flex-row flex-wrap flex-shrink overflow-auto max-h-48">
-                  {selectedSketches.map((sketch) => (
-                    <div
-                      className="relative mr-4 text-xs cursor-pointer"
-                      key={sketch.id}
-                    >
-                      <Sketch
-                        key={sketch.id}
-                        onClick={() => toggle(sketch)}
-                        sketch={sketch}
-                        width={16}
-                      />
-                      <AiFillCheckCircle className="absolute text-lg text-white top-2 right-2" />
-                    </div>
-                  ))}
+                  {selectedSketches.map(
+                    (sketch) =>
+                      sketch && (
+                        <div
+                          className="relative mr-4 text-xs cursor-pointer"
+                          key={sketch.id}
+                        >
+                          <Sketch
+                            key={sketch.id}
+                            onClick={() => toggle(sketch)}
+                            sketch={sketch}
+                            width={16}
+                          />
+                          <AiFillCheckCircle className="absolute text-lg text-white top-2 right-2" />
+                        </div>
+                      )
+                  )}
                 </div>
               </div>
             </div>
