@@ -66,9 +66,9 @@ const SoulmateContainer = () => {
   const [selectedSoulmate, setSelectedSoulmate] = useState(undefined);
 
   useEffect(() => {
-    if (!selectedSoulmate) {
+    if (!selectedSoulmate && !port) {
       setConfig(defaultConfig);
-    } else {
+    } else if (selectedSoulmate) {
       setConfigFromSoulmateData(selectedSoulmate.config);
     }
   }, [selectedSoulmate]);
@@ -215,7 +215,7 @@ const SoulmateContainer = () => {
       setText([]);
     }
 
-    if (port) {
+    if (port && port !== previousPort.current) {
       previousPort.current = port;
       notificationsContainer.notify(`Detecting Soulmate...`);
       setSoulmateLoading(true);
@@ -249,12 +249,6 @@ const SoulmateContainer = () => {
   const restart = () => {
     listener?.port?.write('{ "restart": true }\n');
   };
-
-  // Web-safe!
-  // if (!isElectron())
-  //   return {
-  //     config,
-  //   };
 
   const needsSetup = !!port && !config && !soulmateLoading;
 
