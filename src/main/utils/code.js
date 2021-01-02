@@ -248,3 +248,11 @@ export async function getFullBuild(source) {
 
   return filePath;
 }
+
+// TODO: Move this into a util function
+export const getSoulmateBuild = async (sketches, config) => {
+  const preparedCode = prepareSketches(sketches, config);
+  const build = await getFullBuild(preparedCode);
+
+  return build;
+};

@@ -113,20 +113,13 @@ const SoulmateContainer = () => {
     ipcRenderer?.send("scan", {});
   }, 5000);
 
-  // TODO: Move this into a util function
-  const getBuild = async (sketches, config) => {
-    const preparedCode = prepareSketches(sketches, config);
-    const build = await getFullBuild(preparedCode);
-
-    return build;
-  };
-
   const flashSketches = async (sketches, config) => {
     setFlashing(true);
 
     let build;
     try {
-      build = await getBuild(sketches, config);
+      const preparedCode = prepareSketches(sketches, config);
+      build = await getFullBuild(preparedCode);
     } catch (e) {
       setError(e);
       setFlashing(false);
@@ -256,7 +249,6 @@ const SoulmateContainer = () => {
   const needsSetup = !!port && !config && !soulmateLoading;
 
   return {
-    getBuild,
     flashSketches,
     soulmateLoading,
     usbConnected,
