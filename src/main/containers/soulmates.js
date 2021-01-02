@@ -152,7 +152,6 @@ const SoulmateContainer = () => {
           setUsbFlashingPercentage(progress);
           setFlashing(progress < 100);
         }).catch((e) => {
-          console.log("I HAVE CAUGHT THE ERROR", e);
           setError(e);
         });
       } catch (e) {
@@ -177,10 +176,10 @@ const SoulmateContainer = () => {
 
     const listener = new PortListener(port, (text) => {
       if (text[0] === "{") {
-        setSoulmateLoading(false);
         const data = JSON.parse(text);
         receivedData = data;
         setConfigFromSoulmateData(data);
+        setSoulmateLoading(false);
         notificationsContainer.notify(
           `${data?.name || "USB Soulmate"} connected!`
         );
@@ -257,7 +256,7 @@ const SoulmateContainer = () => {
   //     config,
   //   };
 
-  const needsSetup = !!port && !config;
+  const needsSetup = !!port && !config && !soulmateLoading;
 
   return {
     getBuild,

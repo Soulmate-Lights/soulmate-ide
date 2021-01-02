@@ -1,4 +1,4 @@
-const types = [
+export const types = [
   {
     playlists: true,
     label: "Soulmate Square",
@@ -55,9 +55,6 @@ const types = [
   },
 ];
 
-const playlistTypes = types.filter((t) => t.playlists);
+export const playlistTypes = types.filter((t) => t.playlists);
 
-export default {
-  types,
-  playlistTypes,
-};
+export default playlistTypes;
