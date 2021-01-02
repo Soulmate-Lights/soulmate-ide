@@ -1,5 +1,3 @@
-import { createContainer } from "unstated-next";
-
 const types = [
   {
     playlists: true,
@@ -59,9 +57,7 @@ const types = [
 
 const playlistTypes = types.filter((t) => t.playlists);
 
-export default createContainer(() => {
-  return {
-    types,
-    playlistTypes,
-  };
-});
+export default {
+  types,
+  playlistTypes,
+};

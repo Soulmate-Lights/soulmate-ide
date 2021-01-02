@@ -6,10 +6,10 @@ import useSWR from "swr";
 
 import Header from "~/components/Header";
 import Sketch from "~/components/sketch";
-import ConfigContainer from "~/containers/config";
 import Logo from "~/images/logo.svg";
 import { post } from "~/utils";
 import history from "~/utils/history";
+import { playlistTypes } from "~/utils/types";
 import { PLAYLISTS_URL } from "~/utils/urls";
 
 const Playlists = () => {
@@ -17,8 +17,6 @@ const Playlists = () => {
   const [sketches, setSketches] = useState(state?.sketches || []);
 
   const { data: playlists } = useSWR(PLAYLISTS_URL);
-
-  const { playlistTypes } = ConfigContainer.useContainer();
 
   const [name, setName] = useState("");
   const [modelName, setModelName] = useState(false);

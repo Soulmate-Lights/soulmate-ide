@@ -1,10 +1,10 @@
 import { Helmet } from "react-helmet";
 import { RiUsbLine } from "react-icons/ri";
 
-import ConfigContainer from "~/containers/config";
 import SoulmatesContainer from "~/containers/soulmates";
 import UserContainer from "~/containers/user";
 import Logo from "~/images/Logo";
+import { types } from "~/utils/types";
 
 import Header from "./components/Header";
 
@@ -34,7 +34,7 @@ const Right = (props) => (
 );
 
 const Config = () => {
-  const { types } = ConfigContainer.useContainer();
+  const { isAdmin } = UserContainer.useContainer();
 
   const {
     config: _config,
@@ -51,8 +51,6 @@ const Config = () => {
   useEffect(() => {
     setConfig(_config);
   }, [_config]);
-
-  const { isAdmin } = UserContainer.useContainer();
 
   const isUsingCustomChip =
     config.button !== 39 || config.data !== 32 || config.clock !== 26;
