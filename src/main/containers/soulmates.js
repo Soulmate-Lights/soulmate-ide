@@ -70,6 +70,9 @@ const SoulmateContainer = () => {
       setConfig(defaultConfig);
     } else if (selectedSoulmate) {
       setConfigFromSoulmateData(selectedSoulmate.config);
+    } else {
+      setPort(false);
+      checkUsb();
     }
   }, [selectedSoulmate]);
 

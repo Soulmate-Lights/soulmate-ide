@@ -52,7 +52,7 @@ const SoulmatesMenu = ({
 
   if (!soulmates) return null;
   if (soulmates.length === 0) return null;
-  if (usbConnected) return null;
+  // if (usbConnected) return null;
 
   return (
     <div className="relative inline-block text-left" ref={wrapperRef}>

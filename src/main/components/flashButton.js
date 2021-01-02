@@ -26,14 +26,11 @@ const FlashButton = ({
   } = Soulmates.useContainer();
   const notificationsContainer = NotificationsContainer.useContainer();
 
-  // const [error, setError] = useState(false);
-
   const flash = async () => {
     try {
       await flashSketches(selectedSketches, config);
     } catch (e) {
       notificationsContainer.notify("Error flashing!", "error");
-      // setError(e);
     }
   };
 
@@ -143,10 +140,6 @@ const FlashButton = ({
           />
         )}
       </div>
-      {/*
-      {error && (
-        <ErrorNotification dismiss={() => setError(false)} trace={error} />
-      )} */}
     </div>
   );
 };

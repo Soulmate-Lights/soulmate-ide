@@ -172,7 +172,8 @@ const Menu = () => {
                   </span>
                 </div>
               )}
-              {usbConnected && (
+
+              {usbConnected && !selectedSoulmate && (
                 <div className="flex flex-row flex-wrap items-center  mx-4 text-xs border border-gray-200 rounded-lg bg-gray-50 dark-mode:bg-gray-800 dark-mode:border-gray-600">
                   <FaUsb className="w-4 h-4 mx-2 ml-4" />
                   <span className=" py-1 py-2 whitespace-pre">
