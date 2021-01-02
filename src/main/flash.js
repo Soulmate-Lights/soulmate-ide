@@ -1,6 +1,7 @@
 import "./progress.pcss";
 
 import compact from "lodash/compact";
+import sortBy from "lodash/sortBy";
 import uniqBy from "lodash/uniqBy";
 import { Suspense } from "react";
 import { AiFillCheckCircle } from "react-icons/ai";
@@ -12,6 +13,7 @@ import Sketch from "~/components/sketch";
 import Soulmates from "~/containers/soulmates";
 import UserContainer from "~/containers/user";
 import Logo from "~/images/logo.svg";
+import { emptyCode } from "~/utils/code";
 
 // import history from "~/utils/history";
 import FlashButton from "./components/flashButton";
@@ -49,9 +51,9 @@ const Flash = () => {
 
   if (!allSketches) return <Logo className="loading-spinner" />;
 
-  const filteredSketches = allSketches?.filter((s) =>
-    s.name.toLowerCase().includes(search.toLowerCase())
-  );
+  const filteredSketches = allSketches
+    ?.filter((s) => s.name.toLowerCase().includes(search.toLowerCase()))
+    .filter((s) => s.code !== emptyCode);
 
   const selectedSketches = selected.map(
     (id) =>
@@ -70,6 +72,8 @@ const Flash = () => {
       sketches: filteredSketches.filter((s) => s.user?.id === u.id),
     }))
     .filter((u) => u.uid !== userDetails.sub);
+
+  users = sortBy(users, (u) => -u.sketches.length);
 
   const toggle = (sketch) => {
     if (flashing) return;

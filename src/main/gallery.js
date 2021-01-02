@@ -1,4 +1,5 @@
 import _ from "lodash";
+import sortBy from "lodash/sortBy";
 import uniqBy from "lodash/uniqBy";
 import { Helmet } from "react-helmet";
 import { IoPersonCircleOutline } from "react-icons/io5";
@@ -9,6 +10,7 @@ import Header from "~/components/Header";
 import Sketch from "~/components/sketch";
 import UserContainer from "~/containers/user";
 import Logo from "~/images/logo.svg";
+import { emptyCode } from "~/utils/code";
 import { ALL_SKETCHES_URL } from "~/utils/urls";
 
 const Gallery = () => {
@@ -18,9 +20,9 @@ const Gallery = () => {
 
   if (!allSketches) return <Logo className="loading-spinner" />;
 
-  const filteredSketches = allSketches?.filter((s) =>
-    s.name.toLowerCase().includes(search.toLowerCase())
-  );
+  const filteredSketches = allSketches
+    ?.filter((s) => s.name.toLowerCase().includes(search.toLowerCase()))
+    .filter((s) => s.code !== emptyCode);
 
   let users = uniqBy(
     filteredSketches?.map((sketch) => sketch.user),
@@ -34,7 +36,7 @@ const Gallery = () => {
     sketches: filteredSketches.filter((s) => s.user.id === u.id),
   }));
 
-  users = _.sortBy(users, (u) => -u.sketches.length);
+  users = sortBy(users, (u) => -u.sketches.length);
 
   return (
     <div className="flex flex-col flex-grow">
