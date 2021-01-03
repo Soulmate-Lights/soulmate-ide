@@ -278,7 +278,7 @@ const Config = () => {
                       "border border-gray-200",
                       "bg-gray-50",
                       {
-                        "shadow-inner bg-purple-500 border-purple-600 text-white": !isUsingCustomChip,
+                        "shadow-inner bg-purple-600 border-purple-600 text-white": !isUsingCustomChip,
                       }
                     )}
                     onClick={() => {
@@ -299,7 +299,7 @@ const Config = () => {
                       "border border-gray-200",
                       "bg-gray-50",
                       {
-                        "shadow-inner bg-purple-500 border-purple-600 text-white": isUsingCustomChip,
+                        "shadow-inner bg-purple-600 border-purple-600 text-white": isUsingCustomChip,
                       }
                     )}
                     onClick={() => {

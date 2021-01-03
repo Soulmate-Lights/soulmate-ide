@@ -55,11 +55,14 @@ const Flash = () => {
     ?.filter((s) => s.name.toLowerCase().includes(search.toLowerCase()))
     .filter((s) => s.code !== emptyCode);
 
-  const selectedSketches = selected.map(
+  let selectedSketches = selected.map(
     (id) =>
       allSketches?.find((s) => s?.id === id) ||
       sketches?.find((s) => s?.id === id)
   );
+
+  // Just in case
+  selectedSketches = compact(selectedSketches);
 
   let users = uniqBy(
     filteredSketches?.map((sketch) => sketch.user),

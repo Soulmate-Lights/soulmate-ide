@@ -218,8 +218,8 @@ const SoulmatesContainer = () => {
         notificationsContainer.notify(`Soulmate disconnected.`);
       }
 
-      // setConfig(defaultConfig);
       setSoulmates(soulmates.filter((s) => s.port !== previousPort.current));
+      setSelectedSoulmate(undefined);
 
       previousPort.current = undefined;
       listener?.close();
