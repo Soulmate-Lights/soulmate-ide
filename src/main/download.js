@@ -1,6 +1,5 @@
 import { AiFillApple, AiFillWindows } from "react-icons/ai";
 import { FaShoppingCart } from "react-icons/fa";
-import { Mode, useLightSwitch } from "use-light-switch";
 
 import isElectron from "~/utils/isElectron";
 function isMacintosh() {
@@ -12,8 +11,6 @@ function isWindows() {
 }
 
 const Download = () => {
-  const dark = useLightSwitch() === Mode.Dark;
-
   return (
     <div className="flex flex-col items-center justify-center flex-grow px-20 py-10 width-full space-y-24">
       <div className="space-y-4">
@@ -23,7 +20,7 @@ const Download = () => {
             Buy one of our Soulmate Squares for 196 LEDs of jaw-dropping
             goodness.
             <br />
-            Or pick up a Soulmate DIY kit to create your own.
+            uOr pick up a Soulmate DIY kit to create your own.
           </p>
         </span>
 

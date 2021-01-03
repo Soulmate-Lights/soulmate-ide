@@ -12,10 +12,7 @@ import Logo from "~/images/logo.svg";
 import { fetcher, post, postDelete } from "~/utils";
 import { emptyCode } from "~/utils/code";
 import history from "~/utils/history";
-import isElectron from "~/utils/isElectron";
 import { ALL_SKETCHES_URL, SKETCHES_URL } from "~/utils/urls";
-
-import FlashButton from "./components/flashButton";
 
 const Editor = ({ id, mine }) => {
   const { data: sketches } = useSWR(SKETCHES_URL, fetcher);

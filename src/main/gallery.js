@@ -1,4 +1,3 @@
-import _ from "lodash";
 import sortBy from "lodash/sortBy";
 import uniqBy from "lodash/uniqBy";
 import { Helmet } from "react-helmet";
