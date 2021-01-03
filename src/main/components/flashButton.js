@@ -20,7 +20,6 @@ const FlashButton = ({
     soulmateLoading,
     flashing,
     usbFlashingPercentage,
-    usbConnected,
     config,
     selectedSoulmate,
   } = Soulmates.useContainer();
