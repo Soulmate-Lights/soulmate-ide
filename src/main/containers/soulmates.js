@@ -139,7 +139,7 @@ const SoulmatesContainer = () => {
 
     listener?.close();
 
-    if (selectedSoulmate) {
+    if (selectedSoulmate.type === "http") {
       await flashbuildToWifiSoulmate(
         selectedSoulmate.addresses[0],
         build,
