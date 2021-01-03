@@ -39,8 +39,7 @@ const FlashButton = ({
     selectedSketches.length === 0 ||
     flashing ||
     soulmateLoading ||
-    disabled ||
-    !usbConnected;
+    disabled;
 
   let text;
   if (soulmateLoading) {
