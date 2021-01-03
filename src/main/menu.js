@@ -1,4 +1,3 @@
-import { emojify } from "@twuni/emojify";
 import { BsTerminal } from "react-icons/bs";
 import { FiCloud, FiFolder, FiHome, FiSettings, FiSmile } from "react-icons/fi";
 import { HiOutlineLightningBolt } from "react-icons/hi";
@@ -8,6 +7,7 @@ import { Link, NavLink, useLocation } from "react-router-dom";
 import SoulmatesContainer from "~/containers/soulmates";
 import Logo from "~/images/logo.svg";
 import isElectron from "~/utils/isElectron";
+import soulmateName from "~/utils/soulmateName";
 
 import square from "./Square.jpg";
 import UserDetails from "./userDetails";
@@ -155,29 +155,14 @@ const Menu = () => {
 
             <div className="space-y-4">
               {selectedSoulmate && (
-                <div className="flex flex-row flex-wrap items-center mx-4 text-xs border border-gray-200 rounded-lg bg-gray-50 dark-mode:bg-gray-800 dark-mode:border-gray-600">
-                  <FaWifi className="w-4 h-4 mx-2 ml-4" />
-                  <span className=" py-1 py-2 whitespace-pre">
-                    {emojify(selectedSoulmate?.config.name || "WiFi Soulmate")}
-                    {selectedSoulmate?.config?.rows &&
-                      selectedSoulmate?.config.cols && (
-                        <span
-                          className="self-end p-1 mx-1 whitespace-pre border rounded opacity-50"
-                          style={{ fontSize: 9 }}
-                        >
-                          {selectedSoulmate?.config?.rows} x{" "}
-                          {selectedSoulmate?.config?.cols}
-                        </span>
-                      )}
-                  </span>
-                </div>
-              )}
-
-              {usbConnected && !selectedSoulmate && (
                 <div className="flex flex-row flex-wrap items-center  mx-4 text-xs border border-gray-200 rounded-lg bg-gray-50 dark-mode:bg-gray-800 dark-mode:border-gray-600">
-                  <FaUsb className="w-4 h-4 mx-2 ml-4" />
+                  {selectedSoulmate.type === "usb" ? (
+                    <FaUsb className="w-4 h-4 mx-2 ml-4" />
+                  ) : (
+                    <FaWifi className="w-4 h-4 mx-2 ml-4" />
+                  )}
                   <span className=" py-1 py-2 whitespace-pre">
-                    {emojify(config?.name || "USB Soulmate")}
+                    {soulmateName(selectedSoulmate)}
                     {config?.rows && config.cols && (
                       <span
                         className="p-1 mx-1 whitespace-pre border rounded opacity-50"
@@ -188,12 +173,14 @@ const Menu = () => {
                     )}
                   </span>
 
-                  <Link
-                    className="px-2 py-2 ml-auto justify-self-end button"
-                    to="/config"
-                  >
-                    <FaCog />
-                  </Link>
+                  {selectedSoulmate.type === "usb" && (
+                    <Link
+                      className="px-2 py-2 ml-auto justify-self-end button"
+                      to="/config"
+                    >
+                      <FaCog />
+                    </Link>
+                  )}
                 </div>
               )}
 

@@ -88,7 +88,7 @@ const Editor = ({ id, mine }) => {
 
   const { notify } = NotificationsContainer.useContainer();
   const { getBuild } = BuildsContainer.useContainer();
-  const { port, config } = SoulmatesContainer.useContainer();
+  const { config } = SoulmatesContainer.useContainer();
 
   const menuRef = useRef();
 

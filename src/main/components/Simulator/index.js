@@ -7,6 +7,7 @@ import { FiCast } from "react-icons/fi";
 
 import SoulmatesContainer from "~/containers/soulmates";
 import Logo from "~/images/logo.svg";
+import soulmateName from "~/utils/soulmateName";
 
 import SoulmatesMenu from "./SoulmatesMenu";
 import { calculateDimensions } from "./utils";
@@ -151,6 +152,7 @@ const Simulator = ({ build, className, minWidth, maxWidth, style }) => {
     >
       <span className="absolute inline-flex rounded-md top-4 right-4 space-x-2">
         <SoulmatesMenu
+          allowUsb={false}
           button={
             <button
               aria-expanded="true"
@@ -162,9 +164,9 @@ const Simulator = ({ build, className, minWidth, maxWidth, style }) => {
               type="button"
             >
               <FiCast className="w-4 h-4" />
-              {selectedSoulmate && (
+              {selectedSoulmate && selectedSoulmate.type !== "usb" && (
                 <span className="text-xs">
-                  {selectedSoulmate?.config?.name || "New Soulmate"}
+                  {soulmateName(selectedSoulmate)}
                 </span>
               )}
               <svg

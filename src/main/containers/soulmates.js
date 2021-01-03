@@ -18,7 +18,7 @@ if (typeof window.ipcRenderer === "undefined" || !window.ipcRenderer)
 
 const LINE_LIMIT = 300;
 
-const defaultConfig = {
+export const defaultConfig = {
   rows: 10,
   cols: 10,
   serpentine: true,
@@ -44,37 +44,41 @@ const SoulmatesContainer = () => {
 
   const [listener, setListener] = useState();
   const [text, setText] = useState([]);
-  const [config, setConfig] = useState(defaultConfig);
+  // const [config, setConfig] = useState(defaultConfig);
   const [error, setError] = useState(false);
 
-  const setConfigFromSoulmateData = (data) => {
-    setConfig({
-      name: data.name,
-      rows: data.rows,
-      cols: data.cols,
-      button: data.button,
-      clock: data.clock,
-      data: data.data,
-      ledType: data.ledType,
-      serpentine: data.serpentine,
-      milliamps: data.milliamps,
-    });
-  };
+  // const setConfigFromSoulmateData = (data) => {
+  //   setConfig({
+  //     name: data.name,
+  //     rows: data.rows,
+  //     cols: data.cols,
+  //     button: data.button,
+  //     clock: data.clock,
+  //     data: data.data,
+  //     ledType: data.ledType,
+  //     serpentine: data.serpentine,
+  //     milliamps: data.milliamps,
+  //   });
+  // };
 
   // Wifi Soulmates
   // TODO: Save the soulmate configs here somewhere - maybe in the soulmate objects themselves.
   // Do we need a Soulmate class?!
   const [soulmates, setSoulmates] = useState([]);
   const [selectedSoulmate, setSelectedSoulmate] = useState(undefined);
+  const usbSoulmate = soulmates.find((s) => s.type === "usb");
+  const needsSetup = !!port && !usbSoulmate?.config;
+  const config = selectedSoulmate?.config || defaultConfig;
 
   useEffect(() => {
-    if (!selectedSoulmate && !port) {
-      setConfig(defaultConfig);
-    } else if (selectedSoulmate) {
-      setConfigFromSoulmateData(selectedSoulmate.config);
-    } else {
-      setPort(false);
-      checkUsb();
+    if (!selectedSoulmate && usbSoulmate) {
+      setSelectedSoulmate(usbSoulmate);
+      //     // setConfig(defaultConfig);
+      //   } else if (selectedSoulmate) {
+      //     setConfigFromSoulmateData(selectedSoulmate.config);
+      //   } else {
+      //     setPort(false);
+      //     checkUsb();
     }
   }, [selectedSoulmate]);
 
@@ -170,17 +174,22 @@ const SoulmatesContainer = () => {
     if (!isElectron()) return;
 
     setSelectedSoulmate(undefined);
-    setConfig(false);
     let receivedData;
 
     const listener = new PortListener(port, (text) => {
       if (text[0] === "{") {
-        const data = JSON.parse(text);
-        receivedData = data;
-        setConfigFromSoulmateData(data);
+        const config = JSON.parse(text);
+        receivedData = config;
+        const newSoulmate = {
+          config,
+          type: "usb",
+          port,
+        };
+        setSoulmates([...soulmates, newSoulmate]);
+        setSelectedSoulmate(newSoulmate);
         setSoulmateLoading(false);
         notificationsContainer.notify(
-          `${data?.name || "USB Soulmate"} connected!`
+          `${config?.name || "USB Soulmate"} connected!`
         );
       }
       setText((oldText) => [...takeRight(oldText, LINE_LIMIT), text]);
@@ -209,7 +218,8 @@ const SoulmatesContainer = () => {
         notificationsContainer.notify(`Soulmate disconnected.`);
       }
 
-      setConfig(defaultConfig);
+      // setConfig(defaultConfig);
+      setSoulmates(soulmates.filter((s) => s.port !== previousPort.current));
 
       previousPort.current = undefined;
       listener?.close();
@@ -249,8 +259,6 @@ const SoulmatesContainer = () => {
   const restart = () => {
     listener?.port?.write('{ "restart": true }\n');
   };
-
-  const needsSetup = !!port && !config && !soulmateLoading;
 
   return {
     flashSketches,

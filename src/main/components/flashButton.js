@@ -1,4 +1,3 @@
-import { emojify } from "@twuni/emojify";
 import { FaChevronUp, FaUsb } from "react-icons/fa";
 import { RiPlayList2Fill } from "react-icons/ri";
 
@@ -7,6 +6,7 @@ import Soulmates from "~/containers/soulmates";
 import UserContainer from "~/containers/user";
 import Logo from "~/images/logo.svg";
 
+import soulmateName from "../utils/soulmateName";
 import SoulmatesMenu from "./Simulator/SoulmatesMenu";
 
 const FlashButton = ({
@@ -35,17 +35,17 @@ const FlashButton = ({
   };
 
   const disableFlashButton =
-    !selectedSoulmate &&
-    (selectedSketches.length === 0 ||
-      flashing ||
-      soulmateLoading ||
-      disabled ||
-      !usbConnected);
+    !selectedSoulmate ||
+    selectedSketches.length === 0 ||
+    flashing ||
+    soulmateLoading ||
+    disabled ||
+    !usbConnected;
 
   let text;
   if (soulmateLoading) {
     text = <Logo className="w-4 spin" />;
-  } else if (!usbConnected && !selectedSoulmate) {
+  } else if (!selectedSoulmate) {
     text = "No soulmate connected";
   } else if (usbFlashingPercentage >= 0) {
     text = (
@@ -65,14 +65,10 @@ const FlashButton = ({
       </span>
     );
   } else {
-    let name = selectedSoulmate?.config.name || config?.name;
-    if (!name) {
-      name = usbConnected ? "USB Soulmate" : "New Soulmate";
-    }
     text = (
       <>
-        <span>Flash to {emojify(name)}</span>
-        {usbConnected && <FaUsb className="w-6 h-6" />}
+        {selectedSoulmate?.type === "usb" && <FaUsb className="w-6 h-6" />}
+        <span>Flash to {soulmateName(selectedSoulmate)}</span>
       </>
     );
   }
@@ -101,7 +97,7 @@ const FlashButton = ({
 
         <button
           className={classnames("footer-button space-x-4", {
-            "rounded-r-none": showMenu && !usbConnected,
+            "rounded-r-none": showMenu,
             "cursor-auto": disableFlashButton,
             "hover:bg-purple-500": !disableFlashButton,
             "bg-purple-500": disableFlashButton,
@@ -115,8 +111,9 @@ const FlashButton = ({
           {text}
         </button>
 
-        {showMenu && !usbConnected && (
+        {showMenu && (
           <SoulmatesMenu
+            allowUsb
             button={
               <button
                 className={classnames(
