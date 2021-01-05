@@ -97,7 +97,7 @@ Leaving: "ease-in duration-200"
                 />
               </svg>
             </div>
-            <div className="flex-grow-0 flex-shrink mt-3 sm:mt-0 sm:ml-4 sm:text-left">
+            <div className="flex-grow flex-shrink mt-3 sm:mt-0 sm:ml-4 sm:text-left">
               <h3
                 className="text-lg font-medium text-gray-900 leading-6"
                 id="modal-headline"
@@ -107,13 +107,13 @@ Leaving: "ease-in duration-200"
               <div className="mt-2">
                 <p className="text-sm text-gray-500">
                   There was an error building your sketches. This sometimes
-                  happens when two sketches conflict with each other.
+                  happens when two sketches conflict with each other.{" "}
                   {trace && "Here's some more information that may be helpful:"}
                 </p>
               </div>
 
               {trace && (
-                <div className="flex-shrink w-full px-4 py-2 my-4 mr-8 overflow-hidden font-mono text-xs text-gray-500 border-red-200 rounded-lg bg-red-50 border-1 wrap">
+                <div className="flex-grow flex-shrink w-full px-4 py-2 my-4 mr-8 overflow-hidden font-mono text-xs text-gray-500 border-red-200 rounded-lg bg-red-50 border-1 wrap">
                   {lines?.map((line, i) => (
                     <p className="break-none" key={i}>
                       {line?.trim()}

@@ -92,7 +92,10 @@ export const prepareSketches = (sketches, config) => {
     serpentine,
   } = config;
 
-  if (!rows || !cols) throw "Oh no";
+  if (!rows) throw "Number of rows wasn't set";
+  if (!cols) throw "Number of columns wasn't set";
+  if (!milliamps) throw "Milliamps wasn't set";
+  if (!milliamps) throw "Milliamps wasn't set";
 
   const sanitizedSketchName = (name) => {
     return name.replace(/"/g, "");

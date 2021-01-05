@@ -45,7 +45,7 @@ const Config = () => {
   } = SoulmatesContainer.useContainer();
 
   const [config, setConfig] = useState(
-    _config || { button: 39, data: 32, clock: 26 }
+    _config || { button: 39, data: 32, clock: 26, milliamps: 1000 }
   );
 
   useEffect(() => {
@@ -283,6 +283,7 @@ const Config = () => {
                     )}
                     onClick={() => {
                       setConfig({
+                        ...config,
                         button: 39,
                         data: 32,
                         clock: 26,
@@ -304,9 +305,10 @@ const Config = () => {
                     )}
                     onClick={() => {
                       setConfig({
-                        button: "",
-                        data: "",
-                        clock: "",
+                        ...config,
+                        button: undefined,
+                        data: undefined,
+                        clock: undefined,
                       });
                     }}
                   >
