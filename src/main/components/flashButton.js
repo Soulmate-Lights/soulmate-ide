@@ -66,7 +66,7 @@ const FlashButton = ({
     text = (
       <>
         {selectedSoulmate?.type === "usb" && <FaUsb className="w-6 h-6" />}
-        <span>Flash to {soulmateName(selectedSoulmate)}</span>
+        <span>Upload to {soulmateName(selectedSoulmate)}</span>
       </>
     );
   }
@@ -131,7 +131,7 @@ const FlashButton = ({
             }
             buttonClassName="bg-purple-500 text-white"
             menuClassName="bottom-full mb-2"
-            text="Flash to"
+            text="Upload to..."
           />
         )}
       </div>

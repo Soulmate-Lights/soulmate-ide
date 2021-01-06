@@ -1,5 +1,7 @@
 import { Helmet } from "react-helmet";
+import { HiOutlineLightningBolt } from "react-icons/hi";
 import { RiUsbLine } from "react-icons/ri";
+import { Link } from "react-router-dom";
 
 import SoulmatesContainer from "~/containers/soulmates";
 import UserContainer from "~/containers/user";
@@ -44,9 +46,17 @@ const Config = () => {
     usbFlashingPercentage,
   } = SoulmatesContainer.useContainer();
 
+  const [justFlashed, setJustFlashed] = useState(false);
+
+  useEffect(() => {
+    if (usbFlashingPercentage === 100) setJustFlashed(true);
+  }, [usbFlashingPercentage]);
+
   const [config, setConfig] = useState(
     _config || { button: 39, data: 32, clock: 26, milliamps: 1000 }
   );
+
+  const dirty = _config != config && !flashing;
 
   useEffect(() => {
     setConfig(_config);
@@ -116,7 +126,6 @@ const Config = () => {
               </Right>
             </Section>
           )}
-
           <>
             <Section>
               <Left>
@@ -253,7 +262,7 @@ const Config = () => {
                       }}
                       type="checkbox"
                     />
-                    Mirror
+                    Mirror Horizontal
                   </label>
                 </div>
               </Right>
@@ -399,39 +408,66 @@ const Config = () => {
             <div className="mt-5 md:mt-0 md:col-span-2">
               <div className="sm:rounded-md sm:overflow-hidden">
                 <div className="flex justify-end col-span-6 sm:col-span-3">
-                  <div className="flex flex-row space-x-4">
-                    {_config != config && !flashing && (
-                      <button
-                        className="text-gray-500 bg-white footer-button"
-                        onClick={() => {
-                          setConfig(_config);
-                        }}
-                      >
-                        Cancel
-                      </button>
-                    )}
+                  <div className="flex flex-row flex-grow space-x-4">
+                    <div className="flex flex-row items-center flex-grow">
+                      <span className="flex flex-grow block pr-4 leading-2">
+                        {flashing && (
+                          <>Your Soulmate is being configured. Hang tight!</>
+                        )}
 
-                    <button
-                      className="footer-button"
-                      onClick={() => {
-                        flashSketches([sketch], config);
-                      }}
-                    >
-                      {flashing ? (
-                        <>
-                          <Logo className="w-6 h-6 mr-6 spin" />
-                          <progress
-                            className="my-2 usb-flash"
-                            max="100"
-                            value={usbFlashingPercentage}
-                          >
-                            {usbFlashingPercentage}%{" "}
-                          </progress>
-                        </>
-                      ) : (
-                        <>Configure my Soulmate</>
+                        {justFlashed && !dirty && (
+                          <>
+                            You&apos;re all set! Your Soulmate&apos;s LEDs
+                            should be green. Time to add some patterns!
+                          </>
+                        )}
+                      </span>
+
+                      {dirty && (
+                        <button
+                          className="text-gray-500 bg-white footer-button"
+                          onClick={() => {
+                            setConfig(_config);
+                          }}
+                        >
+                          Reset
+                        </button>
                       )}
-                    </button>
+
+                      {!justFlashed && (
+                        <button
+                          className="flex-shrink-0 footer-button"
+                          onClick={() => {
+                            flashSketches([sketch], config);
+                          }}
+                        >
+                          {flashing ? (
+                            <>
+                              <Logo className="w-6 h-6 mr-6 spin" />
+                              <progress
+                                className="my-2 usb-flash"
+                                max="100"
+                                value={usbFlashingPercentage}
+                              >
+                                {usbFlashingPercentage}%{" "}
+                              </progress>
+                            </>
+                          ) : (
+                            <>Configure my Soulmate</>
+                          )}
+                        </button>
+                      )}
+
+                      {justFlashed && (
+                        <Link
+                          className="flex-shrink-0 footer-button"
+                          to="/flash"
+                        >
+                          <HiOutlineLightningBolt className="w-6 h-6 mr-3 transition ease-in-out duration-150" />
+                          Upload patterns
+                        </Link>
+                      )}
+                    </div>
                   </div>
                 </div>
               </div>

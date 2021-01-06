@@ -6,6 +6,7 @@ import uniqBy from "lodash/uniqBy";
 import { Suspense } from "react";
 import { AiFillCheckCircle } from "react-icons/ai";
 import { BsLayoutSidebarInsetReverse } from "react-icons/bs";
+import { IoAddCircleSharp } from "react-icons/io5";
 import { ResizableBox } from "react-resizable";
 
 import Header from "~/components/Header";
@@ -109,27 +110,36 @@ const Flash = () => {
           title="Flash"
         />
 
-        <div className="flex flex-col flex-grow flex-shrink p-8 overflow-auto">
-          <h3 className="mb-2 text-lg">My Sketches</h3>
+        <div className="flex flex-col flex-grow flex-shrink p-4 overflow-auto">
+          {sketches.length > 0 && (
+            <div className="pb-2">
+              <h3 className="mb-2 text-lg">My Sketches</h3>
 
-          <div className="flex flex-row flex-wrap">
-            {sketches?.map((sketch) => (
-              <div
-                className="relative mb-4 mr-4 cursor-pointer"
-                key={sketch.id}
-                onClick={() => toggle(sketch)}
-              >
-                <Sketch sketch={sketch} />
+              <div className="flex flex-row flex-wrap">
+                {sketches?.map((sketch) => (
+                  <div
+                    className="relative mb-4 mr-4 cursor-pointer"
+                    key={sketch.id}
+                    onClick={() => toggle(sketch)}
+                    style={{
+                      cursor: selected.includes(sketch.id)
+                        ? "not-allowed"
+                        : "copy",
+                    }}
+                  >
+                    <Sketch sketch={sketch} width={24} />
 
-                {selected.includes(sketch.id) && (
-                  <AiFillCheckCircle className="absolute text-lg text-white top-2 right-2" />
-                )}
+                    {selected.includes(sketch.id) && (
+                      <AiFillCheckCircle className="absolute text-lg text-white top-2 right-2" />
+                    )}
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
+            </div>
+          )}
 
           {users?.map((user) => (
-            <div className="pb-4" key={user.id}>
+            <div className="pb-2" key={user.id}>
               <h3 className="mb-2 text-lg">{user.name}</h3>
               <div className="flex flex-row flex-wrap">
                 {user.sketches?.map((sketch) => (
@@ -137,8 +147,13 @@ const Flash = () => {
                     className="relative mb-4 mr-4 cursor-pointer"
                     key={sketch.id}
                     onClick={() => toggle(sketch)}
+                    style={{
+                      cursor: selected.includes(sketch.id)
+                        ? "not-allowed"
+                        : "copy",
+                    }}
                   >
-                    <Sketch sketch={sketch} />
+                    <Sketch sketch={sketch} width={24} />
 
                     {selected.includes(sketch.id) && (
                       <AiFillCheckCircle className="absolute text-lg text-white top-2 right-2" />
@@ -151,8 +166,15 @@ const Flash = () => {
         </div>
 
         <div className="flex flex-col">
-          {selectedSketches.length > 0 && (
-            <div className="flex flex-row items-center px-4 py-4 border-t border-gray-300 dark-mode:bg-gray-600 dark-mode:border-gray-700">
+          <div className="flex flex-row items-center px-4 pt-4 border-t border-gray-300 dark-mode:bg-gray-600 dark-mode:border-gray-700">
+            {selectedSketches?.length == 0 && (
+              <div className="w-full p-2 pb-6 text-center">
+                <IoAddCircleSharp className="inline w-8 h-8 mr-2" />
+                Click on the patterns you want to add to your Soulmate from the
+                gallery above.
+              </div>
+            )}
+            {selectedSketches?.length > 0 && (
               <div className="bottom-0 flex flex-col flex-wrap flex-shrink pr-4">
                 <div className="bottom-0 flex flex-row flex-wrap flex-shrink overflow-auto max-h-48">
                   {selectedSketches.map(
@@ -161,8 +183,14 @@ const Flash = () => {
                         <div
                           className="relative mr-4 text-xs cursor-pointer"
                           key={sketch.id}
+                          style={{
+                            cursor: selected.includes(sketch.id)
+                              ? "not-allowed"
+                              : "copy",
+                          }}
                         >
                           <Sketch
+                            className="mb-4"
                             key={sketch.id}
                             onClick={() => toggle(sketch)}
                             sketch={sketch}
@@ -174,8 +202,8 @@ const Flash = () => {
                   )}
                 </div>
               </div>
-            </div>
-          )}
+            )}
+          </div>
 
           <div className="flex-shrink-0 w-full p-4 ml-auto border-t border-gray-300 dark-mode:bg-gray-600 dark-mode:border-gray-700">
             <div className="flex items-center justify-end space-x-4">

@@ -1,4 +1,5 @@
 import { parse } from "ansicolor";
+import React from "react";
 import { VscDebugRestart } from "react-icons/vsc";
 import Style from "style-it";
 
@@ -14,14 +15,18 @@ const excludes = (line) => {
 const format = (line) => {
   const parsed = parse(line);
 
-  return parsed.spans.map(({ css, text }) =>
-    Style.it(
-      `.line {
+  return parsed.spans.map(({ css, text }, i) => (
+    <React.Fragment key={i}>
+      {Style.it(
+        `.line {
       ${css}
       }`,
-      <span className="line">{text}</span>
-    )
-  );
+        <span className="line" key={i}>
+          {text}
+        </span>
+      )}
+    </React.Fragment>
+  ));
 };
 
 const Console = ({ className }) => {
