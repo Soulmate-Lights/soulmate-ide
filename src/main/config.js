@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 import SoulmatesContainer from "~/containers/soulmates";
 import UserContainer from "~/containers/user";
-import Logo from "~/images/Logo";
+import Logo from "~/images/logo.svg";
 import { types } from "~/utils/types";
 
 import Header from "./components/Header";
