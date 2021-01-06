@@ -6,17 +6,13 @@ import CodeEditor from "~/components/codeEditor";
 import Header from "~/components/Header";
 import Simulator from "~/components/Simulator";
 import BuildsContainer from "~/containers/builds";
-import ConfigContainer from "~/containers/config";
 import NotificationsContainer from "~/containers/notifications";
 import SoulmatesContainer from "~/containers/soulmates";
 import Logo from "~/images/logo.svg";
 import { fetcher, post, postDelete } from "~/utils";
 import { emptyCode } from "~/utils/code";
 import history from "~/utils/history";
-import isElectron from "~/utils/isElectron";
 import { ALL_SKETCHES_URL, SKETCHES_URL } from "~/utils/urls";
-
-import FlashButton from "./components/flashButton";
 
 const Editor = ({ id, mine }) => {
   const { data: sketches } = useSWR(SKETCHES_URL, fetcher);
@@ -89,8 +85,7 @@ const Editor = ({ id, mine }) => {
 
   const { notify } = NotificationsContainer.useContainer();
   const { getBuild } = BuildsContainer.useContainer();
-  const { config } = ConfigContainer.useContainer();
-  const { port } = SoulmatesContainer.useContainer();
+  const { config } = SoulmatesContainer.useContainer();
 
   const menuRef = useRef();
 
@@ -150,7 +145,6 @@ const Editor = ({ id, mine }) => {
           </button>
         </span>
       </div>
-
       {menuOpen && mine && (
         <div className="absolute right-0 z-20 w-56 mt-2 shadow-lg origin-top-right rounded-md">
           <div
@@ -281,11 +275,11 @@ const Editor = ({ id, mine }) => {
       />
 
       <div className="flex flex-row flex-grow flex-shrink min-w-0 min-h-0">
-        <div className="flex flex-col flex-grow flex-shrink min-w-0">
-          <div className="relative flex flex-grow block">
+        <div className="flex flex-col flex-grow flex-shrink min-w-0 min-h-0">
+          <div className="relative flex flex-grow flex-shrink block">
             <CodeEditor
               build={build}
-              className="relative flex-grow flex-shrink min-w-0 bg-white"
+              className="relative flex-grow flex-shrink min-w-0 min-h-0 bg-white"
               code={code}
               onChange={(code) => persistCode(sketch.id, code)}
               onSave={(code) => save(sketch.id, code)}
@@ -322,19 +316,8 @@ const Editor = ({ id, mine }) => {
           <Simulator
             build={build}
             className="flex flex-col flex-grow"
-            config={config}
             minWidth={320}
           />
-
-          {isElectron() && port && (
-            <div className="p-4">
-              <FlashButton
-                className="m-4"
-                disabled={!build || build?.stderr}
-                selectedSketches={[sketch]}
-              />
-            </div>
-          )}
         </div>
       </div>
     </div>

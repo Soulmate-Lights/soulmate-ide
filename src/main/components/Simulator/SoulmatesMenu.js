@@ -1,4 +1,5 @@
-import { FaRegPlayCircle } from "react-icons/fa";
+import sortBy from "lodash/sortBy";
+import { FaRegPlayCircle, FaUsb } from "react-icons/fa";
 import {
   RiCheckboxBlankCircleFill,
   RiCheckboxCircleFill,
@@ -6,6 +7,7 @@ import {
 } from "react-icons/ri";
 
 import Soulmates from "~/containers/soulmates";
+import soulmateName from "~/utils/soulmateName";
 
 {
   /*
@@ -20,15 +22,18 @@ import Soulmates from "~/containers/soulmates";
 */
 }
 
-const canStream = (soulmate) => parseInt(soulmate.config?.version) >= 8;
+const canStream = (soulmate) => {
+  return parseInt(soulmate.config?.version) >= 8 && soulmate.type !== "usb";
+};
 
 const SoulmatesMenu = ({
   buttonClassName,
   menuClassName = "bottom-full",
   button,
   text = "Mirror simulator to:",
+  allowUsb,
 }) => {
-  const {
+  let {
     soulmates,
     selectedSoulmate,
     setSelectedSoulmate,
@@ -51,6 +56,7 @@ const SoulmatesMenu = ({
 
   if (!soulmates) return null;
   if (soulmates.length === 0) return null;
+  // if (usbConnected) return null;
 
   return (
     <div className="relative inline-block text-left" ref={wrapperRef}>
@@ -99,8 +105,9 @@ const SoulmatesMenu = ({
             <div className="px-4 pt-2 pb-1">
               <p className="text-sm text-gray-500">{text}</p>
             </div>
-            {soulmates.map((soulmate, i) => {
-              const enabled = canStream(soulmate);
+            {sortBy(soulmates, (s) => s.config?.chipId).map((soulmate, i) => {
+              let enabled = canStream(soulmate);
+              if (soulmate.type === "usb" && allowUsb) enabled = true;
               return (
                 <div
                   className={classnames(
@@ -134,8 +141,11 @@ const SoulmatesMenu = ({
                     )}
                   </span>
 
+                  {soulmate.type === "usb" && (
+                    <FaUsb className="w-4 h-4 mr-1" />
+                  )}
                   <span>
-                    {soulmate?.config?.name || "New Soulmate"}
+                    {soulmateName(soulmate)}
 
                     <span className="ml-2 font-mono text-xs">
                       (v{soulmate.config?.version})

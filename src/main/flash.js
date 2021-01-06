@@ -1,20 +1,20 @@
 import "./progress.pcss";
 
 import compact from "lodash/compact";
+import sortBy from "lodash/sortBy";
 import uniqBy from "lodash/uniqBy";
 import { Suspense } from "react";
 import { AiFillCheckCircle } from "react-icons/ai";
 import { BsLayoutSidebarInsetReverse } from "react-icons/bs";
-import { RiPlayList2Fill } from "react-icons/ri";
+import { IoAddCircleSharp } from "react-icons/io5";
 import { ResizableBox } from "react-resizable";
-import { useHistory } from "react-router-dom";
 
 import Header from "~/components/Header";
 import Sketch from "~/components/sketch";
-import ConfigContainer from "~/containers/config";
 import Soulmates from "~/containers/soulmates";
 import UserContainer from "~/containers/user";
 import Logo from "~/images/logo.svg";
+import { emptyCode } from "~/utils/code";
 
 // import history from "~/utils/history";
 import FlashButton from "./components/flashButton";
@@ -25,13 +25,11 @@ import useSWR from "swr";
 import { ALL_SKETCHES_URL, SKETCHES_URL } from "~/utils/urls";
 
 const Flash = () => {
-  let history = useHistory();
   const { data: sketches } = useSWR(SKETCHES_URL);
   const { data: allSketches } = useSWR(ALL_SKETCHES_URL);
 
   const { flashing, usbConnected } = Soulmates.useContainer();
-  const { userDetails, isAdmin } = UserContainer.useContainer();
-  const { type } = ConfigContainer.useContainer();
+  const { userDetails } = UserContainer.useContainer();
 
   const [search, setSearch] = useState("");
   const [selected, setSelected] = useState([]);
@@ -54,27 +52,32 @@ const Flash = () => {
 
   if (!allSketches) return <Logo className="loading-spinner" />;
 
-  const filteredSketches = allSketches?.filter((s) =>
-    s.name.toLowerCase().includes(search.toLowerCase())
+  const filteredSketches = allSketches
+    ?.filter((s) => s.name.toLowerCase().includes(search.toLowerCase()))
+    .filter((s) => s.code !== emptyCode);
+
+  let selectedSketches = selected.map(
+    (id) =>
+      allSketches?.find((s) => s?.id === id) ||
+      sketches?.find((s) => s?.id === id)
   );
 
-  const selectedSketches = selected.map(
-    (id) =>
-      // [...(allSketches || []), ...(sketches || [])].find((s) => s.id === id)
-      allSketches.find((s) => s.id === id) || sketches.find((s) => s.id === id)
-  );
+  // Just in case
+  selectedSketches = compact(selectedSketches);
 
   let users = uniqBy(
     filteredSketches?.map((sketch) => sketch.user),
-    (user) => user.id
+    (user) => user?.id
   );
 
   users = users
     ?.map((u) => ({
       ...u,
-      sketches: filteredSketches.filter((s) => s.user.id === u.id),
+      sketches: filteredSketches.filter((s) => s.user?.id === u.id),
     }))
     .filter((u) => u.uid !== userDetails.sub);
+
+  users = sortBy(users, (u) => -u.sketches.length);
 
   const toggle = (sketch) => {
     if (flashing) return;
@@ -107,27 +110,36 @@ const Flash = () => {
           title="Flash"
         />
 
-        <div className="flex flex-col flex-grow flex-shrink p-8 overflow-auto">
-          <h3 className="mb-2 text-lg">My Sketches</h3>
+        <div className="flex flex-col flex-grow flex-shrink p-4 overflow-auto">
+          {sketches.length > 0 && (
+            <div className="pb-2">
+              <h3 className="mb-2 text-lg">My Sketches</h3>
 
-          <div className="flex flex-row flex-wrap">
-            {sketches?.map((sketch) => (
-              <div
-                className="relative mb-4 mr-4 cursor-pointer"
-                key={sketch.id}
-                onClick={() => toggle(sketch)}
-              >
-                <Sketch sketch={sketch} />
+              <div className="flex flex-row flex-wrap">
+                {sketches?.map((sketch) => (
+                  <div
+                    className="relative mb-4 mr-4 cursor-pointer"
+                    key={sketch.id}
+                    onClick={() => toggle(sketch)}
+                    style={{
+                      cursor: selected.includes(sketch.id)
+                        ? "not-allowed"
+                        : "copy",
+                    }}
+                  >
+                    <Sketch sketch={sketch} width={24} />
 
-                {selected.includes(sketch.id) && (
-                  <AiFillCheckCircle className="absolute text-lg text-white top-2 right-2" />
-                )}
+                    {selected.includes(sketch.id) && (
+                      <AiFillCheckCircle className="absolute text-lg text-white top-2 right-2" />
+                    )}
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
+            </div>
+          )}
 
           {users?.map((user) => (
-            <div className="pb-4" key={user.id}>
+            <div className="pb-2" key={user.id}>
               <h3 className="mb-2 text-lg">{user.name}</h3>
               <div className="flex flex-row flex-wrap">
                 {user.sketches?.map((sketch) => (
@@ -135,8 +147,13 @@ const Flash = () => {
                     className="relative mb-4 mr-4 cursor-pointer"
                     key={sketch.id}
                     onClick={() => toggle(sketch)}
+                    style={{
+                      cursor: selected.includes(sketch.id)
+                        ? "not-allowed"
+                        : "copy",
+                    }}
                   >
-                    <Sketch sketch={sketch} />
+                    <Sketch sketch={sketch} width={24} />
 
                     {selected.includes(sketch.id) && (
                       <AiFillCheckCircle className="absolute text-lg text-white top-2 right-2" />
@@ -149,53 +166,52 @@ const Flash = () => {
         </div>
 
         <div className="flex flex-col">
-          {selectedSketches.length > 0 && (
-            <div className="flex flex-row items-center px-4 py-4 border-t border-gray-300 dark-mode:bg-gray-600 dark-mode:border-gray-700">
+          <div className="flex flex-row items-center px-4 pt-4 border-t border-gray-300 dark-mode:bg-gray-600 dark-mode:border-gray-700">
+            {selectedSketches?.length == 0 && (
+              <div className="w-full p-2 pb-6 text-center">
+                <IoAddCircleSharp className="inline w-8 h-8 mr-2" />
+                Click on the patterns you want to add to your Soulmate from the
+                gallery above.
+              </div>
+            )}
+            {selectedSketches?.length > 0 && (
               <div className="bottom-0 flex flex-col flex-wrap flex-shrink pr-4">
                 <div className="bottom-0 flex flex-row flex-wrap flex-shrink overflow-auto max-h-48">
-                  {selectedSketches.map((sketch) => (
-                    <div
-                      className="relative mr-4 text-xs cursor-pointer"
-                      key={sketch.id}
-                    >
-                      <Sketch
-                        key={sketch.id}
-                        onClick={() => toggle(sketch)}
-                        sketch={sketch}
-                        width={16}
-                      />
-                      <AiFillCheckCircle className="absolute text-lg text-white top-2 right-2" />
-                    </div>
-                  ))}
+                  {selectedSketches.map(
+                    (sketch) =>
+                      sketch && (
+                        <div
+                          className="relative mr-4 text-xs cursor-pointer"
+                          key={sketch.id}
+                          style={{
+                            cursor: selected.includes(sketch.id)
+                              ? "not-allowed"
+                              : "copy",
+                          }}
+                        >
+                          <Sketch
+                            className="mb-4"
+                            key={sketch.id}
+                            onClick={() => toggle(sketch)}
+                            sketch={sketch}
+                            width={16}
+                          />
+                          <AiFillCheckCircle className="absolute text-lg text-white top-2 right-2" />
+                        </div>
+                      )
+                  )}
                 </div>
               </div>
-            </div>
-          )}
+            )}
+          </div>
 
           <div className="flex-shrink-0 w-full p-4 ml-auto border-t border-gray-300 dark-mode:bg-gray-600 dark-mode:border-gray-700">
             <div className="flex items-center justify-end space-x-4">
               <FlashButton selectedSketches={selectedSketches} />
-              {isAdmin() && type === "square" && (
-                <button
-                  className="footer-button"
-                  onClick={() => {
-                    history.push({
-                      pathname: "/playlists",
-                      state: {
-                        sketches: selectedSketches,
-                      },
-                    });
-                  }}
-                >
-                  <RiPlayList2Fill className="w-6 h-6 mr-2" />
-                  Create playlist
-                </button>
-              )}
             </div>
           </div>
         </div>
       </div>
-
       {showConsole && (
         <ResizableBox
           axis="x"

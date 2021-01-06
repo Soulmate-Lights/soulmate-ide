@@ -104,7 +104,6 @@ const Dashboard = () => {
                   </div>
                 </div>
               )}
-
               {isMacintosh() && (
                 <div className="flex flex-row mt-4 sm:justify-center space-x-4">
                   <div className="shadow rounded-md">

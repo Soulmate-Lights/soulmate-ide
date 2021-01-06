@@ -82,15 +82,20 @@ void loop() {
 
 export const prepareSketches = (sketches, config) => {
   const {
-    rows = 70,
-    cols = 15,
-    ledType = "APA102",
-    milliamps = 700,
+    rows,
+    cols,
+    ledType,
+    milliamps,
     button,
     data,
     clock,
     serpentine,
   } = config;
+
+  if (!rows) throw "Number of rows wasn't set";
+  if (!cols) throw "Number of columns wasn't set";
+  if (!milliamps) throw "Milliamps wasn't set";
+  if (!milliamps) throw "Milliamps wasn't set";
 
   const sanitizedSketchName = (name) => {
     return name.replace(/"/g, "");
@@ -227,7 +232,10 @@ export async function getFullBuild(source) {
 
   console.log("[getFullBuild]", { res });
 
-  if (!res.ok) return false;
+  if (!res.ok) {
+    const result = await res.text();
+    throw result;
+  }
 
   const path = electron.remote.app.getPath("temp");
   const filename = parseInt(Math.random() * 10000000);
@@ -243,3 +251,11 @@ export async function getFullBuild(source) {
 
   return filePath;
 }
+
+// TODO: Move this into a util function
+export const getSoulmateBuild = async (sketches, config) => {
+  const preparedCode = prepareSketches(sketches, config);
+  const build = await getFullBuild(preparedCode);
+
+  return build;
+};

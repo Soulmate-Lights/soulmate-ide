@@ -7,13 +7,13 @@ const Header = ({ title, sections, subtitle, actions, className }) => {
     <div
       className={classnames(
         "flex dark-mode:bg-gray-800 dark-mode:text-white flex-row",
-        "h-20 border-b dark-mode:border-gray-700",
+        "h-16 border-b dark-mode:border-gray-700",
         "flex-shrink-0 flex-grow-0",
         className
       )}
     >
       <div
-        className="flex flex-col justify-center flex-grow px-6 py-5 "
+        className="flex flex-col justify-center flex-grow px-6 py-5"
         style={{ WebkitAppRegion: "drag" }}
       >
         <div className="md:flex md:items-center md:justify-between">
@@ -22,7 +22,7 @@ const Header = ({ title, sections, subtitle, actions, className }) => {
               {compact(sections).map(({ title, to }, i) => (
                 <React.Fragment key={i}>
                   <Link
-                    className="flex flex-row items-center text-gray-500 dark-mode:text-white hover:text-gray-700 dark-mode:hover:text-gray-300 transition duration-150 ease-in-out"
+                    className="flex flex-row items-center leading-snug text-gray-500 border-b dark-mode:text-white hover:text-gray-700 dark-mode:hover:text-gray-300 transition duration-150 ease-in-out"
                     key={to}
                     to={to}
                   >
@@ -53,7 +53,7 @@ const Header = ({ title, sections, subtitle, actions, className }) => {
         </div>
       </div>
       {actions && (
-        <div className="flex items-center flex-shrink-0 pr-8 ml-auto space-x-2">
+        <div className="flex items-center flex-shrink-0 pr-4 ml-auto space-x-2">
           {compact(actions).map((action, i) => {
             const { title, onClick, className, ...rest } = action;
 

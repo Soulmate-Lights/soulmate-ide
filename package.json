@@ -4,7 +4,7 @@
     "last 1 Chrome versions",
     "last 1 electron version"
   ],
-  "version": "2.0.167",
+  "version": "2.0.168",
   "main": "src/electron.js",
   "license": "MIT",
   "dependencies": {
@@ -19,6 +19,7 @@
     "@sentry/tracing": "^5.24.2",
     "@tailwindcss/forms": "^0.2.1",
     "@tailwindcss/ui": "^0.5.0",
+    "@twuni/emojify": "^1.0.2",
     "@use-it/event-listener": "^0.1.5",
     "@use-it/interval": "^0.1.3",
     "@wokwi/elements": "^0.27.2",

@@ -3,37 +3,26 @@ import useEventListener from "@use-it/event-listener";
 import _ from "lodash";
 import { useCallback } from "react";
 import { BsFillPauseFill, BsPlayFill } from "react-icons/bs";
-import { FaCog } from "react-icons/fa";
 import { FiCast } from "react-icons/fi";
-import { Link } from "react-router-dom";
 
 import SoulmatesContainer from "~/containers/soulmates";
 import Logo from "~/images/logo.svg";
+import soulmateName from "~/utils/soulmateName";
 
 import SoulmatesMenu from "./SoulmatesMenu";
 import { calculateDimensions } from "./utils";
 
 let worker;
 
-const Simulator = ({
-  build,
-  config,
-  showConfig = true,
-  className,
-  minWidth,
-  maxWidth,
-  style,
-}) => {
+const Simulator = ({ build, className, minWidth, maxWidth, style }) => {
   const canvas = useRef();
   const compilerOutputDiv = useRef();
   const [serialOutput, setSerialOutput] = useState("");
   const serialOutputRef = useRef("");
   const [hasPixels, setHasPixels] = useState(false);
 
-  const { selectedSoulmate } = SoulmatesContainer.useContainer();
-
-  const { rows, cols, serpentine, mirror } = config || {};
-
+  const { selectedSoulmate, config } = SoulmatesContainer.useContainer();
+  const { rows, cols, serpentine, mirror } = config;
   const [paused, setPaused] = useState(!document.hasFocus());
   useEventListener("blur", () => !selectedSoulmate && setPaused(true));
   useEventListener("focus", () => setPaused(false));
@@ -43,7 +32,6 @@ const Simulator = ({
   const ws = useRef();
   useEffect(() => {
     if (!selectedSoulmate) return;
-    // if (selectedSoulmate.config) setConfig(selectedSoulmate.config);
     if (!selectedSoulmate.addresses) return;
     ws.current = new WebSocket(`ws://${selectedSoulmate.addresses[0]}:81`);
     return () => ws.current?.close();
@@ -164,6 +152,7 @@ const Simulator = ({
     >
       <span className="absolute inline-flex rounded-md top-4 right-4 space-x-2">
         <SoulmatesMenu
+          allowUsb={false}
           button={
             <button
               aria-expanded="true"
@@ -175,9 +164,9 @@ const Simulator = ({
               type="button"
             >
               <FiCast className="w-4 h-4" />
-              {selectedSoulmate && (
+              {selectedSoulmate && selectedSoulmate.type !== "usb" && (
                 <span className="text-xs">
-                  {selectedSoulmate?.config?.name || "New Soulmate"}
+                  {soulmateName(selectedSoulmate)}
                 </span>
               )}
               <svg
@@ -198,7 +187,7 @@ const Simulator = ({
           buttonClassName=""
           menuClassName=""
         />
-        {showConfig && (
+        {/* {showConfig && (
           <Link
             className="inline-flex items-center px-3 py-2 text-sm font-medium text-gray-700 bg-white border order-gray-300 leading-4 rounded-md hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue ctive:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150"
             onClick={() => setPaused(!paused)}
@@ -206,7 +195,7 @@ const Simulator = ({
           >
             <FaCog />
           </Link>
-        )}
+        )} */}
         <button
           className="inline-flex items-center px-3 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 eading-4 rounded-md hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue ctive:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150"
           onClick={() => setPaused(!paused)}
