@@ -43,13 +43,13 @@ const installDependencies = () => {
   const childProcess = remote.require("child_process");
   if (remote.require("os").platform() === "darwin") {
     childProcess.execSync("/usr/bin/python ./get-pip.py", { cwd: dir });
-    childProcess.execSync("/usr/bin/python -m pip install pyserial");
+    childProcess.execSync(`/usr/bin/python -m pip install "pyserial>=3.5"`);
   } else {
     const which = remote && remote?.require("which");
     const python = which.sync("python");
     childProcess.execSync(`${python} ./get-pip.py`, { cwd: dir });
     const pip = which.sync("pip");
-    childProcess.execSync(`${pip} install pyserial`);
+    childProcess.execSync(`${pip} install "pyserial>=3.5"`);
   }
 };
 
