@@ -148,6 +148,12 @@
         "bucket": "soulmate-ide-updates"
       }
     },
+    "protocols": {
+      "name": "soulmate",
+      "schemes": [
+        "soulmate"
+      ]
+    },
     "mac": {
       "minimumSystemVersion": "10.12.0",
       "target": [

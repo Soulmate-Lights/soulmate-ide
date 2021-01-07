@@ -24,6 +24,7 @@ app.on("ready", () => {
   }
 
   autoUpdater.checkForUpdatesAndNotify();
+  app.setAsDefaultProtocolClient("soulmate");
 });
 
 let mainWindow;
