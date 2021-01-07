@@ -7,6 +7,9 @@ const auth = new ElectronAuth0Login({
   auth0Scopes: "openid profile offline_access",
   applicationName: "soulmate",
   useRefreshTokens: true,
+  windowConfig: {
+    webPreferences: { enableRemoteModule: false, nodeIntegration: false },
+  },
 });
 
 module.exports = auth;

@@ -44,11 +44,18 @@ function createWindow() {
       enableRemoteModule: true,
       // nodeIntegrationInWorker: true,
       // Removed these June 11th for security
-      // nodeIntegration: true,
+      nodeIntegration: false,
       // webSecurity: false,
       preload: __dirname + "/preload.js",
     },
   });
+
+  // mainWindow.webContents.session.defaultSession.webRequest.onBeforeSendHeaders(
+  //   (details, callback) => {
+  //     details.requestHeaders["User-Agent"] = "Chrome";
+  //     callback({ cancel: false, requestHeaders: details.requestHeaders });
+  //   }
+  // );
 
   const mainUrl = isDev
     ? "http://localhost:3000"
