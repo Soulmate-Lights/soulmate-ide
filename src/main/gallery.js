@@ -14,10 +14,11 @@ import { ALL_SKETCHES_URL } from "~/utils/urls";
 
 const Gallery = () => {
   const { userDetails } = UserContainer.useContainer();
-  const { data: allSketches } = useSWR(ALL_SKETCHES_URL);
+  const { data: allSketches, error } = useSWR(ALL_SKETCHES_URL);
   const [search, setSearch] = useState("");
 
-  if (!allSketches) return <Logo className="loading-spinner" />;
+  if (!allSketches || !allSketches.filter)
+    return <Logo className="loading-spinner" />;
 
   const filteredSketches = allSketches
     ?.filter((s) => s.name.toLowerCase().includes(search.toLowerCase()))
@@ -25,14 +26,14 @@ const Gallery = () => {
 
   let users = uniqBy(
     filteredSketches?.map((sketch) => sketch.user),
-    (user) => user.id
+    (user) => user?.id
   );
 
   users = users.sort((u) => u.uid !== userDetails?.sub);
 
   users = users?.map((u) => ({
     ...u,
-    sketches: filteredSketches.filter((s) => s.user.id === u.id),
+    sketches: filteredSketches.filter((s) => s.user?.id === u?.id),
   }));
 
   users = sortBy(users, (u) => -u.sketches.length);

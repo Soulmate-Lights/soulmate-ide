@@ -11,13 +11,13 @@ const User = ({ id }) => {
 
   let users = uniqBy(
     allSketches?.map((sketch) => sketch.user),
-    (user) => user.id
+    (user) => user?.id
   )?.map((u) => ({
     ...u,
-    sketches: allSketches.filter((s) => s.user.id === u.id),
+    sketches: (allSketches || []).filter((s) => s.user?.id === u?.id),
   }));
 
-  let user = users.find((user) => user.id === parseInt(id));
+  let user = users.find((user) => user?.id === parseInt(id));
 
   if (!user) return <Logo className="loading-spinner" />;
 

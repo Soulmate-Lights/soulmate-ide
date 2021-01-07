@@ -1,4 +1,5 @@
 import { Helmet } from "react-helmet";
+import { Link } from "react-router-dom";
 import useSWR, { mutate } from "swr";
 
 import Header from "~/components/Header";
@@ -79,13 +80,13 @@ const MySketches = () => {
 
           <div className="max-w-md mx-auto mt-5 sm:flex sm:justify-center md:mt-8">
             <span className="inline-flex shadow rounded-md">
-              <a
+              <Link
                 className="inline-flex items-center px-4 py-2 text-base font-medium text-purple-600 bg-white border border-transparent leading-6 rounded-md hover:text-purple-500 focus:outline-none focus:border-purple-300 focus:shadow-outline-gray active:bg-purple-50 active:text-purple-700 transition duration-150 ease-in-out"
-                href="#none"
                 onClick={login}
+                to="/my-patterns"
               >
                 Log in
-              </a>
+              </Link>
             </span>
           </div>
         </div>

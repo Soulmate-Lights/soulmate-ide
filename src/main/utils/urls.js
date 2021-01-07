@@ -1,5 +1,5 @@
-// const devHost = "http://localhost:3001";
-const host = "https://editor.soulmatelights.com";
+const host = "http://localhost:3001";
+// const host = "https://editor.soulmatelights.com";
 export const url = (path) => host + path;
 
 export const SKETCHES_URL = url("/sketches/list");

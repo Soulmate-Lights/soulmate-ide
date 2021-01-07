@@ -43,6 +43,8 @@ const IDE = () => {
     setError,
   } = SoulmatesContainer.useContainer();
 
+  UserContainer.useContainer();
+
   const [focus, setFocus] = useState(true);
   const blur = !focus;
 
@@ -52,95 +54,102 @@ const IDE = () => {
 
   return (
     <div className="flex flex-col flex-grow flex-shrink overflow-hidden">
-      <div
-        className={classnames(
-          "flex flex-shrink flex-grow overflow-hidden bg-gray-100 dark-mode:bg-gray-300 font-medium"
-        )}
-        style={{
-          WebkitUserSelect: "none",
-          opacity: blur ? "0.9" : 1,
-        }}
-      >
-        <Menu />
+      <Switch>
+        <Route path="/desktop-sign-in">
+          <Logo className="loading-spinner" />
+        </Route>
+        <Route>
+          <div
+            className={classnames(
+              "flex flex-shrink flex-grow overflow-hidden bg-gray-100 dark-mode:bg-gray-300 font-medium"
+            )}
+            style={{
+              WebkitUserSelect: "none",
+              opacity: blur ? "0.9" : 1,
+            }}
+          >
+            <Menu />
 
-        <Notifications />
+            <Notifications />
 
-        <ErrorBoundary>
-          <Suspense fallback={<Logo className="loading-spinner" />}>
-            <div className="flex flex-row flex-grow flex-shrink w-full min-w-0 bg-gray-100 dark-mode:bg-gray-800 dark-mode:text-white">
-              <Switch>
-                <Route exact path="/">
-                  <Dashboard />
-                </Route>
+            <ErrorBoundary>
+              <Suspense fallback={<Logo className="loading-spinner" />}>
+                <div className="flex flex-row flex-grow flex-shrink w-full min-w-0 bg-gray-100 dark-mode:bg-gray-800 dark-mode:text-white">
+                  <Switch>
+                    <Route exact path="/">
+                      <Dashboard />
+                    </Route>
 
-                <Route exact path="/tutorial">
-                  <Welcome />
-                </Route>
+                    <Route exact path="/tutorial">
+                      <Welcome />
+                    </Route>
 
-                <Route exact path="/my-patterns">
-                  <MySketches />
-                </Route>
+                    <Route exact path="/my-patterns">
+                      <MySketches />
+                    </Route>
 
-                <Route exact path="/gallery">
-                  <Gallery />
-                </Route>
+                    <Route exact path="/gallery">
+                      <Gallery />
+                    </Route>
 
-                <Route exact path="/flash">
-                  {isElectron() ? <Flash /> : <Download />}
-                </Route>
+                    <Route exact path="/flash">
+                      {isElectron() ? <Flash /> : <Download />}
+                    </Route>
 
-                <Route exact path="/config">
-                  <Config />
-                </Route>
+                    <Route exact path="/config">
+                      <Config />
+                    </Route>
 
-                <Route
-                  path="/gallery/user/:id"
-                  render={({
-                    match: {
-                      params: { id },
-                    },
-                  }) => <User id={id} />}
-                />
+                    <Route
+                      path="/gallery/user/:id"
+                      render={({
+                        match: {
+                          params: { id },
+                        },
+                      }) => <User id={id} />}
+                    />
 
-                <Route
-                  path="/gallery/:id"
-                  render={({
-                    match: {
-                      params: { id },
-                    },
-                  }) => <Editor id={id} />}
-                />
+                    <Route
+                      path="/gallery/:id"
+                      render={({
+                        match: {
+                          params: { id },
+                        },
+                      }) => <Editor id={id} />}
+                    />
 
-                <Route
-                  path="/my-patterns/:id"
-                  render={({
-                    match: {
-                      params: { id },
-                    },
-                  }) => <Editor id={id} mine />}
-                />
+                    <Route
+                      path="/my-patterns/:id"
+                      render={({
+                        match: {
+                          params: { id },
+                        },
+                      }) => <Editor id={id} mine />}
+                    />
 
-                <Route path="/console">
-                  <Console />
-                </Route>
+                    <Route path="/console">
+                      <Console />
+                    </Route>
 
-                <Route
-                  path="/playlists/:id"
-                  render={({
-                    match: {
-                      params: { id },
-                    },
-                  }) => <Playlist id={id} />}
-                />
+                    <Route
+                      path="/playlists/:id"
+                      render={({
+                        match: {
+                          params: { id },
+                        },
+                      }) => <Playlist id={id} />}
+                    />
 
-                <Route path="/playlists">
-                  <Playlists />
-                </Route>
-              </Switch>
-            </div>
-          </Suspense>
-        </ErrorBoundary>
-      </div>
+                    <Route path="/playlists">
+                      <Playlists />
+                    </Route>
+                  </Switch>
+                </div>
+              </Suspense>
+            </ErrorBoundary>
+          </div>
+        </Route>
+      </Switch>
 
       <Switch>
         <Route path="/config" />
