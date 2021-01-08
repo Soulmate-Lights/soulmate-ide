@@ -4,11 +4,12 @@ on:
   push:
     tags:
       - "v*"
+      - "sentry-*"
 
 jobs:
   upload-sourcemaps-to-sentry:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 15
     env:
       ACTIONS_ALLOW_UNSECURE_COMMANDS: true
 
