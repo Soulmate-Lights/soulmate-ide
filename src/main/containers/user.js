@@ -3,7 +3,7 @@ import isEmpty from "lodash/isEmpty";
 import { mutate } from "swr";
 import { createContainer } from "unstated-next";
 
-import { triggerLogin } from "~/utils/auth";
+import { callbackDesktop, signInDesktop, triggerLogin } from "~/utils/auth";
 import { SKETCHES_URL } from "~/utils/urls";
 import { url } from "~/utils/urls";
 
@@ -30,9 +30,11 @@ const UserContainer = () => {
 
   useEffect(() => {
     if (window.location.pathname === "/desktop-sign-in") {
-      setTimeout(() => {
-        triggerLogin(document.location.hash.replace("#", ""));
-      }, 500);
+      signInDesktop();
+    }
+
+    if (window.location.pathname === "/desktop-callback") {
+      callbackDesktop();
     }
   }, []);
 

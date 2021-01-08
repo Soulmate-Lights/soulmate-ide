@@ -5,59 +5,26 @@ const config = {
   clientId: "OsKmsunrgzhFv2znzUHpd9JsFSsOl46o",
 };
 import createAuth0Client from "@auth0/auth0-spa-js";
-import * as SentryReact from "@sentry/react";
 import jwtDecode from "jwt-decode";
 
-import history from "~/utils/history";
 import { url } from "~/utils/urls";
 
 import { get, postWithToken } from ".";
 import isElectron from "./isElectron";
 
-let auth0;
+// createAuth0Client({
+//   domain: config.domain,
+//   client_id: config.clientId,
+// }).then(async (client) => {
+//   window.auth0 = client;
+// });
 
-createAuth0Client({
+const auth0Promise = createAuth0Client({
   domain: config.domain,
   client_id: config.clientId,
-}).then(async (client) => {
-  auth0 = client;
-  window.auth0 = client;
-
-  const query = window.location.search;
-  if (query.includes("code=")) {
-    if (document.location.pathname === "/desktop-callback") {
-      const code = window.location.hash.replace("#", "");
-      await auth0.handleRedirectCallback();
-      const claim = await auth0?.getIdTokenClaims();
-      const token = claim.__raw;
-      postWithToken("/save-token", { code, token }).then(window.close);
-      setTimeout(() => {
-        window.close();
-      }, 1000);
-      // alert("We have a code");
-      // debugger;
-      // await auth0.handleRedirectCallback();
-      // const claim = await auth0?.getIdTokenClaims();
-      // localStorage.token = JSON.stringify(claim.__raw);
-    } else {
-      try {
-        localStorage.loginPending = true;
-        await auth0.handleRedirectCallback();
-
-        const claim = await auth0?.getIdTokenClaims();
-        localStorage.token = JSON.stringify(claim.__raw);
-
-        const user = await auth0.getUser();
-        localStorage.user = JSON.stringify(user);
-        window.location.reload();
-      } catch (e) {
-        SentryReact.captureException(e);
-      }
-
-      history.push("/");
-    }
-  }
 });
+
+window.auth0Promise = auth0Promise;
 
 export const getTokenOnStartup = () => {
   if (window.auth) return window.auth.getToken();
@@ -94,6 +61,7 @@ export const tokenProperties = async () => {
     return jwtDecode(localStorage.token);
   }
 
+  const auth0 = await auth0Promise;
   return await auth0.getUser();
 };
 
@@ -113,19 +81,8 @@ export const triggerLogin = async () => {
         }
       }, 1000);
     });
-    // } else if (code) {
-    //   if (!auth0) console.log("no auth0");
-    //   await auth0.loginWithRedirect({
-    //     redirect_uri: url(`/desktop-callback#${code}`),
-    //   });
-    //   if (window.location.pathname === "/desktop-callback") {
-    //     // const code = window.location.hash.replace("#", "");
-    //     const token = await getToken();
-    //     postWithToken("/save-token", { code, token }).then(window.close);
-    //   } else {
-    //     return auth0.getIdTokenClaims().then((c) => c.__raw);
-    //   }
   } else {
+    const auth0 = await auth0Promise;
     await auth0.loginWithPopup();
     return auth0.getIdTokenClaims().then((c) => c.__raw);
   }
@@ -133,13 +90,23 @@ export const triggerLogin = async () => {
 
 export const signInDesktop = async () => {
   const code = document.location.hash.replace("#", "");
+  const auth0 = await auth0Promise;
   auth0.loginWithRedirect({
-    redirect_uri: url(`/desktop-callback#${code}`),
+    redirect_uri: url(`desktop-callback#${code}`),
   });
 };
 
 export const callbackDesktop = async () => {
+  console.log("callback desktop");
   const code = document.location.hash.replace("#", "");
-  const token = await getToken();
+  console.log({ code });
+  const auth0 = await auth0Promise;
+  console.log("auth0");
+  await auth0.handleRedirectCallback();
+  console.log("handled");
+  const claim = await auth0?.getIdTokenClaims();
+  console.log(claim);
+  const token = claim.__raw;
+  console.log(token);
   postWithToken("/save-token", { code, token }).then(window.close);
 };
