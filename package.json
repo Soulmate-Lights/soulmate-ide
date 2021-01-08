@@ -4,7 +4,7 @@
     "last 1 Chrome versions",
     "last 1 electron version"
   ],
-  "version": "2.0.173",
+  "version": "2.0.174",
   "main": "src/electron.js",
   "license": "MIT",
   "dependencies": {
@@ -45,6 +45,7 @@
     "lodash": "^4.17.15",
     "moment": "^2.27.0",
     "node-abi": "^2.19.3",
+    "normalize-url": "^5.3.0",
     "postcss": "^8.1.10",
     "postcss-modules": "^3.2.0",
     "prop-types": "^15.7.2",

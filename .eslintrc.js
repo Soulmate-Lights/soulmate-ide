@@ -28,6 +28,9 @@ module.exports = {
     useState: "readonly",
     useContext: "readonly",
     classnames: "readonly",
+    expect: "readonly",
+    describe: "readonly",
+    it: "readonly",
   },
   parserOptions: {
     ecmaFeatures: {
