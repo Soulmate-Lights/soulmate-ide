@@ -1,7 +1,7 @@
 import normalizeUrl from "normalize-url";
 
-// const host = "http://localhost:3001";
-export const host = "https://editor.soulmatelights.com";
+const host = "http://localhost:3000";
+// export const host = "https://editor.soulmatelights.com";
 
 export const url = (path) => normalizeUrl(host + "/" + path);
 

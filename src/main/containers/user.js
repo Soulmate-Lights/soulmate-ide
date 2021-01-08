@@ -7,6 +7,8 @@ import { triggerLogin } from "~/utils/auth";
 import { SKETCHES_URL } from "~/utils/urls";
 import { url } from "~/utils/urls";
 
+import isElectron from "../utils/isElectron";
+
 const UserContainer = () => {
   const [userDetails, setUserDetails] = useState(undefined);
 
@@ -29,7 +31,7 @@ const UserContainer = () => {
   useEffect(() => {
     if (window.location.pathname === "/desktop-sign-in") {
       setTimeout(() => {
-        triggerLogin();
+        triggerLogin(document.location.hash.replace("#", ""));
       }, 500);
     }
   }, []);
@@ -63,6 +65,10 @@ const UserContainer = () => {
 
   const logout = async () => {
     setUserDetails(undefined);
+
+    if (isElectron()) {
+      remote.require("electron").session.defaultSession.clearStorageData;
+    }
 
     var cookies = document.cookie.split(";");
     for (var i = 0; i < cookies.length; i++) {

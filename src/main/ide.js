@@ -58,6 +58,15 @@ const IDE = () => {
         <Route path="/desktop-sign-in">
           <Logo className="loading-spinner" />
         </Route>
+        <Route path="/desktop-callback">
+          <div
+            onClick={() => {
+              window.close();
+            }}
+          >
+            close me
+          </div>
+        </Route>
         <Route>
           <div
             className={classnames(

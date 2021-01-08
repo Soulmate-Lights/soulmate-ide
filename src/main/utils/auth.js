@@ -24,22 +24,35 @@ createAuth0Client({
   window.auth0 = client;
 
   const query = window.location.search;
-  if (query.includes("code=") && query.includes("state=")) {
-    try {
-      localStorage.loginPending = true;
-      await auth0.handleRedirectCallback();
+  if (query.includes("code=")) {
+    if (document.location.pathname === "/desktop-callback") {
+      const code = window.location.hash.replace("#", "");
+      postWithToken("/save-token", { code }).then(window.close);
+      setTimeout(() => {
+        window.close();
+      }, 1000);
+      // alert("We have a code");
+      // debugger;
+      // await auth0.handleRedirectCallback();
+      // const claim = await auth0?.getIdTokenClaims();
+      // localStorage.token = JSON.stringify(claim.__raw);
+    } else {
+      try {
+        localStorage.loginPending = true;
+        await auth0.handleRedirectCallback();
 
-      const claim = await auth0?.getIdTokenClaims();
-      localStorage.token = JSON.stringify(claim.__raw);
+        const claim = await auth0?.getIdTokenClaims();
+        localStorage.token = JSON.stringify(claim.__raw);
 
-      const user = await auth0.getUser();
-      localStorage.user = JSON.stringify(user);
-      window.location.reload();
-    } catch (e) {
-      SentryReact.captureException(e);
+        const user = await auth0.getUser();
+        localStorage.user = JSON.stringify(user);
+        window.location.reload();
+      } catch (e) {
+        SentryReact.captureException(e);
+      }
+
+      history.push("/");
     }
-
-    history.push("/");
   }
 });
 
@@ -81,7 +94,7 @@ export const tokenProperties = async () => {
   return await auth0.getUser();
 };
 
-export const triggerLogin = async () => {
+export const triggerLogin = async (code) => {
   if (isElectron()) {
     const id = Math.random();
     electron.shell.openExternal(url(`/desktop-sign-in#${id}`));
@@ -99,9 +112,12 @@ export const triggerLogin = async () => {
     });
   } else {
     if (!auth0) console.log("no auth0");
-    await auth0.loginWithPopup();
-    if (window.location.pathname === "/desktop-sign-in") {
-      const code = window.location.hash.replace("#", "");
+    await auth0.loginWithRedirect({
+      redirect_uri: url(`/desktop-callback#${code}`),
+    });
+    if (window.location.pathname === "/desktop-callback") {
+      // const code = window.location.hash.replace("#", "");
+      alert("Save token");
       postWithToken("/save-token", { code }).then(window.close);
     } else {
       return auth0.getIdTokenClaims().then((c) => c.__raw);
