@@ -110,7 +110,7 @@ export const triggerLogin = async (code) => {
         }
       }, 1000);
     });
-  } else {
+  } else if (code) {
     if (!auth0) console.log("no auth0");
     await auth0.loginWithRedirect({
       redirect_uri: url(`/desktop-callback#${code}`),
@@ -122,5 +122,8 @@ export const triggerLogin = async (code) => {
     } else {
       return auth0.getIdTokenClaims().then((c) => c.__raw);
     }
+  } else {
+    await auth0.loginWithPopup();
+    return auth0.getIdTokenClaims().then((c) => c.__raw);
   }
 };
