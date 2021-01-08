@@ -102,6 +102,7 @@ export const triggerLogin = async () => {
     await auth0.loginWithPopup();
     if (window.location.pathname === "/desktop-sign-in") {
       const code = window.location.hash.replace("#", "");
+      console.log("Posting to /save-token");
       postWithToken("/save-token", { code }); // .then(window.close);
     } else {
       return auth0.getIdTokenClaims().then((c) => c.__raw);
