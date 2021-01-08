@@ -27,7 +27,10 @@ createAuth0Client({
   if (query.includes("code=")) {
     if (document.location.pathname === "/desktop-callback") {
       const code = window.location.hash.replace("#", "");
-      postWithToken("/save-token", { code }).then(window.close);
+      await auth0.handleRedirectCallback();
+      const claim = await auth0?.getIdTokenClaims();
+      const token = claim.__raw;
+      postWithToken("/save-token", { code, token }).then(window.close);
       setTimeout(() => {
         window.close();
       }, 1000);

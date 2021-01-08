@@ -28,13 +28,13 @@ const UserContainer = () => {
       });
   };
 
-  useEffect(() => {
-    if (window.location.pathname === "/desktop-sign-in") {
-      setTimeout(() => {
-        triggerLogin(document.location.hash.replace("#", ""));
-      }, 500);
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (window.location.pathname === "/desktop-sign-in") {
+  //     setTimeout(() => {
+  //       triggerLogin(document.location.hash.replace("#", ""));
+  //     }, 500);
+  //   }
+  // }, []);
 
   useEffect(() => {
     fetchUser();
