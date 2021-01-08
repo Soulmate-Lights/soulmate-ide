@@ -4,8 +4,6 @@ VERSION=$(node ./get-version.js)
 echo "[Sentry] Uploading sourcemaps for version: $VERSION"
 npx sentry-cli releases new $VERSION
 
-yarn --ignore-scripts
-
 npx parcel build index.html
 
 npx sentry-cli releases files $VERSION upload-sourcemaps dist --rewrite
