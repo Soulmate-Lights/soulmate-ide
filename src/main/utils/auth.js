@@ -117,8 +117,9 @@ export const triggerLogin = async (code) => {
     });
     if (window.location.pathname === "/desktop-callback") {
       // const code = window.location.hash.replace("#", "");
+      const token = await getToken();
       alert("Save token");
-      postWithToken("/save-token", { code }).then(window.close);
+      postWithToken("/save-token", { code, token }).then(window.close);
     } else {
       return auth0.getIdTokenClaims().then((c) => c.__raw);
     }
