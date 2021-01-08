@@ -59,12 +59,9 @@ const IDE = () => {
           <Logo className="loading-spinner" />
         </Route>
         <Route path="/desktop-callback">
-          <div
-            onClick={() => {
-              window.close();
-            }}
-          >
-            close me
+          <div className="flex flex-col items-center justify-center flex-grow w-full h-full space-y-8">
+            <Logo />
+            <span className="flex">All set. You can close this window.</span>
           </div>
         </Route>
         <Route>
