@@ -52,9 +52,11 @@ export const postWithToken = async (path, params) => {
   const headers = {
     "Content-Type": "application/json",
   };
+  console.log(token);
   if (token) {
     headers.Authorization = `Bearer ${token}`;
   } else {
+    console.log("No token");
     debugger;
   }
   return fetch(url(path), {
