@@ -3,7 +3,7 @@ import isEmpty from "lodash/isEmpty";
 import { mutate } from "swr";
 import { createContainer } from "unstated-next";
 
-import { triggerLogin, triggerLogout } from "~/utils/auth";
+import { triggerLogin } from "~/utils/auth";
 import { SKETCHES_URL } from "~/utils/urls";
 import { url } from "~/utils/urls";
 

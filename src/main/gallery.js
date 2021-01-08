@@ -14,7 +14,7 @@ import { ALL_SKETCHES_URL } from "~/utils/urls";
 
 const Gallery = () => {
   const { userDetails } = UserContainer.useContainer();
-  const { data: allSketches, error } = useSWR(ALL_SKETCHES_URL);
+  const { data: allSketches } = useSWR(ALL_SKETCHES_URL);
   const [search, setSearch] = useState("");
 
   if (!allSketches || !allSketches.filter)
