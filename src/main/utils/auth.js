@@ -97,7 +97,7 @@ export const tokenProperties = async () => {
   return await auth0.getUser();
 };
 
-export const triggerLogin = async (code) => {
+export const triggerLogin = async () => {
   if (isElectron()) {
     const id = Math.random();
     electron.shell.openExternal(url(`/desktop-sign-in#${id}`));
@@ -113,21 +113,33 @@ export const triggerLogin = async (code) => {
         }
       }, 1000);
     });
-  } else if (code) {
-    if (!auth0) console.log("no auth0");
-    await auth0.loginWithRedirect({
-      redirect_uri: url(`/desktop-callback#${code}`),
-    });
-    if (window.location.pathname === "/desktop-callback") {
-      // const code = window.location.hash.replace("#", "");
-      const token = await getToken();
-      alert("Save token");
-      postWithToken("/save-token", { code, token }).then(window.close);
-    } else {
-      return auth0.getIdTokenClaims().then((c) => c.__raw);
-    }
+    // } else if (code) {
+    //   if (!auth0) console.log("no auth0");
+    //   await auth0.loginWithRedirect({
+    //     redirect_uri: url(`/desktop-callback#${code}`),
+    //   });
+    //   if (window.location.pathname === "/desktop-callback") {
+    //     // const code = window.location.hash.replace("#", "");
+    //     const token = await getToken();
+    //     postWithToken("/save-token", { code, token }).then(window.close);
+    //   } else {
+    //     return auth0.getIdTokenClaims().then((c) => c.__raw);
+    //   }
   } else {
     await auth0.loginWithPopup();
     return auth0.getIdTokenClaims().then((c) => c.__raw);
   }
+};
+
+export const signInDesktop = async () => {
+  const code = document.location.hash.replace("#", "");
+  auth0.loginWithRedirect({
+    redirect_uri: url(`/desktop-callback#${code}`),
+  });
+};
+
+export const callbackDesktop = async () => {
+  const code = document.location.hash.replace("#", "");
+  const token = await getToken();
+  postWithToken("/save-token", { code, token }).then(window.close);
 };
