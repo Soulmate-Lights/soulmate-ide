@@ -46,3 +46,17 @@ export const get = async (path, params) => {
     headers,
   }).then((d) => d.json());
 };
+
+export const postWithToken = async (path, params) => {
+  const token = await getToken();
+  const headers = {
+    "Content-Type": "application/json",
+  };
+  if (token) headers.Authorization = `Bearer ${token}`;
+  return fetch(url(path), {
+    credentials: "include",
+    method: "post",
+    headers,
+    body: JSON.stringify({ ...params, token }),
+  }).then((d) => d.json());
+};

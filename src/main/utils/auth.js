@@ -1,6 +1,5 @@
 import "regenerator-runtime/runtime";
 
-import { get } from "~/utils";
 const config = {
   domain: "yellow-boat-0900.auth0.com",
   clientId: "OsKmsunrgzhFv2znzUHpd9JsFSsOl46o",
@@ -10,8 +9,9 @@ import * as SentryReact from "@sentry/react";
 import jwtDecode from "jwt-decode";
 
 import history from "~/utils/history";
+import { url } from "~/utils/urls";
 
-import { post } from ".";
+import { get, postWithToken } from ".";
 import isElectron from "./isElectron";
 
 let auth0;
@@ -84,10 +84,7 @@ export const tokenProperties = async () => {
 export const triggerLogin = async () => {
   if (isElectron()) {
     const id = Math.random();
-    electron.shell.openExternal(
-      // `http://localhost:3000/desktop-sign-in#${id}`
-      `https://editor.soulmatelights.com/desktop-sign-in#${id}`
-    );
+    electron.shell.openExternal(url(`/desktop-sign-in#${id}`));
 
     return new Promise((resolve) => {
       const interval = setInterval(async () => {
@@ -105,7 +102,7 @@ export const triggerLogin = async () => {
     await auth0.loginWithPopup();
     if (window.location.pathname === "/desktop-sign-in") {
       const code = window.location.hash.replace("#", "");
-      post("/save-token", { code }).then(window.close);
+      postWithToken("/save-token", { code }).then(window.close);
     } else {
       return auth0.getIdTokenClaims().then((c) => c.__raw);
     }
