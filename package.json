@@ -125,7 +125,6 @@
     "start": "concurrently \"cross-env BROWSER=none yarn react-start\" \"wait-on http://localhost:3000 && electron . \" \"yarn build-worker-dev\"",
     "start-local": "concurrently \"yarn start-servers\" \"yarn start-app-local\"",
     "start-app-local": "concurrently \"cross-env local=true BROWSER=none yarn react-start\" \"wait-on http://localhost:3000 && electron . \" \"yarn build-worker-dev\"",
-    "electron-build": "yarn rebuild-electron && electron-builder",
     "rebuild-electron": "yarn node-gyp clean && yarn electron-rebuild",
     "build": "yarn build-worker && parcel build index.html --out-dir build --public-url . --no-source-maps",
     "build-publish": "yarn rebuild-electron && yarn build && yarn rebuild-electron && electron-builder -p always",
