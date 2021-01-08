@@ -85,8 +85,8 @@ export const triggerLogin = async () => {
   if (isElectron()) {
     const id = Math.random();
     electron.shell.openExternal(
-      // `https://editor.soulmatelights.com/desktop-sign-in?ot-auth-code=${id}`
-      `http://localhost:3000/desktop-sign-in#${id}`
+      // `http://localhost:3000/desktop-sign-in#${id}`
+      `https://editor.soulmatelights.com/desktop-sign-in#${id}`
     );
 
     return new Promise((resolve) => {
