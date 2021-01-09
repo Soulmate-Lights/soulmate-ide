@@ -97,16 +97,10 @@ export const signInDesktop = async () => {
 };
 
 export const callbackDesktop = async () => {
-  console.log("callback desktop");
   const code = document.location.hash.replace("#", "");
-  console.log({ code });
   const auth0 = await auth0Promise;
-  console.log("auth0");
   await auth0.handleRedirectCallback();
-  console.log("handled");
   const claim = await auth0?.getIdTokenClaims();
-  console.log(claim);
   const token = claim.__raw;
-  console.log(token);
   postWithToken("/save-token", { code, token }).then(window.close);
 };
