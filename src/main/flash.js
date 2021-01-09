@@ -75,7 +75,7 @@ const Flash = () => {
       ...u,
       sketches: filteredSketches.filter((s) => s.user?.id === u.id),
     }))
-    .filter((u) => u.uid !== userDetails.sub);
+    .filter((u) => u.uid !== userDetails?.sub);
 
   users = sortBy(users, (u) => -u.sketches.length);
 
