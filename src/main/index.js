@@ -34,7 +34,7 @@ const Main = () => {
   const showTopBar = isMac() && isElectron();
 
   return (
-    <div className="relative flex flex-col flex-grow h-screen dark-mode:bg-gray-300 dark-mode:bg-gray-700">
+    <div className="relative flex flex-col flex-grow h-full dark-mode:bg-gray-300 dark-mode:bg-gray-700">
       {showTopBar && (
         <div
           className={classnames("absolute w-full h-7 border-b ", {
@@ -47,10 +47,9 @@ const Main = () => {
 
       <Suspense fallback={<Logo className="loading-spinner" />}>
         <div
-          className={classnames(
-            "flex flex-grow flex-col flex-shrink h-screen",
-            { "pt-7": showTopBar }
-          )}
+          className={classnames("flex flex-grow flex-col flex-shrink h-full", {
+            "pt-7": showTopBar,
+          })}
         >
           <MainProvider>
             <SpecificRouter history={isElectron() ? undefined : history}>
