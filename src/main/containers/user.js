@@ -7,6 +7,7 @@ import { callbackDesktop, signInDesktop, triggerLogin } from "~/utils/auth";
 import { SKETCHES_URL } from "~/utils/urls";
 import { url } from "~/utils/urls";
 
+import { handleRedirectCallback } from "../utils/auth";
 import isElectron from "../utils/isElectron";
 
 const UserContainer = () => {
@@ -35,6 +36,12 @@ const UserContainer = () => {
 
     if (window.location.pathname === "/desktop-callback") {
       callbackDesktop();
+    }
+
+    if (window.location.search.includes("code=")) {
+      handleRedirectCallback().then((user) => {
+        setUserDetails(user);
+      });
     }
   }, []);
 

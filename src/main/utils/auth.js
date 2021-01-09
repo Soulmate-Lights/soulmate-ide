@@ -111,3 +111,10 @@ export const callbackDesktop = async () => {
   const token = claim.__raw;
   postWithToken("/save-token", { code, token }).then(window.close);
 };
+
+export const handleRedirectCallback = async () => {
+  const auth0 = await auth0Promise;
+  await auth0.handleRedirectCallback();
+  const user = await auth0.getUser();
+  return user;
+};
