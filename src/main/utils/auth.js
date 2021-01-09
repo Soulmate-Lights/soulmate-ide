@@ -14,7 +14,8 @@ const config = {
   scope: "openid profile email",
 };
 
-const key = `@@auth0spajs@@::${config.clientId}::${config.audience}::${config.scope}`;
+const specialKey = `@@auth0spajs@@::${config.clientId}::${config.audience}::${config.scope}`;
+
 export const auth0Promise = createAuth0Client({
   domain: config.domain,
   client_id: config.clientId,
@@ -22,9 +23,7 @@ export const auth0Promise = createAuth0Client({
   cacheLocation: "localstorage",
 });
 
-window.auth0Promise = auth0Promise;
-
-export const triggerLogin = async () => {
+export const logIn = async () => {
   const auth0 = await auth0Promise;
 
   if (isElectron()) {
@@ -39,7 +38,7 @@ export const triggerLogin = async () => {
         const response = await get("/desktop-code", { code: id });
         if (!response.token) return;
         clearInterval(interval);
-        localStorage[key] = response.token;
+        localStorage[specialKey] = response.token;
         remote.getCurrentWindow().show();
         resolve(auth0.getUser());
       }, 1000);
@@ -47,56 +46,39 @@ export const triggerLogin = async () => {
   } else {
     try {
       await auth0.loginWithPopup();
-      return auth0.getUser();
     } catch {
-      auth0.loginWithRedirect({ redirect_uri: url("/") });
+      await auth0.loginWithRedirect({ redirect_uri: url("/") });
     }
+
+    return auth0.getUser();
   }
 };
 
-// Called on page first load by the user container!
-export const handleLogin = async () => {
-  const pathname = window.location.pathname;
-  if (pathname === "/desktop-sign-in") signInDesktop();
-  if (pathname === "/desktop-callback") callbackDesktop();
+// Called on page first load by the user container
+export const logBackIn = async () => {
+  const auth0 = await auth0Promise;
+  const { search, pathname } = window.location;
 
-  if (window.location.search.includes("code=")) return handleRedirectCallback();
+  if (pathname === "/desktop-sign-in") {
+    const code = document.location.hash.replace("#", "");
+    auth0.loginWithRedirect({ redirect_uri: url(`desktop-callback#${code}`) });
+  } else if (pathname === "/desktop-callback") {
+    await auth0.handleRedirectCallback();
+    const code = document.location.hash.replace("#", "");
+    const token = localStorage[specialKey];
+    await postWithToken("/save-token", { code, token });
+  }
+
+  if (search.includes("code=")) {
+    await auth0.handleRedirectCallback();
+  }
 
   const oauth = await auth0Promise;
   return oauth.getUser();
 };
 
-export const signInDesktop = async () => {
-  const auth0 = await auth0Promise;
-
-  const code = document.location.hash.replace("#", "");
-  auth0.loginWithRedirect({ redirect_uri: url(`desktop-callback#${code}`) });
-};
-
-export const callbackDesktop = async () => {
-  const auth0 = await auth0Promise;
-
-  const code = document.location.hash.replace("#", "");
-  await auth0.handleRedirectCallback();
-  const token = localStorage[key];
-
-  await postWithToken("/save-token", { code, token });
-};
-
-export const handleRedirectCallback = async () => {
-  const auth0 = await auth0Promise;
-
-  await auth0.handleRedirectCallback();
-  const user = await auth0.getUser();
-  return user;
-};
-
-export const triggerLogout = async () => {
-  const auth0 = await auth0Promise;
-  auth0.logout({
-    returnTo: window.location.href,
-  });
-
+// Called when clicking a button
+export const logOut = async () => {
   var cookies = document.cookie.split(";");
   for (var i = 0; i < cookies.length; i++) {
     var cookie = cookies[i];
@@ -109,5 +91,6 @@ export const triggerLogout = async () => {
     remote.require("electron").session.defaultSession.clearStorageData;
   }
 
-  delete localStorage.loginSaved;
+  const auth0 = await auth0Promise;
+  auth0.logout({ returnTo: window.location.href });
 };
