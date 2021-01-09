@@ -82,9 +82,16 @@ export const triggerLogin = async () => {
       }, 1000);
     });
   } else {
-    const auth0 = await auth0Promise;
-    await auth0.loginWithPopup();
-    return auth0.getIdTokenClaims().then((c) => c.__raw);
+    try {
+      const auth0 = await auth0Promise;
+      await auth0.loginWithPopup();
+      return auth0.getIdTokenClaims().then((c) => c.__raw);
+    } catch {
+      const auth0 = await auth0Promise;
+      auth0.loginWithRedirect({
+        redirect_uri: url("/"),
+      });
+    }
   }
 };
 
