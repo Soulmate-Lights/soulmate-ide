@@ -46,6 +46,7 @@ export const postWithToken = async (path, params) => {
   const headers = {
     "Content-Type": "application/json",
   };
+  if (params.token) headers.Authorization = `Bearer ${params.token}`;
   return fetch(url(path), {
     credentials: "include",
     method: "post",

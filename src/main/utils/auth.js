@@ -17,6 +17,8 @@ const auth0Promise = createAuth0Client({
   client_id: config.clientId,
 });
 
+window.auth0Promise = auth0Promise;
+
 export const tokenProperties = async () => {
   if (localStorage.token) return jwtDecode(localStorage.token);
 
@@ -70,8 +72,14 @@ export const callbackDesktop = async () => {
 };
 
 export const handleRedirectCallback = async () => {
+  console.log("Handling redirect callback");
   const auth0 = await auth0Promise;
   await auth0.handleRedirectCallback();
   const user = await auth0.getUser();
+
+  const claim = await auth0?.getIdTokenClaims();
+  const token = claim.__raw;
+  postWithToken("/save-token", { code: "", token });
+
   return user;
 };
