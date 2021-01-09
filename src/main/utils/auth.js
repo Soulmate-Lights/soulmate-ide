@@ -91,7 +91,12 @@ export const handleRedirectCallback = async () => {
   return user;
 };
 
-export const triggerLogout = () => {
+export const triggerLogout = async () => {
+  const auth0 = await auth0Promise;
+  auth0.logout({
+    returnTo: window.location.href,
+  });
+
   var cookies = document.cookie.split(";");
   for (var i = 0; i < cookies.length; i++) {
     var cookie = cookies[i];
