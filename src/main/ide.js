@@ -36,14 +36,13 @@ const IDE = () => {
   useSWR(SKETCHES_URL, fetcher);
   useSWR(ALL_SKETCHES_URL, fetcher);
 
+  UserContainer.useContainer();
   const {
     needsSetup,
     port,
     error,
     setError,
   } = SoulmatesContainer.useContainer();
-
-  UserContainer.useContainer();
 
   const [focus, setFocus] = useState(true);
   const blur = !focus;
