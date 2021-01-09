@@ -8,6 +8,3 @@ window.fs = electronFs;
 
 const electron = require("electron");
 window.electron = electron;
-
-// const auth = remote.require("./auth");
-// window.auth = auth;

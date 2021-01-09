@@ -51,13 +51,6 @@ function createWindow() {
     },
   });
 
-  // mainWindow.webContents.session.defaultSession.webRequest.onBeforeSendHeaders(
-  //   (details, callback) => {
-  //     details.requestHeaders["User-Agent"] = "Chrome";
-  //     callback({ cancel: false, requestHeaders: details.requestHeaders });
-  //   }
-  // );
-
   const mainUrl = isDev
     ? "http://localhost:3000"
     : `file://${path.join(__dirname, "../build/index.html")}`;
