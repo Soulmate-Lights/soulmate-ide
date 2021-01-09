@@ -1,4 +1,3 @@
-import { getToken } from "~/utils/auth";
 import { url } from "~/utils/urls";
 
 export const post = async (path, body = {}) => {
@@ -38,12 +37,8 @@ export const fetcher = async (path) => {
 };
 
 export const get = async (path, params) => {
-  const token = await getToken();
-  const headers = {};
-  if (token) headers.Authorization = `Bearer ${token}`;
   return fetch(url(path) + "?" + new URLSearchParams(params), {
     credentials: "include",
-    headers,
   }).then((d) => d.json());
 };
 

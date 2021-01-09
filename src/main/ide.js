@@ -59,7 +59,7 @@ const IDE = () => {
           <Logo className="loading-spinner" />
         </Route>
         <Route path="/desktop-callback">
-          <div className="flex flex-col items-center justify-center flex-grow w-full h-full space-y-8">
+          <div className="flex flex-col items-center justify-center flex-grow w-full h-full space-y-8 dark-mode:text-white">
             <Logo />
             <span className="flex">All set. You can close this window.</span>
           </div>
