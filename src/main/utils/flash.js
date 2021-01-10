@@ -2,10 +2,7 @@ if (!window.remote) {
   window.remote = undefined;
 }
 
-// import { prepareSketches } from "~/utils/code";
-// import streamWithProgress from "~/utils/streamWithProgress";
 const path = remote?.require("path");
-// const fs = remote?.require("fs");
 const IS_PROD = process.env.NODE_ENV === "production";
 const getAppPath = remote?.app.getAppPath;
 const isPackaged =
@@ -55,6 +52,7 @@ export const installDependencies = () => {
 
 /** Flash a build file to a USB output */
 export const flashBuild = async (port, file, progressCallback) => {
+  let errorOutput = [];
   const which = remote && remote?.require("which");
   let python = "/usr/bin/python";
   if (remote.require("os").platform() !== "darwin") {
@@ -73,18 +71,7 @@ export const flashBuild = async (port, file, progressCallback) => {
   console.log("[flashBuild]", { cmd });
 
   const child = childProcess.exec(cmd, { cwd: dir });
-  // let error = false;
-  let errorOutput = [];
-  // child.on("error", (e) => {
-  //   // console.log("childProcess threw an error");
-  //   // console.log(e);
-  //   // throw e;
-  //   // debugger;
-  //   // error = e;
-  // });
-  child.stderr.on("data", (line) => {
-    errorOutput = [...errorOutput, line];
-  });
+  child.stderr.on("data", (line) => (errorOutput = [...errorOutput, line]));
   child.stdout.on("data", (data) => {
     const number = getNumberFromFlashOutput(data);
     if (number) progressCallback(number);
@@ -93,24 +80,20 @@ export const flashBuild = async (port, file, progressCallback) => {
   await new Promise((resolve, reject) => {
     child.on("close", (code) => {
       progressCallback(100);
-      if (code != 0) {
-        reject(errorOutput);
-      } else {
-        resolve();
-      }
+      code == 0 ? resolve() : reject(errorOutput);
     });
   });
 };
 
 /* We don't actually use this right now */
 export const flashbuildToWifiSoulmate = async (ip, build, progressCallback) => {
+  const contents = fs.readFileSync(build);
   const url = `http://${ip}/ota`;
   var body = new FormData();
-  const contents = fs.readFileSync(build);
   body.append("image", new Blob([contents]), "firmware.bin");
   await fetch(url, {
     method: "POST",
-    body: body,
+    body,
     mode: "no-cors",
     headers: {
       "Content-Length": fs.statSync(build).size,
