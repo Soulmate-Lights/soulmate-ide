@@ -1,9 +1,6 @@
 import normalizeUrl from "normalize-url";
 
-// const host = "http://192.168.4.76:3001";
-// const host = "http://localhost:3001";
-// const host = "http://macbook-pro.local:3001";
-export const host = "https://editor.soulmatelights.com";
+export const host = process.env.SERVER || "https://editor.soulmatelights.com";
 
 export const url = (path) => normalizeUrl(host + "/" + path);
 
