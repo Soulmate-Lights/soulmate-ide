@@ -1,7 +1,7 @@
 import uniqBy from "lodash/uniqBy";
 import useSWR from "swr";
 
-import Header from "~/components/Header";
+import Header, { PersonSection } from "~/components/Header";
 import TimeGroupedSketches from "~/components/timeGroupedSketches";
 import Logo from "~/images/logo.svg";
 import { ALL_SKETCHES_URL } from "~/utils/urls";
@@ -27,12 +27,7 @@ const User = ({ id }) => {
     <div className="flex flex-col flex-grow ">
       <Header
         sections={[{ title: "Gallery", to: "/gallery" }]}
-        title={
-          <>
-            <img className="w-8 h-8 mr-2 rounded-full" src={user.image} />
-            {user.name}
-          </>
-        }
+        title={<PersonSection user={user} />}
       />
 
       <div className="flex-grow overflow-auto bg-white dark-mode:bg-gray-900 dark-mode:text-white">

@@ -14,6 +14,8 @@ import { emptyCode } from "~/utils/code";
 import history from "~/utils/history";
 import { ALL_SKETCHES_URL, SKETCHES_URL } from "~/utils/urls";
 
+import { PersonSection } from "./components/Header";
+
 const Editor = ({ id, mine }) => {
   const { data: sketches } = useSWR(SKETCHES_URL, fetcher);
   const { data: allSketches } = useSWR(ALL_SKETCHES_URL, fetcher);
@@ -217,15 +219,7 @@ const Editor = ({ id, mine }) => {
         sections={[
           !mine && { title: "Gallery", to: "/gallery" },
           !mine && {
-            title: (
-              <>
-                <img
-                  className="w-8 h-8 mr-2 rounded-full"
-                  src={sketch.user.image}
-                />
-                {sketch.user.name}
-              </>
-            ),
+            title: <PersonSection user={sketch.user} />,
             to: `/gallery/user/${sketch.user.id}`,
           },
           mine && { title: "My patterns", to: "/my-patterns" },
