@@ -26,7 +26,7 @@ const Chevron = () => (
 
 const Breadcrumb = ({ sections, title }) => (
   <nav aria-label="Breadcrumb" className="flex">
-    <ol className="flex items-center ml-4 ">
+    <ol className="flex items-center ml-4">
       {compact(sections).map(({ title, to }, i) => (
         <li key={i}>
           <div className="flex items-center">
@@ -72,7 +72,7 @@ const Header = ({ title, sections, subtitle, actions, className }) => {
         <Breadcrumb sections={sections} title={title} />
       </div>
       {actions && (
-        <div className="flex items-center flex-shrink-0 pr-4 ml-auto space-x-2">
+        <div className="flex items-center flex-shrink-0 pr-4 ml-auto text-xs space-x-2">
           {compact(actions).map((action, i) => {
             const { title, onClick, className, ...rest } = action;
 
