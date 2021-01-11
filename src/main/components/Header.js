@@ -4,7 +4,7 @@ import { BiChevronRight } from "react-icons/bi";
 import { IoPersonCircleOutline } from "react-icons/io5";
 import { Link } from "react-router-dom";
 
-export const PersonSection = (user) => (
+export const PersonSection = ({ user }) => (
   <div className="flex flex-row items-center">
     {user.image ? (
       <img

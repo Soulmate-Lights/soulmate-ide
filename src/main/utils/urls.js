@@ -1,8 +1,11 @@
 import normalizeUrl from "normalize-url";
 
 import isDev from "~/utils/isDev";
+import isElectron from "~/utils/isElectron";
 
-export const host = process.env.SERVER || "https://editor.soulmatelights.com";
+let _host = process.env.SERVER || window.location.origin;
+if (isElectron()) _host = "https://editor.soulmatelights.com";
+export const host = _host;
 
 export const url = (path) => normalizeUrl(host + "/" + path);
 
