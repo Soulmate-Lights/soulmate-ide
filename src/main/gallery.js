@@ -72,7 +72,7 @@ const Gallery = () => {
                       {user.image ? (
                         <img
                           alt="Profile picture"
-                          className="w-12 h-12 bg-white rounded-full shadow"
+                          className="object-cover w-12 h-12 bg-white rounded-full shadow"
                           src={user.image}
                         />
                       ) : (

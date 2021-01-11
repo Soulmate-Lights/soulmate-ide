@@ -8,9 +8,12 @@ export const PersonSection = ({ user }) => (
   <div className="flex flex-row items-center">
     {user.image ? (
       <img
-        className={classnames("w-8 h-8 mr-2 bg-white rounded-full", {
-          "bg-white": !user.image,
-        })}
+        className={classnames(
+          "w-8 h-8 mr-2 bg-white rounded-full object-cover",
+          {
+            "bg-white": !user.image,
+          }
+        )}
         src={user.image}
       />
     ) : (

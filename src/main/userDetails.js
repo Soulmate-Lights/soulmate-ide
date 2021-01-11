@@ -25,7 +25,7 @@ const UserDetails = ({ className }) => {
             <div>
               <img
                 alt="avatar"
-                className="inline-block rounded-full h-9 w-9"
+                className="inline-block object-cover rounded-full h-9 w-9"
                 src={userDetails?.picture}
               />
             </div>
