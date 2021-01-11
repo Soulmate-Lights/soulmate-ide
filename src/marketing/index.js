@@ -480,7 +480,7 @@ export default function MarketingPage() {
               </h2>
               <p className="text-xl text-gray-500 leading-7"></p>
             </div>
-            <ul className="mx-16 md:space-y-0 grid grid-cols-2 gap-16 space-y-0 md:grid-cols-3 lg:max-w-5xl">
+            <ul className="mx-16 mx-auto md:space-y-0 grid grid-cols-2 gap-16 space-y-0 md:grid-cols-3 lg:max-w-5xl">
               {[
                 {
                   twitter: "elliottkember",
