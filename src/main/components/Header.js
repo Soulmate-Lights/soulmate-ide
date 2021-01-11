@@ -55,7 +55,7 @@ const Breadcrumb = ({ sections, title }) => (
   </nav>
 );
 
-const Header = ({ title, sections, subtitle, actions, className }) => {
+const Header = ({ title, sections, actions, className }) => {
   return (
     <div
       className={classnames(
