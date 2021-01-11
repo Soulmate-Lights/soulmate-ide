@@ -1,7 +1,7 @@
-import { host, url } from "./urls";
+// import { host, url } from "./urls";
 
 describe("urls", () => {
-  // Figure this out
+  // Figure this out1
   // it("uses production URLs", () => {
   //   expect(host).toEqual("https://editor.soulmatelights.com");
   //   expect(url("/a")).toEqual("https://editor.soulmatelights.com/a");
