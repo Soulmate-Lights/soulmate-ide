@@ -2,7 +2,7 @@ import "regenerator-runtime/runtime";
 
 import createAuth0Client from "@auth0/auth0-spa-js";
 
-import { url } from "~/utils/urls";
+import { clientSideUrl, url } from "~/utils/urls";
 
 import { get, postWithToken } from ".";
 import isElectron from "./isElectron";
@@ -29,8 +29,10 @@ export const logIn = async () => {
   if (isElectron()) {
     // Generate a random ID to share with the server
     const id = Math.random();
+
     // Log in on the server
-    electron.shell.openExternal(url(`/desktop-sign-in#${id}`));
+    const url = clientSideUrl(`/desktop-sign-in#${id}`);
+    electron.shell.openExternal(url);
 
     // And now just ping it until we hear back
     return new Promise((resolve) => {
@@ -61,7 +63,8 @@ export const logBackIn = async () => {
 
   if (pathname === "/desktop-sign-in") {
     const code = document.location.hash.replace("#", "");
-    auth0.loginWithRedirect({ redirect_uri: url(`desktop-callback#${code}`) });
+    const redirect_uri = clientSideUrl(`/desktop-callback#${code}`);
+    auth0.loginWithRedirect({ redirect_uri });
   } else if (pathname === "/desktop-callback") {
     await auth0.handleRedirectCallback();
     const code = document.location.hash.replace("#", "");
@@ -69,9 +72,7 @@ export const logBackIn = async () => {
     await postWithToken("/save-token", { code, token });
   }
 
-  if (search.includes("code=")) {
-    await auth0.handleRedirectCallback();
-  }
+  if (search.includes("code=")) await auth0.handleRedirectCallback();
 
   const oauth = await auth0Promise;
   return oauth.getUser();
