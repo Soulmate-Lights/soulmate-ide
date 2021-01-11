@@ -363,12 +363,12 @@ export default function MarketingPage() {
         </div>
       </div>
 
-      <div className="w-10/12 px-0 py-8 mx-auto max-w-screen-xl sm:py-16 sm:px-6 lg:px-8">
+      <div className="w-10/12 px-0 py-8 mx-auto max-w-screen-xl sm:py-16 sm:px-6">
         <h2 className="text-3xl font-extrabold text-center text-gray-900 leading-9">
           Frequently asked questions
         </h2>
-        <div className="px-0 mt-12 sm:px-12">
-          <dl className="space-y-10 sm:space-y-0 sm:grid sm:grid-cols-2 sm:grid-rows-2 col-gap-8 sm:row-gap-12 lg:grid-cols-3">
+        <div className="px-0 mt-12">
+          <dl className="sm:grid sm:grid-cols-1 md:grid-cols-2 sm:grid-rows-2 col-gap-8 sm:row-gap-12 lg:grid-cols-3">
             <div className="px-4 mb-6 space-y-2">
               <dt className="text-lg font-medium text-gray-900 leading-6">
                 What do I need to get started?
@@ -472,7 +472,7 @@ export default function MarketingPage() {
       </div>
 
       <div className="bg-gray-50">
-        <div className="px-4 py-12 mx-auto text-center max-w-screen-xl sm:px-6 lg:px-8 lg:py-24">
+        <div className="py-12 mx-auto text-center md:px-4 max-w-screen-xl sm:px-0 lg:px-8 lg:py-24">
           <div className="space-y-12">
             <div className="space-y-5 sm:mx-auto sm:max-w-xl sm:space-y-4 lg:max-w-5xl">
               <h2 className="text-3xl font-extrabold tracking-tight leading-9 sm:text-4xl">
@@ -480,7 +480,7 @@ export default function MarketingPage() {
               </h2>
               <p className="text-xl text-gray-500 leading-7"></p>
             </div>
-            <ul className="mx-auto space-y-16 sm:grid sm:grid-cols-2 sm:gap-16 sm:space-y-0 lg:grid-cols-3 lg:max-w-5xl">
+            <ul className="mx-16 md:space-y-0 grid grid-cols-2 gap-16 space-y-0 md:grid-cols-3 lg:max-w-5xl">
               {[
                 {
                   twitter: "elliottkember",
@@ -537,7 +537,6 @@ export default function MarketingPage() {
                             </svg>
                           </a>
                         </h4>
-                        <p className="text-indigo-600"></p>
                       </div>
                     </div>
                   </div>
