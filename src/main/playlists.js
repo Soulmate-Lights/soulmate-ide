@@ -8,6 +8,7 @@ import Header from "~/components/Header";
 import Sketch from "~/components/sketch";
 import Logo from "~/images/logo.svg";
 import { post } from "~/utils";
+import { fetcher } from "~/utils";
 import history from "~/utils/history";
 import { playlistTypes } from "~/utils/types";
 import { PLAYLISTS_URL } from "~/utils/urls";
@@ -16,7 +17,7 @@ const Playlists = () => {
   const { state } = useLocation();
   const [sketches, setSketches] = useState(state?.sketches || []);
 
-  const { data: playlists } = useSWR(PLAYLISTS_URL);
+  const { data: playlists } = useSWR(PLAYLISTS_URL, fetcher);
 
   const [name, setName] = useState("");
   const [modelName, setModelName] = useState(false);

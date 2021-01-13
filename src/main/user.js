@@ -4,10 +4,11 @@ import useSWR from "swr";
 import Header, { PersonSection } from "~/components/Header";
 import TimeGroupedSketches from "~/components/timeGroupedSketches";
 import Logo from "~/images/logo.svg";
+import { fetcher } from "~/utils";
 import { ALL_SKETCHES_URL } from "~/utils/urls";
 
 const User = ({ id }) => {
-  const { data: allSketches } = useSWR(ALL_SKETCHES_URL);
+  const { data: allSketches } = useSWR(ALL_SKETCHES_URL, fetcher);
 
   let users = uniqBy(
     allSketches?.map((sketch) => sketch.user),

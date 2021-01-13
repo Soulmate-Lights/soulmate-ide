@@ -8,6 +8,7 @@ import BuildsContainer from "~/containers/builds";
 import SoulmatesContainer from "~/containers/soulmates";
 import Logo from "~/images/logo.svg";
 import { post, postDelete, put } from "~/utils";
+import { fetcher } from "~/utils";
 import { emptyCode } from "~/utils/code";
 import history from "~/utils/history";
 import { PLAYLISTS_URL } from "~/utils/urls";
@@ -38,7 +39,7 @@ const Playlist = (props) => {
   const soulmates = SoulmatesContainer.useContainer();
 
   const id = parseInt(props.id);
-  const { data: playlists } = useSWR(PLAYLISTS_URL);
+  const { data: playlists } = useSWR(PLAYLISTS_URL, fetcher);
 
   const [publishing, setPublishing] = useState(false);
   const playlist = playlists?.find((p) => parseInt(p.id) === parseInt(id));

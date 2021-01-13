@@ -14,9 +14,9 @@ import Sketch from "~/components/sketch";
 import Soulmates from "~/containers/soulmates";
 import UserContainer from "~/containers/user";
 import Logo from "~/images/logo.svg";
+import { fetcher } from "~/utils";
 import { emptyCode } from "~/utils/code";
 
-// import history from "~/utils/history";
 import FlashButton from "./components/flashButton";
 const Console = React.lazy(() => import("./console"));
 
@@ -25,8 +25,8 @@ import useSWR from "swr";
 import { ALL_SKETCHES_URL, SKETCHES_URL } from "~/utils/urls";
 
 const Flash = () => {
-  const { data: sketches } = useSWR(SKETCHES_URL);
-  const { data: allSketches } = useSWR(ALL_SKETCHES_URL);
+  const { data: sketches } = useSWR(SKETCHES_URL, fetcher);
+  const { data: allSketches } = useSWR(ALL_SKETCHES_URL, fetcher);
 
   const { flashing, usbConnected } = Soulmates.useContainer();
   const { userDetails } = UserContainer.useContainer();
