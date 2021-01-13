@@ -33,8 +33,8 @@ import User from "./user";
 import Welcome from "./welcome";
 
 const IDE = () => {
-  useSWR(SKETCHES_URL, fetcher);
-  useSWR(ALL_SKETCHES_URL, fetcher);
+  useSWR(SKETCHES_URL);
+  useSWR(ALL_SKETCHES_URL);
 
   UserContainer.useContainer();
   const {

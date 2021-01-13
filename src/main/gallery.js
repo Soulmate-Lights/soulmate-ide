@@ -9,13 +9,12 @@ import Header from "~/components/Header";
 import Sketch from "~/components/sketch";
 import UserContainer from "~/containers/user";
 import Logo from "~/images/logo.svg";
-import { fetcher } from "~/utils";
 import { emptyCode } from "~/utils/code";
 import { ALL_SKETCHES_URL } from "~/utils/urls";
 
 const Gallery = () => {
   const { userDetails } = UserContainer.useContainer();
-  const { data: allSketches } = useSWR(ALL_SKETCHES_URL, fetcher);
+  const { data: allSketches } = useSWR(ALL_SKETCHES_URL);
   const [search, setSearch] = useState("");
 
   if (!allSketches || !allSketches.filter)
