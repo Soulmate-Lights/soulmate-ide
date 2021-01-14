@@ -220,6 +220,7 @@ const Playlist = (props) => {
             <Simulator
               build={build}
               className="flex flex-col flex-grow"
+              config={config}
               minWidth={320}
             />
           </div>

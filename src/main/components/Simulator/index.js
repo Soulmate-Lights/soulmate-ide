@@ -15,7 +15,7 @@ import { calculateDimensions } from "./utils";
 
 let worker;
 
-const Simulator = ({ className, minWidth, maxWidth, style, build }) => {
+const Simulator = ({ className, minWidth, maxWidth, style, build, config }) => {
   const canvas = useRef();
   const compilerOutputDiv = useRef();
   const [serialOutput, setSerialOutput] = useState("");
@@ -25,7 +25,6 @@ const Simulator = ({ className, minWidth, maxWidth, style, build }) => {
   const {
     selectedSoulmate,
     setSavedConfig,
-    config,
   } = SoulmatesContainer.useContainer();
 
   const isStreamingSoulmate =
