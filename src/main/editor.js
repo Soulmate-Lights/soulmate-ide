@@ -1,3 +1,4 @@
+import isEqual from "lodash/isEqual";
 import { Helmet } from "react-helmet";
 import { HiOutlineLink } from "react-icons/hi";
 import useSWR, { mutate } from "swr";
