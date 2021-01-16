@@ -1,9 +1,9 @@
 import uniqBy from "lodash/uniqBy";
+import useSWR from "swr";
 
 import Header, { PersonSection } from "~/components/Header";
 import TimeGroupedSketches from "~/components/timeGroupedSketches";
 import Logo from "~/images/logo.svg";
-import useSWR from "swr";
 import { fetcher } from "~/utils";
 import { ALL_SKETCHES_URL } from "~/utils/urls";
 
