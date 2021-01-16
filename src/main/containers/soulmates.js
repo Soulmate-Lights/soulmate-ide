@@ -22,6 +22,10 @@ export const defaultConfig = {
   rows: 10,
   cols: 10,
   serpentine: true,
+  button: 39,
+  data: 32,
+  clock: 26,
+  milliamps: 700,
 };
 
 // TODO:
@@ -196,6 +200,8 @@ const SoulmatesContainer = () => {
     });
 
     setListener(listener);
+
+    listener?.port?.write('{ "status": true }\n');
 
     setTimeout(() => {
       if (!receivedData) {

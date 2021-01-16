@@ -101,28 +101,19 @@ const Config = () => {
                 </p>
               </Left>
               <Right>
-                <div>
-                  <label
-                    className="block text-sm font-medium text-gray-700 leading-5"
-                    htmlFor="country"
-                  >
-                    Flash a pre-configured type of Soulmate (Admin only)
-                  </label>
-
-                  <p className="mt-4">
-                    {types.map((t) => (
-                      <button
-                        className="h-auto p-2 mr-2 button"
-                        key={t.label}
-                        onClick={() => {
-                          flashSketches([sketch], t.config);
-                        }}
-                      >
-                        {t.label}
-                      </button>
-                    ))}
-                  </p>
-                </div>
+                <p>
+                  {types.map((t) => (
+                    <button
+                      className="h-auto p-2 mr-2 button"
+                      key={t.label}
+                      onClick={() => {
+                        flashSketches([sketch], t.config);
+                      }}
+                    >
+                      {t.label}
+                    </button>
+                  ))}
+                </p>
               </Right>
             </Section>
           )}
@@ -453,7 +444,7 @@ const Config = () => {
                               </progress>
                             </>
                           ) : (
-                            <>Configure my Soulmate</>
+                            <>Save changes to my Soulmate</>
                           )}
                         </button>
                       )}

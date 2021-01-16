@@ -66,7 +66,7 @@ body {
   text-decoration: underline;
 }
 
-@media(prefers-color-scheme: dark) {
+@media (prefers-color-scheme: dark) {
   input {
     @apply text-gray-800;
   }
@@ -75,14 +75,13 @@ body {
 body .monaco-editor .lines-content,
 body .monaco-editor .view-line,
 body .monaco-editor .view-lines {
-	user-select: auto;
-	-ms-user-select: auto;
-	-khtml-user-select: auto;
-	-moz-user-select: auto;
-	-o-user-select: auto;
-	-webkit-user-select: auto;
+  user-select: auto;
+  -ms-user-select: auto;
+  -khtml-user-select: auto;
+  -moz-user-select: auto;
+  -o-user-select: auto;
+  -webkit-user-select: auto;
 }
-
 
 @layer base {
   .footer-button {
@@ -92,4 +91,8 @@ body .monaco-editor .view-lines {
   .button {
     @apply cursor-pointer inline-flex items-center px-6 py-2 border border-transparent text-base leading-6 font-medium rounded-md text-white bg-purple-600 focus:outline-none focus:border-purple-700 focus:shadow-outline-purple active:bg-purple-700 transition ease-in-out duration-150 justify-center;
   }
+}
+
+.app-border {
+  @apply border-gray-300 dark-mode:border-gray-600;
 }

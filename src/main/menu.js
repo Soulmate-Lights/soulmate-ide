@@ -1,40 +1,46 @@
 import { BsTerminal } from "react-icons/bs";
-import { FiCloud, FiFolder, FiHome, FiSettings, FiSmile } from "react-icons/fi";
+import { FaChevronDown } from "react-icons/fa";
+import { FaUsb, FaWifi } from "react-icons/fa";
+import {
+  FiAlertCircle,
+  FiCloud,
+  FiFolder,
+  FiHome,
+  FiSettings,
+  FiSmile,
+} from "react-icons/fi";
 import { HiOutlineLightningBolt } from "react-icons/hi";
 import { RiToolsFill } from "react-icons/ri";
 import { RiPlayList2Fill } from "react-icons/ri";
 import { Link, NavLink, useLocation } from "react-router-dom";
 
+import SoulmatesMenu from "~/components/Simulator/SoulmatesMenu";
+import UserDetails from "~/components/userDetails";
 import SoulmatesContainer from "~/containers/soulmates";
+import UserContainer from "~/containers/user";
 import Logo from "~/images/logo.svg";
 import isElectron from "~/utils/isElectron";
 import soulmateName from "~/utils/soulmateName";
 
 import square from "./Square.jpg";
-import UserDetails from "./userDetails";
-
-const shopUrl = "https://shop.soulmatelights.com/products/square";
 
 const iconClass = "mr-3 h-6 w-6 transition ease-in-out duration-150";
-const linkClass = `group flex items-center px-4 py-2 text-sm leading-5 font-medium rounded-md
-hover:bg-gray-300
-dark-mode:hover:text-white
-dark-mode:hover:bg-gray-600
-  transition ease-in-out duration-150`;
+const menuSectionClass =
+  "group flex items-center px-4 py-2 text-sm leading-5 font-medium rounded-md";
+const linkClass = `${menuSectionClass} hover:bg-gray-300 dark-mode:hover:text-white dark-mode:hover:bg-gray-600 transition ease-in-out duration-150`;
+const activeLinkClass = `dark-mode:bg-gray-800 dark-mode:hover:bg-gray-800 bg-gray-300`;
 
-const activeLinkClass = `
-  dark-mode:bg-gray-800
-  dark-mode:hover:bg-gray-800
-  bg-gray-300`;
-
-import { FaCog, FaUsb, FaWifi } from "react-icons/fa";
-
-import UserContainer from "~/containers/user";
+const shopUrl = "https://shop.soulmatelights.com/products/square";
 
 const Menu = () => {
   const location = useLocation();
   const { isAdmin } = UserContainer.useContainer();
-  const { usbConnected, selectedSoulmate } = SoulmatesContainer.useContainer();
+  const {
+    usbConnected,
+    soulmates,
+    selectedSoulmate,
+    needsSetup,
+  } = SoulmatesContainer.useContainer();
 
   return (
     <div
@@ -44,8 +50,8 @@ const Menu = () => {
     >
       <div className="flex flex-col w-64">
         <div className="flex flex-col flex-1 h-0">
-          <div className="flex flex-col flex-1 pb-4 overflow-y-auto">
-            <div className="flex flex-row items-center flex-grow-0 flex-shrink-0 h-16 px-6 border-b dark-mode:border-gray-600">
+          <div className="flex flex-col flex-1 pb-4">
+            <div className="flex flex-row items-center flex-grow-0 flex-shrink-0 h-16 px-6 border-b app-border">
               <Logo className="w-6 h-6 mr-2" />
 
               <span className="flex flex-col flex-shrink">
@@ -79,6 +85,10 @@ const Menu = () => {
                 Tutorial
               </NavLink>
 
+              <hr className="mx-2 app-border" />
+
+              <div className={menuSectionClass}>Patterns</div>
+
               <NavLink
                 activeClassName={activeLinkClass}
                 className={linkClass}
@@ -99,17 +109,68 @@ const Menu = () => {
                 Gallery
               </NavLink>
 
-              <NavLink
-                activeClassName={activeLinkClass}
-                className={linkClass}
-                location={location}
-                to="/flash"
-              >
-                <HiOutlineLightningBolt className={iconClass} />
-                Upload
-              </NavLink>
+              <hr className="mx-2 app-border" />
 
-              {isElectron() && (
+              {soulmates?.length > 0 && (
+                <>
+                  <div className={menuSectionClass}>
+                    {selectedSoulmate ? (
+                      <>
+                        {soulmateName(selectedSoulmate)}
+                        {selectedSoulmate.type === "usb" ? (
+                          <FaUsb className="w-4 h-4 ml-2 mr-4 text-blue-600" />
+                        ) : (
+                          <FaWifi className="w-4 h-4 ml-2 mr-4 text-blue-600" />
+                        )}
+                      </>
+                    ) : (
+                      <>Choose a Soulmate</>
+                    )}
+
+                    <div className="flex ml-auto">
+                      <SoulmatesMenu
+                        allowUsb
+                        button={
+                          <span className="flex items-center justify-center h-full p-1 ml-auto rounded cursor-pointer hover:bg-white">
+                            <FaChevronDown />
+                          </span>
+                        }
+                        buttonClassName="bg-purple-500 text-white"
+                        menuClassName="top-full right-0 w-48"
+                        text="Connect to..."
+                      />
+                    </div>
+                  </div>
+
+                  {selectedSoulmate && !needsSetup && (
+                    <NavLink
+                      activeClassName={activeLinkClass}
+                      className={linkClass}
+                      location={location}
+                      to="/flash"
+                    >
+                      <HiOutlineLightningBolt className={iconClass} />
+                      Change Patterns
+                    </NavLink>
+                  )}
+                </>
+              )}
+
+              {isElectron() && usbConnected && !needsSetup && (
+                <>
+                  <NavLink
+                    activeClassName={activeLinkClass}
+                    className={linkClass}
+                    location={location}
+                    to="/console"
+                  >
+                    <BsTerminal className={iconClass} />
+                    Serial Console
+                  </NavLink>
+                </>
+              )}
+
+              {(usbConnected || needsSetup) && (
                 <NavLink
                   activeClassName={activeLinkClass}
                   className={linkClass}
@@ -117,39 +178,40 @@ const Menu = () => {
                   location={location}
                   to="/config"
                 >
-                  <FiSettings className={iconClass} />
-                  Configure
+                  {needsSetup ? (
+                    <FiAlertCircle
+                      className={classnames(iconClass, "text-red-500")}
+                    />
+                  ) : (
+                    <FiSettings className={iconClass} />
+                  )}
+
+                  {needsSetup ? <>Set up new Soulmate</> : "Change config"}
                 </NavLink>
               )}
 
               {isAdmin() && (
-                <NavLink
-                  activeClassName={activeLinkClass}
-                  className={linkClass}
-                  disabled
-                  location={location}
-                  to="/playlists"
-                >
-                  <RiPlayList2Fill className={iconClass} />
-                  Playlists
-                </NavLink>
+                <>
+                  <hr className="mx-2 app-border" />
+                  <div className={menuSectionClass}>Playlists</div>
+                  <NavLink
+                    activeClassName={activeLinkClass}
+                    className={linkClass}
+                    disabled
+                    location={location}
+                    to="/playlists"
+                  >
+                    <RiPlayList2Fill className={iconClass} />
+                    Playlists
+                  </NavLink>
+                </>
               )}
             </nav>
 
-            <div className="mt-8" />
+            <div className="mt-auto" />
 
             {isElectron() && usbConnected && (
               <nav className="mx-2 my-2 space-y-1">
-                <NavLink
-                  activeClassName={activeLinkClass}
-                  className={linkClass}
-                  location={location}
-                  to="/console"
-                >
-                  <BsTerminal className={iconClass} />
-                  Serial Console
-                </NavLink>
-
                 <a
                   className={linkClass}
                   onClick={() => {
@@ -177,30 +239,6 @@ const Menu = () => {
             )}
 
             <div className="space-y-4">
-              {selectedSoulmate && (
-                <div className="flex flex-row flex-wrap items-center  mx-4 text-xs border border-gray-200 rounded-lg bg-gray-50 dark-mode:bg-gray-800 dark-mode:border-gray-600">
-                  {selectedSoulmate.type === "usb" ? (
-                    <FaUsb className="w-4 h-4 mx-2 ml-4" />
-                  ) : (
-                    <FaWifi className="w-4 h-4 mx-2 ml-4" />
-                  )}
-                  <span className="py-1 py-2 whitespace-pre">
-                    {soulmateName(selectedSoulmate)}
-                  </span>
-
-                  {selectedSoulmate.type === "usb" && (
-                    <>
-                      <Link
-                        className="px-2 py-2 ml-auto justify-self-end button"
-                        to="/config"
-                      >
-                        <FaCog />
-                      </Link>
-                    </>
-                  )}
-                </div>
-              )}
-
               <a
                 className="flex flex-col flex-shrink mx-4 mt-auto mb-4 overflow-hidden text-xs bg-gray-300 border rounded-lg dark-mode:bg-gray-800 align-center dark-mode:border-gray-600"
                 href={shopUrl}

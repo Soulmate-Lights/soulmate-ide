@@ -1,4 +1,4 @@
-import { FaChevronUp, FaUsb } from "react-icons/fa";
+import { FaChevronUp, FaUsb, FaWifi } from "react-icons/fa";
 import { RiPlayList2Fill } from "react-icons/ri";
 
 import NotificationsContainer from "~/containers/notifications";
@@ -66,6 +66,7 @@ const FlashButton = ({
     text = (
       <>
         {selectedSoulmate?.type === "usb" && <FaUsb className="w-6 h-6" />}
+        {selectedSoulmate?.type === "http" && <FaWifi className="w-6 h-6" />}
         <span>Upload to {soulmateName(selectedSoulmate)}</span>
       </>
     );
