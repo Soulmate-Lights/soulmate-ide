@@ -135,15 +135,6 @@ const Simulator = ({ className, minWidth, maxWidth, style, build, config }) => {
     if (ref) ref.scrollTop = ref.scrollHeight;
   }, [serialOutput]);
 
-  // Event listeners
-
-  let stopResizeTimeout = useRef();
-  useEventListener("resize", () => {
-    setPaused(true);
-    clearTimeout(stopResizeTimeout.current);
-    stopResizeTimeout.current = setTimeout(() => setPaused(false), 500);
-  });
-
   // Calculate canvas width and height from rows / cols
 
   let { width, height } = useCallback(calculateDimensions(rows, cols), [
