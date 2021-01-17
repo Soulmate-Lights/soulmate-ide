@@ -6,6 +6,7 @@ import CodeEditor from "~/components/codeEditor";
 import Header from "~/components/Header";
 import Simulator from "~/components/Simulator";
 import BuildsContainer from "~/containers/builds";
+import SoulmatesContainer from "~/containers/soulmates";
 import UserContainer from "~/containers/user";
 import Logo from "~/images/logo.svg";
 
@@ -52,7 +53,7 @@ const Welcome = () => {
   const [savedCodes, setSavedCodes] = useState({});
   const { getBuild } = useContainer(BuildsContainer);
   const [index, setIndex] = useState(0);
-  const config = { rows: 30, cols: 30 };
+  const { config } = SoulmatesContainer.useContainer();
   const code = savedCodes[index] || examples[index];
   const build = getBuild(code, config);
 
@@ -108,6 +109,7 @@ const Welcome = () => {
             <Simulator
               build={build}
               className="flex flex-col flex-shrink w-5/12"
+              config={config}
               maxWidth={350}
             />
           </>

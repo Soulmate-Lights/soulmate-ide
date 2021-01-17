@@ -18,6 +18,17 @@ if (typeof window.ipcRenderer === "undefined" || !window.ipcRenderer)
 
 const LINE_LIMIT = 300;
 
+const saveConfig = ({ rows, cols }) =>
+  (localStorage["simulatorConfig"] = JSON.stringify({ rows, cols }));
+
+const readConfig = () => {
+  if (localStorage["simulatorConfig"]) {
+    return JSON.parse(localStorage["simulatorConfig"]);
+  } else {
+    return {};
+  }
+};
+
 export const defaultConfig = {
   rows: 10,
   cols: 10,
@@ -68,7 +79,17 @@ const SoulmatesContainer = () => {
   const [selectedSoulmate, setSelectedSoulmate] = useState(undefined);
   const usbSoulmate = soulmates.find((s) => s.type === "usb");
   const needsSetup = !!port && !usbSoulmate?.config;
-  const config = selectedSoulmate?.config || defaultConfig;
+
+  const [savedConfig, _setSavedConfig] = useState({
+    ...defaultConfig,
+    ...readConfig(),
+  });
+  const config = selectedSoulmate?.config || savedConfig;
+
+  const setSavedConfig = (config) => {
+    saveConfig(config);
+    _setSavedConfig(config);
+  };
 
   useEffect(() => {
     if (!selectedSoulmate && usbSoulmate) {
@@ -278,6 +299,7 @@ const SoulmatesContainer = () => {
     needsSetup,
     error,
     setError,
+    setSavedConfig,
   };
 };
 
