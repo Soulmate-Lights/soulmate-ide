@@ -109,10 +109,9 @@ const Menu = () => {
                 Gallery
               </NavLink>
 
-              <hr className="mx-2 app-border" />
-
               {soulmates?.length > 0 && (
                 <>
+                  <hr className="mx-2 app-border" />
                   <div className={menuSectionClass}>
                     {selectedSoulmate ? (
                       <>
@@ -131,7 +130,7 @@ const Menu = () => {
                       <SoulmatesMenu
                         allowUsb
                         button={
-                          <span className="flex items-center justify-center h-full p-1 ml-auto rounded cursor-pointer hover:bg-white">
+                          <span className="flex items-center justify-center h-full p-1 ml-auto rounded cursor-pointer hover:bg-white dark-mode:text-white dark-mode:hover:text-gray-800">
                             <FaChevronDown />
                           </span>
                         }

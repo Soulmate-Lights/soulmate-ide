@@ -10,6 +10,7 @@ import { getFullBuild, prepareSketches } from "~/utils/code";
 import { flashBuild } from "~/utils/flash";
 import isElectron from "~/utils/isElectron";
 import { getPort, getPorts, PortListener } from "~/utils/ports";
+import soulmateName from "~/utils/soulmateName";
 
 import { flashbuildToWifiSoulmate } from "../utils/flash";
 
@@ -77,12 +78,6 @@ const SoulmatesContainer = () => {
   useEffect(() => {
     if (!selectedSoulmate && usbSoulmate) {
       setSelectedSoulmate(usbSoulmate);
-      //     // setConfig(defaultConfig);
-      //   } else if (selectedSoulmate) {
-      //     setConfigFromSoulmateData(selectedSoulmate.config);
-      //   } else {
-      //     setPort(false);
-      //     checkUsb();
     }
   }, [selectedSoulmate]);
 
@@ -95,7 +90,6 @@ const SoulmatesContainer = () => {
     const socket = new WebSocket(`ws://${soulmate.addresses[0]}:81`);
     socket.onopen = () => {
       socket.onmessage = (e) => {
-        // const { version, rows, cols, serpentine } = JSON.parse(e.data);
         soulmate.config = JSON.parse(e.data);
         socket.close();
       };
@@ -178,8 +172,9 @@ const SoulmatesContainer = () => {
     if (!isElectron()) return;
 
     setSelectedSoulmate(undefined);
-    let receivedData;
+    setSoulmates(soulmates.filter((soulmate) => soulmate.type !== "usb"));
 
+    let receivedData;
     const listener = new PortListener(port, (text) => {
       if (text[0] === "{") {
         const config = JSON.parse(text);
@@ -192,9 +187,8 @@ const SoulmatesContainer = () => {
         setSoulmates([...soulmates, newSoulmate]);
         setSelectedSoulmate(newSoulmate);
         setSoulmateLoading(false);
-        notificationsContainer.notify(
-          `${config?.name || "USB Soulmate"} connected!`
-        );
+        const name = soulmateName(newSoulmate);
+        notificationsContainer.notify(`${name} connected!`);
       }
       setText((oldText) => [...takeRight(oldText, LINE_LIMIT), text]);
     });
@@ -204,9 +198,7 @@ const SoulmatesContainer = () => {
     listener?.port?.write('{ "status": true }\n');
 
     setTimeout(() => {
-      if (!receivedData) {
-        setSoulmateLoading(false);
-      }
+      if (!receivedData) setSoulmateLoading(false);
     }, 2000);
 
     window.addEventListener("beforeunload", () => {
