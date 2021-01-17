@@ -61,7 +61,7 @@ const Menu = () => {
               </span>
             </div>
 
-            <nav className="flex-1 mx-2 mt-4 space-y-1">
+            <nav className="flex-1 mx-2 mt-4 space-y-2">
               <NavLink
                 activeClassName={activeLinkClass}
                 className={linkClass}
@@ -85,7 +85,7 @@ const Menu = () => {
                 Tutorial
               </NavLink>
 
-              <hr className="mx-2 app-border" />
+              <hr className="mx-2 mt-4 app-border" />
 
               <div className={menuSectionClass}>Patterns</div>
 
@@ -111,7 +111,7 @@ const Menu = () => {
 
               {soulmates?.length > 0 && (
                 <>
-                  <hr className="mx-2 app-border" />
+                  <hr className="mx-2 mt-4 app-border" />
                   <div className={menuSectionClass}>
                     {selectedSoulmate ? (
                       <>
@@ -191,7 +191,7 @@ const Menu = () => {
 
               {isAdmin() && (
                 <>
-                  <hr className="mx-2 app-border" />
+                  <hr className="mx-2 mt-4 app-border" />
                   <div className={menuSectionClass}>Playlists</div>
                   <NavLink
                     activeClassName={activeLinkClass}
