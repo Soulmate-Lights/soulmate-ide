@@ -268,7 +268,7 @@ const Menu = () => {
             </div>
           </div>
 
-          <UserDetails className={`border-t dark-mode:border-gray-600`} />
+          <UserDetails className="border-t dark-mode:border-gray-600" />
         </div>
       </div>
     </div>

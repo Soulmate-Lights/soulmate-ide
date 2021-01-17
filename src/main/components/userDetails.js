@@ -6,43 +6,42 @@ const UserDetails = ({ className }) => {
   const { userDetails, logout, login } = UserContainer.useContainer();
 
   return (
-    <div className={classnames("flex-shrink-0 flex px-4 py-2 h-14", className)}>
-      <div className="flex-grow flex-shrink-0 group">
-        {!userDetails && (
-          <div className="flex items-center flex-grow py-2">
-            <button onClick={login}>Log in</button>
+    <div
+      className={classnames("flex flex-row w-full px-4 py-3 h-14", className)}
+    >
+      {!userDetails && (
+        <button
+          className="flex items-center flex-grow leading-5"
+          onClick={login}
+        >
+          <span>Log in</span>
 
-            <button
-              className="flex items-center justify-center h-full ml-auto"
-              onClick={login}
-            >
-              <FiLogIn />
-            </button>
+          <span
+            className="flex items-center justify-center h-full ml-auto"
+            onClick={login}
+          >
+            <FiLogIn />
+          </span>
+        </button>
+      )}
+      {userDetails && (
+        <div className="flex flex-row items-center flex-shrink w-full min-w-0 space-x-2">
+          <img
+            alt="avatar"
+            className="flex-shrink-0 inline-block object-cover rounded-full h-9 w-9"
+            src={userDetails?.picture}
+          />
+          <div className="flex-grow flex-shrink min-w-0 text-sm font-medium truncate">
+            {userDetails?.name}
           </div>
-        )}
-        {userDetails && (
-          <div className="flex items-center">
-            <div>
-              <img
-                alt="avatar"
-                className="inline-block object-cover rounded-full h-9 w-9"
-                src={userDetails?.picture}
-              />
-            </div>
-            <div className="ml-3">
-              <p className="text-sm font-medium leading-5">
-                {userDetails?.name}
-              </p>
-            </div>
-            <button
-              className="flex items-center justify-center h-full ml-auto"
-              onClick={logout}
-            >
-              <FiLogOut />
-            </button>
-          </div>
-        )}
-      </div>
+          <button
+            className="flex items-center justify-center flex-shrink-0 ml-auto"
+            onClick={logout}
+          >
+            <FiLogOut className="w-8 h-8 p-2 rounded hover:text-black hover:bg-white" />
+          </button>
+        </div>
+      )}
     </div>
   );
 };
