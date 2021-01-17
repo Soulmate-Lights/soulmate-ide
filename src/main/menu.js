@@ -45,12 +45,12 @@ const Menu = () => {
   return (
     <div
       className={
-        "flex flex-shrink-0 border-r bg-gray-200 dark-mode:border-gray-600 dark-mode:bg-gray-700 dark-mode:text-white"
+        "flex flex-shrink-0 border-r bg-gray-200 dark-mode:border-gray-600 dark-mode:bg-gray-700 dark-mode:text-white overflow-"
       }
     >
       <div className="flex flex-col w-64">
         <div className="flex flex-col flex-1 h-0">
-          <div className="flex flex-col flex-1 pb-4">
+          <div className="flex flex-col flex-1 pb-4 overflow-auto">
             <div className="flex flex-row items-center flex-grow-0 flex-shrink-0 h-16 px-6 border-b app-border">
               <Logo className="w-6 h-6 mr-2" />
 

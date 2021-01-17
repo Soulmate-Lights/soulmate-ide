@@ -93,6 +93,7 @@ const SoulmatesMenu = ({
               </button>
             )
           }
+          portal
         >
           <MenuHeader className="pl-4">{text}</MenuHeader>
           {sortBy(soulmates, (s) => s.config?.chipId).map((soulmate, i) => {
