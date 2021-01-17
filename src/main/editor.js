@@ -260,10 +260,10 @@ const Editor = ({ id }) => {
               onSave={(code) => save(sketch.id, code)}
             />
           </div>
-          <div className="flex flex-row items-center p-4 text-sm border-t dark-mode:border-gray-700">
+          <div className="flex flex-row items-center p-4 py-3 text-sm border-t h-14 dark-mode:border-gray-700">
             <span className="px-4 font-light">Public URL</span>
             <input
-              className="flex-grow h-8 px-2 py-1 text-gray-900 border rounded-l dark-mode:bg-gray-200 dark-mode:border-gray-700"
+              className="flex-grow h-8 px-2 py-2 text-gray-900 border rounded-l dark-mode:bg-gray-200 dark-mode:border-gray-300"
               onClick={(e) => {
                 e.target.select();
               }}

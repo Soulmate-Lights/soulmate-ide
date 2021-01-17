@@ -58,14 +58,14 @@ const ResolutionPopup = ({ rows, cols, button, className, onChange }) => {
           <div
             aria-labelledby="options-menu"
             aria-orientation="vertical"
-            className="py-2 space-y-2"
+            className="px-4 py-2 space-y-2"
             role="menu"
           >
-            <div className="px-4 pt-2 pb-1">
+            <div className="pt-2 pb-1">
               <p className="text-sm text-gray-500">Simulator resolution</p>
             </div>
 
-            <div className="flex flex-row items-center flex-shrink px-4 mb-2 text-sm text-gray-500 space-x-4">
+            <div className="flex flex-row items-center flex-shrink mb-2 text-sm text-gray-500 space-x-4">
               <input
                 autoFocus
                 className="flex flex-shrink min-w-0 p-2 text-xs text-center bg-white border border-gray-600 rounded-lg leading-4"
@@ -94,7 +94,7 @@ const ResolutionPopup = ({ rows, cols, button, className, onChange }) => {
               />
             </div>
 
-            <div className="flex justify-end px-4 py-2">
+            <div className="flex justify-end py-2">
               <button
                 className="flex-grow p-2 ml-auto button"
                 onClick={() => {

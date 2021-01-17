@@ -6,7 +6,7 @@ const UserDetails = ({ className }) => {
   const { userDetails, logout, login } = UserContainer.useContainer();
 
   return (
-    <div className={classnames("flex-shrink-0 flex px-4 py-2", className)}>
+    <div className={classnames("flex-shrink-0 flex px-4 py-2 h-14", className)}>
       <div className="flex-grow flex-shrink-0 group">
         {!userDetails && (
           <div className="flex items-center flex-grow py-2">
