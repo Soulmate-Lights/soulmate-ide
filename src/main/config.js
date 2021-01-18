@@ -255,6 +255,25 @@ const Config = () => {
                     />
                     Mirror Horizontal
                   </label>
+
+                  <label
+                    className="flex flex-row items-center block text-sm font-medium text-gray-700 leading-5"
+                    htmlFor="first_name"
+                  >
+                    <input
+                      checked={config.mirror}
+                      className="mr-2"
+                      id="reverse"
+                      onChange={(e) => {
+                        setConfig({
+                          ...config,
+                          reverse: e.target.checked,
+                        });
+                      }}
+                      type="checkbox"
+                    />
+                    Flip Vertical
+                  </label>
                 </div>
               </Right>
             </Section>

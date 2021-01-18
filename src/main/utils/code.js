@@ -90,6 +90,7 @@ export const prepareSketches = (sketches, config) => {
     data,
     clock,
     serpentine,
+    reverse,
   } = config;
 
   if (!rows) throw "Number of rows wasn't set";
@@ -128,6 +129,8 @@ export const prepareSketches = (sketches, config) => {
 #define LED_ROWS ${rows}
 // Normally LED_COLS * LED_ROWS
 // #define N_LEDS ${cols * rows}
+
+${reverse ? "#define SOULMATE_REVERSE true" : ""}
 
 // How long should we spend in each pattern?
 #define CYCLE_LENGTH_IN_MS 120000

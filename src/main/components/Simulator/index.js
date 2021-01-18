@@ -5,12 +5,12 @@ import { useCallback } from "react";
 import { BsFillPauseFill, BsPlayFill } from "react-icons/bs";
 import { FiCast } from "react-icons/fi";
 
+import SoulmatesMenu from "~/components/SoulmatesMenu";
 import SoulmatesContainer from "~/containers/soulmates";
 import Logo from "~/images/logo.svg";
 import soulmateName from "~/utils/soulmateName";
 
 import ResolutionPopup from "./resolutionPopup";
-import SoulmatesMenu from "./SoulmatesMenu";
 import { calculateDimensions } from "./utils";
 
 let worker;
@@ -144,6 +144,9 @@ const Simulator = ({ className, minWidth, maxWidth, style, build, config }) => {
 
   width = Math.min(width, 500);
 
+  // TODO: Turn this into a config variable I think
+  const canvasStyle = { transform: `${mirror && "scaleX(-1)"}` };
+
   return (
     <div
       className={`${className} relative flex flex-grow flex-shrink min-h-0`}
@@ -162,6 +165,7 @@ const Simulator = ({ className, minWidth, maxWidth, style, build, config }) => {
         )}
 
         <SoulmatesMenu
+          align="end"
           allowUsb={false}
           button={
             <button
@@ -195,7 +199,8 @@ const Simulator = ({ className, minWidth, maxWidth, style, build, config }) => {
             </button>
           }
           buttonClassName=""
-          menuClassName=""
+          direction="down"
+          menuClassName="mr-8"
         />
         <button
           className="inline-flex items-center px-3 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 eading-4 rounded-md hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue ctive:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150"
@@ -219,7 +224,7 @@ const Simulator = ({ className, minWidth, maxWidth, style, build, config }) => {
             <canvas
               height={height}
               ref={canvas}
-              style={mirror ? { transform: "scaleX(-1)" } : {}}
+              style={canvasStyle}
               width={width}
             />
           )}

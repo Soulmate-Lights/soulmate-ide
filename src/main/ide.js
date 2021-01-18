@@ -9,6 +9,7 @@ import { SWRConfig } from "swr";
 import useSWR from "swr";
 
 import ErrorNotification from "~/components/ErrorNotification";
+import Menu from "~/components/Menu";
 import Notifications from "~/components/notifications";
 import SoulmatesContainer from "~/containers/soulmates";
 import UserContainer from "~/containers/user";
@@ -25,7 +26,6 @@ import Download from "./download";
 import Editor from "./editor";
 import Flash from "./flash";
 import Gallery from "./gallery";
-import Menu from "./menu";
 import MySketches from "./mySketches";
 import Playlist from "./playlist";
 import Playlists from "./playlists";

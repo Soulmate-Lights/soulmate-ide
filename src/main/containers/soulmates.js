@@ -205,11 +205,17 @@ const SoulmatesContainer = () => {
           type: "usb",
           port,
         };
-        setSoulmates([...soulmates, newSoulmate]);
+        console.log("Adding USB soulmate", newSoulmate);
+        console.log("Removing old USB soulmates while we're at it....");
+        const filteredSoulmates = soulmates.filter(
+          (soulmate) => soulmate.port !== port
+        );
+        setSoulmates([...filteredSoulmates, newSoulmate]);
         setSelectedSoulmate(newSoulmate);
         setSoulmateLoading(false);
-        const name = soulmateName(newSoulmate);
-        notificationsContainer.notify(`${name} connected!`);
+        notificationsContainer.notify(
+          `${soulmateName(newSoulmate)} connected!`
+        );
       }
       setText((oldText) => [...takeRight(oldText, LINE_LIMIT), text]);
     });

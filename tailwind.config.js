@@ -10,6 +10,9 @@ module.exports = {
   },
   theme: {
     extend: {
+      fontSize: {
+        "2xs": ".6rem",
+      },
       screens: {
         "light-mode": { raw: "(prefers-color-scheme: light)" },
         "dark-mode": { raw: "(prefers-color-scheme: dark)" },
