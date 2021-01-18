@@ -76,7 +76,7 @@ const Flash = () => {
     }))
     .filter((u) => u.uid !== userDetails?.sub);
 
-  users = sortBy(users, (u) => -u.sketches.length);
+  users = sortBy(users, (u) => -u.sketches?.length);
 
   const toggle = (sketch) => {
     if (flashing) return;
@@ -110,7 +110,7 @@ const Flash = () => {
         />
 
         <div className="flex flex-col flex-grow flex-shrink p-4 overflow-auto">
-          {sketches.length > 0 && (
+          {sketches?.length > 0 && (
             <div className="pb-2">
               <h3 className="mb-2 text-lg">My Sketches</h3>
 
@@ -129,7 +129,9 @@ const Flash = () => {
                     <Sketch sketch={sketch} width={24} />
 
                     {selected.includes(sketch.id) && (
-                      <AiFillCheckCircle className="absolute text-lg text-white top-2 right-2" />
+                      <div className="absolute bg-black rounded-full top-2 right-2">
+                        <AiFillCheckCircle className=" p-0 text-lg text-white rounded-full shadow " />
+                      </div>
                     )}
                   </div>
                 ))}
@@ -155,7 +157,7 @@ const Flash = () => {
                     <Sketch sketch={sketch} width={24} />
 
                     {selected.includes(sketch.id) && (
-                      <AiFillCheckCircle className="absolute text-lg text-white top-2 right-2" />
+                      <AiFillCheckCircle className="absolute text-lg text-white border border-black top-2 right-2" />
                     )}
                   </div>
                 ))}
@@ -168,7 +170,7 @@ const Flash = () => {
           <div className="flex flex-row items-center px-4 pt-4 border-t border-gray-300 dark-mode:bg-gray-600 dark-mode:border-gray-700">
             {selectedSketches?.length == 0 && (
               <div className="w-full p-2 pb-6 text-center">
-                <IoAddCircleSharp className="inline w-8 h-8 mr-2" />
+                <IoAddCircleSharp className="inline w-8 h-8 mr-2 border-2 border-black shadow-lg" />
                 Click on the patterns you want to add to your Soulmate from the
                 gallery above.
               </div>
@@ -195,7 +197,9 @@ const Flash = () => {
                             sketch={sketch}
                             width={16}
                           />
-                          <AiFillCheckCircle className="absolute text-lg text-white top-2 right-2" />
+                          <div className="absolute bg-black rounded-full top-2 right-2">
+                            <AiFillCheckCircle className=" p-0 text-lg text-white rounded-full shadow " />
+                          </div>
                         </div>
                       )
                   )}

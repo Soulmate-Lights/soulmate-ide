@@ -57,6 +57,7 @@ Leaving: "ease-in duration-200"
           <div className="absolute top-0 right-0 hidden pt-4 pr-4 sm:block">
             <button
               className="text-gray-400 bg-white rounded-md hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              onClick={dismiss}
               type="button"
             >
               <span className="sr-only">Close</span>

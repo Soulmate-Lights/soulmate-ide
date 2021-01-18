@@ -1,4 +1,4 @@
-// import { drawPixels } from "@elliottkember/leduino";
+import { drawPixels } from "@elliottkember/leduino";
 import useEventListener from "@use-it/event-listener";
 import _ from "lodash";
 import { useCallback } from "react";
@@ -10,7 +10,6 @@ import SoulmatesContainer from "~/containers/soulmates";
 import Logo from "~/images/logo.svg";
 import soulmateName from "~/utils/soulmateName";
 
-import { drawPixels } from "./drawPixels";
 import ResolutionPopup from "./resolutionPopup";
 import { calculateDimensions } from "./utils";
 

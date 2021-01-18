@@ -17,7 +17,7 @@ const SoulmateMenuItem = ({ soulmate, selected, allowUsb, disabled }) => {
   const ConnectionIcon = soulmate.type === "usb" ? FaUsb : FaWifi;
 
   return (
-    <div className="flex flex-row py-1 text-xs text-sm whitespace-pre space-x-2">
+    <div className="flex flex-row text-xs text-sm whitespace-pre space-x-2">
       {!disabled ? (
         <CheckboxIcon className="w-4 h-4 text-purple-600" />
       ) : (
