@@ -1,4 +1,4 @@
-import { drawPixels } from "@elliottkember/leduino";
+// import { drawPixels } from "@elliottkember/leduino";
 import useEventListener from "@use-it/event-listener";
 import _ from "lodash";
 import { useCallback } from "react";
@@ -10,6 +10,7 @@ import SoulmatesContainer from "~/containers/soulmates";
 import Logo from "~/images/logo.svg";
 import soulmateName from "~/utils/soulmateName";
 
+import { drawPixels } from "./drawPixels";
 import ResolutionPopup from "./resolutionPopup";
 import { calculateDimensions } from "./utils";
 
@@ -30,7 +31,7 @@ const Simulator = ({ className, minWidth, maxWidth, style, build, config }) => {
   const isStreamingSoulmate =
     selectedSoulmate && selectedSoulmate.type !== "usb";
 
-  const { rows, cols, serpentine, mirror } = config;
+  const { rows, cols, serpentine } = config;
   const [paused, setPaused] = useState(!document.hasFocus());
   useEventListener("blur", () => !selectedSoulmate && setPaused(true));
   useEventListener("focus", () => setPaused(false));
@@ -145,8 +146,6 @@ const Simulator = ({ className, minWidth, maxWidth, style, build, config }) => {
   width = Math.min(width, 500);
 
   // TODO: Turn this into a config variable I think
-  const canvasStyle = { transform: `${mirror && "scaleX(-1)"}` };
-
   return (
     <div
       className={`${className} relative flex flex-grow flex-shrink min-h-0`}
@@ -199,8 +198,8 @@ const Simulator = ({ className, minWidth, maxWidth, style, build, config }) => {
             </button>
           }
           buttonClassName=""
-          direction="down"
-          menuClassName="mr-8"
+          direction="bottom"
+          // menuClassName="mr-8"
         />
         <button
           className="inline-flex items-center px-3 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 eading-4 rounded-md hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue ctive:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150"
@@ -221,12 +220,7 @@ const Simulator = ({ className, minWidth, maxWidth, style, build, config }) => {
               style={{ animationDuration: "2s" }}
             />
           ) : (
-            <canvas
-              height={height}
-              ref={canvas}
-              style={canvasStyle}
-              width={width}
-            />
+            <canvas height={height} ref={canvas} width={width} />
           )}
         </div>
       </div>

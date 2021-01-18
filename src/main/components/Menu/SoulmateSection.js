@@ -56,7 +56,7 @@ const SoulmatesSection = () => {
                   </span>
                 }
                 buttonClassName="bg-purple-500 text-white"
-                menuClassName="top-full right-0 w-48"
+                // menuClassName="top-full right-0 w-48"
                 text="Connect to..."
               />
             </div>
@@ -76,9 +76,9 @@ const SoulmatesSection = () => {
         </>
       )}
 
-      {usbSelected && isElectron() && (
+      {selectedSoulmate && isElectron() && (
         <>
-          {!needsSetup && (
+          {!needsSetup && usbConnected && (
             <NavLink
               activeClassName={activeLinkClass}
               className={linkClass}

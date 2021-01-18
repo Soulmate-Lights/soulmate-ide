@@ -91,6 +91,12 @@ export const flashbuildToWifiSoulmate = async (ip, build, progressCallback) => {
   const url = `http://${ip}/ota`;
   var body = new FormData();
   body.append("image", new Blob([contents]), "firmware.bin");
+
+  let progress = 0;
+  const uploadInterval = setInterval(() => {
+    progressCallback((progress += 1));
+  }, 300);
+
   await fetch(url, {
     method: "POST",
     body,
@@ -99,6 +105,8 @@ export const flashbuildToWifiSoulmate = async (ip, build, progressCallback) => {
       "Content-Length": fs.statSync(build).size,
     },
   });
+
+  clearInterval(uploadInterval);
 
   progressCallback(100);
 };

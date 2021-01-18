@@ -40,23 +40,24 @@ int16_t gridIndexHorizontal(int16_t x, int16_t y) {
   if (x < 0) return -1;
   if (y < 0) return -1;
 
-  int16_t index = 0;
+  int16_t xIndex = x;
 
-  if (SOULMATE_SERPENTINE) {
-    if (y % 2 == 1) {
-      index = y * LED_COLS + x;
-    } else {
-      index = y * LED_COLS + LED_COLS - 1 - x;
-    }
-  } else {
-    index = y * LED_COLS + x;
+  // Serpentine row
+  if (SOULMATE_SERPENTINE && y % 2 != 1) {
+    xIndex = LED_COLS - 1 - xIndex;
   }
+
+  // // Mirrored left-to-right
+  // if (SOULMATE_MIRROR) {
+  //   xIndex = LED_COLS - 1 - xIndex;
+  // }
+
+  int16_t index = y * LED_COLS + xIndex;
 
   if (index > -1 && index < N_LEDS) {
     return index;
-  } else {
-    return -1;
   }
+  return -1;
 }
 
 uint16_t XY(uint8_t x, uint8_t y) {
@@ -91,6 +92,7 @@ export const prepareSketches = (sketches, config) => {
     clock,
     serpentine,
     reverse,
+    mirror,
   } = config;
 
   if (!rows) throw "Number of rows wasn't set";
@@ -130,7 +132,8 @@ export const prepareSketches = (sketches, config) => {
 // Normally LED_COLS * LED_ROWS
 // #define N_LEDS ${cols * rows}
 
-${reverse ? "#define SOULMATE_REVERSE true" : ""}
+#define SOULMATE_REVERSE ${reverse ? "true" : "false"}
+#define SOULMATE_MIRROR ${mirror ? "true" : "false"}
 
 // How long should we spend in each pattern?
 #define CYCLE_LENGTH_IN_MS 120000

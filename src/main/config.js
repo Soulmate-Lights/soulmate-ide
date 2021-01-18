@@ -43,6 +43,7 @@ const Config = () => {
     usbConnected,
     flashSketches,
     flashing,
+    selectedSoulmate,
     usbFlashingPercentage,
   } = SoulmatesContainer.useContainer();
 
@@ -65,7 +66,7 @@ const Config = () => {
   const isUsingCustomChip =
     config.button !== 39 || config.data !== 32 || config.clock !== 26;
 
-  if (!usbConnected) {
+  if (!selectedSoulmate) {
     return (
       <div className="flex flex-col w-full dark-mode:text-gray-800">
         <Helmet>
@@ -261,7 +262,7 @@ const Config = () => {
                     htmlFor="first_name"
                   >
                     <input
-                      checked={config.mirror}
+                      checked={config.reverse}
                       className="mr-2"
                       id="reverse"
                       onChange={(e) => {

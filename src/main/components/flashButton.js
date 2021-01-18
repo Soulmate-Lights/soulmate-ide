@@ -131,7 +131,7 @@ const FlashButton = ({
               </button>
             }
             buttonClassName="bg-purple-500 text-white"
-            menuClassName="bottom-full mb-2"
+            // menuClassName="bottom-full mb-2"
             text="Upload to..."
           />
         )}
