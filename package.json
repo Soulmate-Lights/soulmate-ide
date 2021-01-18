@@ -10,7 +10,7 @@
   "dependencies": {
     "@auth0/auth0-spa-js": "^1.13.6",
     "@babel/core": "^7.12.10",
-    "@elliottkember/leduino": "^1.0.4",
+    "@elliottkember/leduino": "1.0.6",
     "@fullhuman/postcss-purgecss": "^2.3.0",
     "@hot-loader/react-dom": "^16.13.0",
     "@sentry/electron": "^2.0.1",
