@@ -195,6 +195,10 @@ const SoulmatesContainer = () => {
     setSelectedSoulmate(undefined);
     setSoulmates(soulmates.filter((soulmate) => soulmate.type !== "usb"));
 
+    let newSoulmate = { type: "usb", port, config: null };
+    setSoulmates([...soulmates, newSoulmate]);
+    setSelectedSoulmate(newSoulmate);
+
     let receivedData;
     const listener = new PortListener(port, (text) => {
       if (text[0] === "{") {

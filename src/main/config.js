@@ -173,6 +173,7 @@ const Config = () => {
                             rows: e.target.value,
                           })
                         }
+                        placeholder="10"
                         type="text"
                         value={config.rows}
                       />
@@ -189,6 +190,7 @@ const Config = () => {
                             cols: e.target.value,
                           })
                         }
+                        placeholder="10"
                         type="text"
                         value={config.cols}
                       />
@@ -212,6 +214,7 @@ const Config = () => {
                             milliamps: parseInt(e.target.value) || 0,
                           });
                         }}
+                        placeholder="1000"
                         type="text"
                         value={config.milliamps}
                       />
@@ -366,6 +369,7 @@ const Config = () => {
                                   data: e.target.value,
                                 })
                               }
+                              placeholder="Data pin number"
                               type="text"
                               value={config.data}
                             />
@@ -383,6 +387,7 @@ const Config = () => {
                                     clock: e.target.value,
                                   })
                                 }
+                                placeholder="Clock pin number"
                                 type="text"
                                 value={config.clock}
                               />
