@@ -1,38 +1,38 @@
-name: Upload Sentry sourcemaps
+# name: Upload Sentry sourcemaps
 
-on:
-  push:
-    tags:
-      - "v*"
-      - "sentry-*"
+# on:
+#   push:
+#     tags:
+#       - "v*"
+#       - "sentry-*"
 
-jobs:
-  upload-sourcemaps-to-sentry:
-    runs-on: ubuntu-latest
-    timeout-minutes: 15
-    env:
-      ACTIONS_ALLOW_UNSECURE_COMMANDS: true
+# jobs:
+#   upload-sourcemaps-to-sentry:
+#     runs-on: ubuntu-latest
+#     timeout-minutes: 15
+#     env:
+#       ACTIONS_ALLOW_UNSECURE_COMMANDS: true
 
-    steps:
-      - name: Check out Git repository
-        uses: actions/checkout@v1
+#     steps:
+#       - name: Check out Git repository
+#         uses: actions/checkout@v1
 
-      - name: Install Node.js, NPM and Yarn
-        uses: actions/setup-node@v1
-        with:
-          node-version: 15
+#       - name: Install Node.js, NPM and Yarn
+#         uses: actions/setup-node@v1
+#         with:
+#           node-version: 15
 
-      - name: Setup Sentry CLI
-        uses: mathrix-education/setup-sentry-cli@0.1.0
-        with:
-          version: latest # optional if 'latest'
-          token: ${{ secrets.SENTRY_AUTH_TOKEN }} # from GitHub secrets
-          organization: soulmate
-          project: ide
+#       - name: Setup Sentry CLI
+#         uses: mathrix-education/setup-sentry-cli@0.1.0
+#         with:
+#           version: latest # optional if 'latest'
+#           token: ${{ secrets.SENTRY_AUTH_TOKEN }} # from GitHub secrets
+#           organization: soulmate
+#           project: ide
 
-      - name: Upload to Sentry
-        run: "./sentry.sh"
-        env:
-          SENTRY_ORG: soulmate
-          SENTRY_PROJECT: ide
-          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+#       - name: Upload to Sentry
+#         run: "./sentry.sh"
+#         env:
+#           SENTRY_ORG: soulmate
+#           SENTRY_PROJECT: ide
+#           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}

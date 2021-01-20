@@ -1,57 +1,57 @@
-name: Deploy to web
+# name: Deploy to web
 
-on:
-  push:
-    tags:
-      - "v*"
+# on:
+#   push:
+#     tags:
+#       - "v*"
 
-jobs:
-  update-ui:
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    env:
-      ACTIONS_ALLOW_UNSECURE_COMMANDS: true
-    steps:
-      - name: Check out Git repository
-        uses: actions/checkout@v2
-        with:
-          repository: Soulmate-Lights/soulmate-server
-          token: ${{ secrets.TOKEN }}
-          ref: refs/heads/master
-          submodules: true
-          path: soulmate-server
+# jobs:
+#   update-ui:
+#     runs-on: ubuntu-latest
+#     timeout-minutes: 10
+#     env:
+#       ACTIONS_ALLOW_UNSECURE_COMMANDS: true
+#     steps:
+#       - name: Check out Git repository
+#         uses: actions/checkout@v2
+#         with:
+#           repository: Soulmate-Lights/soulmate-server
+#           token: ${{ secrets.TOKEN }}
+#           ref: refs/heads/master
+#           submodules: true
+#           path: soulmate-server
 
-      - name: Install Node.js, NPM and Yarn
-        uses: actions/setup-node@v1
-        with:
-          node-version: 15
+#       - name: Install Node.js, NPM and Yarn
+#         uses: actions/setup-node@v1
+#         with:
+#           node-version: 15
 
-      - uses: actions/cache@v2
-        with:
-          path: |
-            **/node_modules
-            **/.cache
-          key: ${{ runner.os }}-deploy-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-deploy-
+#       - uses: actions/cache@v2
+#         with:
+#           path: |
+#             **/node_modules
+#             **/.cache
+#           key: ${{ runner.os }}-deploy-${{ hashFiles('**/yarn.lock') }}
+#           restore-keys: |
+#             ${{ runner.os }}-deploy-
 
-      - name: yarn
-        run: yarn
-        working-directory: soulmate-server/soulmate-ide
+#       - name: yarn
+#         run: yarn
+#         working-directory: soulmate-server/soulmate-ide
 
-      - name: Update UI
-        run: git pull
-        working-directory: soulmate-server
+#       - name: Update UI
+#         run: git pull
+#         working-directory: soulmate-server
 
-      - name: Update UI
-        run: yarn update-ui
-        working-directory: soulmate-server
+#       - name: Update UI
+#         run: yarn update-ui
+#         working-directory: soulmate-server
 
-      - name: Push changes
-        run: |
-          git config --global user.name "Github Actions"
-          git config --global user.email "elliott@soulmatelights.com"
-          git add public soulmate-ide
-          git commit -m "Update UI" || echo "No changes"
-          git push
-        working-directory: soulmate-server
+#       - name: Push changes
+#         run: |
+#           git config --global user.name "Github Actions"
+#           git config --global user.email "elliott@soulmatelights.com"
+#           git add public soulmate-ide
+#           git commit -m "Update UI" || echo "No changes"
+#           git push
+#         working-directory: soulmate-server
