@@ -137,7 +137,7 @@
     "install-arm": "npm_config_arch=$(uname -m) yarn",
     "build-with-dependencies-from-source": "yarn run electron-builder --config.buildDependenciesFromSource=true -mwl",
     "web": "NODE_ENV=development parcel index.html --open -p 3000",
-    "bump": "yarn version --patch && git push && git push --tags && build-publish"
+    "bump": "yarn version --patch && git push && git push --tags && yarn build-publish"
   },
   "build": {
     "afterSign": "electron-builder-notarize",
