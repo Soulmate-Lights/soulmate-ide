@@ -42,6 +42,7 @@ jobs:
           python3 --version
           which python
           python --version
+          echo "::set-env name=NODE_GYP_FORCE_PYTHON::python3"
 
       - name: Setup Xcode version
         if: startsWith(matrix.os, 'macos')

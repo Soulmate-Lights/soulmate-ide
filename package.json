@@ -4,7 +4,7 @@
     "last 1 Chrome versions",
     "last 1 electron version"
   ],
-  "version": "2.0.200",
+  "version": "2.0.199",
   "main": "src/electron.js",
   "license": "MIT",
   "dependencies": {
@@ -139,7 +139,6 @@
     "bump": "yarn version --patch && git push && git push --tags"
   },
   "build": {
-    "nodeGypRebuild": true,
     "afterSign": "electron-builder-notarize",
     "afterPack": "./afterpack",
     "win": {
