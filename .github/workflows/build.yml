@@ -43,7 +43,7 @@ jobs:
 
       - name: Setup Xcode version
         if: startsWith(matrix.os, 'macos')
-        run: xcode-select --switch /Applications/Xcode_12.3.app
+        run: sudo xcode-select --switch /Applications/Xcode_12.3.app
 
       - name: Install Node.js, NPM and Yarn for Mac
         if: startsWith(matrix.os, 'macos')
