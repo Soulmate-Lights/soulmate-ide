@@ -17,7 +17,7 @@ jobs:
 
     strategy:
       matrix:
-        os: [windows-latest, macos-11.0]
+        os: [windows-latest, macos-latest]
 
     steps:
       - name: Configure AWS Credentials
