@@ -35,10 +35,6 @@ jobs:
           python-version: "3.8" # Version range or exact version of a Python version to use, using SemVer's version range syntax
           architecture: "x64" # optional x64 or x86. Defaults to x64 if not specified
 
-      - name: Node-gyp clean
-        if: startsWith(matrix.os, 'macos')
-        run: yarn node-gyp clean
-
       - name: Print python stuff
         if: startsWith(matrix.os, 'macos')
         run: |
@@ -74,6 +70,7 @@ jobs:
         run: |
           yarn install
           yarn clean
+          yarn node-gyp clean
 
       - name: Prepare for app notarization
         if: startsWith(matrix.os, 'macos')
