@@ -17,7 +17,7 @@ jobs:
 
     strategy:
       matrix:
-        os: [windows-latest] # , macos-11.0]
+        os: [windows-latest, macos-10.15]
 
     steps:
       - name: Configure AWS Credentials
@@ -30,10 +30,10 @@ jobs:
       - name: Check out Git repository
         uses: actions/checkout@v2
 
-      - uses: actions/setup-python@v2
-        with:
-          python-version: "3.x" # Version range or exact version of a Python version to use, using SemVer's version range syntax
-          architecture: "x64" # optional x64 or x86. Defaults to x64 if not specified
+      # - uses: actions/setup-python@v2
+      #   with:
+      #     python-version: "3.x" # Version range or exact version of a Python version to use, using SemVer's version range syntax
+      #     architecture: "x64" # optional x64 or x86. Defaults to x64 if not specified
 
       - name: Install Node.js, NPM and Yarn for Mac
         if: startsWith(matrix.os, 'macos')
