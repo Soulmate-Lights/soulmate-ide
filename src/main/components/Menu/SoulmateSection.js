@@ -26,7 +26,7 @@ const SoulmatesSection = () => {
     needsSetup,
   } = SoulmatesContainer.useContainer();
   const { isAdmin } = UserContainer.useContainer();
-  const usbSelected = selectedSoulmate?.type === "usb";
+  // const usbSelected = selectedSoulmate?.type === "usb";
 
   return (
     <>

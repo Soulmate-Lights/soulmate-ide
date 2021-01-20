@@ -40,7 +40,7 @@ const Config = () => {
 
   const {
     config: _config,
-    usbConnected,
+    // usbConnected,
     flashSketches,
     flashing,
     selectedSoulmate,
