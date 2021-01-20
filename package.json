@@ -128,7 +128,7 @@
     "start-app-local": "concurrently \"cross-env local=true BROWSER=none yarn react-start\" \"wait-on http://localhost:3000 && electron . \" \"yarn build-worker-dev\"",
     "rebuild-electron": "yarn node-gyp clean && yarn electron-rebuild",
     "build": "yarn build-worker && parcel build index.html --out-dir build --public-url . --no-source-maps",
-    "build-publish": "yarn build && yarn rebuild-electron && electron-builder -p always",
+    "build-publish": "./postinstall.sh && yarn build && electron-builder -p always",
     "build-worker": "parcel build node_modules/monaco-editor/esm/vs/editor/editor.worker.js -d build --no-source-maps",
     "build-worker-dev": "parcel build node_modules/monaco-editor/esm/vs/editor/editor.worker.js --no-source-maps",
     "release": "yarn clean && yarn version --patch && yarn build && yarn rebuild-electron && AWS_PROFILE=soulmate-ide-updates electron-builder -mw --publish always",
