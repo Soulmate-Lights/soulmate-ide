@@ -38,7 +38,7 @@ jobs:
 
       - name: yarn
         run: yarn
-        working-directory: soulmate-server/soulmate-ide
+        working-directory: soulmate-server/ide
 
       - name: Update UI
         run: git pull
