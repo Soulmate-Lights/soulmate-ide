@@ -44,11 +44,22 @@ jobs:
           python --version
           echo "::set-env name=NODE_GYP_FORCE_PYTHON::python3"
 
+      - name: Xcode rm -rf
+        if: startsWith(matrix.os, 'macos')
+        run: sudo rm -rf /Library/Developer/CommandLineTools
+
       - name: Setup Xcode version
         if: startsWith(matrix.os, 'macos')
         uses: maxim-lobanov/setup-xcode@v1.2.1
         with:
           xcode-version: latest
+
+      - name: Setup Xcode
+        if: startsWith(matrix.os, 'macos')
+        run: |
+          xcode-select -print-path
+          xcode-select --reset
+          xcode-select -print-path
 
       - name: Install Node.js, NPM and Yarn for Mac
         if: startsWith(matrix.os, 'macos')
