@@ -1,35 +1,35 @@
-# name: Lint and Test
+name: Lint and Test
 
-# on: push
+on: push
 
-# jobs:
-#   lint:
-#     runs-on: ubuntu-latest
-#     timeout-minutes: 5
-#     env:
-#       ACTIONS_ALLOW_UNSECURE_COMMANDS: true
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      ACTIONS_ALLOW_UNSECURE_COMMANDS: true
 
-#     steps:
-#       - name: Check out Git repository
-#         uses: actions/checkout@v1
+    steps:
+      - name: Check out Git repository
+        uses: actions/checkout@v1
 
-#       - name: Install Node.js, NPM and Yarn
-#         uses: actions/setup-node@v1
-#         with:
-#           node-version: 15
+      - name: Install Node.js, NPM and Yarn
+        uses: actions/setup-node@v1
+        with:
+          node-version: 15
 
-#       - uses: actions/cache@v2
-#         with:
-#           path: "**/node_modules"
-#           key: ${{ runner.os }}-lint-modules-${{ hashFiles('**/yarn.lock') }}
-#           restore-keys: |
-#             ${{ runner.os }}-lint-modules
+      - uses: actions/cache@v2
+        with:
+          path: "**/node_modules"
+          key: ${{ runner.os }}-lint-modules-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-lint-modules
 
-#       - name: yarn
-#         run: yarn --frozen-lockfile
+      - name: yarn
+        run: yarn --frozen-lockfile
 
-#       - name: eslint
-#         run: npx eslint src
+      - name: eslint
+        run: npx eslint src
 
-#       - name: jest
-#         run: npx jest --passWithNoTests
+      - name: jest
+        run: npx jest --passWithNoTests
