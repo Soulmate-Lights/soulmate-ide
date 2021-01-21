@@ -58,7 +58,7 @@ jobs:
         if: startsWith(matrix.os, 'macos')
         run: |
           xcode-select -print-path
-          xcode-select --reset
+          sudo xcode-select --reset
           xcode-select -print-path
 
       - name: Test xcode-node-gyp
