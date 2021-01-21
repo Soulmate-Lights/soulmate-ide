@@ -61,6 +61,10 @@ jobs:
           xcode-select --reset
           xcode-select -print-path
 
+      - name: Test xcode-node-gyp
+        if: startsWith(matrix.os, 'macos')
+        run: curl -sL https://github.com/nodejs/node-gyp/raw/master/macOS_Catalina_acid_test.sh | bash
+
       - name: Install Node.js, NPM and Yarn for Mac
         if: startsWith(matrix.os, 'macos')
         uses: actions/setup-node@v1
