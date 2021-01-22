@@ -7,7 +7,7 @@ import Logo from "~/images/logo.svg";
 
 const groupSketches = (sketches) => {
   const monthName = (item) =>
-    parseInt(moment(item.updated_at, "YYYY-MM-DD").format("YM"));
+    parseInt(moment(item.updated_at, "YYYY-MM-DD").format("YMM"));
   const groupedSketches = _.groupBy(sketches, monthName);
   const keys = Object.keys(groupedSketches)
     .map((key) => parseInt(key))
