@@ -24,6 +24,7 @@ const Editor = ({ id }) => {
   const { config } = SoulmatesContainer.useContainer();
   const { userDetails } = UserContainer.useContainer();
   const { data: sketch } = useSWR(SKETCH_URL(id), fetcher);
+  const [dirtyCode, setDirtyCode] = useState(sketch?.code);
   const mine = sketch?.user.uid === userDetails?.sub;
 
   const setSketchState = (id, options) => {
@@ -31,7 +32,9 @@ const Editor = ({ id }) => {
   };
 
   const save = async (id, code, config) => {
-    setSketchState(id, { code, dirtyCode: undefined, config, dirty: false });
+    setDirtyCode(code);
+
+    setSketchState(id, { code, config, dirty: false });
 
     if (!mine) return;
     await post("/sketches/save", { id, code, config });
@@ -51,7 +54,6 @@ const Editor = ({ id }) => {
     if (!id) return;
 
     setSketchState(id, {
-      dirtyCode: code,
       dirty: sketch.code !== code,
     });
   };
@@ -92,8 +94,8 @@ const Editor = ({ id }) => {
     );
   }
 
-  const build = getBuild(sketch.code || emptyCode, config);
-  let code = sketch.dirtyCode || sketch.code || emptyCode;
+  let code = dirtyCode || sketch.code || emptyCode;
+  const build = getBuild(code, config);
 
   const confirmAndDelete = () => {
     if (!confirm("Delete this sketch?")) return;
@@ -190,13 +192,7 @@ const Editor = ({ id }) => {
         </title>
       </Helmet>
       <Header
-        actions={[
-          mine && menu,
-          mine && {
-            title: mine ? "Save" : "Refresh",
-            onClick: () => save(sketch.id, sketch.dirtyCode),
-          },
-        ]}
+        actions={[mine && menu]}
         sections={[
           !mine && { title: "Gallery", to: "/gallery" },
           !mine && {

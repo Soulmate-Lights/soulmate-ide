@@ -31,7 +31,7 @@ const Simulator = ({ className, minWidth, maxWidth, style, build, config }) => {
     selectedSoulmate && selectedSoulmate.type !== "usb";
 
   const { rows, cols, serpentine } = config;
-  const [paused, setPaused] = useState(!document.hasFocus());
+  const [paused, setPaused] = useState(false);
   useEventListener("blur", () => !selectedSoulmate && setPaused(true));
   useEventListener("focus", () => setPaused(false));
 
