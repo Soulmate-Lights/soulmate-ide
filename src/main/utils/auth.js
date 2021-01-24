@@ -88,10 +88,12 @@ export const logOut = async () => {
     document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
   }
 
+  const auth0 = await auth0Promise;
+
   if (isElectron()) {
     remote.require("electron").session.defaultSession.clearStorageData;
+    auth0.logout({ returnTo: window.location.href });
+  } else {
+    auth0.logout({ returnTo: window.location.origin });
   }
-
-  const auth0 = await auth0Promise;
-  auth0.logout({ returnTo: window.location.href });
 };
