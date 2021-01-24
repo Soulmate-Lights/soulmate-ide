@@ -340,25 +340,6 @@ export default function MarketingPage() {
                 Open the web editor
               </a>
             </div>
-            {!isMobile() && (
-              <div className="hidden shadow rounded-md sm:block">
-                <a
-                  className="inline-flex items-center justify-center px-5 py-3 text-base font-medium text-purple-600 bg-white border border-transparent leading-6 rounded-md hover:text-purple-800 focus:outline-none focus:shadow-outline transition duration-150 ease-in-out"
-                  href={
-                    isMacintosh()
-                      ? "https://editor.soulmatelights.com/download/mac"
-                      : "https://editor.soulmatelights.com/download/windows"
-                  }
-                >
-                  {isMacintosh() ? (
-                    <AiFillApple className="mr-2" />
-                  ) : (
-                    <AiFillWindows className="mr-2" />
-                  )}
-                  Download the desktop app
-                </a>
-              </div>
-            )}
           </div>
         </div>
       </div>
