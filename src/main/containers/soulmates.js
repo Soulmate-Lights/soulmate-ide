@@ -138,6 +138,13 @@ const SoulmatesContainer = () => {
     ipcRenderer?.send("scan", {});
   }, 5000);
 
+  const getBuild = async (sketches, config) => {
+    const preparedCode = prepareSketches(sketches, config);
+    let build = await getFullBuild(preparedCode);
+
+    return build;
+  };
+
   const flashSketches = async (sketches, config) => {
     setFlashing(true);
 
@@ -308,6 +315,7 @@ const SoulmatesContainer = () => {
     error,
     setError,
     setSavedConfig,
+    getBuild,
   };
 };
 
