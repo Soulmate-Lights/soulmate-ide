@@ -1,3 +1,4 @@
+import uniqBy from "lodash/uniqBy";
 import useSWR, { mutate } from "swr";
 
 import CodeEditor from "~/components/codeEditor";
@@ -44,7 +45,7 @@ const Playlist = (props) => {
   const { data: mySketches = [] } = useSWR(SKETCHES_URL);
   const { data: allSketches = [] } = useSWR(ALL_SKETCHES_URL);
 
-  const onlineSketches = [...mySketches, ...allSketches];
+  const onlineSketches = uniqBy([...mySketches, ...allSketches], "id");
 
   const id = parseInt(props.id);
   const { data: playlists } = useSWR(PLAYLISTS_URL, fetcher);
@@ -197,7 +198,7 @@ const Playlist = (props) => {
       />
 
       <div className="flex flex-row flex-grow flex-shrink min-h-0">
-        <div className="flex flex-col w-3/12 h-full p-4 overflow-auto text-gray-800 border-r border-gray-200 dark-mode:border-gray-700">
+        <div className="flex flex-col flex-shrink-0 w-3/12 h-full p-4 overflow-auto text-gray-800 border-r border-gray-200 dark-mode:border-gray-700">
           <PlaylistMenu
             index={index}
             onChange={(sketches) => {
@@ -218,7 +219,7 @@ const Playlist = (props) => {
         </div>
 
         {index === -1 ? (
-          <div className="flex flex-row items-start">
+          <div className="flex flex-row flex-wrap items-start flex-shrink overflow-scroll">
             {onlineSketches.map((sketch) => (
               <div
                 className="flex flex-grow-0 flex-shrink m-2 cursor-pointer"
