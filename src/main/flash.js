@@ -170,7 +170,7 @@ const Flash = () => {
           <div className="flex flex-row items-center px-4 pt-4 border-t border-gray-300 dark-mode:bg-gray-600 dark-mode:border-gray-700">
             {selectedSketches?.length == 0 && (
               <div className="w-full p-2 pb-6 text-center">
-                <IoAddCircleSharp className="inline w-8 h-8 mr-2 border-2 border-black shadow-lg" />
+                <IoAddCircleSharp className="inline w-8 h-8 mr-2" />
                 Click on the patterns you want to add to your Soulmate from the
                 gallery above.
               </div>
