@@ -4,6 +4,7 @@ import CodeEditor from "~/components/codeEditor";
 import Header from "~/components/Header";
 import PlaylistMenu from "~/components/PlaylistMenu";
 import Simulator from "~/components/Simulator";
+import Sketch from "~/components/sketch";
 import BuildsContainer from "~/containers/builds";
 import SoulmatesContainer from "~/containers/soulmates";
 import Logo from "~/images/logo.svg";
@@ -20,7 +21,7 @@ const savePlaylist = async (id, data, build) => {
     const blob = new Blob([fs.readFileSync(build)]);
     formData.append("build", blob, "firmware.bin");
   }
-  await put(`/my-playlists/${id}`, formData);
+  await put(`/my-playlists/${id}?hi`, formData);
   mutate(PLAYLISTS_URL);
 };
 
@@ -34,9 +35,15 @@ const unpublishPlaylist = async (id) => {
   mutate(PLAYLISTS_URL);
 };
 
+import { ALL_SKETCHES_URL, SKETCHES_URL } from "~/utils/urls";
 const Playlist = (props) => {
   const { getBuild } = BuildsContainer.useContainer();
   const soulmates = SoulmatesContainer.useContainer();
+
+  const { data: mySketches = [] } = useSWR(SKETCHES_URL);
+  const { data: allSketches = [] } = useSWR(ALL_SKETCHES_URL);
+
+  const onlineSketches = [...mySketches, ...allSketches];
 
   const id = parseInt(props.id);
   const { data: playlists } = useSWR(PLAYLISTS_URL, fetcher);
@@ -173,11 +180,11 @@ const Playlist = (props) => {
         title={
           <>
             {playlist.name}
-            <span className="px-4 py-2 m-2 text-sm bg-gray-200 rounded-full border-1">
+            <span className="px-4 py-2 mx-4 ml-4 text-sm text-gray-800 bg-gray-200 rounded-full border-1">
               {playlist.url ? "published" : "not published"}
             </span>
             {dirty && (
-              <span className="px-4 py-2 m-2 text-sm bg-red-200 rounded-full border-1">
+              <span className="px-4 py-2 ml-2 text-sm text-red-400 bg-red-200 rounded-full border-1">
                 Has changes
               </span>
             )}
@@ -186,46 +193,79 @@ const Playlist = (props) => {
       />
 
       <div className="flex flex-row flex-grow flex-shrink min-h-0">
-        <PlaylistMenu
-          index={index}
-          onChange={(sketches) => {
-            setSketches(sketches);
-            savePlaylist(playlist.id, { sketches });
-            setDirty(true);
-          }}
-          setIndex={setIndex}
-          sketches={sketches}
-        />
+        <div className="flex flex-col w-3/12 h-full p-4 text-gray-800">
+          <PlaylistMenu
+            index={index}
+            onChange={(sketches) => {
+              setSketches(sketches);
+              savePlaylist(playlist.id, { sketches });
+              setDirty(true);
+            }}
+            setIndex={setIndex}
+            sketches={sketches}
+          />
 
-        {sketches && sketches[index] ? (
-          <div className="flex flex-row flex-grow flex-shrink min-w-0 min-h-0">
-            <CodeEditor
-              build={build}
-              className="relative flex-grow flex-shrink w-6/12 min-w-0 min-h-0 bg-white"
-              code={sketch?.code || emptyCode}
-              key={index}
-              onChange={(code) => {
-                sketches[index].code = code;
-                setSketches(sketches);
-                setDirty(true);
-              }}
-              onSave={(code) => {
-                setDirty(false);
-                sketches[index].code = code;
-                setSketches(sketches);
-                savePlaylist(playlist.id, { sketches });
-              }}
-            />
+          <div
+            className="block py-2 my-4 text-sm text-center text-white bg-indigo-500 rounded cursor-pointer align-center"
+            onClick={() => {
+              setIndex(-1);
+            }}
+          >
+            Add from Gallery
+          </div>
+        </div>
 
-            <Simulator
-              build={build}
-              className="flex flex-col flex-grow"
-              config={config}
-              minWidth={320}
-            />
+        {index === -1 ? (
+          <div className="flex flex-row">
+            {onlineSketches.map((sketch) => (
+              <div
+                className="m-2"
+                key={sketch.id}
+                onClick={() => {
+                  console.log(sketch);
+                  setSketches([
+                    ...sketches,
+                    { name: sketch.name, code: sketch.code },
+                  ]);
+                }}
+              >
+                <Sketch sketch={sketch} />
+              </div>
+            ))}
           </div>
         ) : (
-          <Logo className="loading-spinner" />
+          <>
+            {sketches && sketches[index] ? (
+              <div className="flex flex-row flex-grow flex-shrink min-w-0 min-h-0">
+                <CodeEditor
+                  build={build}
+                  className="relative flex-grow flex-shrink w-6/12 min-w-0 min-h-0 bg-white"
+                  code={sketch?.code || emptyCode}
+                  key={index}
+                  onChange={(code) => {
+                    sketches[index].code = code;
+                    setSketches(sketches);
+                    setDirty(true);
+                  }}
+                  onSave={(code) => {
+                    setDirty(false);
+                    sketches[index].code = code;
+                    setSketches(sketches);
+                    savePlaylist(playlist.id, { sketches });
+                  }}
+                />
+
+                <Simulator
+                  build={build}
+                  className="flex flex-col flex-grow"
+                  config={config}
+                  minWidth={320}
+                />
+              </div>
+            ) : (
+              <Logo className="loading-spinner" />
+            )}
+          </>
         )}
       </div>
     </div>

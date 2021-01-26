@@ -30,9 +30,13 @@ export const postDelete = async (path, body = {}) => {
 };
 
 export const put = async (path, body = {}) => {
+  const auth = await auth0Promise;
+  const authenticated = await auth.isAuthenticated();
+  const headers = {};
+  if (authenticated) headers["Authorization"] = await auth.getTokenSilently();
   return fetch(url(path), {
     method: "PUT",
-    ...(await headersAndCredentials()),
+    credentials: "include",
     body,
   }).then((d) => d.json());
 };

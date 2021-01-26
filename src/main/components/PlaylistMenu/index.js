@@ -1,12 +1,7 @@
 import NameLabel from "./NameLabel";
 
 const NamesMenu = ({ sketches, className, onChange, index, setIndex }) => (
-  <div
-    className={classnames(
-      "flex flex-col w-3/12 h-full text-gray-800 p-4",
-      className
-    )}
-  >
+  <div className={className}>
     <nav aria-label="Sidebar" className="space-y-1">
       {sketches?.map((sketch, i) => (
         <div
@@ -42,12 +37,6 @@ const NamesMenu = ({ sketches, className, onChange, index, setIndex }) => (
         </div>
       ))}
     </nav>
-    <div
-      className="block py-2 my-4 text-sm text-center text-white bg-indigo-500 rounded cursor-pointer align-center"
-      onClick={() => onChange([...sketches, {}])}
-    >
-      Add a pattern
-    </div>
   </div>
 );
 
