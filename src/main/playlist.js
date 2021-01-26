@@ -6,19 +6,20 @@ import PlaylistMenu from "~/components/PlaylistMenu";
 import Simulator from "~/components/Simulator";
 import Sketch from "~/components/sketch";
 import BuildsContainer from "~/containers/builds";
-import SoulmatesContainer from "~/containers/soulmates";
+// import SoulmatesContainer from "~/containers/soulmates";
 import Logo from "~/images/logo.svg";
 import { post, postDelete, put } from "~/utils";
 import { fetcher } from "~/utils";
 import { emptyCode } from "~/utils/code";
+import { getFullBuildAsBlob, prepareSketches } from "~/utils/code";
 import history from "~/utils/history";
 import { PLAYLISTS_URL } from "~/utils/urls";
 
-const savePlaylist = async (id, data, build) => {
+const savePlaylist = async (id, data, blob) => {
   var formData = new FormData();
   formData.append("sketches", JSON.stringify(data.sketches));
-  if (build) {
-    const blob = new Blob([fs.readFileSync(build)]);
+  if (blob) {
+    // const blob = new Blob([fs.readFileSync(build)]);
     formData.append("build", blob, "firmware.bin");
   }
   await put(`/my-playlists/${id}?hi`, formData);
@@ -38,7 +39,7 @@ const unpublishPlaylist = async (id) => {
 import { ALL_SKETCHES_URL, SKETCHES_URL } from "~/utils/urls";
 const Playlist = (props) => {
   const { getBuild } = BuildsContainer.useContainer();
-  const soulmates = SoulmatesContainer.useContainer();
+  // const soulmates = SoulmatesContainer.useContainer();
 
   const { data: mySketches = [] } = useSWR(SKETCHES_URL);
   const { data: allSketches = [] } = useSWR(ALL_SKETCHES_URL);
@@ -83,7 +84,10 @@ const Playlist = (props) => {
 
   const publish = async () => {
     setPublishing(true);
-    const build = await soulmates.getBuild(sketches, config);
+    // const build = await soulmates.getBuild(sketches, config);
+    const preparedCode = prepareSketches(sketches, config);
+    let build = await getFullBuildAsBlob(preparedCode);
+
     // TODO: Catch errors here
     if (!build) {
       alert("There was an error building.");
@@ -193,7 +197,7 @@ const Playlist = (props) => {
       />
 
       <div className="flex flex-row flex-grow flex-shrink min-h-0">
-        <div className="flex flex-col w-3/12 h-full p-4 text-gray-800">
+        <div className="flex flex-col w-3/12 h-full p-4 overflow-auto text-gray-800 border-r border-gray-200 dark-mode:border-gray-700">
           <PlaylistMenu
             index={index}
             onChange={(sketches) => {
@@ -207,9 +211,7 @@ const Playlist = (props) => {
 
           <div
             className="block py-2 my-4 text-sm text-center text-white bg-indigo-500 rounded cursor-pointer align-center"
-            onClick={() => {
-              setIndex(-1);
-            }}
+            onClick={() => setIndex(-1)}
           >
             Add from Gallery
           </div>

@@ -194,7 +194,8 @@ export const emptyCode = `void draw() {
 let simulatorBuildUrl = "https://editor.soulmatelights.com/sketches/build";
 // let simulatorBuildUrl = "http://soulmate-balancer-158908611.us-east-1.elb.amazonaws.com:8080"
 // let fullBuildUrl = `http://builder.soulmatelights.com:8081/build`;
-let fullBuildUrl = `http://soulmate-balancer-158908611.us-east-1.elb.amazonaws.com:8081/build`;
+// let fullBuildUrl = `http://soulmate-balancer-158908611.us-east-1.elb.amazonaws.com:8081/build`;
+let fullBuildUrl = `https://firmware.soulmatelights.com:8083/build`;
 
 if (typeof electron !== "undefined") {
   const process = electron.remote.require("process");
@@ -226,6 +227,24 @@ export async function buildHex(source) {
     referer: "https://avr8js-mega-ws2812.stackblitz.io/",
   });
   return await resp.json();
+}
+
+export async function getFullBuildAsBlob(source) {
+  const body = JSON.stringify({ sketch: source });
+  console.log("[getFullBuild]", { body });
+  const res = await window.fetch(fullBuildUrl, {
+    ...options,
+    body,
+  });
+
+  console.log("[getFullBuildAsBlob]", { res });
+
+  if (!res.ok) {
+    const result = await res.text();
+    throw result;
+  }
+
+  return await res.blob();
 }
 
 export async function getFullBuild(source) {
