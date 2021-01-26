@@ -6,6 +6,7 @@ import NotificationsContainer from "~/containers/notifications";
 import Soulmates from "~/containers/soulmates";
 import UserContainer from "~/containers/user";
 import Logo from "~/images/logo.svg";
+import history from "~/utils/history";
 
 import soulmateName from "../utils/soulmateName";
 
@@ -76,12 +77,13 @@ const FlashButton = ({
     <div className="flex items-center justify-end flex-shrink w-auto w-full ml-auto space-x-4">
       <div className="flex flex-row items-center flex-grow block">
         <div className="flex flex-row items-start justify-start flex-grow mr-auto space-x-4">
-          {isAdmin() && selectedSketches.length > 1 && (
+          {isAdmin() && selectedSketches.length >= 1 && (
             <button
               className="footer-button"
               onClick={() => {
-                history.push({
-                  pathname: "/playlists",
+                console.log(history.push);
+                globalThis.h = history;
+                history.push("/playlists", {
                   state: {
                     sketches: selectedSketches,
                   },

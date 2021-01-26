@@ -1,10 +1,10 @@
-import { createBrowserHistory, createMemoryHistory } from "history";
+import { createBrowserHistory, createHashHistory } from "history";
 
 import isElectron from "~/utils/isElectron";
 
 let history;
 if (isElectron()) {
-  history = createMemoryHistory();
+  history = createHashHistory();
 } else {
   history = createBrowserHistory();
 }

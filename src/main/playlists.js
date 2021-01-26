@@ -1,21 +1,30 @@
 import _ from "lodash";
 import React from "react";
 import { Link } from "react-router-dom";
-import { useLocation } from "react-router-dom";
 import useSWR from "swr";
 
 import Header from "~/components/Header";
 import Sketch from "~/components/sketch";
+import SketchesContainer from "~/containers/sketches";
 import Logo from "~/images/logo.svg";
 import { post } from "~/utils";
 import { fetcher } from "~/utils";
 import history from "~/utils/history";
 import { playlistTypes } from "~/utils/types";
+import { ALL_SKETCHES_URL, SKETCHES_URL } from "~/utils/urls";
 import { PLAYLISTS_URL } from "~/utils/urls";
 
 const Playlists = () => {
-  const { state } = useLocation();
-  const [sketches, setSketches] = useState(state?.sketches || []);
+  // const [sketches, setSketches] = useState(state?.sketches || []);
+  const { data: sketches } = useSWR(SKETCHES_URL);
+  const { data: allSketches } = useSWR(ALL_SKETCHES_URL);
+  const { selected, setSelected } = SketchesContainer.useContainer();
+
+  const selectedSketches = selected.map(
+    (id) =>
+      allSketches?.find((s) => s?.id === id) ||
+      sketches?.find((s) => s?.id === id)
+  );
 
   const { data: playlists } = useSWR(PLAYLISTS_URL, fetcher);
 
@@ -32,7 +41,7 @@ const Playlists = () => {
       name,
       description,
       model: modelName,
-      sketches: sketches,
+      sketches: selectedSketches,
     })
       .then((playlist) => history.push(`/playlists/${playlist.id}`))
       .then(reset)
@@ -43,7 +52,7 @@ const Playlists = () => {
   };
 
   const onClickCancel = () => {
-    setSketches([]);
+    setSelected([]);
   };
 
   const groupedPlaylists = _.groupBy(playlists, (p) => p.model_name);
@@ -54,7 +63,7 @@ const Playlists = () => {
     <div className="flex flex-col w-full space-y-8">
       <Header title="Playlists" />
       <div className="flex flex-col items-center w-full text-gray-700 space-y-2">
-        {sketches.length == 0 && (
+        {selectedSketches.length == 0 && (
           <div className="w-6/12 align-center rounded-md">
             <ul>
               {Object.entries(groupedPlaylists)?.map(
@@ -117,11 +126,10 @@ const Playlists = () => {
             </ul>
           </div>
         )}
-
-        {sketches.length > 0 && (
+        {selectedSketches.length > 0 && (
           <>
             <div className="flex flex-row items-start justify-start space-x-2">
-              {sketches.map((sketch) => (
+              {selectedSketches.map((sketch) => (
                 <Sketch className="flex" key={sketch.id} sketch={sketch} />
               ))}
             </div>

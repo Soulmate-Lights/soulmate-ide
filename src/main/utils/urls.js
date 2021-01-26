@@ -4,8 +4,11 @@ import isDev from "~/utils/isDev";
 import isElectron from "~/utils/isElectron";
 
 let _host = process.env.SERVER || window.location.origin;
-if (isElectron()) _host = "https://editor.soulmatelights.com";
+if (isElectron() && !process.env.SERVER)
+  _host = "https://editor.soulmatelights.com";
 export const host = _host;
+
+console.log(host);
 
 export const url = (path) => normalizeUrl(host + "/" + path);
 
