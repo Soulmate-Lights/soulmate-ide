@@ -11,7 +11,6 @@ import { ResizableBox } from "react-resizable";
 
 import Header from "~/components/Header";
 import Sketch from "~/components/sketch";
-import SketchesContainer from "~/containers/sketches";
 import Soulmates from "~/containers/soulmates";
 import UserContainer from "~/containers/user";
 import Logo from "~/images/logo.svg";
@@ -32,24 +31,23 @@ const Flash = () => {
   const { userDetails } = UserContainer.useContainer();
 
   const [search, setSearch] = useState("");
-  // const [selected, setSelected] = useState([]);
-  const { selected, setSelected } = SketchesContainer.useContainer();
+  const [selected, setSelected] = useState([]);
   const [showConsole, setShowConsole] = useState(false);
 
-  // useEffect(() => {
-  //   if (localStorage.selected) {
-  //     try {
-  //       const ids = JSON.parse(localStorage["selected"]);
-  //       setSelected(ids);
-  //     } catch (e) {
-  //       delete localStorage["selected"];
-  //     }
-  //   }
-  // }, []);
+  useEffect(() => {
+    if (localStorage.selected) {
+      try {
+        const ids = JSON.parse(localStorage["selected"]);
+        setSelected(ids);
+      } catch (e) {
+        delete localStorage["selected"];
+      }
+    }
+  }, []);
 
-  // useEffect(() => {
-  //   localStorage["selected"] = JSON.stringify(selected);
-  // }, [selected]);
+  useEffect(() => {
+    localStorage["selected"] = JSON.stringify(selected);
+  }, [selected]);
 
   if (!allSketches) return <Logo className="loading-spinner" />;
 

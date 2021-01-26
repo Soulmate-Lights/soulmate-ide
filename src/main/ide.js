@@ -27,6 +27,7 @@ import Editor from "./editor";
 import Flash from "./flash";
 import Gallery from "./gallery";
 import MySketches from "./mySketches";
+import NewPlaylist from "./newPlaylist";
 import Playlist from "./playlist";
 import Playlists from "./playlists";
 import User from "./user";
@@ -134,6 +135,10 @@ const IDE = () => {
 
                     <Route path="/console">
                       <Console />
+                    </Route>
+
+                    <Route path="/playlists/new">
+                      <NewPlaylist />
                     </Route>
 
                     <Route

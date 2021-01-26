@@ -8,7 +8,6 @@ import { LastLocationProvider } from "react-router-last-location";
 
 import BuildsContainer from "~/containers/builds";
 import NotificationsContainer from "~/containers/notifications";
-import SketchesContainer from "~/containers/sketches";
 import SoulmatesContainer from "~/containers/soulmates";
 import Logo from "~/images/logo.svg";
 import history from "~/utils/history";
@@ -21,13 +20,11 @@ const Ide = React.lazy(() => import("./ide"));
 const SpecificRouter = isElectron() ? HashRouter : Router;
 
 const MainProvider = ({ children }) => (
-  <SketchesContainer.Provider>
-    <NotificationsContainer.Provider>
-      <SoulmatesContainer.Provider>
-        <BuildsContainer.Provider>{children}</BuildsContainer.Provider>
-      </SoulmatesContainer.Provider>
-    </NotificationsContainer.Provider>
-  </SketchesContainer.Provider>
+  <NotificationsContainer.Provider>
+    <SoulmatesContainer.Provider>
+      <BuildsContainer.Provider>{children}</BuildsContainer.Provider>
+    </SoulmatesContainer.Provider>
+  </NotificationsContainer.Provider>
 );
 
 const Main = () => {
