@@ -24,10 +24,9 @@ const NameLabel = ({ value, onChange, disabled }) => {
 
   return (
     <div
-      className={classnames(
-        "inline p-1 border-2 border-transparent rounded-lg",
-        { "hover:border-white": !disabled }
-      )}
+      className={classnames("inline p-1 border border-transparent", {
+        "hover:border-white": !disabled,
+      })}
       onClick={() => {
         if (!disabled) setEditing(true);
       }}

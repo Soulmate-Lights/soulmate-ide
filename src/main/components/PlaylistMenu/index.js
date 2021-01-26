@@ -1,9 +1,8 @@
 import NameLabel from "./NameLabel";
 
 const sketchClass =
-  "cursor-pointer flex items-center px-3 py-2 text-sm font-medium text-gray-600 dark-mode:text-white hover:text-gray-900 dark-mode:hover:bg-white group rounded-md border-2 border-white border-opacity-0";
-const selectedClass =
-  "text-gray-900 dark-mode:text-gray-900 bg-gray-300 border-opacity-100";
+  "cursor-pointer flex items-center px-3 py-2 text-sm font-medium text-gray-600 dark-mode:text-white hover:text-gray-900 dark-mode:hover:bg-white group";
+const selectedClass = "text-gray-900 dark-mode:text-gray-900 bg-gray-300";
 
 const NamesMenu = ({ sketches, onChange, index, setIndex }) =>
   sketches?.map((sketch, i) => {

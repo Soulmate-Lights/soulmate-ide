@@ -16,25 +16,25 @@ const Playlists = () => {
   if (!playlists) return <Logo className="loading-spinner" />;
 
   return (
-    <div className="flex flex-col w-full space-y-8">
+    <div className="flex flex-col w-full">
       <Header title="Playlists" />
-      <div className="flex flex-col items-center w-full text-gray-700 space-y-2">
-        <div className="w-6/12 align-center rounded-md">
+      <div className="flex flex-col items-center w-full py-8 overflow-auto text-gray-700 space-y-2">
+        <div className="w-6/12 align-center rounded-md  space-y-8">
           <ul>
             {Object.entries(groupedPlaylists)?.map(
               ([model_name, playlists]) => (
-                <div key={model_name}>
+                <div className="space-y-4" key={model_name}>
                   <span className="dark-mode:text-white">
                     {_.capitalize(model_name)}
                   </span>
                   <ul
-                    className="my-4 overflow-hidden rounded shadow"
+                    className="overflow-hidden rounded shadow"
                     key={model_name}
                   >
                     {playlists.map((playlist) => (
                       <li key={playlist.id}>
                         <Link
-                          className="block bg-white hover:bg-gray-50 dark-mode:hover:bg-gray-700 hover:text-white focus:outline-none focus:bg-gray-50 transition duration-150 ease-in-out"
+                          className="block bg-white hover:bg-gray-500 dark-mode:hover:bg-gray-700 hover:text-white focus:outline-none  transition duration-150 ease-in-out"
                           to={`/playlists/${playlist.id}`}
                         >
                           <div className="flex items-center px-4 py-4 sm:px-6">

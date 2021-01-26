@@ -194,7 +194,7 @@ const Playlist = (props) => {
       />
 
       <div className="flex flex-row flex-grow flex-shrink min-h-0">
-        <div className="flex flex-col flex-shrink-0 w-3/12 h-full p-4 overflow-auto text-gray-800 border-r border-gray-200 dark-mode:border-gray-700">
+        <div className="flex flex-col flex-shrink-0 h-full p-4 overflow-auto text-gray-800 border-r border-gray-200 w-72 dark-mode:border-gray-700">
           <PlaylistMenu
             index={index}
             onChange={(sketches) => {
