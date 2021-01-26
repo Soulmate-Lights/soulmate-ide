@@ -216,8 +216,6 @@ const SoulmatesContainer = () => {
           type: "usb",
           port,
         };
-        console.log("Adding USB soulmate", newSoulmate);
-        console.log("Removing old USB soulmates while we're at it....");
         const filteredSoulmates = soulmates.filter(
           (soulmate) => soulmate.port !== port
         );

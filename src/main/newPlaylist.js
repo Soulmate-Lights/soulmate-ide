@@ -1,5 +1,5 @@
-import { post } from "~/utils";
 import history from "~/utils/history";
+import { post } from "~/utils/network";
 import { playlistTypes } from "~/utils/types";
 
 const NewPlaylist = () => {

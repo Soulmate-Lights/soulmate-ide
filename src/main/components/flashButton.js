@@ -81,8 +81,6 @@ const FlashButton = ({
             <button
               className="footer-button"
               onClick={() => {
-                console.log(history.push);
-                globalThis.h = history;
                 history.push("/playlists", {
                   state: {
                     sketches: selectedSketches,

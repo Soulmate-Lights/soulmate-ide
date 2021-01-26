@@ -6,18 +6,18 @@ import Header from "~/components/Header";
 import TimeGroupedSketches from "~/components/timeGroupedSketches";
 import UserContainer from "~/containers/user";
 import Logo from "~/images/logo.svg";
-import { fetcher, post } from "~/utils";
 import history from "~/utils/history";
-import { SKETCHES_URL } from "~/utils/urls";
+import { fetcher, post } from "~/utils/network";
+import { SKETCHES_PATH } from "~/utils/network";
 
 const createSketch = async (name) => {
   const newSketch = await post("/sketches/create", { name });
-  mutate(SKETCHES_URL);
+  mutate(SKETCHES_PATH);
   return newSketch;
 };
 
 const MySketches = () => {
-  const { data: sketches } = useSWR(SKETCHES_URL, fetcher);
+  const { data: sketches } = useSWR(SKETCHES_PATH, fetcher);
   const { userDetails, login } = UserContainer.useContainer();
   const [newSketchName, setNewSketchName] = useState("");
   const [creating, setCreating] = useState(false);

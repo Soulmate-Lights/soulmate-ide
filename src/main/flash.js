@@ -21,11 +21,11 @@ const Console = React.lazy(() => import("./console"));
 
 import useSWR from "swr";
 
-import { ALL_SKETCHES_URL, SKETCHES_URL } from "~/utils/urls";
+import { ALL_SKETCHES_PATH, SKETCHES_PATH } from "~/utils/network";
 
 const Flash = () => {
-  const { data: sketches } = useSWR(SKETCHES_URL);
-  const { data: allSketches } = useSWR(ALL_SKETCHES_URL);
+  const { data: sketches } = useSWR(SKETCHES_PATH);
+  const { data: allSketches } = useSWR(ALL_SKETCHES_PATH);
 
   const { flashing, usbConnected } = Soulmates.useContainer();
   const { userDetails } = UserContainer.useContainer();

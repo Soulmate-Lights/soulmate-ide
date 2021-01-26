@@ -1,4 +1,4 @@
-import { host, url } from "./urls";
+import { host, url } from "./network";
 
 describe("urls", () => {
   it("uses production URLs", () => {

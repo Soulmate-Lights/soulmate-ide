@@ -14,9 +14,9 @@ import Notifications from "~/components/notifications";
 import SoulmatesContainer from "~/containers/soulmates";
 import UserContainer from "~/containers/user";
 import Logo from "~/images/logo.svg";
-import { fetcher } from "~/utils";
 import isElectron from "~/utils/isElectron";
-import { ALL_SKETCHES_URL, SKETCHES_URL } from "~/utils/urls";
+import { fetcher } from "~/utils/network";
+import { ALL_SKETCHES_PATH, SKETCHES_PATH } from "~/utils/network";
 
 import ErrorBoundary from "./components/ErrorBoundary";
 import Config from "./config";
@@ -34,8 +34,8 @@ import User from "./user";
 import Welcome from "./welcome";
 
 const IDE = () => {
-  useSWR(SKETCHES_URL);
-  useSWR(ALL_SKETCHES_URL);
+  useSWR(SKETCHES_PATH);
+  useSWR(ALL_SKETCHES_PATH);
 
   UserContainer.useContainer();
   const {

@@ -10,11 +10,15 @@ import NotificationsContainer from "~/containers/notifications";
 import SoulmatesContainer from "~/containers/soulmates";
 import UserContainer from "~/containers/user";
 import Logo from "~/images/logo.svg";
-import { fetcher, post, postDelete } from "~/utils";
 import { emptyCode } from "~/utils/code";
 import history from "~/utils/history";
-import { SKETCHES_URL } from "~/utils/urls";
-import { SKETCH_URL } from "~/utils/urls";
+import {
+  fetcher,
+  post,
+  postDelete,
+  SKETCH_PATH,
+  SKETCHES_PATH,
+} from "~/utils/network";
 
 import { PersonSection } from "./components/Header";
 
@@ -23,12 +27,12 @@ const Editor = ({ id }) => {
   const { getBuild } = BuildsContainer.useContainer();
   const { config } = SoulmatesContainer.useContainer();
   const { userDetails } = UserContainer.useContainer();
-  const { data: sketch } = useSWR(SKETCH_URL(id), fetcher);
+  const { data: sketch } = useSWR(SKETCH_PATH(id), fetcher);
   const [dirtyCode, setDirtyCode] = useState(sketch?.code);
   const mine = sketch?.user.uid === userDetails?.sub;
 
   const setSketchState = (id, options) => {
-    mutate(SKETCH_URL(id), { ...sketch, ...options }, false);
+    mutate(SKETCH_PATH(id), { ...sketch, ...options }, false);
   };
 
   const save = async (id, code, config) => {
@@ -38,7 +42,7 @@ const Editor = ({ id }) => {
 
     if (!mine) return;
     await post("/sketches/save", { id, code, config });
-    mutate(SKETCHES_URL);
+    mutate(SKETCHES_PATH);
   };
 
   const togglePublic = async (id) => {
@@ -47,7 +51,7 @@ const Editor = ({ id }) => {
     const isPublic = !sketch.public;
     setSketchState(id, { public: isPublic });
     await post("/sketches/save", { id, public: isPublic });
-    mutate(SKETCHES_URL);
+    mutate(SKETCHES_PATH);
   };
 
   const persistCode = (id, code) => {

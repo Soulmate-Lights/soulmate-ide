@@ -3,7 +3,7 @@ import { mutate } from "swr";
 import { createContainer } from "unstated-next";
 
 import { logBackIn, logIn, logOut } from "~/utils/auth";
-import { SKETCHES_URL } from "~/utils/urls";
+import { SKETCHES_PATH } from "~/utils/network";
 
 const admin = "google-oauth2|102941484361041922849";
 
@@ -23,7 +23,7 @@ const UserContainer = () => {
       ...userDetails,
     });
 
-    mutate(SKETCHES_URL);
+    mutate(SKETCHES_PATH);
   }, [userDetails]);
 
   const login = async () => logIn().then(setUserDetails);

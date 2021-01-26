@@ -2,10 +2,10 @@ import "regenerator-runtime/runtime";
 
 import createAuth0Client from "@auth0/auth0-spa-js";
 
-import { clientSideUrl, url } from "~/utils/urls";
+import { clientSideUrl, url } from "~/utils/network";
 
-import { get, postWithToken } from ".";
 import isElectron from "./isElectron";
+import { get, postWithToken } from "./network";
 
 const config = {
   domain: "yellow-boat-0900.auth0.com",

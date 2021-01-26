@@ -10,11 +10,11 @@ import Sketch from "~/components/sketch";
 import UserContainer from "~/containers/user";
 import Logo from "~/images/logo.svg";
 import { emptyCode } from "~/utils/code";
-import { ALL_SKETCHES_URL } from "~/utils/urls";
+import { ALL_SKETCHES_PATH } from "~/utils/network";
 
 const Gallery = () => {
   const { userDetails } = UserContainer.useContainer();
-  const { data: allSketches } = useSWR(ALL_SKETCHES_URL);
+  const { data: allSketches } = useSWR(ALL_SKETCHES_PATH);
   const [search, setSearch] = useState("");
 
   if (!allSketches || !allSketches.filter)

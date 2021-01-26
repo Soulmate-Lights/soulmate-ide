@@ -8,40 +8,43 @@ import Simulator from "~/components/Simulator";
 import Sketch from "~/components/sketch";
 import BuildsContainer from "~/containers/builds";
 import Logo from "~/images/logo.svg";
-import { post, postDelete, put } from "~/utils";
-import { fetcher } from "~/utils";
 import { emptyCode } from "~/utils/code";
 import { getFullBuildAsBlob, prepareSketches } from "~/utils/code";
 import history from "~/utils/history";
-import { PLAYLISTS_URL } from "~/utils/urls";
+import { post, postDelete, put } from "~/utils/network";
+import { fetcher } from "~/utils/network";
+import {
+  ALL_SKETCHES_PATH,
+  PLAYLISTS_PATH,
+  SKETCHES_PATH,
+} from "~/utils/network";
 
 const savePlaylist = async (id, data, blob) => {
   var formData = new FormData();
   formData.append("sketches", JSON.stringify(data.sketches));
   if (blob) formData.append("build", blob, "firmware.bin");
   await put(`/my-playlists/${id}?hi`, formData);
-  mutate(PLAYLISTS_URL);
+  mutate(PLAYLISTS_PATH);
 };
 
 const destroyPlaylist = async (id) => {
   await postDelete(`/my-playlists/${id}`);
-  mutate(PLAYLISTS_URL);
+  mutate(PLAYLISTS_PATH);
 };
 
 const unpublishPlaylist = async (id) => {
   await post(`/my-playlists/${id}/unpublish`);
-  mutate(PLAYLISTS_URL);
+  mutate(PLAYLISTS_PATH);
 };
 
-import { ALL_SKETCHES_URL, SKETCHES_URL } from "~/utils/urls";
 const Playlist = (props) => {
   const id = parseInt(props.id);
   const { getBuild } = BuildsContainer.useContainer();
 
-  const { data: mySketches = [] } = useSWR(SKETCHES_URL);
-  const { data: allSketches = [] } = useSWR(ALL_SKETCHES_URL);
+  const { data: mySketches = [] } = useSWR(SKETCHES_PATH);
+  const { data: allSketches = [] } = useSWR(ALL_SKETCHES_PATH);
   const onlineSketches = uniqBy([...mySketches, ...allSketches], "id");
-  const { data: playlists } = useSWR(PLAYLISTS_URL, fetcher);
+  const { data: playlists } = useSWR(PLAYLISTS_PATH, fetcher);
 
   const [publishing, setPublishing] = useState(false);
   const playlist = playlists?.find((p) => parseInt(p.id) === parseInt(id));
@@ -218,7 +221,6 @@ const Playlist = (props) => {
                 className="flex flex-grow-0 flex-shrink m-2 cursor-pointer"
                 key={sketch.id}
                 onClick={() => {
-                  console.log(sketch);
                   setSketches([
                     ...sketches,
                     { name: sketch.name, code: sketch.code },

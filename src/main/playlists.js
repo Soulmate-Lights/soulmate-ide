@@ -5,13 +5,13 @@ import useSWR from "swr";
 
 import Header from "~/components/Header";
 import Logo from "~/images/logo.svg";
-import { fetcher } from "~/utils";
-import { PLAYLISTS_URL } from "~/utils/urls";
+import { fetcher } from "~/utils/network";
+import { PLAYLISTS_PATH } from "~/utils/network";
 
 import NewPlaylist from "./newPlaylist";
 
 const Playlists = () => {
-  const { data: playlists } = useSWR(PLAYLISTS_URL, fetcher);
+  const { data: playlists } = useSWR(PLAYLISTS_PATH, fetcher);
   const groupedPlaylists = _.groupBy(playlists, (p) => p.model_name);
   if (!playlists) return <Logo className="loading-spinner" />;
 
