@@ -1,12 +1,6 @@
-// import useSWR from "swr";
-
-// import Sketch from "~/components/sketch";
-// import SketchesContainer from "~/containers/sketches";
 import { post } from "~/utils";
 import history from "~/utils/history";
 import { playlistTypes } from "~/utils/types";
-// import { playlistTypes } from "~/utils/types";
-// import { ALL_SKETCHES_URL, SKETCHES_URL } from "~/utils/urls";
 
 const NewPlaylist = () => {
   const [name, setName] = useState("");
@@ -94,62 +88,3 @@ const NewPlaylist = () => {
 };
 
 export default NewPlaylist;
-
-{
-  /* {selectedSketches.length > 0 && (
-    <>
-      <div className="flex flex-row items-start justify-start space-x-2">
-        {selectedSketches.map((sketch) => (
-          <Sketch className="flex" key={sketch.id} sketch={sketch} />
-        ))}
-      </div>
-
-
-    </>
-  )} */
-}
-
-// const [sketches, setSketches] = useState(state?.sketches || []);
-// const { data: sketches } = useSWR(SKETCHES_URL);
-// const { data: allSketches } = useSWR(ALL_SKETCHES_URL);
-// const { selected, setSelected } = SketchesContainer.useContainer();
-
-// const selectedSketches = selected.map(
-//   (id) =>
-//     allSketches?.find((s) => s?.id === id) ||
-//     sketches?.find((s) => s?.id === id)
-// );
-
-// const [name, setName] = useState("");
-// const [modelName, setModelName] = useState(false);
-// const [description, setDescription] = useState(undefined);
-
-// const reset = () => setName("");
-
-// const onClickSave = async () => {
-//   if (!name || !modelName || !description) return;
-
-//   post("/my-playlists", {
-//     name,
-//     description,
-//     model: modelName,
-//     sketches: selectedSketches,
-//   })
-//     .then((playlist) => history.push(`/playlists/${playlist.id}`))
-//     .then(reset)
-//     .catch((e) => {
-//       alert("Error creating playlist");
-//       console.log({ error: e });
-//     });
-// };
-
-// const onClickCancel = () => {
-//   setSelected([]);
-// };
-
-// import Sketch from "~/components/sketch";
-// import SketchesContainer from "~/containers/sketches";
-// import { post } from "~/utils";
-// import history from "~/utils/history";
-
-// import { ALL_SKETCHES_URL, SKETCHES_URL } from "~/utils/urls";
