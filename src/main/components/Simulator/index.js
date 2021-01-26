@@ -15,7 +15,15 @@ import { calculateDimensions } from "./utils";
 
 let worker;
 
-const Simulator = ({ className, minWidth, maxWidth, style, build, config }) => {
+const Simulator = ({
+  className,
+  minWidth,
+  maxWidth,
+  style,
+  build,
+  config,
+  hideResolutionMenu,
+}) => {
   const canvas = useRef();
   const compilerOutputDiv = useRef();
   const [serialOutput, setSerialOutput] = useState("");
@@ -151,7 +159,7 @@ const Simulator = ({ className, minWidth, maxWidth, style, build, config }) => {
       style={{ ...style, maxWidth, minWidth }}
     >
       <span className="absolute inline-flex justify-end rounded-md top-4 right-4 space-x-2 left-4">
-        {!selectedSoulmate && (
+        {!selectedSoulmate && !hideResolutionMenu && (
           <ResolutionPopup
             className="mr-auto"
             cols={cols}

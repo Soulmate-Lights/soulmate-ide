@@ -70,7 +70,7 @@ const Sketch = ({
           </video>
         )}
       </div>
-      {showTitle && hover && (
+      {(showTitle || hover) && (
         <div className="z-10 p-1 text-gray-900 bg-white opacity-90 dark-mode:bg-gray-700 dark-mode:text-white">
           <h3 className="text-xs font-medium truncate leading-5">
             {sketch.name}

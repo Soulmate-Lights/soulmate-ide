@@ -6,7 +6,7 @@ const NamesMenu = ({ sketches, className, onChange, index, setIndex }) => (
       {sketches?.map((sketch, i) => (
         <div
           className={classnames(
-            "cursor-pointer flex items-center px-3 py-2 text-sm font-medium text-gray-600 dark-mode:text-white hover:text-gray-900 group rounded-md border-2 border-white border-opacity-0",
+            "cursor-pointer flex items-center px-3 py-2 text-sm font-medium text-gray-600 dark-mode:text-white hover:text-gray-900 dark-mode:hover:bg-white group rounded-md border-2 border-white border-opacity-0",
             {
               "text-gray-900 dark-mode:text-gray-900 bg-gray-300 border-opacity-100 ":
                 i === index,

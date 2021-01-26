@@ -216,10 +216,10 @@ const Playlist = (props) => {
         </div>
 
         {index === -1 ? (
-          <div className="flex flex-row">
+          <div className="flex flex-row items-start">
             {onlineSketches.map((sketch) => (
               <div
-                className="m-2"
+                className="flex flex-grow-0 flex-shrink m-2 cursor-pointer"
                 key={sketch.id}
                 onClick={() => {
                   console.log(sketch);
@@ -228,6 +228,7 @@ const Playlist = (props) => {
                     { name: sketch.name, code: sketch.code },
                   ]);
                 }}
+                showTitle
               >
                 <Sketch sketch={sketch} />
               </div>
@@ -259,6 +260,7 @@ const Playlist = (props) => {
                   build={build}
                   className="flex flex-col flex-grow"
                   config={config}
+                  hideResolutionMenu
                   minWidth={320}
                 />
               </div>
