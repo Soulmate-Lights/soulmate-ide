@@ -7,7 +7,6 @@ import PlaylistMenu from "~/components/PlaylistMenu";
 import Simulator from "~/components/Simulator";
 import Sketch from "~/components/sketch";
 import BuildsContainer from "~/containers/builds";
-// import SoulmatesContainer from "~/containers/soulmates";
 import Logo from "~/images/logo.svg";
 import { post, postDelete, put } from "~/utils";
 import { fetcher } from "~/utils";
@@ -19,10 +18,7 @@ import { PLAYLISTS_URL } from "~/utils/urls";
 const savePlaylist = async (id, data, blob) => {
   var formData = new FormData();
   formData.append("sketches", JSON.stringify(data.sketches));
-  if (blob) {
-    // const blob = new Blob([fs.readFileSync(build)]);
-    formData.append("build", blob, "firmware.bin");
-  }
+  if (blob) formData.append("build", blob, "firmware.bin");
   await put(`/my-playlists/${id}?hi`, formData);
   mutate(PLAYLISTS_URL);
 };
@@ -39,15 +35,12 @@ const unpublishPlaylist = async (id) => {
 
 import { ALL_SKETCHES_URL, SKETCHES_URL } from "~/utils/urls";
 const Playlist = (props) => {
+  const id = parseInt(props.id);
   const { getBuild } = BuildsContainer.useContainer();
-  // const soulmates = SoulmatesContainer.useContainer();
 
   const { data: mySketches = [] } = useSWR(SKETCHES_URL);
   const { data: allSketches = [] } = useSWR(ALL_SKETCHES_URL);
-
   const onlineSketches = uniqBy([...mySketches, ...allSketches], "id");
-
-  const id = parseInt(props.id);
   const { data: playlists } = useSWR(PLAYLISTS_URL, fetcher);
 
   const [publishing, setPublishing] = useState(false);
