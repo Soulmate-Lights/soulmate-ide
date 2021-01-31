@@ -2,6 +2,7 @@ import "react-resizable/css/styles.css";
 
 import classnames from "classnames";
 import React, { Suspense } from "react";
+import { Helmet } from "react-helmet";
 import { FiSettings } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import { Route, Switch } from "react-router-dom";
@@ -54,6 +55,7 @@ const IDE = () => {
 
   return (
     <div className="flex flex-col flex-grow flex-shrink overflow-hidden">
+      <Helmet titleTemplate="%s | Soulmate IDE"></Helmet>
       <Switch>
         <Route path="/desktop-sign-in">
           <Logo className="loading-spinner" />

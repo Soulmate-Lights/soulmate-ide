@@ -9,6 +9,7 @@
   "license": "MIT",
   "dependencies": {
     "@auth0/auth0-spa-js": "^1.13.6",
+    "@babel/helper-builder-react-jsx": "^7.10.4",
     "@elliottkember/leduino": "1.0.6",
     "@fullhuman/postcss-purgecss": "^2.3.0",
     "@hot-loader/react-dom": "^16.13.0",

@@ -70,7 +70,7 @@ const Config = () => {
     return (
       <div className="flex flex-col w-full dark-mode:text-gray-800">
         <Helmet>
-          <title>Config &mdash; Soulmate IDE</title>
+          <title>Config</title>
         </Helmet>
         <Header title="Config" />
 
@@ -85,7 +85,7 @@ const Config = () => {
   return (
     <div className="flex flex-col w-full">
       <Helmet>
-        <title>Config &mdash; Soulmate IDE</title>
+        <title>Config</title>
       </Helmet>
       <Header title="Config" />
 

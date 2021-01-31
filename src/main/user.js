@@ -1,4 +1,5 @@
 import uniqBy from "lodash/uniqBy";
+import { Helmet } from "react-helmet";
 import useSWR from "swr";
 
 import Header, { PersonSection } from "~/components/Header";
@@ -30,6 +31,16 @@ const User = ({ id }) => {
         sections={[{ title: "Gallery", to: "/gallery" }]}
         title={<PersonSection user={user} />}
       />
+
+      <Helmet>
+        <title>{user?.name}</title>
+        <meta content={user?.name} property="og:title" />
+        <meta
+          content={`Sketches by ${user?.name} in Soulmate IDE`}
+          property="og:description"
+        />
+        <meta content={user.image} property="og:image" />
+      </Helmet>
 
       <div className="flex-grow overflow-auto bg-white dark-mode:bg-gray-900 dark-mode:text-white">
         <TimeGroupedSketches sketches={sketches} />

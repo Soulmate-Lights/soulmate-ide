@@ -32,7 +32,7 @@ const MySketches = () => {
   return (
     <div className="flex flex-col flex-grow">
       <Helmet>
-        <title>My Sketches &mdash; Soulmate IDE</title>
+        <title>My Sketches</title>
       </Helmet>
       <Header
         actions={[

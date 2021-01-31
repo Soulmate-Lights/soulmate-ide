@@ -192,8 +192,16 @@ const Editor = ({ id }) => {
           {sketch?.name
             ? `${sketch?.name} by ${sketch?.user?.name}`
             : "Loading sketch..."}{" "}
-          &mdash; Soulmate IDE
         </title>
+        <meta
+          content={`${sketch?.name} by ${sketch?.user?.name}`}
+          property="og:title"
+        />
+        <meta
+          content={`${sketch?.name} by ${sketch?.user?.name} | Soulmate IDE`}
+          property="og:description"
+        />
+        <meta content={sketch.thumb_url} property="og:image" />
       </Helmet>
       <Header
         actions={[mine && menu]}

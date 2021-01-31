@@ -41,7 +41,7 @@ const Gallery = () => {
   return (
     <div className="flex flex-col flex-grow">
       <Helmet>
-        <title>Gallery &mdash; Soulmate IDE</title>
+        <title>Gallery</title>
       </Helmet>
       <Header
         actions={[
