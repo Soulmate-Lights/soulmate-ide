@@ -1,6 +1,6 @@
 /* eslint-disable no-useless-escape */
-
 import React from "react";
+import { Helmet } from "react-helmet";
 
 import examples from "~/welcome/examples";
 
@@ -14,6 +14,23 @@ export default function MarketingPage() {
 
   return (
     <div className="full-width marketing">
+      <Helmet>
+        <meta
+          content="Soulmate - a lighting platform for everybody"
+          property="og:title"
+        />
+        <meta content="Soulmate" property="og:site_name" />
+        <meta content="https://www.soulmatelights.com" property="og:url" />
+        <meta
+          content="Soulmate is the easiest way to work with LEDs. Whether you’re building an LED panel, lighting your room with an LED strip, or just writing C++, try Soulmate free today."
+          property="og:description"
+        />
+        <meta content="product" property="og:type" />
+        <meta
+          content="https://www.soulmatelights.com/hand.fd7ece86.jpg"
+          property="og:image"
+        />
+      </Helmet>
       <div className="relative overflow-hidden bg-white">
         <div className="mx-auto max-w-screen-xl">
           <div className="relative z-10 pb-4 bg-white sm:pb-8 md:pb-20 lg:max-w-2xl lg:w-full lg:pb-28 xl:pb-48">

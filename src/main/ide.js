@@ -55,7 +55,23 @@ const IDE = () => {
 
   return (
     <div className="flex flex-col flex-grow flex-shrink overflow-hidden">
-      <Helmet titleTemplate="%s | Soulmate IDE"></Helmet>
+      <Helmet titleTemplate="%s | Soulmate IDE">
+        <meta
+          content="Soulmate - a lighting platform for everybody"
+          property="og:title"
+        />
+        <meta content="Soulmate" property="og:site_name" />
+        <meta content="https://www.soulmatelights.com" property="og:url" />
+        <meta
+          content="Soulmate is the easiest way to work with LEDs. Whether you’re building an LED panel, lighting your room with an LED strip, or just writing C++, try Soulmate free today."
+          property="og:description"
+        />
+        <meta content="product" property="og:type" />
+        <meta
+          content="https://www.soulmatelights.com/hand.fd7ece86.jpg"
+          property="og:image"
+        />
+      </Helmet>
       <Switch>
         <Route path="/desktop-sign-in">
           <Logo className="loading-spinner" />
