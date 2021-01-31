@@ -67,10 +67,10 @@ const IDE = () => {
           property="og:description"
         />
         <meta content="product" property="og:type" />
-        <meta
+        {/* <meta
           content="https://www.soulmatelights.com/hand.fd7ece86.jpg"
           property="og:image"
-        />
+        /> */}
       </Helmet>
       <Switch>
         <Route path="/desktop-sign-in">

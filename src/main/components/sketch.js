@@ -29,6 +29,12 @@ const Sketch = ({
     width / 2
   } md:h-${width} md:w-${width}`;
 
+  const imageStyle = {
+    position: "absolute",
+    left: 0,
+    top: 0,
+  };
+
   return (
     <div
       className={classnames(
@@ -42,27 +48,9 @@ const Sketch = ({
       {...rest}
     >
       <div className={`block ${size} bg-black relative`}>
-        <img
-          src={sketch.thumb_url}
-          style={{
-            transform: "rotate(180deg)",
-            position: "absolute",
-            left: 0,
-            top: 0,
-          }}
-        />
+        <img src={sketch.thumb_url} style={imageStyle} />
         {hover && (
-          <video
-            autoPlay
-            loop
-            muted
-            style={{
-              transform: "rotate(180deg)",
-              position: "absolute",
-              left: 0,
-              top: 0,
-            }}
-          >
+          <video autoPlay loop muted style={imageStyle}>
             <source
               id="media-source"
               src={`${sketch.video_url}#t=0.5`}
