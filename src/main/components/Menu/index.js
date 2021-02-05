@@ -122,7 +122,7 @@ const Menu = () => {
               </nav>
             )}
 
-            <div className="space-y-4">
+            <div className="space-y-4 mt-4">
               <a
                 className="flex flex-col flex-shrink mx-4 mt-auto mb-4 overflow-hidden text-xs bg-gray-300 border rounded-lg dark-mode:bg-gray-800 align-center dark-mode:border-gray-600"
                 href={shopUrl}
