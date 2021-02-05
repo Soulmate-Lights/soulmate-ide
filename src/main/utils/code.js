@@ -152,7 +152,8 @@ ${
     : ""
 }
 #define SOULMATE_DATA_PIN ${data}
-#define SOULMATE_CLOCK_PIN ${clock}
+
+${clock ? `#define SOULMATE_CLOCK_PIN ${clock}` : ""}
 #define SOULMATE_LED_TYPE ${ledType}
 
 #define SOULMATE_SERPENTINE ${serpentine ? "true" : "false"}
