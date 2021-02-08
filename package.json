@@ -37,7 +37,7 @@
     "electron-is-dev": "^1.2.0",
     "electron-log": "^4.3.0",
     "electron-root-path": "^1.0.16",
-    "electron-updater": "^4.3.5",
+    "electron-updater": "^4.3.7",
     "emittery": "^0.7.1",
     "history": "^4.10.1",
     "js-beautify": "^1.11.0",
