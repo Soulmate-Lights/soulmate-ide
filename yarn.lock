@@ -1103,12 +1103,12 @@
     dir-compare "^2.4.0"
     fs-extra "^9.0.1"
 
-"@elliottkember/leduino@1.0.6":
-  version "1.0.6"
-  resolved "https://registry.yarnpkg.com/@elliottkember/leduino/-/leduino-1.0.6.tgz"
-  integrity sha512-W+G5UAlIDehmIgVeVameeQ97VvFbQpYDGO8XFjd3khf2rf/IPKZwY7fFHjIzLdONp6TDFCqrjwTX8JtYTORkHg==
+"@elliottkember/leduino@^1.0.7":
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/@elliottkember/leduino/-/leduino-1.0.7.tgz#b882f4f69fd34ecaa394d793564b5d29fbb1759f"
+  integrity sha512-jyFkXhdaV45lDGJtkKALEAEa+GgKQ4PUBMKdjduAdRiTbKgrPUT9gT/iJMuXaXnJAXBVe+4+aGIrWX/84Vxl5A==
   dependencies:
-    avr8js "^0.12.0"
+    avr8js "^0.14.10"
     babel-core "^6.26.3"
     babel-polyfill "^6.26.0"
 
@@ -2538,6 +2538,11 @@ avr8js@^0.12.0:
   version "0.12.0"
   resolved "https://registry.yarnpkg.com/avr8js/-/avr8js-0.12.0.tgz"
   integrity sha512-Bz9NrIiAIYHvbpTY6OfFZ0Q/TElpFYH2iHX/w7GUkf+6hi0EO0rqGFpjiFVmG4mM8duzbZWrkiHcjHytXBPhcw==
+
+avr8js@^0.14.10:
+  version "0.14.10"
+  resolved "https://registry.yarnpkg.com/avr8js/-/avr8js-0.14.10.tgz#36ec36d54154a81077ba908a80a16ca97bccd113"
+  integrity sha512-Cva+9evCDAmA2qLM4cOOXl7Nzi+295y5rut0Ru+oGCYHCR5U2W2Xfbgke8eOS6pPthBgs3omcdSXoJnVAQlGCw==
 
 aws-sign2@~0.7.0:
   version "0.7.0"
