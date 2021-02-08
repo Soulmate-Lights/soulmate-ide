@@ -81,7 +81,7 @@
     "@babel/preset-env": "^7.10.2",
     "@babel/preset-react": "^7.10.1",
     "@babel/runtime": "^7.10.2",
-    "@sentry/cli": "^1.61.0",
+    "@sentry/cli": "^1.62.0",
     "@svgr/parcel-plugin-svgr": "^5.4.0",
     "autoprefixer": "^9.8.6",
     "babel-core": "^7.0.0-bridge.0",
