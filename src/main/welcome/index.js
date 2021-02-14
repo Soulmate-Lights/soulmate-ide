@@ -110,7 +110,7 @@ const Welcome = () => {
               build={build}
               className="flex flex-col flex-shrink w-5/12"
               config={config}
-              maxWidth={350}
+              minWidth={400}
             />
           </>
         )}
