@@ -101,7 +101,10 @@ const IDE = () => {
             </div>
 
             {showMenu && (
-              <Menu className="sm:hidden" style={{ opacity: 0.5 }} />
+              <Menu
+                className="fixed z-50 h-full sm:hidden"
+                style={{ opacity: 0.5 }}
+              />
             )}
 
             <Notifications />
@@ -109,7 +112,14 @@ const IDE = () => {
             <ErrorBoundary>
               <Suspense fallback={<Logo className="loading-spinner" />}>
                 <div className="relative flex flex-row flex-grow flex-shrink w-full min-w-0 bg-gray-100 dark-mode:bg-gray-800 dark-mode:text-white">
-                  <div className="absolute flex top-4 left-4 z-8 sm:hidden">
+                  <div
+                    className={classnames(
+                      "absolute z-20 flex top-4 z-8 sm:hidden",
+                      {
+                        "left-64": showMenu,
+                      }
+                    )}
+                  >
                     <a
                       className={
                         "flex inline-flex items-center ml-4 relative px-4 py-2 font-medium text-gray-800 bg-white border border-gray-300 sm:hidden  text-md leading-5 rounded-md hover:text-gray-800 hover:bg-purple-50 ()):outline-none focus:shadow-outline-blue focus:border-blue-300 active:text-gray-800 active:bg-gray-50 transition duration-150 ease-in-out cursor-pointer z-8"
