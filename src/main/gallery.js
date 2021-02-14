@@ -98,7 +98,7 @@ const Gallery = () => {
                             key={sketch.id}
                             showTitle={false}
                             sketch={sketch}
-                            width={14}
+                            width={22}
                           />
                         ))}
                       </div>
