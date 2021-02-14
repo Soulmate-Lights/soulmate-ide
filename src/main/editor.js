@@ -1,5 +1,6 @@
 import { Helmet } from "react-helmet";
 import { HiOutlineLink } from "react-icons/hi";
+import { RiVideoDownloadLine } from "react-icons/ri";
 import useSWR, { mutate } from "swr";
 
 import CodeEditor from "~/components/codeEditor";
@@ -118,9 +119,10 @@ const Editor = ({ id }) => {
               className="inline-flex justify-center w-full px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md leading-5 hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-50 active:text-gray-800 transition ease-in-out duration-150"
               href={sketch.video_url}
               id="options-menu"
+              title="Download a video of this pattern"
               type="button"
             >
-              Export
+              <RiVideoDownloadLine className="w-5 h-5" />
             </a>
           </span>
         )}
