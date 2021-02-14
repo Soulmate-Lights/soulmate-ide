@@ -35,16 +35,16 @@ const SoulmateMenuItem = ({
         <RiIndeterminateCircleLine className="flex-shrink-0 w-4 h-4" />
       )}
 
-      <ConnectionIcon className="w-4 h-4" />
-
       <span className="leading-snug">
-        {soulmateName(soulmate)}
+        <span className="truncate">{soulmateName(soulmate)}</span>
         {soulmate.config?.version && (
           <span className="ml-2 font-mono align-baseline text-2xs">
             (v{soulmate.config?.version})
           </span>
         )}
       </span>
+
+      <ConnectionIcon className="w-4 h-4 ml-auto" />
     </div>
   );
 };
