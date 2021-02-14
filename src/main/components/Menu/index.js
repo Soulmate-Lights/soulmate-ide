@@ -18,15 +18,16 @@ const activeLinkClass = `dark-mode:bg-gray-800 dark-mode:hover:bg-gray-800 bg-gr
 
 const shopUrl = "https://shop.soulmatelights.com/products/square";
 
-const Menu = () => {
+const Menu = ({ className }) => {
   const location = useLocation();
   const { usbConnected } = SoulmatesContainer.useContainer();
 
   return (
     <div
-      className={
-        "flex flex-shrink-0 border-r bg-gray-200 dark-mode:border-gray-600 dark-mode:bg-gray-700 dark-mode:text-white overflow-"
-      }
+      className={classnames(
+        "flex flex-shrink-0 border-r bg-gray-200 dark-mode:border-gray-600 dark-mode:bg-gray-700 dark-mode:text-white",
+        className
+      )}
     >
       <div className="flex flex-col w-64">
         <div className="flex flex-col flex-1 h-0">

@@ -4,6 +4,8 @@ import classnames from "classnames";
 import React, { Suspense } from "react";
 import { Helmet } from "react-helmet";
 import { FiSettings } from "react-icons/fi";
+import { GrClose } from "react-icons/gr";
+import { IoMenuSharp } from "react-icons/io5";
 import { Link } from "react-router-dom";
 import { Route, Switch } from "react-router-dom";
 import { SWRConfig } from "swr";
@@ -49,6 +51,8 @@ const IDE = () => {
   const [focus, setFocus] = useState(true);
   const blur = !focus;
 
+  const [showMenu, setShowMenu] = useState(false);
+
   useEffect(() => {
     window.ipcRenderer?.on("focus", (event, isFocused) => setFocus(isFocused));
   }, [window, window.ipcRenderer]);
@@ -92,13 +96,30 @@ const IDE = () => {
               opacity: blur ? "0.9" : 1,
             }}
           >
-            <Menu />
+            <div className="hidden sm:flex">
+              <Menu />
+            </div>
+
+            {showMenu && (
+              <Menu className="sm:hidden" style={{ opacity: 0.5 }} />
+            )}
 
             <Notifications />
 
             <ErrorBoundary>
               <Suspense fallback={<Logo className="loading-spinner" />}>
-                <div className="flex flex-row flex-grow flex-shrink w-full min-w-0 bg-gray-100 dark-mode:bg-gray-800 dark-mode:text-white">
+                <div className="relative flex flex-row flex-grow flex-shrink w-full min-w-0 bg-gray-100 dark-mode:bg-gray-800 dark-mode:text-white">
+                  <div className="absolute flex top-4 left-4 z-8 sm:hidden">
+                    <a
+                      className={
+                        "flex inline-flex items-center ml-4 relative px-4 py-2 font-medium text-gray-800 bg-white border border-gray-300 sm:hidden  text-md leading-5 rounded-md hover:text-gray-800 hover:bg-purple-50 ()):outline-none focus:shadow-outline-blue focus:border-blue-300 active:text-gray-800 active:bg-gray-50 transition duration-150 ease-in-out cursor-pointer z-8"
+                      }
+                      onClick={() => setShowMenu(!showMenu)}
+                    >
+                      {!showMenu ? <IoMenuSharp /> : <GrClose />}
+                    </a>
+                  </div>
+
                   <Switch>
                     <Route exact path="/">
                       <Dashboard />

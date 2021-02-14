@@ -24,9 +24,7 @@ const Sketch = ({
     }
   }, []);
 
-  const size = `sm:w-${width / 2} sm:h-${
-    width / 2
-  } md:h-${width} md:w-${width}`;
+  const size = `w-${width / 2} h-${width / 2} md:h-${width} md:w-${width}`;
 
   const imageStyle = {
     position: "absolute",
@@ -39,7 +37,7 @@ const Sketch = ({
       className={classnames(
         className,
         size,
-        "flex flex-col text-center bg-white shadow overflow-hidden",
+        "flex flex-col text-center bg-white shadow overflow-hidden flex-shrink-0",
         "rounded-lg overflow-hidden shadow border border-gray-300 dark-mode:border-gray-700"
       )}
       onMouseEnter={() => setHover(true)}
