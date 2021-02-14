@@ -9,7 +9,13 @@ import {
 
 import soulmateName from "~/utils/soulmateName";
 
-const SoulmateMenuItem = ({ soulmate, selected, allowUsb, disabled, className }) => {
+const SoulmateMenuItem = ({
+  soulmate,
+  selected,
+  allowUsb,
+  disabled,
+  className,
+}) => {
   if (soulmate.type === "usb" && allowUsb) disabled = false;
   const CheckboxIcon = selected
     ? RiCheckboxCircleFill
@@ -17,11 +23,16 @@ const SoulmateMenuItem = ({ soulmate, selected, allowUsb, disabled, className })
   const ConnectionIcon = soulmate.type === "usb" ? FaUsb : FaWifi;
 
   return (
-    <div className={classnames("flex flex-row text-xs text-sm whitespace-pre space-x-2 items-center", className)}>
+    <div
+      className={classnames(
+        "flex flex-row text-xs text-sm whitespace-pre space-x-2 items-center",
+        className
+      )}
+    >
       {!disabled ? (
-        <CheckboxIcon className="w-4 h-4 text-purple-600" />
+        <CheckboxIcon className="flex-shrink-0 w-4 h-4 text-purple-600" />
       ) : (
-        <RiIndeterminateCircleLine className="w-4 h-4" />
+        <RiIndeterminateCircleLine className="flex-shrink-0 w-4 h-4" />
       )}
 
       <ConnectionIcon className="w-4 h-4" />
