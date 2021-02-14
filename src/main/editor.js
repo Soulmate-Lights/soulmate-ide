@@ -109,7 +109,21 @@ const Editor = ({ id }) => {
 
   const menu = (
     <div className="relative inline-block text-left" ref={menuRef}>
-      <div>
+      <div className="flex flex-row space-x-2">
+        {sketch.video_url && (
+          <span className="rounded-md shadow-sm">
+            <a
+              aria-expanded="true"
+              aria-haspopup="true"
+              className="inline-flex justify-center w-full px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md leading-5 hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-50 active:text-gray-800 transition ease-in-out duration-150"
+              href={sketch.video_url}
+              id="options-menu"
+              type="button"
+            >
+              Export
+            </a>
+          </span>
+        )}
         <span className="rounded-md shadow-sm">
           <button
             aria-expanded="true"
@@ -300,7 +314,7 @@ const Editor = ({ id }) => {
             build={build}
             className="flex flex-col flex-grow"
             config={config}
-            minWidth={320}
+            minWidth={400}
           />
         </div>
       </div>
