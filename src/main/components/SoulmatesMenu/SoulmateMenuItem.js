@@ -25,14 +25,21 @@ const SoulmateMenuItem = ({
   return (
     <div
       className={classnames(
-        "flex flex-row text-xs text-sm whitespace-pre space-x-2 items-center",
+        "flex flex-row text-xs text-sm whitespace-pre space-x-2 items-end",
         className
       )}
     >
       {!disabled ? (
-        <CheckboxIcon className="flex-shrink-0 w-4 h-4 text-purple-600" />
+        <CheckboxIcon
+          className={classnames(
+            "flex-shrink-0 w-5 h-5 text-purple-600 dark-mode:text-white",
+            {
+              "text-indigo-600 dark-mode:text-indigo-500": selected,
+            }
+          )}
+        />
       ) : (
-        <RiIndeterminateCircleLine className="flex-shrink-0 w-4 h-4" />
+        <RiIndeterminateCircleLine className="flex-shrink-0 w-5 h-5" />
       )}
 
       <span className="leading-snug">
