@@ -31,8 +31,8 @@ const readConfig = () => {
 };
 
 export const defaultConfig = {
-  rows: 10,
-  cols: 10,
+  rows: 20,
+  cols: 20,
   serpentine: true,
   button: 39,
   data: 32,
