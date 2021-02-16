@@ -24,10 +24,6 @@ const Sketch = ({
     }
   }, []);
 
-  const size = `w-${parseInt(width / 2)} h-${parseInt(
-    width / 2
-  )} sm:h-${width} md:w-${width}`;
-
   const imageStyle = {
     position: "absolute",
     left: 0,
@@ -38,15 +34,15 @@ const Sketch = ({
     <div
       className={classnames(
         className,
-        size,
         "flex flex-col text-center shadow overflow-hidden flex-shrink-0 group",
         "rounded-lg overflow-hidden shadow border border-gray-300 dark-mode:border-gray-700"
       )}
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
+      style={{ width, height: width }}
       {...rest}
     >
-      <div className={`block ${size} bg-black relative`}>
+      <div className="relative block w-full h-full bg-black">
         <img src={sketch.thumb_url} style={imageStyle} />
         {hover && (
           <video autoPlay loop muted style={imageStyle}>

@@ -150,8 +150,6 @@ const Simulator = ({
     cols,
   ]);
 
-  width = Math.min(width, 500);
-
   // TODO: Turn this into a config variable I think
   return (
     <div

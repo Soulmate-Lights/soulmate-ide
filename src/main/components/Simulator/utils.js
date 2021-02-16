@@ -46,6 +46,11 @@ export const calculateDimensions = (rows, cols) => {
     width = height * ratio;
   }
 
+  if (width > window.innerWidth * 0.8) {
+    width = Math.min(width, window.innerWidth * 0.8);
+    height = width / ratio;
+  }
+
   height = parseInt(height / rows) * rows;
   width = parseInt(width / cols) * cols;
 
