@@ -34,17 +34,16 @@ export const drawPixels = (pixels, canvas, rows, cols, serpentine) => {
 export const calculateDimensions = (rows, cols) => {
   let width = cols * 20;
   let height = rows * 20;
+  let ratio = width / height;
 
   if (width < 250 && height < 250) {
-    let ratio = width / height;
-    width = 250;
-    height = width * ratio;
+    height = 250;
+    width = height * ratio;
   }
 
-  if (width > 320 && height > 320) {
-    let ratio = width / height;
-    width = 320;
-    height = width * ratio;
+  if (height > 500) {
+    height = 500;
+    width = height * ratio;
   }
 
   height = parseInt(height / rows) * rows;
