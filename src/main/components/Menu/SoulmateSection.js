@@ -33,7 +33,7 @@ const SoulmatesSection = () => {
           <hr className="mx-2 mt-4 app-border" />
           <div className={menuSectionClass}>Choose a Soulmate</div>
 
-          <div className="overflow-hidden rounded-lg">
+          <div>
             {soulmates.map((soulmate, i) => (
               <div
                 className="px-4 py-2 bg-transparent cursor-pointer dark-mode:hover:bg-gray-800 hover:bg-gray-300"
@@ -65,9 +65,12 @@ const SoulmatesSection = () => {
           <hr className="mx-2 mt-4 app-border" />
           <div className={menuSectionClass}>
             <span>{soulmateName(selectedSoulmate)}</span>
-            <span className="px-2 ml-auto text-xs text-gray-800 bg-white rounded-lg py-0.5">
-              {selectedSoulmate.config.cols} x {selectedSoulmate.config.rows}
-            </span>
+
+            {selectedSoulmate.config && (
+              <span className="px-2 ml-auto text-xs text-gray-800 bg-white rounded-lg py-0.5">
+                {selectedSoulmate.config.cols} x {selectedSoulmate.config.rows}
+              </span>
+            )}
           </div>
 
           {!needsSetup && (
