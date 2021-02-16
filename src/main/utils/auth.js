@@ -16,12 +16,15 @@ const config = {
 
 const specialKey = `@@auth0spajs@@::${config.clientId}::${config.audience}::${config.scope}`;
 
-export const auth0Promise = createAuth0Client({
-  domain: config.domain,
-  client_id: config.clientId,
-  audience: config.audience,
-  cacheLocation: "localstorage",
-});
+export var auth0Promise = () => {};
+if (window.crypto) {
+  auth0Promise = createAuth0Client({
+    domain: config.domain,
+    client_id: config.clientId,
+    audience: config.audience,
+    cacheLocation: "localstorage",
+  });
+}
 
 export const logIn = async () => {
   const auth0 = await auth0Promise;
