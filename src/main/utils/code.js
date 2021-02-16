@@ -1,5 +1,7 @@
 import { dataPin } from "@elliottkember/leduino";
 
+import replaceDefines from "~/utils/replaceDefines";
+
 const translation = `
 CRGB* leds = Soulmate.leds;
 #define NUM_LEDS N_LEDS
@@ -71,7 +73,7 @@ void setup() {
 }
 
 namespace Pattern {
-  ${code}
+  ${replaceDefines(code)}
 }
 
 void loop() {
@@ -100,15 +102,13 @@ export const prepareSketches = (sketches, config) => {
   if (!milliamps) throw "Milliamps wasn't set";
   if (!milliamps) throw "Milliamps wasn't set";
 
-  const sanitizedSketchName = (name) => {
-    return name.replace(/"/g, "");
-  };
+  const sanitizedSketchName = (name) => name.replace(/"/g, "");
 
   const code = sketches
     .map(
       ({ code }, index) =>
         `namespace Pattern${index} {
-      ${code}
+      ${replaceDefines(code)}
     }`
     )
     .join("\n");
