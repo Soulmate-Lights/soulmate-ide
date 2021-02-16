@@ -195,7 +195,7 @@ const Flash = () => {
                             key={sketch.id}
                             onClick={() => toggle(sketch)}
                             sketch={sketch}
-                            width={18}
+                            width={20}
                           />
                           <div className="absolute bg-black rounded-full top-2 right-2">
                             <AiFillCheckCircle className=" p-0 text-lg text-white rounded-full shadow " />
