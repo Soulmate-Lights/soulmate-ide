@@ -158,7 +158,7 @@ ${clock ? `#define SOULMATE_CLOCK_PIN ${clock}` : ""}
 
 #define SOULMATE_SERPENTINE ${serpentine ? "true" : "false"}
 
-#include <Soulmate.h>
+#include "Soulmate.h"
 
 ${translation}
 

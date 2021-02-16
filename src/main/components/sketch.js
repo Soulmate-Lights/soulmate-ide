@@ -60,7 +60,7 @@ const Sketch = ({
       </div>
       {(showTitle || hover) && (
         <div className="z-10 p-1 opacity-75 group-hover:opacity-100">
-          <h3 className="flex-grow-0 p-2 py-1 text-xs font-medium text-gray-900 truncate border border-gray-500 rounded-lg leading-5 opacity-90 dark-mode:bg-gray-700 dark-mode:text-white">
+          <h3 className="flex-grow-0 p-2 py-1 text-xs font-medium text-gray-900 truncate bg-white border-gray-500 rounded-lg dark-mode:border leading-5 opacity-90 dark-mode:bg-gray-700 dark-mode:text-white">
             {sketch.name}
           </h3>
         </div>

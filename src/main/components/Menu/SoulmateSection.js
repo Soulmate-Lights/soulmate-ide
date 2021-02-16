@@ -64,7 +64,10 @@ const SoulmatesSection = () => {
         <>
           <hr className="mx-2 mt-4 app-border" />
           <div className={menuSectionClass}>
-            {soulmateName(selectedSoulmate)}
+            <span>{soulmateName(selectedSoulmate)}</span>
+            <span className="px-2 ml-auto text-xs text-gray-800 bg-white rounded-lg py-0.5">
+              {selectedSoulmate.config.cols} x {selectedSoulmate.config.rows}
+            </span>
           </div>
 
           {!needsSetup && (
