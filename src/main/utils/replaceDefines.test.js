@@ -5,12 +5,15 @@ const testReplaceDefines = (input, output) => {
     .split("\n")
     .map((l) => l.trim())
     .join("\n");
-  const _output = output
+  const expectedOutput = output
     .split("\n")
     .map((l) => l.trim())
-    .join("\n");
+    .join("\n")
+    .trim();
 
-  expect(replaceDefines(_input).trim()).toEqual(_output.trim());
+  const result = replaceDefines(_input).trim();
+
+  expect(result).toEqual(expectedOutput);
 };
 
 describe("urls", () => {

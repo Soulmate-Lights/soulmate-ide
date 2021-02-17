@@ -1,5 +1,7 @@
 {
   "files.exclude": {
     "services/*": true
-  }
+  },
+  "jest.rootPath": "src",
+  "jest.runAllTestsFirst": false
 }

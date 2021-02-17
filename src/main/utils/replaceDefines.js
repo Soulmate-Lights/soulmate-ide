@@ -38,4 +38,8 @@ const uniqueDefines = (sketch) => {
   return sketch;
 };
 
+export const renameDefines = (prefix, sketch) => {
+  return "failure";
+};
+
 export default uniqueDefines;
