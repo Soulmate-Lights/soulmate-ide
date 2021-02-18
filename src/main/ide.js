@@ -4,6 +4,8 @@ import classnames from "classnames";
 import React, { Suspense } from "react";
 import { Helmet } from "react-helmet";
 import { FiSettings } from "react-icons/fi";
+import { GrClose } from "react-icons/gr";
+import { IoMenuSharp } from "react-icons/io5";
 import { Link } from "react-router-dom";
 import { Route, Switch } from "react-router-dom";
 import { SWRConfig } from "swr";
@@ -15,6 +17,7 @@ import Notifications from "~/components/notifications";
 import SoulmatesContainer from "~/containers/soulmates";
 import UserContainer from "~/containers/user";
 import Logo from "~/images/logo.svg";
+import history from "~/utils/history";
 import isElectron from "~/utils/isElectron";
 import { fetcher } from "~/utils/network";
 import { ALL_SKETCHES_PATH, SKETCHES_PATH } from "~/utils/network";
@@ -48,6 +51,9 @@ const IDE = () => {
 
   const [focus, setFocus] = useState(true);
   const blur = !focus;
+
+  const [showMenu, setShowMenu] = useState(false);
+  history.listen(() => setShowMenu(false));
 
   useEffect(() => {
     window.ipcRenderer?.on("focus", (event, isFocused) => setFocus(isFocused));
@@ -92,13 +98,42 @@ const IDE = () => {
               opacity: blur ? "0.9" : 1,
             }}
           >
-            <Menu />
+            <div className="hidden lg:flex">
+              <Menu />
+            </div>
+
+            {/* {showMenu && ( */}
+            <Menu
+              className={[
+                "transform fixed z-50 h-full lg:hidden",
+                "ease-in-out transition-all duration-300 ",
+                showMenu ? "translate-x-0" : "-translate-x-full",
+              ]}
+              style={{ opacity: 0.5 }}
+            />
+            {/* )} */}
 
             <Notifications />
 
             <ErrorBoundary>
               <Suspense fallback={<Logo className="loading-spinner" />}>
-                <div className="flex flex-row flex-grow flex-shrink w-full min-w-0 bg-gray-100 dark-mode:bg-gray-800 dark-mode:text-white">
+                <div className="relative flex flex-row flex-grow flex-shrink w-full min-w-0 bg-gray-100 dark-mode:bg-gray-800 dark-mode:text-white">
+                  <div
+                    className={classnames(
+                      "absolute z-20 flex top-3 z-8 lg:hidden",
+                      {
+                        "left-64": showMenu,
+                      }
+                    )}
+                  >
+                    <a
+                      className="relative flex inline-flex items-center h-10 px-4 ml-4 font-medium text-gray-800 bg-white border border-gray-300 cursor-pointer lg:hidden text-md leading-5 rounded-md hover:text-gray-800 hover:bg-purple-50 ()):outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out z-8"
+                      onClick={() => setShowMenu(!showMenu)}
+                    >
+                      <span>{!showMenu ? <IoMenuSharp /> : <GrClose />}</span>
+                    </a>
+                  </div>
+
                   <Switch>
                     <Route exact path="/">
                       <Dashboard />

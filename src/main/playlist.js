@@ -259,7 +259,7 @@ const Playlist = (props) => {
                   className="flex flex-col flex-grow"
                   config={config}
                   hideResolutionMenu
-                  minWidth={320}
+                  minWidth={400}
                 />
               </div>
             ) : (

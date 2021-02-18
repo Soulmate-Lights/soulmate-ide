@@ -22,6 +22,11 @@ jobs:
         with:
           node-version: 15
 
+      - uses: actions/cache@v2.1.0
+        with:
+          path: "**/node_modules"
+          key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
+
       - name: Setup Sentry CLI
         uses: mathrix-education/setup-sentry-cli@0.1.0
         with:

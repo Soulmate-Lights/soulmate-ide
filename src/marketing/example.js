@@ -34,7 +34,7 @@ const Example = ({ code, className }) => {
         build={build}
         classpame="flex flex-col flex-shrink w-5/12 bg-gray-300 dark-mode:bg-gray-800"
         config={config}
-        maxWidth={350}
+        minWidth={400}
         showConfig={false}
       />
     </div>

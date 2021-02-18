@@ -1,3 +1,4 @@
+import isElectron from "~/utils/isElectron";
 if (!window.remote) {
   window.remote = undefined;
 }
@@ -50,6 +51,15 @@ export const installDependencies = () => {
   }
 };
 
+if (isElectron()) {
+  console.log("[flashbuild] Installing dependencices");
+  try {
+    installDependencies();
+  } catch (e) {
+    console.log("Error installing dependencies", e);
+  }
+}
+
 /** Flash a build file to a USB output */
 export const flashBuild = async (port, file, progressCallback) => {
   let errorOutput = [];
@@ -57,13 +67,6 @@ export const flashBuild = async (port, file, progressCallback) => {
   let python = "/usr/bin/python";
   if (remote.require("os").platform() !== "darwin") {
     python = which.sync("python");
-  }
-
-  console.log("[flashbuild] Installing dependencices");
-  try {
-    installDependencies();
-  } catch (e) {
-    console.log("Error installing dependencies", e);
   }
 
   const cmd = `${python} ./esptool.py --chip esp32 -p ${port} --baud 1500000 --before default_reset --after hard_reset write_flash -z --flash_mode dio --flash_freq 80m --flash_size detect 0xe000 ./ota_data_initial.bin 0x1000 ./bootloader.bin 0x10000 ${file} 0x8000 ./partitions.bin`;

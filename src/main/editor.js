@@ -1,5 +1,6 @@
 import { Helmet } from "react-helmet";
 import { HiOutlineLink } from "react-icons/hi";
+import { RiVideoDownloadLine } from "react-icons/ri";
 import useSWR, { mutate } from "swr";
 
 import CodeEditor from "~/components/codeEditor";
@@ -109,30 +110,47 @@ const Editor = ({ id }) => {
 
   const menu = (
     <div className="relative inline-block text-left" ref={menuRef}>
-      <div>
-        <span className="rounded-md shadow-sm">
-          <button
-            aria-expanded="true"
-            aria-haspopup="true"
-            className="inline-flex justify-center w-full px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md leading-5 hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-50 active:text-gray-800 transition ease-in-out duration-150"
-            id="options-menu"
-            onClick={() => setMenuOpen(!menuOpen)}
-            type="button"
-          >
-            Options
-            <svg
-              className="w-5 h-5 ml-2 -mr-1"
-              fill="currentColor"
-              viewBox="0 0 20 20"
+      <div className="flex flex-row space-x-2">
+        {sketch.video_url && (
+          <span className="rounded-md shadow-sm">
+            <a
+              aria-expanded="true"
+              aria-haspopup="true"
+              className="inline-flex justify-center w-full px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md leading-5 hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-50 active:text-gray-800 transition ease-in-out duration-150"
+              href={sketch.video_url}
+              id="options-menu"
+              title="Download a video of this pattern"
+              type="button"
             >
-              <path
-                clipRule="evenodd"
-                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                fillRule="evenodd"
-              />
-            </svg>
-          </button>
-        </span>
+              <RiVideoDownloadLine className="w-5 h-5" />
+            </a>
+          </span>
+        )}
+        {mine && (
+          <span className="rounded-md shadow-sm">
+            <button
+              aria-expanded="true"
+              aria-haspopup="true"
+              className="inline-flex justify-center w-full px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md leading-5 hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-50 active:text-gray-800 transition ease-in-out duration-150"
+              id="options-menu"
+              onClick={() => setMenuOpen(!menuOpen)}
+              type="button"
+            >
+              Options
+              <svg
+                className="w-5 h-5 ml-2 -mr-1"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+              >
+                <path
+                  clipRule="evenodd"
+                  d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                  fillRule="evenodd"
+                />
+              </svg>
+            </button>
+          </span>
+        )}
       </div>
       {menuOpen && mine && (
         <div className="absolute right-0 z-20 w-56 mt-2 shadow-lg origin-top-right rounded-md">
@@ -204,7 +222,7 @@ const Editor = ({ id }) => {
         <meta content={sketch.thumb_url} property="og:image" />
       </Helmet>
       <Header
-        actions={[mine && menu]}
+        actions={[menu]}
         sections={[
           !mine && { title: "Gallery", to: "/gallery" },
           !mine && {
@@ -268,7 +286,7 @@ const Editor = ({ id }) => {
               onSave={(code) => save(sketch.id, code)}
             />
           </div>
-          <div className="flex flex-row items-center p-4 py-3 text-sm border-t h-14 dark-mode:border-gray-700">
+          <div className="flex-row items-center hidden p-4 py-3 text-sm border-t h-14 dark-mode:border-gray-700 md:flex">
             <span className="px-4 font-light">Public URL</span>
             <input
               className="flex-grow h-8 px-2 py-2 text-gray-900 border rounded-l dark-mode:bg-gray-200 dark-mode:border-gray-300"
@@ -300,7 +318,7 @@ const Editor = ({ id }) => {
             build={build}
             className="flex flex-col flex-grow"
             config={config}
-            minWidth={320}
+            minWidth={400}
           />
         </div>
       </div>

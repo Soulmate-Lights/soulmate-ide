@@ -29,7 +29,7 @@ const Dashboard = () => {
           <span className="inline-flex w-full rounded-md">
             {!userDetails && (
               <button
-                className="inline-flex items-center px-4 py-2 ml-auto text-base font-medium text-purple-600 bg-white border border-transparent leading-6 rounded-md hover:text-purple-500 focus:outline-none focus:border-purple-300 focus:shadow-outline-gray active:bg-purple-50 active:text-purple-700 transition duration-150 ease-in-out"
+                className="inline-flex items-center px-4 py-2 ml-auto text-base font-medium text-purple-600 bg-white border border-transparent border-gray-300 leading-6 rounded-md hover:text-purple-500 focus:outline-none focus:border-purple-300 focus:shadow-outline-gray active:bg-purple-50 active:text-purple-700 transition duration-150 ease-in-out"
                 href="#"
                 onClick={login}
               >
@@ -40,7 +40,7 @@ const Dashboard = () => {
         </nav>
         <main className="flex flex-col flex-grow max-h-full px-4 mx-auto text-center max-w-screen-xl">
           <div className="my-auto">
-            <h2 className="flex text-4xl font-extrabold tracking-tight text-purple-900 leading-20 dark-mode:text-purple-400 sm:text-5xl sm:leading-none md:text-6xl lg:flex-row sm:flex-col">
+            <h2 className="flex flex-col text-4xl font-extrabold tracking-tight text-purple-900 leading-20 dark-mode:text-purple-400 sm:text-5xl sm:leading-none md:text-6xl">
               <span className="lg:mr-4">Soulmate</span>
               <span className="text-5xl text-purple-600 lg:text-6xl">
                 LED firmware

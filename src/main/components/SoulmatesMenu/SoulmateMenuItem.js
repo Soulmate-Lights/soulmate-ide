@@ -9,7 +9,13 @@ import {
 
 import soulmateName from "~/utils/soulmateName";
 
-const SoulmateMenuItem = ({ soulmate, selected, allowUsb, disabled, className }) => {
+const SoulmateMenuItem = ({
+  soulmate,
+  selected,
+  allowUsb,
+  disabled,
+  className,
+}) => {
   if (soulmate.type === "usb" && allowUsb) disabled = false;
   const CheckboxIcon = selected
     ? RiCheckboxCircleFill
@@ -17,23 +23,35 @@ const SoulmateMenuItem = ({ soulmate, selected, allowUsb, disabled, className })
   const ConnectionIcon = soulmate.type === "usb" ? FaUsb : FaWifi;
 
   return (
-    <div className={classnames("flex flex-row text-xs text-sm whitespace-pre space-x-2 items-center", className)}>
+    <div
+      className={classnames(
+        "flex flex-row text-xs text-sm whitespace-pre space-x-2 items-end",
+        className
+      )}
+    >
       {!disabled ? (
-        <CheckboxIcon className="w-4 h-4 text-purple-600" />
+        <CheckboxIcon
+          className={classnames(
+            "flex-shrink-0 w-5 h-5 text-purple-600 dark-mode:text-white",
+            {
+              "text-indigo-600 dark-mode:text-indigo-500": selected,
+            }
+          )}
+        />
       ) : (
-        <RiIndeterminateCircleLine className="w-4 h-4" />
+        <RiIndeterminateCircleLine className="flex-shrink-0 w-5 h-5" />
       )}
 
-      <ConnectionIcon className="w-4 h-4" />
-
       <span className="leading-snug">
-        {soulmateName(soulmate)}
+        <span className="truncate">{soulmateName(soulmate)}</span>
         {soulmate.config?.version && (
           <span className="ml-2 font-mono align-baseline text-2xs">
             (v{soulmate.config?.version})
           </span>
         )}
       </span>
+
+      <ConnectionIcon className="w-4 h-4 ml-auto" />
     </div>
   );
 };

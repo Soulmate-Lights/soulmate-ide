@@ -1103,12 +1103,12 @@
     dir-compare "^2.4.0"
     fs-extra "^9.0.1"
 
-"@elliottkember/leduino@1.0.6":
-  version "1.0.6"
-  resolved "https://registry.yarnpkg.com/@elliottkember/leduino/-/leduino-1.0.6.tgz"
-  integrity sha512-W+G5UAlIDehmIgVeVameeQ97VvFbQpYDGO8XFjd3khf2rf/IPKZwY7fFHjIzLdONp6TDFCqrjwTX8JtYTORkHg==
+"@elliottkember/leduino@^1.0.7":
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/@elliottkember/leduino/-/leduino-1.0.7.tgz#b882f4f69fd34ecaa394d793564b5d29fbb1759f"
+  integrity sha512-jyFkXhdaV45lDGJtkKALEAEa+GgKQ4PUBMKdjduAdRiTbKgrPUT9gT/iJMuXaXnJAXBVe+4+aGIrWX/84Vxl5A==
   dependencies:
-    avr8js "^0.12.0"
+    avr8js "^0.14.10"
     babel-core "^6.26.3"
     babel-polyfill "^6.26.0"
 
@@ -1460,10 +1460,10 @@
     "@sentry/utils" "5.28.0"
     tslib "^1.9.3"
 
-"@sentry/cli@^1.61.0":
-  version "1.61.0"
-  resolved "https://registry.yarnpkg.com/@sentry/cli/-/cli-1.61.0.tgz#98be4cce2d61df91a8cb42afb740b46eba029925"
-  integrity sha512-pHEhqP1bB4sdO7N5ow/IkRBrPbKT9HZRinq4PhTVIvmG+NW4VVuVZ6k4tlbp+JXmzMcUc/iXynVkTL7zJIlTQw==
+"@sentry/cli@^1.62.0":
+  version "1.62.0"
+  resolved "https://registry.yarnpkg.com/@sentry/cli/-/cli-1.62.0.tgz#2e2d8cacb5ec494f86c188ef95b41745605be028"
+  integrity sha512-MCkx+zjetdIWhAVaFuEuoD4MOAFlb3/GLR5B5uFZ1AcegcsggasLo/3rb2gq6jYIic/pubtRjH4ltmOL/s3cag==
   dependencies:
     https-proxy-agent "^5.0.0"
     mkdirp "^0.5.5"
@@ -2067,9 +2067,9 @@
   dependencies:
     "@types/node" "*"
 
-"@types/semver@^7.3.1":
+"@types/semver@^7.3.4":
   version "7.3.4"
-  resolved "https://registry.yarnpkg.com/@types/semver/-/semver-7.3.4.tgz"
+  resolved "https://registry.yarnpkg.com/@types/semver/-/semver-7.3.4.tgz#43d7168fec6fa0988bb1a513a697b29296721afb"
   integrity sha512-+nVsLKlcUCeMzD2ufHEYuJ9a2ovstb6Dp52A5VsoKxDXgvE051XgHI/33I1EymwkRGQkwnA0LkhnUzituGs4EQ==
 
 "@types/stack-utils@^2.0.0":
@@ -2545,6 +2545,11 @@ avr8js@^0.12.0:
   version "0.12.0"
   resolved "https://registry.yarnpkg.com/avr8js/-/avr8js-0.12.0.tgz"
   integrity sha512-Bz9NrIiAIYHvbpTY6OfFZ0Q/TElpFYH2iHX/w7GUkf+6hi0EO0rqGFpjiFVmG4mM8duzbZWrkiHcjHytXBPhcw==
+
+avr8js@^0.14.10:
+  version "0.14.10"
+  resolved "https://registry.yarnpkg.com/avr8js/-/avr8js-0.14.10.tgz#36ec36d54154a81077ba908a80a16ca97bccd113"
+  integrity sha512-Cva+9evCDAmA2qLM4cOOXl7Nzi+295y5rut0Ru+oGCYHCR5U2W2Xfbgke8eOS6pPthBgs3omcdSXoJnVAQlGCw==
 
 aws-sign2@~0.7.0:
   version "0.7.0"
@@ -3446,14 +3451,6 @@ buffer@^5.1.0, buffer@^5.5.0:
   dependencies:
     base64-js "^1.3.1"
     ieee754 "^1.1.13"
-
-builder-util-runtime@8.7.2:
-  version "8.7.2"
-  resolved "https://registry.yarnpkg.com/builder-util-runtime/-/builder-util-runtime-8.7.2.tgz"
-  integrity sha512-xBqv+8bg6cfnzAQK1k3OGpfaHg+QkPgIgpEkXNhouZ0WiUkyZCftuRc2LYzQrLucFywpa14Xbc6+hTbpq83yRA==
-  dependencies:
-    debug "^4.1.1"
-    sax "^1.2.4"
 
 builder-util-runtime@8.7.3:
   version "8.7.3"
@@ -4980,18 +4977,18 @@ electron-to-chromium@^1.3.612:
   resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.616.tgz"
   integrity sha512-CI8L38UN2BEnqXw3/oRIQTmde0LiSeqWSRlPA42ZTYgJQ8fYenzAM2Z3ni+jtILTcrs5aiXZCGJ96Pm+3/yGyQ==
 
-electron-updater@^4.3.5:
-  version "4.3.5"
-  resolved "https://registry.yarnpkg.com/electron-updater/-/electron-updater-4.3.5.tgz"
-  integrity sha512-5jjN7ebvfj1cLI0VZMdCnJk6aC4bP+dy7ryBf21vArR0JzpRVk0OZHA2QBD+H5rm6ZSeDYHOY6+8PrMEqJ4wlQ==
+electron-updater@^4.3.7:
+  version "4.3.7"
+  resolved "https://registry.yarnpkg.com/electron-updater/-/electron-updater-4.3.7.tgz#632434cf1dd856e37f5557a68b55867fae29c39e"
+  integrity sha512-F7l1ZdslA5Do9kABNhiYKMPzreLulFTv+rsbGUQJ3TnRKrEb3JAi/n/jco3mI8LOEG/pgS5f9ytQ+D+5r/PvQw==
   dependencies:
-    "@types/semver" "^7.3.1"
-    builder-util-runtime "8.7.2"
+    "@types/semver" "^7.3.4"
+    builder-util-runtime "8.7.3"
     fs-extra "^9.0.1"
-    js-yaml "^3.14.0"
+    js-yaml "^3.14.1"
     lazy-val "^1.0.4"
     lodash.isequal "^4.5.0"
-    semver "^7.3.2"
+    semver "^7.3.4"
 
 electron@^11.1.0:
   version "11.1.1"

@@ -55,7 +55,7 @@ const Main = () => {
             <SpecificRouter history={history}>
               <LastLocationProvider>
                 <Switch>
-                  <Route exact path={marketing ? "/" : "/marketing"}>
+                  <Route path={marketing ? "/" : "/marketing"}>
                     <Marketing />
                   </Route>
 

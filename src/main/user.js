@@ -26,7 +26,7 @@ const User = ({ id }) => {
   const { sketches = [] } = user;
 
   return (
-    <div className="flex flex-col flex-grow ">
+    <div className="flex flex-col flex-grow">
       <Header
         sections={[{ title: "Gallery", to: "/gallery" }]}
         title={<PersonSection user={user} />}
