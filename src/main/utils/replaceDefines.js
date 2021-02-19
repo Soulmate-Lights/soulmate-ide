@@ -11,7 +11,7 @@ function makeid(length) {
 }
 
 const renameDefines = (sketch, prefix) => {
-  prefix ||= makeid(3);
+  if (!prefix) prefix = makeid(3);
   let defines = [];
 
   sketch.split("\n").forEach((line) => {
