@@ -126,7 +126,7 @@ const Flash = () => {
                         : "copy",
                     }}
                   >
-                    <Sketch sketch={sketch} width={24} />
+                    <Sketch sketch={sketch} width={96} />
 
                     {selected.includes(sketch.id) && (
                       <div className="absolute bg-black rounded-full top-2 right-2">
@@ -154,7 +154,7 @@ const Flash = () => {
                         : "copy",
                     }}
                   >
-                    <Sketch sketch={sketch} width={24} />
+                    <Sketch sketch={sketch} width={96} />
 
                     {selected.includes(sketch.id) && (
                       <AiFillCheckCircle className="absolute text-lg text-white border border-black top-2 right-2" />
@@ -195,7 +195,7 @@ const Flash = () => {
                             key={sketch.id}
                             onClick={() => toggle(sketch)}
                             sketch={sketch}
-                            width={20}
+                            width={72}
                           />
                           <div className="absolute bg-black rounded-full top-2 right-2">
                             <AiFillCheckCircle className=" p-0 text-lg text-white rounded-full shadow " />
