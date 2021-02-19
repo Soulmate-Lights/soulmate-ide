@@ -17,7 +17,7 @@ const renameDefines = (sketch, prefix) => {
   sketch.split("\n").forEach((line) => {
     if (line.trim().includes("#define ")) {
       let declaration = line.trim().split("#define ")[1].trim();
-      declaration = declaration.split(/[^A-Za-z0-9\s]/i)[0];
+      declaration = declaration.split(/[^A-Za-z0-9_\s]/i)[0];
       let [key] = declaration.split(" ");
       defines.push(key.trim());
     }
@@ -28,9 +28,13 @@ const renameDefines = (sketch, prefix) => {
   defines = uniq(defines);
 
   defines.forEach((define) => {
+    const regex = new RegExp(`(?<=[\\W\\s])${define}(?=[\\W|\\s]?)`, "g");
+
     sketch = sketch
       .split("\n")
-      .map((line) => line.replaceAll(define, `${prefix}${define}`))
+      .map((line) => {
+        return line.replaceAll(regex, `${prefix}${define}`);
+      })
       .join("\n");
   });
 

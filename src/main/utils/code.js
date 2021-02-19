@@ -160,6 +160,12 @@ ${clock ? `#define SOULMATE_CLOCK_PIN ${clock}` : ""}
 
 #include "Soulmate.h"
 
+#ifndef random
+int random() {
+  return random(255);
+}
+#endif
+
 ${translation}
 
 ${code}
