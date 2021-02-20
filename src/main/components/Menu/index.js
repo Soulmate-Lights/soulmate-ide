@@ -1,4 +1,5 @@
 import { FiCloud, FiFolder, FiHome, FiSmile } from "react-icons/fi";
+import { GoSettings } from "react-icons/go";
 import { RiToolsFill } from "react-icons/ri";
 import { Link, NavLink, useLocation } from "react-router-dom";
 
@@ -153,6 +154,19 @@ const Menu = ({ className }) => {
               </a>
             </div>
           </div>
+
+          <nav className="mx-2 mt-4 space-y-2">
+            <NavLink
+              activeClassName={activeLinkClass}
+              className={linkClass}
+              exact
+              location={location}
+              to="/settings"
+            >
+              <GoSettings className={iconClass} />
+              Settings
+            </NavLink>
+          </nav>
 
           <UserDetails className="border-t dark-mode:border-gray-600" />
         </div>

@@ -6,6 +6,7 @@ import CodeEditor from "~/components/codeEditor";
 import Header from "~/components/Header";
 import Simulator from "~/components/Simulator";
 import BuildsContainer from "~/containers/builds";
+import ConfigContainer from "~/containers/config";
 import SoulmatesContainer from "~/containers/soulmates";
 import UserContainer from "~/containers/user";
 import Logo from "~/images/logo.svg";
@@ -49,13 +50,14 @@ const Finished = () => {
   );
 };
 
+import useBuild from "~/hooks/useBuild";
+
 const Welcome = () => {
   const [savedCodes, setSavedCodes] = useState({});
-  const { getBuild } = useContainer(BuildsContainer);
   const [index, setIndex] = useState(0);
   const { config } = SoulmatesContainer.useContainer();
   const code = savedCodes[index] || examples[index];
-  const build = getBuild(code, config);
+  const build = useBuild(code, config);
 
   const actions = [];
   if (index > 0) {

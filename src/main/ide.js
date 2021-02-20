@@ -14,6 +14,7 @@ import useSWR from "swr";
 import ErrorNotification from "~/components/ErrorNotification";
 import Menu from "~/components/Menu";
 import Notifications from "~/components/notifications";
+import ConfigContainer from "~/containers/config";
 import SoulmatesContainer from "~/containers/soulmates";
 import UserContainer from "~/containers/user";
 import Logo from "~/images/logo.svg";
@@ -34,6 +35,7 @@ import MySketches from "./mySketches";
 import NewPlaylist from "./newPlaylist";
 import Playlist from "./playlist";
 import Playlists from "./playlists";
+import Settings from "./Settings";
 import User from "./user";
 import Welcome from "./welcome";
 
@@ -73,10 +75,6 @@ const IDE = () => {
           property="og:description"
         />
         <meta content="product" property="og:type" />
-        {/* <meta
-          content="https://www.soulmatelights.com/hand.fd7ece86.jpg"
-          property="og:image"
-        /> */}
       </Helmet>
       <Switch>
         <Route path="/desktop-sign-in">
@@ -102,16 +100,13 @@ const IDE = () => {
               <Menu />
             </div>
 
-            {/* {showMenu && ( */}
             <Menu
               className={[
-                "transform fixed z-50 h-full lg:hidden",
-                "ease-in-out transition-all duration-300 ",
+                "transform fixed z-50 h-full lg:hidden ease-in-out transition-all duration-300",
                 showMenu ? "translate-x-0" : "-translate-x-full",
               ]}
               style={{ opacity: 0.5 }}
             />
-            {/* )} */}
 
             <Notifications />
 
@@ -121,9 +116,7 @@ const IDE = () => {
                   <div
                     className={classnames(
                       "absolute z-20 flex top-3 z-8 lg:hidden",
-                      {
-                        "left-64": showMenu,
-                      }
+                      { "left-64": showMenu }
                     )}
                   >
                     <a
@@ -157,6 +150,10 @@ const IDE = () => {
 
                     <Route exact path="/config">
                       <Config />
+                    </Route>
+
+                    <Route exact path="/settings">
+                      <Settings />
                     </Route>
 
                     <Route
@@ -244,7 +241,9 @@ const IDE = () => {
 const WrappedIde = (props) => (
   <SWRConfig value={{ fetcher }}>
     <UserContainer.Provider>
-      <IDE {...props} />
+      <ConfigContainer.Provider>
+        <IDE {...props} />
+      </ConfigContainer.Provider>
     </UserContainer.Provider>
   </SWRConfig>
 );
