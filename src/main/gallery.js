@@ -46,7 +46,6 @@ const Gallery = () => {
       <Header
         actions={[
           <input
-            autoFocus
             className="block w-full form-input sm:text-sm sm:leading-3"
             key="search"
             onChange={(e) => setSearch(e.target.value)}
