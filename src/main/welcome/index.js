@@ -108,7 +108,7 @@ const Welcome = () => {
 
             <Simulator
               build={build}
-              className="flex flex-col flex-shrink w-5/12"
+              className="flex flex-col flex-shrink min-w-5/12"
               config={config}
               minWidth={400}
             />

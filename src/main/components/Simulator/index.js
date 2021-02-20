@@ -11,7 +11,7 @@ import Logo from "~/images/logo.svg";
 import soulmateName from "~/utils/soulmateName";
 
 import ResolutionPopup from "./resolutionPopup";
-import { calculateDimensions } from "./utils";
+import { calculateDimensions, useWindowSize } from "./utils";
 
 let worker;
 
@@ -150,6 +150,21 @@ const Simulator = ({
     cols,
   ]);
 
+  const windowSize = useWindowSize();
+  if (width > windowSize.width * 0.5) {
+    width *= 0.5;
+    height *= 0.5;
+  }
+
+  // Event listeners
+
+  let stopResizeTimeout = useRef();
+  useEventListener("resize", () => {
+    setPaused(true);
+    clearTimeout(stopResizeTimeout.current);
+    stopResizeTimeout.current = setTimeout(() => setPaused(false), 500);
+  });
+
   // TODO: Turn this into a config variable I think
   return (
     <div
@@ -215,7 +230,7 @@ const Simulator = ({
       </span>
       <div className="flex items-center justify-center flex-grow p-10">
         <div
-          className="flex items-center justify-center overflow-hidden bg-black border-2 border-white rounded-lg shadow-lg dark-mode:border-gray-600"
+          className="flex items-center justify-center flex-shrink-0 overflow-hidden bg-black border-2 border-white rounded-lg shadow-lg dark-mode:border-gray-600"
           style={{ height, width }}
         >
           {!hasPixels ? (
