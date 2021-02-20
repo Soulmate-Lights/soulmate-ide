@@ -45,9 +45,35 @@
     ></script>
 
     <meta
-      name="viewport"
-      content="width=device-width, initial-scale=0.9, user-scalable=no, viewport-fit=cover"
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
     />
+
+    <!-- <meta
+      name="viewport"
+      content="width=device-width, initial-scale=0.7, user-scalable=no, viewport-fit=cover"
+    /> -->
+
+    <meta id="viewport" name="viewport" />
+    <script>
+      (function (doc) {
+        var viewport = document.getElementById("viewport");
+        if (
+          navigator.userAgent.match(/iPhone/i) ||
+          navigator.userAgent.match(/iPod/i)
+        ) {
+          viewport.setAttribute(
+            "content",
+            "initial-scale=0.7, viewport-fit=cover, width=device-width"
+          );
+        } else if (navigator.userAgent.match(/iPad/i)) {
+          viewport.setAttribute(
+            "content",
+            "initial-scale=0.8, viewport-fit=cover, width=device-width"
+          );
+        }
+      })(document);
+    </script>
   </head>
 
   <body>
