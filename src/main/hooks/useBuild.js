@@ -10,21 +10,33 @@ const useBuild = (code, config) => {
     BuildsContainer
   );
 
-  if (isBuilding(code, config)) return;
+  const [buildingState, setBuildingState] = useState(false);
 
   const cachedBuild = getBuild(code, config);
-  if (cachedBuild) return cachedBuild;
 
-  setTimeout(() => {
+  useEffect(() => {
+    if (cachedBuild) return;
+
+    setBuildingState(true);
     setIsBuilding(code, config, true);
+
+    if (isBuilding(code, config)) return;
+    if (buildingState) return;
+
     const preparedCode = preparePreviewCode(code, config);
 
     buildHex(preparedCode, simulator)
-      .then((build) => setBuild(code, config, build))
+      .then((build) => {
+        setIsBuilding(code, config, false);
+        setBuild(code, config, build);
+        setBuildingState(false);
+      })
       .catch(() => setIsBuilding(code, config, false));
-  });
 
-  return;
+    return () => {};
+  }, [code, config, cachedBuild]);
+
+  return cachedBuild;
 };
 
 export default useBuild;

@@ -37,9 +37,10 @@ const unpublishPlaylist = async (id) => {
   mutate(PLAYLISTS_PATH);
 };
 
+import useBuild from "~/hooks/useBuild";
 const Playlist = (props) => {
   const id = parseInt(props.id);
-  const { getBuild } = BuildsContainer.useContainer();
+
   const { firmware } = ConfigContainer.useContainer();
 
   const { data: mySketches = [] } = useSWR(SKETCHES_PATH);
@@ -70,10 +71,8 @@ const Playlist = (props) => {
   const { config } = playlist || {};
 
   let build;
-  if (playlist?.sketches) {
-    const code = playlist.sketches[index]?.code || emptyCode;
-    build = getBuild(code, config);
-  }
+  const code = playlist.sketches[index]?.code || emptyCode;
+  build = useBuild(code, config);
 
   const save = () => {
     savePlaylist(playlist.id, { sketches });

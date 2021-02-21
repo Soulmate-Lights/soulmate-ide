@@ -1,15 +1,12 @@
-import { useContainer } from "unstated-next";
-
 import CodeEditor from "~/components/codeEditor";
 import Simulator from "~/components/Simulator";
-import BuildsContainer from "~/containers/builds";
+import useBuild from "~/hooks/useBuild";
 
 const config = { rows: 30, cols: 30 };
 
 const Example = ({ code, className }) => {
   const [editorCode, setEditorCode] = useState(code);
-  const { getBuild } = useContainer(BuildsContainer);
-  const build = getBuild(editorCode, config);
+  const build = useBuild(editorCode, config);
 
   return (
     <div

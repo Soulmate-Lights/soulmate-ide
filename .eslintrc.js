@@ -7,6 +7,7 @@ module.exports = {
     "eslint:recommended",
     "plugin:react/recommended",
     "plugin:tailwind/recommended",
+    "plugin:react-hooks/recommended",
   ],
   globals: {
     Atomics: "readonly",

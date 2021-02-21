@@ -3,25 +3,26 @@ import { Link } from "react-router-dom";
 
 import Header from "~/components/Header";
 import TimeGroupedSketches from "~/components/timeGroupedSketches";
+import ConfigContainer from "~/containers/config";
 import UserContainer from "~/containers/user";
 import useSWR, { mutate } from "~/hooks/useSwr";
 import Logo from "~/images/logo.svg";
 import history from "~/utils/history";
-import { post } from "~/utils/network";
 import { SKETCHES_PATH } from "~/utils/network";
 
-const createSketch = async (name) => {
-  const newSketch = await post("/sketches/create", { name });
-  mutate(SKETCHES_PATH);
-  return newSketch;
-};
-
 const MySketches = () => {
+  const { post } = ConfigContainer.useContainer();
   const { data: sketches } = useSWR(SKETCHES_PATH);
   const { userDetails, login } = UserContainer.useContainer();
   const [newSketchName, setNewSketchName] = useState("");
   const [creating, setCreating] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  const createSketch = async (name) => {
+    const newSketch = await post("/sketches/create", { name });
+    mutate(SKETCHES_PATH);
+    return newSketch;
+  };
 
   const createSketchFromName = async () => {
     setLoading(true);

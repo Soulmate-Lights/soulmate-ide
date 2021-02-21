@@ -1,11 +1,12 @@
+import ConfigContainer from "~/containers/config";
 import history from "~/utils/history";
-import { post } from "~/utils/network";
 import { playlistTypes } from "~/utils/types";
 
 const NewPlaylist = () => {
   const [name, setName] = useState("");
   const [modelName, setModelName] = useState(false);
   const [description, setDescription] = useState(undefined);
+  const { post } = ConfigContainer.useContainer();
 
   const onClickSave = async () => {
     if (!name || !modelName || !description) return;
