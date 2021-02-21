@@ -38,7 +38,7 @@ const editorConfig = {
   },
 };
 
-const codeEditor = ({
+const CodeEditor = ({
   build,
   code,
   onChange,
@@ -234,4 +234,4 @@ const codeEditor = ({
   );
 };
 
-export default codeEditor;
+export default CodeEditor;
