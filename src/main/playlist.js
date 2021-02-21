@@ -82,7 +82,6 @@ const Playlist = (props) => {
 
   const publish = async () => {
     setPublishing(true);
-    // const build = await soulmates.getBuild(sketches, config);
     const preparedCode = prepareSketches(sketches, config);
     let build = await getFullBuildAsBlob(preparedCode, firmware);
 

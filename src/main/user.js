@@ -10,13 +10,12 @@ import { ALL_SKETCHES_PATH } from "~/utils/network";
 const User = ({ id }) => {
   const { data: allSketches } = useSWR(ALL_SKETCHES_PATH);
 
-  let users = uniqBy(
-    allSketches?.map((sketch) => sketch.user),
-    (user) => user?.id
-  )?.map((u) => ({
-    ...u,
-    sketches: (allSketches || []).filter((s) => s.user?.id === u?.id),
-  }));
+  const allUsers = allSketches?.map((sketch) => sketch.user) || [];
+  const uniqueUsers = uniqBy(allUsers, (user) => user?.id) || [];
+  let users = uniqueUsers.map((u) => {
+    const sketches = allSketches.filter((s) => s.user?.id === u?.id);
+    return { ...u, sketches };
+  });
 
   let user = users.find((user) => user?.id === parseInt(id));
 
