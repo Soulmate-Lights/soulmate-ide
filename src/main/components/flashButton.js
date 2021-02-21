@@ -28,7 +28,6 @@ const FlashButton = ({
   const { notify } = NotificationsContainer.useContainer();
   const { firmware } = NetworkContainer.useContainer();
 
-  // TODO: Flashing an ESP32 could be a hook?
   const flash = async () => {
     try {
       await flashSketches(selectedSketches, config, firmware);
