@@ -115,7 +115,7 @@ const Settings = () => {
               onChange={setFirmware}
               options={[
                 "https://firmware.soulmatelights.com:8083/build",
-                "http://localhost:8081",
+                "http://localhost:8081/",
               ]}
               selectedOption={firmware}
             />
