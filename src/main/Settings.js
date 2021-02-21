@@ -15,7 +15,7 @@ const Options = ({ options, selectedOption, onChange }) => {
               {
                 "bg-indigo-50 border-indigo-200 z-10":
                   selectedOption === option,
-                "border-gray-200": selectedOption === option,
+                "border-gray-200": selectedOption !== option,
               }
             )}
           >
@@ -42,16 +42,14 @@ const Options = ({ options, selectedOption, onChange }) => {
       <li>
         <div
           className={classnames("relative flex flex-col px-4 border", {
-            "bg-indigo-50 border-indigo-200 z-10": !options.includes(
-              selectedOption
-            ),
-            "border-gray-200": options.includes(selectedOption),
+            "bg-indigo-50 border-indigo-200 z-10": !optionSelected,
+            "border-gray-200": !optionSelected,
           })}
         >
           <label
             className="flex items-center text-sm cursor-pointer"
             onMouseDown={() => {
-              if (options.includes(selectedOption)) onChange("");
+              if (optionSelected) onChange("");
             }}
           >
             <input
