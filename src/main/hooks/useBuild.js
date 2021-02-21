@@ -6,7 +6,7 @@ import { buildHex, preparePreviewCode } from "~/utils/code";
 
 const useBuild = (code, config) => {
   const { simulator } = useContainer(ConfigContainer);
-  const { getBuild, setBuild, isBuilding, setBuilding } = useContainer(
+  const { getBuild, setBuild, isBuilding, setIsBuilding } = useContainer(
     BuildsContainer
   );
 
@@ -16,12 +16,12 @@ const useBuild = (code, config) => {
   if (cachedBuild) return cachedBuild;
 
   setTimeout(() => {
-    setBuilding(code, config, true);
+    setIsBuilding(code, config, true);
     const preparedCode = preparePreviewCode(code, config);
 
     buildHex(preparedCode, simulator)
       .then((build) => setBuild(code, config, build))
-      .catch(() => setBuilding(code, config, false));
+      .catch(() => setIsBuilding(code, config, false));
   });
 
   return;

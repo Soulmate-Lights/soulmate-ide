@@ -1,14 +1,20 @@
 import { createContainer } from "unstated-next";
 
 function Builds() {
-  let [builds, setBuilds] = useState({});
+  let [_builds, _setBuilds] = useState({});
   let [_building, _setBuilding] = useState({});
 
   function getBuild(code, config) {
     const key = JSON.stringify({ code, config });
     if (_building[key]) return false;
-    if (builds[key]) return builds[key];
+    if (_builds[key]) return _builds[key];
     return false;
+  }
+
+  function setBuild(code, config, build) {
+    const key = JSON.stringify({ code, config });
+    _setBuilds({ ..._builds, [key]: build });
+    _setBuilding({ ..._building, [key]: false });
   }
 
   function isBuilding(code, config) {
@@ -16,19 +22,13 @@ function Builds() {
     return _building[key];
   }
 
-  function setBuilding(code, config, building) {
+  function setIsBuilding(code, config, building) {
     const key = JSON.stringify({ code, config });
-    setBuilds({ ...builds, [key]: false });
+    _setBuilds({ ..._builds, [key]: false });
     _setBuilding({ ..._building, [key]: building });
   }
 
-  function setBuild(code, config, build) {
-    const key = JSON.stringify({ code, config });
-    setBuilds({ ...builds, [key]: build });
-    _setBuilding({ ..._building, [key]: false });
-  }
-
-  return { getBuild, setBuild, isBuilding, builds, setBuilds, setBuilding };
+  return { getBuild, setBuild, isBuilding, setIsBuilding };
 }
 
 export default createContainer(Builds);
