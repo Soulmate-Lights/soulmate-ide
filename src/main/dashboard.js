@@ -1,10 +1,14 @@
+import sortBy from "lodash/sortBy";
 import { Helmet } from "react-helmet";
 import { AiFillApple, AiFillWindows } from "react-icons/ai";
 import { Link } from "react-router-dom";
 
+import Sketch from "~/components/Sketch";
 import UserContainer from "~/containers/user";
+import useSWR from "~/hooks/useSwr";
 import isDev from "~/utils/isDev";
 import isElectron from "~/utils/isElectron";
+import { ALL_SKETCHES_PATH } from "~/utils/network";
 
 import packagedotjson from "../../package.json";
 
@@ -18,6 +22,7 @@ function isWindows() {
 
 const Dashboard = () => {
   const { userDetails, login } = UserContainer.useContainer();
+  const { data: sketches } = useSWR(ALL_SKETCHES_PATH);
 
   return (
     <div className="flex flex-col flex-grow w-full">
@@ -81,6 +86,34 @@ const Dashboard = () => {
               )}
             </div>
           </div>
+
+          {sketches && (
+            <div className="flex flex-col items-center w-8/12 mx-auto my-8">
+              <h3>Latest patterns:</h3>
+              <div
+                className="flex flex-row flex-wrap justify-center flex-shrink"
+                style={{ maxWidth: 1006 }}
+              >
+                {sortBy(sketches, (s) => -new Date(s.updated_at))
+                  .slice(0, 12)
+                  .map((sketch) => (
+                    <Link
+                      className="relative m-2"
+                      key={sketch.id}
+                      to={`/gallery/${sketch.id}`}
+                    >
+                      <img
+                        className="absolute z-10 w-8 h-8 border rounded-full"
+                        src={sketch.user.image}
+                        style={{ left: -8, top: -8 }}
+                      />
+                      <Sketch sketch={sketch} width={92} />
+                    </Link>
+                  ))}
+              </div>
+            </div>
+          )}
+
           {!isElectron() && (
             <div className="mt-auto opacity-75 bottom-8 hover:opacity-100 transition-opacity duration-500">
               {isWindows() && (

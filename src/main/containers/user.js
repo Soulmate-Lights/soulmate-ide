@@ -1,7 +1,7 @@
 import * as SentryReact from "@sentry/react";
-import { mutate } from "swr";
 import { createContainer } from "unstated-next";
 
+import { mutate } from "~/hooks/useSwr";
 import { logBackIn, logIn, logOut } from "~/utils/auth";
 import { SKETCHES_PATH } from "~/utils/network";
 

@@ -198,20 +198,6 @@ export const emptyCode = `void draw() {
   // For more information, visit https://github.com/FastLED/FastLED/wiki/Overview
 }`;
 
-let simulatorBuildUrl = "https://editor.soulmatelights.com/sketches/build";
-// let simulatorBuildUrl = "http://soulmate-balancer-158908611.us-east-1.elb.amazonaws.com:8080"
-// let fullBuildUrl = `http://builder.soulmatelights.com:8081/build`;
-// let fullBuildUrl = `http://soulmate-balancer-158908611.us-east-1.elb.amazonaws.com:8081/build`;
-let fullBuildUrl = `https://firmware.soulmatelights.com:8083/build`;
-
-if (typeof electron !== "undefined") {
-  const process = electron.remote.require("process");
-  if (process.env.local) {
-    simulatorBuildUrl = `http://localhost:8080/build`;
-    fullBuildUrl = `http://localhost:8081/build`;
-  }
-}
-
 import streamWithProgress from "~/utils/streamWithProgress";
 
 const options = {
@@ -224,9 +210,10 @@ const options = {
   },
 };
 
-export async function buildHex(source) {
+export async function buildHex(code, config, url) {
+  const source = preparePreviewCode(code, config);
   const body = JSON.stringify({ sketch: source, board: "mega" });
-  const resp = await fetch(simulatorBuildUrl, {
+  const resp = await fetch(url, {
     ...options,
     body,
     Authority: "hexi.wokwi.com",
@@ -236,10 +223,10 @@ export async function buildHex(source) {
   return await resp.json();
 }
 
-export async function getFullBuildAsBlob(source) {
+export async function getFullBuildAsBlob(source, firmwareUrl) {
   const body = JSON.stringify({ sketch: source });
   console.log("[getFullBuild]", { body });
-  const res = await window.fetch(fullBuildUrl, {
+  const res = await window.fetch(firmwareUrl, {
     ...options,
     body,
   });
@@ -254,10 +241,10 @@ export async function getFullBuildAsBlob(source) {
   return await res.blob();
 }
 
-export async function getFullBuild(source) {
+export async function getFullBuild(source, firmwareUrl) {
   const body = JSON.stringify({ sketch: source });
   console.log("[getFullBuild]", { body });
-  const res = await window.fetch(fullBuildUrl, {
+  const res = await window.fetch(firmwareUrl, {
     ...options,
     body,
   });

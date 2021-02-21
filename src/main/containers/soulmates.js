@@ -145,13 +145,13 @@ const SoulmatesContainer = () => {
     return build;
   };
 
-  const flashSketches = async (sketches, config) => {
+  const flashSketches = async (sketches, config, firmwareUrl) => {
     setFlashing(true);
 
     let build;
     try {
       const preparedCode = prepareSketches(sketches, config);
-      build = await getFullBuild(preparedCode);
+      build = await getFullBuild(preparedCode, firmwareUrl);
     } catch (e) {
       setError(e);
       setFlashing(false);

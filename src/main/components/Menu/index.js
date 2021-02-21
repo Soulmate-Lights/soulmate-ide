@@ -1,9 +1,11 @@
 import { FiCloud, FiFolder, FiHome, FiSmile } from "react-icons/fi";
+import { GoSettings } from "react-icons/go";
 import { RiToolsFill } from "react-icons/ri";
 import { Link, NavLink, useLocation } from "react-router-dom";
 
 import UserDetails from "~/components/userDetails";
 import SoulmatesContainer from "~/containers/soulmates";
+import UserContainer from "~/containers/user";
 import Logo from "~/images/logo.svg";
 import isElectron from "~/utils/isElectron";
 
@@ -21,6 +23,7 @@ const shopUrl = "https://shop.soulmatelights.com/products/square";
 const Menu = ({ className }) => {
   const location = useLocation();
   const { usbConnected } = SoulmatesContainer.useContainer();
+  const { isAdmin } = UserContainer.useContainer();
 
   return (
     <div
@@ -153,6 +156,21 @@ const Menu = ({ className }) => {
               </a>
             </div>
           </div>
+
+          {isAdmin() && (
+            <nav className="mx-2 mt-4 space-y-2">
+              <NavLink
+                activeClassName={activeLinkClass}
+                className={linkClass}
+                exact
+                location={location}
+                to="/settings"
+              >
+                <GoSettings className={iconClass} />
+                Settings
+              </NavLink>
+            </nav>
+          )}
 
           <UserDetails className="border-t dark-mode:border-gray-600" />
         </div>

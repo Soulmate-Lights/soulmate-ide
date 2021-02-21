@@ -1,5 +1,4 @@
 import uniqBy from "lodash/uniqBy";
-import useSWR, { mutate } from "swr";
 
 import CodeEditor from "~/components/codeEditor";
 import Header from "~/components/Header";
@@ -7,12 +6,13 @@ import PlaylistMenu from "~/components/PlaylistMenu";
 import Simulator from "~/components/Simulator";
 import Sketch from "~/components/sketch";
 import BuildsContainer from "~/containers/builds";
+import NetworkContainer from "~/containers/network";
+import useSWR, { mutate } from "~/hooks/useSwr";
 import Logo from "~/images/logo.svg";
 import { emptyCode } from "~/utils/code";
 import { getFullBuildAsBlob, prepareSketches } from "~/utils/code";
 import history from "~/utils/history";
 import { post, postDelete, put } from "~/utils/network";
-import { fetcher } from "~/utils/network";
 import {
   ALL_SKETCHES_PATH,
   PLAYLISTS_PATH,
@@ -37,14 +37,16 @@ const unpublishPlaylist = async (id) => {
   mutate(PLAYLISTS_PATH);
 };
 
+import useBuild from "~/hooks/useBuild";
 const Playlist = (props) => {
   const id = parseInt(props.id);
-  const { getBuild } = BuildsContainer.useContainer();
+
+  const { firmware } = NetworkContainer.useContainer();
 
   const { data: mySketches = [] } = useSWR(SKETCHES_PATH);
   const { data: allSketches = [] } = useSWR(ALL_SKETCHES_PATH);
   const onlineSketches = uniqBy([...mySketches, ...allSketches], "id");
-  const { data: playlists } = useSWR(PLAYLISTS_PATH, fetcher);
+  const { data: playlists } = useSWR(PLAYLISTS_PATH);
 
   const [publishing, setPublishing] = useState(false);
   const playlist = playlists?.find((p) => parseInt(p.id) === parseInt(id));
@@ -69,10 +71,8 @@ const Playlist = (props) => {
   const { config } = playlist || {};
 
   let build;
-  if (playlist?.sketches) {
-    const code = playlist.sketches[index]?.code || emptyCode;
-    build = getBuild(code, config);
-  }
+  const code = playlist.sketches[index]?.code || emptyCode;
+  build = useBuild(code, config);
 
   const save = () => {
     savePlaylist(playlist.id, { sketches });
@@ -81,9 +81,8 @@ const Playlist = (props) => {
 
   const publish = async () => {
     setPublishing(true);
-    // const build = await soulmates.getBuild(sketches, config);
     const preparedCode = prepareSketches(sketches, config);
-    let build = await getFullBuildAsBlob(preparedCode);
+    let build = await getFullBuildAsBlob(preparedCode, firmware);
 
     // TODO: Catch errors here
     if (!build) {

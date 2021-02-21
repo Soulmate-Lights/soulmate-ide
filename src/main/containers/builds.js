@@ -1,29 +1,37 @@
 import { createContainer } from "unstated-next";
 
-import { buildHex, preparePreviewCode } from "~/utils/code";
+const makeKey = (code, config) => JSON.stringify({ code, config });
 
 function Builds() {
-  let [builds, setBuilds] = useState({});
-  let [building, setBuilding] = useState({});
+  let [_builds, _setBuilds] = useState({});
+  let [_building, _setBuilding] = useState({});
 
   function getBuild(code, config) {
-    const key = JSON.stringify({ code, config });
+    const key = makeKey(code, config);
 
-    if (building[key]) return false;
-    if (builds[key]) return builds[key];
-
-    setTimeout(() => {
-      const preparedCode = preparePreviewCode(code, config);
-      setBuilding({ ...building, [key]: true });
-      buildHex(preparedCode).then((build) => {
-        setBuilds({ ...builds, [key]: build });
-        setBuilding({ ...building, [key]: false });
-      });
-    });
-    return false;
+    return _builds[key];
   }
 
-  return { getBuild };
+  function setBuild(code, config, build) {
+    const key = makeKey(code, config);
+
+    _setBuilding({ ..._building, [key]: false });
+    _setBuilds({ ..._builds, [key]: build });
+  }
+
+  function isBuilding(code, config) {
+    const key = makeKey(code, config);
+
+    return _building[key];
+  }
+
+  function setIsBuilding(code, config, building) {
+    const key = makeKey(code, config);
+
+    _setBuilding({ ..._building, [key]: building });
+  }
+
+  return { getBuild, setBuild, isBuilding, setIsBuilding };
 }
 
 export default createContainer(Builds);

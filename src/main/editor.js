@@ -1,36 +1,34 @@
 import { Helmet } from "react-helmet";
 import { HiOutlineLink } from "react-icons/hi";
 import { RiVideoDownloadLine } from "react-icons/ri";
-import useSWR, { mutate } from "swr";
 
 import CodeEditor from "~/components/codeEditor";
 import Header from "~/components/Header";
 import Simulator from "~/components/Simulator";
-import BuildsContainer from "~/containers/builds";
+import NetworkContainer from "~/containers/network";
 import NotificationsContainer from "~/containers/notifications";
 import SoulmatesContainer from "~/containers/soulmates";
 import UserContainer from "~/containers/user";
+import useBuild from "~/hooks/useBuild";
+import useSWR, { mutate } from "~/hooks/useSwr";
 import Logo from "~/images/logo.svg";
 import { emptyCode } from "~/utils/code";
 import history from "~/utils/history";
-import {
-  fetcher,
-  post,
-  postDelete,
-  SKETCH_PATH,
-  SKETCHES_PATH,
-} from "~/utils/network";
+import { SKETCH_PATH, SKETCHES_PATH } from "~/utils/network";
 
 import { PersonSection } from "./components/Header";
 
 const Editor = ({ id }) => {
+  const { post, postDelete } = NetworkContainer.useContainer();
   const { notify } = NotificationsContainer.useContainer();
-  const { getBuild } = BuildsContainer.useContainer();
   const { config } = SoulmatesContainer.useContainer();
   const { userDetails } = UserContainer.useContainer();
-  const { data: sketch } = useSWR(SKETCH_PATH(id), fetcher);
+  const { data: sketch } = useSWR(SKETCH_PATH(id));
   const [dirtyCode, setDirtyCode] = useState(sketch?.code);
   const mine = sketch?.user.uid === userDetails?.sub;
+
+  let code = dirtyCode || sketch?.code || emptyCode;
+  const build = useBuild(code, config);
 
   const setSketchState = (id, options) => {
     mutate(SKETCH_PATH(id), { ...sketch, ...options }, false);
@@ -42,7 +40,11 @@ const Editor = ({ id }) => {
     setSketchState(id, { code, config, dirty: false });
 
     if (!mine) return;
-    await post("/sketches/save", { id, code, config });
+    await post("/sketches/save", {
+      id,
+      code,
+      config,
+    });
     mutate(SKETCHES_PATH);
   };
 
@@ -51,7 +53,10 @@ const Editor = ({ id }) => {
 
     const isPublic = !sketch.public;
     setSketchState(id, { public: isPublic });
-    await post("/sketches/save", { id, public: isPublic });
+    await post("/sketches/save", {
+      id,
+      public: isPublic,
+    });
     mutate(SKETCHES_PATH);
   };
 
@@ -98,9 +103,6 @@ const Editor = ({ id }) => {
       </div>
     );
   }
-
-  let code = dirtyCode || sketch.code || emptyCode;
-  const build = getBuild(code, config);
 
   const confirmAndDelete = () => {
     if (!confirm("Delete this sketch?")) return;

@@ -8,18 +8,17 @@ import { GrClose } from "react-icons/gr";
 import { IoMenuSharp } from "react-icons/io5";
 import { Link } from "react-router-dom";
 import { Route, Switch } from "react-router-dom";
-import { SWRConfig } from "swr";
-import useSWR from "swr";
 
 import ErrorNotification from "~/components/ErrorNotification";
 import Menu from "~/components/Menu";
 import Notifications from "~/components/notifications";
+import NetworkContainer from "~/containers/network";
 import SoulmatesContainer from "~/containers/soulmates";
 import UserContainer from "~/containers/user";
+import useSWR from "~/hooks/useSwr";
 import Logo from "~/images/logo.svg";
 import history from "~/utils/history";
 import isElectron from "~/utils/isElectron";
-import { fetcher } from "~/utils/network";
 import { ALL_SKETCHES_PATH, SKETCHES_PATH } from "~/utils/network";
 
 import ErrorBoundary from "./components/ErrorBoundary";
@@ -34,8 +33,9 @@ import MySketches from "./mySketches";
 import NewPlaylist from "./newPlaylist";
 import Playlist from "./playlist";
 import Playlists from "./playlists";
+import Settings from "./Settings";
+import Tutorial from "./tutorial";
 import User from "./user";
-import Welcome from "./welcome";
 
 const IDE = () => {
   useSWR(SKETCHES_PATH);
@@ -73,10 +73,6 @@ const IDE = () => {
           property="og:description"
         />
         <meta content="product" property="og:type" />
-        {/* <meta
-          content="https://www.soulmatelights.com/hand.fd7ece86.jpg"
-          property="og:image"
-        /> */}
       </Helmet>
       <Switch>
         <Route path="/desktop-sign-in">
@@ -102,16 +98,13 @@ const IDE = () => {
               <Menu />
             </div>
 
-            {/* {showMenu && ( */}
             <Menu
               className={[
-                "transform fixed z-50 h-full lg:hidden",
-                "ease-in-out transition-all duration-300 ",
+                "transform fixed z-50 h-full lg:hidden ease-in-out transition-all duration-300",
                 showMenu ? "translate-x-0" : "-translate-x-full",
               ]}
               style={{ opacity: 0.5 }}
             />
-            {/* )} */}
 
             <Notifications />
 
@@ -121,9 +114,7 @@ const IDE = () => {
                   <div
                     className={classnames(
                       "absolute z-20 flex top-3 z-8 lg:hidden",
-                      {
-                        "left-64": showMenu,
-                      }
+                      { "left-64": showMenu }
                     )}
                   >
                     <a
@@ -140,7 +131,7 @@ const IDE = () => {
                     </Route>
 
                     <Route exact path="/tutorial">
-                      <Welcome />
+                      <Tutorial />
                     </Route>
 
                     <Route exact path="/my-patterns">
@@ -157,6 +148,10 @@ const IDE = () => {
 
                     <Route exact path="/config">
                       <Config />
+                    </Route>
+
+                    <Route exact path="/settings">
+                      <Settings />
                     </Route>
 
                     <Route
@@ -242,11 +237,11 @@ const IDE = () => {
 };
 
 const WrappedIde = (props) => (
-  <SWRConfig value={{ fetcher }}>
-    <UserContainer.Provider>
+  <UserContainer.Provider>
+    <NetworkContainer.Provider>
       <IDE {...props} />
-    </UserContainer.Provider>
-  </SWRConfig>
+    </NetworkContainer.Provider>
+  </UserContainer.Provider>
 );
 
 export default WrappedIde;

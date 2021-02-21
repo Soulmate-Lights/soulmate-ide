@@ -5,7 +5,6 @@ import { Mode, useLightSwitch } from "use-light-switch";
 import CodeEditor from "~/components/codeEditor";
 import Header from "~/components/Header";
 import Simulator from "~/components/Simulator";
-import BuildsContainer from "~/containers/builds";
 import SoulmatesContainer from "~/containers/soulmates";
 import UserContainer from "~/containers/user";
 import Logo from "~/images/logo.svg";
@@ -49,13 +48,14 @@ const Finished = () => {
   );
 };
 
-const Welcome = () => {
+import useBuild from "~/hooks/useBuild";
+
+const Tutorial = () => {
   const [savedCodes, setSavedCodes] = useState({});
-  const { getBuild } = useContainer(BuildsContainer);
   const [index, setIndex] = useState(0);
   const { config } = SoulmatesContainer.useContainer();
   const code = savedCodes[index] || examples[index];
-  const build = getBuild(code, config);
+  const build = useBuild(code, config);
 
   const actions = [];
   if (index > 0) {
@@ -119,4 +119,4 @@ const Welcome = () => {
   );
 };
 
-export default Welcome;
+export default Tutorial;

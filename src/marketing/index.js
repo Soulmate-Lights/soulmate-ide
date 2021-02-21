@@ -2,7 +2,7 @@
 import React from "react";
 import { Helmet } from "react-helmet";
 
-import examples from "~/welcome/examples";
+import examples from "~/tutorial/examples";
 
 import Example from "./example";
 import hand from "./hand.jpg";

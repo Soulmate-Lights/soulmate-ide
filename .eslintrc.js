@@ -7,6 +7,7 @@ module.exports = {
     "eslint:recommended",
     "plugin:react/recommended",
     "plugin:tailwind/recommended",
+    "plugin:react-hooks/recommended",
   ],
   globals: {
     Atomics: "readonly",
@@ -48,6 +49,7 @@ module.exports = {
     "simple-import-sort/imports": "error",
     "tailwind/class-order": "error",
     "react/jsx-sort-props": "error",
+    "react-hooks/exhaustive-deps": 0,
   },
   settings: {
     react: {
