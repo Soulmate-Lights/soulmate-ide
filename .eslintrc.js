@@ -49,6 +49,7 @@ module.exports = {
     "simple-import-sort/imports": "error",
     "tailwind/class-order": "error",
     "react/jsx-sort-props": "error",
+    "react-hooks/exhaustive-deps": 0,
   },
   settings: {
     react: {

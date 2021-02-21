@@ -88,7 +88,7 @@ const Dashboard = () => {
           </div>
 
           {sketches && (
-            <div className="flex flex-col items-center w-6/12 w-full">
+            <div className="flex flex-col items-center w-8/12 mx-auto my-8">
               <h3>Latest patterns:</h3>
               <div
                 className="flex flex-row flex-wrap justify-center flex-shrink"
@@ -103,11 +103,11 @@ const Dashboard = () => {
                       to={`/gallery/${sketch.id}`}
                     >
                       <img
-                        className="absolute z-10 w-12 h-12 border rounded-full"
+                        className="absolute z-10 w-8 h-8 border rounded-full"
                         src={sketch.user.image}
                         style={{ left: -8, top: -8 }}
                       />
-                      <Sketch sketch={sketch} width={128} />
+                      <Sketch sketch={sketch} width={92} />
                     </Link>
                   ))}
               </div>

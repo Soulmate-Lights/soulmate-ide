@@ -1,33 +1,34 @@
 import { createContainer } from "unstated-next";
 
+const makeKey = (code, config) => JSON.stringify({ code, config });
+
 function Builds() {
   let [_builds, _setBuilds] = useState({});
   let [_building, _setBuilding] = useState({});
 
   function getBuild(code, config) {
-    const key = JSON.stringify({ code, config });
-    if (_building[key]) return false;
-    if (_builds[key]) return _builds[key];
-    return false;
+    const key = makeKey(code, config);
+
+    return _builds[key];
   }
 
   function setBuild(code, config, build) {
-    const key = JSON.stringify({ code, config });
+    const key = makeKey(code, config);
+
     _setBuilding({ ..._building, [key]: false });
     _setBuilds({ ..._builds, [key]: build });
   }
 
   function isBuilding(code, config) {
-    const key = JSON.stringify({ code, config });
-    // console.log(_building[key] ? "Building" : "Not building");
+    const key = makeKey(code, config);
+
     return _building[key];
   }
 
   function setIsBuilding(code, config, building) {
-    const key = JSON.stringify({ code, config });
-    // console.log(building ? "Start building" : "Stop building");
+    const key = makeKey(code, config);
+
     _setBuilding({ ..._building, [key]: building });
-    // _setBuilds({ ..._builds, [key]: false });
   }
 
   return { getBuild, setBuild, isBuilding, setIsBuilding };

@@ -1,38 +1,27 @@
-import { useContainer } from "unstated-next";
-
 import BuildsContainer from "~/containers/builds";
 import NetworkContainer from "~/containers/network";
-import { buildHex, preparePreviewCode } from "~/utils/code";
+import { buildHex } from "~/utils/code";
 
 const useBuild = (code, config) => {
-  const { simulator } = useContainer(NetworkContainer);
-  const { getBuild, setBuild, isBuilding, setIsBuilding } = useContainer(
-    BuildsContainer
-  );
-
-  const cachedBuild = getBuild(code, config);
-  const [stateBuild, setStateBuild] = useState(cachedBuild);
+  const { simulator } = NetworkContainer.useContainer();
+  const {
+    getBuild,
+    setBuild,
+    isBuilding,
+    setIsBuilding,
+  } = BuildsContainer.useContainer();
 
   useEffect(() => {
-    if (cachedBuild) return;
+    if (getBuild(code, config) || isBuilding(code, config)) return;
+
     setIsBuilding(code, config, true);
 
-    if (isBuilding(code, config)) return;
+    buildHex(code, config, simulator).then((build) =>
+      setBuild(code, config, build)
+    );
+  }, [code, config, simulator]);
 
-    const preparedCode = preparePreviewCode(code, config);
-
-    buildHex(preparedCode, simulator)
-      .then((build) => {
-        setIsBuilding(code, config, false);
-        setBuild(code, config, build);
-        setStateBuild(build);
-      })
-      .catch(() => setIsBuilding(code, config, false));
-
-    return () => {};
-  }, [code, config, cachedBuild]);
-
-  return stateBuild;
+  return getBuild(code, config);
 };
 
 export default useBuild;

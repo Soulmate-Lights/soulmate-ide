@@ -210,7 +210,8 @@ const options = {
   },
 };
 
-export async function buildHex(source, url) {
+export async function buildHex(code, config, url) {
+  const source = preparePreviewCode(code, config);
   const body = JSON.stringify({ sketch: source, board: "mega" });
   const resp = await fetch(url, {
     ...options,
