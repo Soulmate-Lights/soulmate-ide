@@ -6,7 +6,7 @@ import PlaylistMenu from "~/components/PlaylistMenu";
 import Simulator from "~/components/Simulator";
 import Sketch from "~/components/sketch";
 import BuildsContainer from "~/containers/builds";
-import ConfigContainer from "~/containers/config";
+import NetworkContainer from "~/containers/network";
 import useSWR, { mutate } from "~/hooks/useSwr";
 import Logo from "~/images/logo.svg";
 import { emptyCode } from "~/utils/code";
@@ -41,7 +41,7 @@ import useBuild from "~/hooks/useBuild";
 const Playlist = (props) => {
   const id = parseInt(props.id);
 
-  const { firmware } = ConfigContainer.useContainer();
+  const { firmware } = NetworkContainer.useContainer();
 
   const { data: mySketches = [] } = useSWR(SKETCHES_PATH);
   const { data: allSketches = [] } = useSWR(ALL_SKETCHES_PATH);

@@ -12,7 +12,7 @@ import { Route, Switch } from "react-router-dom";
 import ErrorNotification from "~/components/ErrorNotification";
 import Menu from "~/components/Menu";
 import Notifications from "~/components/notifications";
-import ConfigContainer from "~/containers/config";
+import NetworkContainer from "~/containers/network";
 import SoulmatesContainer from "~/containers/soulmates";
 import UserContainer from "~/containers/user";
 import useSWR from "~/hooks/useSwr";
@@ -238,9 +238,9 @@ const IDE = () => {
 
 const WrappedIde = (props) => (
   <UserContainer.Provider>
-    <ConfigContainer.Provider>
+    <NetworkContainer.Provider>
       <IDE {...props} />
-    </ConfigContainer.Provider>
+    </NetworkContainer.Provider>
   </UserContainer.Provider>
 );
 

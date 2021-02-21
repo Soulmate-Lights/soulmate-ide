@@ -5,7 +5,7 @@ import { RiVideoDownloadLine } from "react-icons/ri";
 import CodeEditor from "~/components/codeEditor";
 import Header from "~/components/Header";
 import Simulator from "~/components/Simulator";
-import ConfigContainer from "~/containers/config";
+import NetworkContainer from "~/containers/network";
 import NotificationsContainer from "~/containers/notifications";
 import SoulmatesContainer from "~/containers/soulmates";
 import UserContainer from "~/containers/user";
@@ -19,7 +19,7 @@ import { SKETCH_PATH, SKETCHES_PATH } from "~/utils/network";
 import { PersonSection } from "./components/Header";
 
 const Editor = ({ id }) => {
-  const { post, postDelete } = ConfigContainer.useContainer();
+  const { post, postDelete } = NetworkContainer.useContainer();
   const { notify } = NotificationsContainer.useContainer();
   const { config } = SoulmatesContainer.useContainer();
   const { userDetails } = UserContainer.useContainer();

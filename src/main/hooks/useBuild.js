@@ -1,11 +1,11 @@
 import { useContainer } from "unstated-next";
 
 import BuildsContainer from "~/containers/builds";
-import ConfigContainer from "~/containers/config";
+import NetworkContainer from "~/containers/network";
 import { buildHex, preparePreviewCode } from "~/utils/code";
 
 const useBuild = (code, config) => {
-  const { simulator } = useContainer(ConfigContainer);
+  const { simulator } = useContainer(NetworkContainer);
   const { getBuild, setBuild, isBuilding, setIsBuilding } = useContainer(
     BuildsContainer
   );

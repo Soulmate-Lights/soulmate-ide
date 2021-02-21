@@ -1,5 +1,5 @@
 import Header from "./components/Header";
-import ConfigContainer from "./containers/config";
+import NetworkContainer from "./containers/network";
 
 const Settings = () => {
   const {
@@ -9,7 +9,7 @@ const Settings = () => {
     setFirmware,
     appServer,
     setAppServer,
-  } = ConfigContainer.useContainer();
+  } = NetworkContainer.useContainer();
 
   const Options = ({ options, selectedOption, onChange }) => (
     <>
