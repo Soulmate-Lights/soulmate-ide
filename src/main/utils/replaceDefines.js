@@ -28,13 +28,11 @@ const renameDefines = (sketch, prefix) => {
   defines = uniq(defines);
 
   defines.forEach((define) => {
-    const regex = new RegExp(`(?<=[\\W\\s])${define}(?=[\\W|\\s]?)`, "g");
+    const regex = new RegExp(`\\b${define}\\b`, "g");
 
     sketch = sketch
       .split("\n")
-      .map((line) => {
-        return line.replaceAll(regex, `${prefix}${define}`);
-      })
+      .map((line) => line.replaceAll(regex, `${prefix}${define}`))
       .join("\n");
   });
 

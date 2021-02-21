@@ -47,7 +47,7 @@ const testReplaceDefines = (input, output) => {
   expect(result).toEqual(expectedOutput);
 };
 
-describe("urls", () => {
+describe("replacing defines", () => {
   it("Replaces simple values", () => {
     testReplaceDefines(
       `#define ABC 123
@@ -178,6 +178,19 @@ describe("urls", () => {
       I am GLOBAL_COLOR_1;`,
       `#define  prefix_GLOBAL_COLOR_1 CRGB::Green
       I am prefix_GLOBAL_COLOR_1;`
+    );
+  });
+
+  it("handles ldir example", () => {
+    testReplaceDefines(
+      `#define r random8()
+       color.h+=random8(val);
+       a = r('hi');
+      `,
+      `#define prefix_r random8()
+       color.h+=random8(val);
+       a = prefix_r('hi');
+      `
     );
   });
 });
