@@ -89,7 +89,7 @@ const Settings = () => {
               onChange={setAppServer}
               options={[
                 "https://editor.soulmatelights.com/",
-                "http://localhost:3000/",
+                "http://localhost:3001/",
               ]}
               selectedOption={appServer}
             />
@@ -102,6 +102,7 @@ const Settings = () => {
               onChange={setSimulator}
               options={[
                 "https://editor.soulmatelights.com/sketches/build",
+                "https://firmware.soulmatelights.com:8082/build",
                 "http://localhost:8080/build",
               ]}
               selectedOption={simulator}
@@ -115,7 +116,7 @@ const Settings = () => {
               onChange={setFirmware}
               options={[
                 "https://firmware.soulmatelights.com:8083/build",
-                "http://localhost:8081/",
+                "http://localhost:8081//build",
               ]}
               selectedOption={firmware}
             />
