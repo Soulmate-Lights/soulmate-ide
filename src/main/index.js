@@ -7,6 +7,7 @@ import { HashRouter, Route, Router, Switch } from "react-router-dom";
 import { LastLocationProvider } from "react-router-last-location";
 
 import BuildsContainer from "~/containers/builds";
+import NetworkContainer from "~/containers/network";
 import NotificationsContainer from "~/containers/notifications";
 import SoulmatesContainer from "~/containers/soulmates";
 import Logo from "~/images/logo.svg";
@@ -20,11 +21,13 @@ const Ide = React.lazy(() => import("./ide"));
 const SpecificRouter = isElectron() ? HashRouter : Router;
 
 const MainProvider = ({ children }) => (
-  <NotificationsContainer.Provider>
-    <SoulmatesContainer.Provider>
-      <BuildsContainer.Provider>{children}</BuildsContainer.Provider>
-    </SoulmatesContainer.Provider>
-  </NotificationsContainer.Provider>
+  <NetworkContainer.Provider>
+    <NotificationsContainer.Provider>
+      <SoulmatesContainer.Provider>
+        <BuildsContainer.Provider>{children}</BuildsContainer.Provider>
+      </SoulmatesContainer.Provider>
+    </NotificationsContainer.Provider>
+  </NetworkContainer.Provider>
 );
 
 const Main = () => {

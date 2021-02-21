@@ -1,5 +1,5 @@
 import normalizeUrl from "normalize-url";
-import useSwr, { mutate as _mutate } from "swr";
+import useSwr from "swr";
 
 import NetworkContainer from "~/containers/network";
 
@@ -19,5 +19,3 @@ const useRequest = (path) => {
 };
 
 export default useRequest;
-
-export const mutate = _mutate;

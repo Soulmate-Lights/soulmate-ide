@@ -7,7 +7,8 @@ import Simulator from "~/components/Simulator";
 import Sketch from "~/components/sketch";
 import BuildsContainer from "~/containers/builds";
 import NetworkContainer from "~/containers/network";
-import useSWR, { mutate } from "~/hooks/useSwr";
+import useBuild from "~/hooks/useBuild";
+import useSWR from "~/hooks/useSwr";
 import Logo from "~/images/logo.svg";
 import { emptyCode } from "~/utils/code";
 import { getFullBuildAsBlob, prepareSketches } from "~/utils/code";
@@ -18,26 +19,6 @@ import {
   PLAYLISTS_PATH,
   SKETCHES_PATH,
 } from "~/utils/network";
-
-const savePlaylist = async (id, data, blob) => {
-  var formData = new FormData();
-  formData.append("sketches", JSON.stringify(data.sketches));
-  if (blob) formData.append("build", blob, "firmware.bin");
-  await put(`/my-playlists/${id}?hi`, formData);
-  mutate(PLAYLISTS_PATH);
-};
-
-const destroyPlaylist = async (id) => {
-  await postDelete(`/my-playlists/${id}`);
-  mutate(PLAYLISTS_PATH);
-};
-
-const unpublishPlaylist = async (id) => {
-  await post(`/my-playlists/${id}/unpublish`);
-  mutate(PLAYLISTS_PATH);
-};
-
-import useBuild from "~/hooks/useBuild";
 const Playlist = (props) => {
   const id = parseInt(props.id);
 
@@ -46,7 +27,7 @@ const Playlist = (props) => {
   const { data: mySketches = [] } = useSWR(SKETCHES_PATH);
   const { data: allSketches = [] } = useSWR(ALL_SKETCHES_PATH);
   const onlineSketches = uniqBy([...mySketches, ...allSketches], "id");
-  const { data: playlists } = useSWR(PLAYLISTS_PATH);
+  const { data: playlists, mutate: mutatePlaylists } = useSWR(PLAYLISTS_PATH);
 
   const [publishing, setPublishing] = useState(false);
   const playlist = playlists?.find((p) => parseInt(p.id) === parseInt(id));
@@ -55,6 +36,24 @@ const Playlist = (props) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const menuRef = useRef();
   const [dirty, setDirty] = useState(false);
+
+  const savePlaylist = async (id, data, blob) => {
+    var formData = new FormData();
+    formData.append("sketches", JSON.stringify(data.sketches));
+    if (blob) formData.append("build", blob, "firmware.bin");
+    await put(`/my-playlists/${id}?hi`, formData);
+    mutatePlaylists();
+  };
+
+  const destroyPlaylist = async (id) => {
+    await postDelete(`/my-playlists/${id}`);
+    mutatePlaylists();
+  };
+
+  const unpublishPlaylist = async (id) => {
+    await post(`/my-playlists/${id}/unpublish`);
+    mutatePlaylists();
+  };
 
   useEffect(() => {
     if (!sketches && playlist?.sketches) {

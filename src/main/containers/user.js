@@ -1,7 +1,7 @@
 import * as SentryReact from "@sentry/react";
 import { createContainer } from "unstated-next";
 
-import { mutate } from "~/hooks/useSwr";
+import useSWR from "~/hooks/useSwr";
 import { logBackIn, logIn, logOut } from "~/utils/auth";
 import { SKETCHES_PATH } from "~/utils/network";
 
@@ -9,6 +9,7 @@ const admin = "google-oauth2|102941484361041922849";
 
 const UserContainer = () => {
   const [userDetails, setUserDetails] = useState(undefined);
+  const { mutate } = useSWR(SKETCHES_PATH);
 
   useEffect(() => {
     logBackIn().then(setUserDetails);
@@ -23,7 +24,7 @@ const UserContainer = () => {
       ...userDetails,
     });
 
-    mutate(SKETCHES_PATH);
+    mutate();
   }, [userDetails]);
 
   const login = async () => logIn().then(setUserDetails);

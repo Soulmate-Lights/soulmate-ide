@@ -10,7 +10,7 @@ import NotificationsContainer from "~/containers/notifications";
 import SoulmatesContainer from "~/containers/soulmates";
 import UserContainer from "~/containers/user";
 import useBuild from "~/hooks/useBuild";
-import useSWR, { mutate } from "~/hooks/useSwr";
+import useSWR from "~/hooks/useSwr";
 import Logo from "~/images/logo.svg";
 import { emptyCode } from "~/utils/code";
 import history from "~/utils/history";
@@ -23,15 +23,16 @@ const Editor = ({ id }) => {
   const { notify } = NotificationsContainer.useContainer();
   const { config } = SoulmatesContainer.useContainer();
   const { userDetails } = UserContainer.useContainer();
-  const { data: sketch } = useSWR(SKETCH_PATH(id));
+  const { mutate: mutateSketches } = useSWR(SKETCHES_PATH);
+  const { data: sketch, mutate: mutateSketch } = useSWR(SKETCH_PATH(id));
   const [dirtyCode, setDirtyCode] = useState(sketch?.code);
-  const mine = sketch?.user.uid === userDetails?.sub;
+  const mine = sketch?.user?.uid === userDetails?.sub;
 
   let code = dirtyCode || sketch?.code || emptyCode;
   const build = useBuild(code, config);
 
   const setSketchState = (id, options) => {
-    mutate(SKETCH_PATH(id), { ...sketch, ...options }, false);
+    mutateSketch({ ...sketch, ...options }, false);
   };
 
   const save = async (id, code, config) => {
@@ -45,7 +46,7 @@ const Editor = ({ id }) => {
       code,
       config,
     });
-    mutate(SKETCHES_PATH);
+    mutateSketches();
   };
 
   const togglePublic = async (id) => {
@@ -57,7 +58,7 @@ const Editor = ({ id }) => {
       id,
       public: isPublic,
     });
-    mutate(SKETCHES_PATH);
+    mutateSketches();
   };
 
   const persistCode = (id, code) => {

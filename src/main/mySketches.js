@@ -5,14 +5,14 @@ import Header from "~/components/Header";
 import TimeGroupedSketches from "~/components/timeGroupedSketches";
 import NetworkContainer from "~/containers/network";
 import UserContainer from "~/containers/user";
-import useSWR, { mutate } from "~/hooks/useSwr";
+import useSWR from "~/hooks/useSwr";
 import Logo from "~/images/logo.svg";
 import history from "~/utils/history";
 import { SKETCHES_PATH } from "~/utils/network";
 
 const MySketches = () => {
   const { post } = NetworkContainer.useContainer();
-  const { data: sketches } = useSWR(SKETCHES_PATH);
+  const { data: sketches, mutate } = useSWR(SKETCHES_PATH);
   const { userDetails, login } = UserContainer.useContainer();
   const [newSketchName, setNewSketchName] = useState("");
   const [creating, setCreating] = useState(false);
@@ -20,7 +20,7 @@ const MySketches = () => {
 
   const createSketch = async (name) => {
     const newSketch = await post("/sketches/create", { name });
-    mutate(SKETCHES_PATH);
+    mutate();
     return newSketch;
   };
 
