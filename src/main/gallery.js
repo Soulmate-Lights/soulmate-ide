@@ -72,6 +72,7 @@ const Gallery = () => {
                         <img
                           alt="Profile picture"
                           className="object-cover w-12 h-12 bg-white rounded-full shadow"
+                          referrerPolicy="no-referrer"
                           src={user.image}
                         />
                       ) : (

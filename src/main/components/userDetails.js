@@ -29,6 +29,7 @@ const UserDetails = ({ className }) => {
           <img
             alt="avatar"
             className="flex-shrink-0 inline-block object-cover rounded-full h-9 w-9"
+            referrerPolicy="no-referrer"
             src={userDetails?.picture}
           />
           <div className="flex-grow flex-shrink min-w-0 text-sm font-medium truncate">

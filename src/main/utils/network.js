@@ -62,12 +62,6 @@ export const put = async (path, body = {}) => {
   }).then((d) => d.json());
 };
 
-export const fetcher = async (url) => {
-  return fetch(url, {
-    ...(await headersAndCredentials()),
-  }).then((d) => d.json());
-};
-
 export const get = async (path, params) => {
   return fetch(url(path) + "?" + new URLSearchParams(params), {
     ...(await headersAndCredentials()),

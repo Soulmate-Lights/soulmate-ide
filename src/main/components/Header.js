@@ -14,6 +14,7 @@ export const PersonSection = ({ user }) => (
             "bg-white": !user.image,
           }
         )}
+        referrerPolicy="no-referrer"
         src={user.image}
       />
     ) : (

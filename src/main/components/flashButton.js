@@ -2,6 +2,7 @@ import { FaChevronUp, FaUsb, FaWifi } from "react-icons/fa";
 import { RiPlayList2Fill } from "react-icons/ri";
 
 import SoulmatesMenu from "~/components/SoulmatesMenu";
+import ConfigContainer from "~/containers/config";
 import NotificationsContainer from "~/containers/notifications";
 import Soulmates from "~/containers/soulmates";
 import UserContainer from "~/containers/user";
@@ -24,13 +25,15 @@ const FlashButton = ({
     config,
     selectedSoulmate,
   } = Soulmates.useContainer();
-  const notificationsContainer = NotificationsContainer.useContainer();
+  const { notify } = NotificationsContainer.useContainer();
+  const { firmware } = ConfigContainer.useContainer();
 
+  // TODO: Flashing an ESP32 could be a hook?
   const flash = async () => {
     try {
-      await flashSketches(selectedSketches, config);
+      await flashSketches(selectedSketches, config, firmware);
     } catch (e) {
-      notificationsContainer.notify("Error flashing!", "error");
+      notify("Error flashing!", "error");
     }
   };
 

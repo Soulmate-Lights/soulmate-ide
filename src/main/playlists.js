@@ -3,15 +3,14 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 import Header from "~/components/Header";
-import useSWR, { mutate } from "~/hooks/useSwr";
+import useSWR from "~/hooks/useSwr";
 import Logo from "~/images/logo.svg";
-import { fetcher } from "~/utils/network";
 import { PLAYLISTS_PATH } from "~/utils/network";
 
 import NewPlaylist from "./newPlaylist";
 
 const Playlists = () => {
-  const { data: playlists } = useSWR(PLAYLISTS_PATH, fetcher);
+  const { data: playlists } = useSWR(PLAYLISTS_PATH);
   const groupedPlaylists = _.groupBy(playlists, (p) => p.model_name);
   if (!playlists) return <Logo className="loading-spinner" />;
 
