@@ -5,8 +5,6 @@ import { Mode, useLightSwitch } from "use-light-switch";
 import CodeEditor from "~/components/codeEditor";
 import Header from "~/components/Header";
 import Simulator from "~/components/Simulator";
-import BuildsContainer from "~/containers/builds";
-import ConfigContainer from "~/containers/config";
 import SoulmatesContainer from "~/containers/soulmates";
 import UserContainer from "~/containers/user";
 import Logo from "~/images/logo.svg";
@@ -52,7 +50,7 @@ const Finished = () => {
 
 import useBuild from "~/hooks/useBuild";
 
-const Welcome = () => {
+const Tutorial = () => {
   const [savedCodes, setSavedCodes] = useState({});
   const [index, setIndex] = useState(0);
   const { config } = SoulmatesContainer.useContainer();
@@ -121,4 +119,4 @@ const Welcome = () => {
   );
 };
 
-export default Welcome;
+export default Tutorial;

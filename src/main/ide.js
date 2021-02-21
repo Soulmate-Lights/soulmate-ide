@@ -15,7 +15,7 @@ import Notifications from "~/components/notifications";
 import ConfigContainer from "~/containers/config";
 import SoulmatesContainer from "~/containers/soulmates";
 import UserContainer from "~/containers/user";
-import useSWR, { mutate } from "~/hooks/useSwr";
+import useSWR from "~/hooks/useSwr";
 import Logo from "~/images/logo.svg";
 import history from "~/utils/history";
 import isElectron from "~/utils/isElectron";
@@ -34,8 +34,8 @@ import NewPlaylist from "./newPlaylist";
 import Playlist from "./playlist";
 import Playlists from "./playlists";
 import Settings from "./Settings";
+import Tutorial from "./tutorial";
 import User from "./user";
-import Welcome from "./welcome";
 
 const IDE = () => {
   useSWR(SKETCHES_PATH);
@@ -131,7 +131,7 @@ const IDE = () => {
                     </Route>
 
                     <Route exact path="/tutorial">
-                      <Welcome />
+                      <Tutorial />
                     </Route>
 
                     <Route exact path="/my-patterns">
