@@ -1,9 +1,9 @@
 import uniqBy from "lodash/uniqBy";
 import { Helmet } from "react-helmet";
-import useSWR from "swr";
 
 import Header, { PersonSection } from "~/components/Header";
 import TimeGroupedSketches from "~/components/timeGroupedSketches";
+import useSWR from "~/hooks/useSwr";
 import Logo from "~/images/logo.svg";
 import { fetcher } from "~/utils/network";
 import { ALL_SKETCHES_PATH } from "~/utils/network";

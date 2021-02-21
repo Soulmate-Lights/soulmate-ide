@@ -3,11 +3,11 @@ import uniqBy from "lodash/uniqBy";
 import { Helmet } from "react-helmet";
 import { IoPersonCircleOutline } from "react-icons/io5";
 import { Link } from "react-router-dom";
-import useSWR from "swr";
 
 import Header from "~/components/Header";
 import Sketch from "~/components/sketch";
 import UserContainer from "~/containers/user";
+import useSWR from "~/hooks/useSwr";
 import Logo from "~/images/logo.svg";
 import { emptyCode } from "~/utils/code";
 import { ALL_SKETCHES_PATH } from "~/utils/network";

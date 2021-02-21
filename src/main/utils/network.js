@@ -23,7 +23,7 @@ export const SKETCH_PATH = (id) => `/sketches/${id}`;
 export const ALL_SKETCHES_PATH = "/sketches/all";
 export const PLAYLISTS_PATH = "/my-playlists";
 
-const headersAndCredentials = async () => {
+export const headersAndCredentials = async () => {
   const auth = await auth0Promise;
   const authenticated = await auth.isAuthenticated();
   const headers = { "Content-Type": "application/json" };
@@ -62,8 +62,8 @@ export const put = async (path, body = {}) => {
   }).then((d) => d.json());
 };
 
-export const fetcher = async (path) => {
-  return fetch(url(path), {
+export const fetcher = async (url) => {
+  return fetch(url, {
     ...(await headersAndCredentials()),
   }).then((d) => d.json());
 };

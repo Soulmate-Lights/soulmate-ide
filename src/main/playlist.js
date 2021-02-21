@@ -1,5 +1,4 @@
 import uniqBy from "lodash/uniqBy";
-import useSWR, { mutate } from "swr";
 
 import CodeEditor from "~/components/codeEditor";
 import Header from "~/components/Header";
@@ -7,6 +6,7 @@ import PlaylistMenu from "~/components/PlaylistMenu";
 import Simulator from "~/components/Simulator";
 import Sketch from "~/components/sketch";
 import BuildsContainer from "~/containers/builds";
+import useSWR, { mutate } from "~/hooks/useSwr";
 import Logo from "~/images/logo.svg";
 import { emptyCode } from "~/utils/code";
 import { getFullBuildAsBlob, prepareSketches } from "~/utils/code";

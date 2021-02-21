@@ -8,8 +8,6 @@ import { GrClose } from "react-icons/gr";
 import { IoMenuSharp } from "react-icons/io5";
 import { Link } from "react-router-dom";
 import { Route, Switch } from "react-router-dom";
-import { SWRConfig } from "swr";
-import useSWR from "swr";
 
 import ErrorNotification from "~/components/ErrorNotification";
 import Menu from "~/components/Menu";
@@ -17,10 +15,10 @@ import Notifications from "~/components/notifications";
 import ConfigContainer from "~/containers/config";
 import SoulmatesContainer from "~/containers/soulmates";
 import UserContainer from "~/containers/user";
+import useSWR, { mutate } from "~/hooks/useSwr";
 import Logo from "~/images/logo.svg";
 import history from "~/utils/history";
 import isElectron from "~/utils/isElectron";
-import { fetcher } from "~/utils/network";
 import { ALL_SKETCHES_PATH, SKETCHES_PATH } from "~/utils/network";
 
 import ErrorBoundary from "./components/ErrorBoundary";
@@ -239,13 +237,11 @@ const IDE = () => {
 };
 
 const WrappedIde = (props) => (
-  <SWRConfig value={{ fetcher }}>
-    <UserContainer.Provider>
-      <ConfigContainer.Provider>
-        <IDE {...props} />
-      </ConfigContainer.Provider>
-    </UserContainer.Provider>
-  </SWRConfig>
+  <UserContainer.Provider>
+    <ConfigContainer.Provider>
+      <IDE {...props} />
+    </ConfigContainer.Provider>
+  </UserContainer.Provider>
 );
 
 export default WrappedIde;

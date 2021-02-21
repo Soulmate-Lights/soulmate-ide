@@ -1,9 +1,9 @@
 import _ from "lodash";
 import React from "react";
 import { Link } from "react-router-dom";
-import useSWR from "swr";
 
 import Header from "~/components/Header";
+import useSWR, { mutate } from "~/hooks/useSwr";
 import Logo from "~/images/logo.svg";
 import { fetcher } from "~/utils/network";
 import { PLAYLISTS_PATH } from "~/utils/network";

@@ -19,8 +19,7 @@ import { emptyCode } from "~/utils/code";
 import FlashButton from "./components/flashButton";
 const Console = React.lazy(() => import("./console"));
 
-import useSWR from "swr";
-
+import useSWR from "~/hooks/useSwr";
 import { ALL_SKETCHES_PATH, SKETCHES_PATH } from "~/utils/network";
 
 const Flash = () => {
