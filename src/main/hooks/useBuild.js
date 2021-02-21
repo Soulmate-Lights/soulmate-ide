@@ -10,18 +10,14 @@ const useBuild = (code, config) => {
     BuildsContainer
   );
 
-  const [buildingState, setBuildingState] = useState(false);
-
   const cachedBuild = getBuild(code, config);
+  const [stateBuild, setStateBuild] = useState(cachedBuild);
 
   useEffect(() => {
     if (cachedBuild) return;
-
-    setBuildingState(true);
     setIsBuilding(code, config, true);
 
     if (isBuilding(code, config)) return;
-    if (buildingState) return;
 
     const preparedCode = preparePreviewCode(code, config);
 
@@ -29,14 +25,14 @@ const useBuild = (code, config) => {
       .then((build) => {
         setIsBuilding(code, config, false);
         setBuild(code, config, build);
-        setBuildingState(false);
+        setStateBuild(build);
       })
       .catch(() => setIsBuilding(code, config, false));
 
     return () => {};
   }, [code, config, cachedBuild]);
 
-  return cachedBuild;
+  return stateBuild;
 };
 
 export default useBuild;

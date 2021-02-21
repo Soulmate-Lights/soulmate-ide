@@ -80,7 +80,6 @@ function Config() {
     setFirmware,
     appServer,
     setAppServer,
-
     headersAndCredentials,
     post,
     postDelete,
