@@ -7,12 +7,9 @@ const UrlValidator = ({ url }) => {
   const [valid, setValid] = useState(undefined);
 
   useEffect(() => {
-    console.log(url);
-    fetch(url)
-      .then((r) => {
-        console.log(r.status);
-        setValid(true);
-      })
+    const origin = new URL(url).origin;
+    fetch(origin)
+      .then((r) => setValid(r.status === 200))
       .catch(() => setValid(false));
   }, [url]);
 
