@@ -35,6 +35,7 @@ export const logIn = async () => {
 
     // Log in on the server
     const url = clientSideUrl(`/desktop-sign-in#${id}`);
+    console.log(url);
     electron.shell.openExternal(url);
 
     // And now just ping it until we hear back
