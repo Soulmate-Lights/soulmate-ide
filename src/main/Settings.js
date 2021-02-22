@@ -1,27 +1,35 @@
-import { AiOutlineCheckCircle, AiOutlineCloseCircle } from "react-icons/ai";
+// import useInterval from "@use-it/interval";
+// import { AiOutlineCheckCircle, AiOutlineCloseCircle } from "react-icons/ai";
 
 import Header from "./components/Header";
 import NetworkContainer from "./containers/network";
 
-const UrlValidator = ({ url }) => {
-  const [valid, setValid] = useState(undefined);
+// const UrlValidator = ({ url }) => {
+//   const [valid, setValid] = useState(undefined);
 
-  useEffect(() => {
-    const origin = new URL(url).origin;
-    fetch(origin)
-      .then((r) => setValid(r.status === 200))
-      .catch(() => setValid(false));
-  }, [url]);
+//   const check = () => {
+//     console.log(url);
+//     // const origin = new URL(url).origin;
+//     fetch(url, { method: "POST", body: JSON.stringify({ sketch: "" }) })
+//       .then((r) => {
+//         console.log(url, r.status);
+//         setValid(r.status === 200);
+//       })
+//       .catch(() => setValid(false));
+//   };
 
-  switch (valid) {
-    case undefined:
-      return "Loading...";
-    case true:
-      return <AiOutlineCheckCircle className="text-xl text-green-400" />;
-    default:
-      return <AiOutlineCloseCircle className="text-xl text-red-400" />;
-  }
-};
+//   useEffect(check, [url]);
+//   useInterval(check, 5000);
+
+//   switch (valid) {
+//     case undefined:
+//       return "Loading...";
+//     case true:
+//       return <AiOutlineCheckCircle className="text-xl text-green-400" />;
+//     default:
+//       return <AiOutlineCloseCircle className="text-xl text-red-400" />;
+//   }
+// };
 
 const Options = ({ options, selectedOption, onChange }) => {
   const optionSelected = options
@@ -55,9 +63,9 @@ const Options = ({ options, selectedOption, onChange }) => {
             </label>
 
             <span className="flex flex-row ml-3 text-sm font-medium text-gray-900 space-x-2">
-              <span className="flex-grow-0">
+              {/* <span className="flex-grow-0">
                 <UrlValidator url={option} />
-              </span>
+              </span> */}
               <span>{option}</span>
             </span>
           </div>
