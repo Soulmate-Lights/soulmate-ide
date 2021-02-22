@@ -24,7 +24,9 @@ const Editor = ({ id }) => {
   const { config } = SoulmatesContainer.useContainer();
   const { userDetails } = UserContainer.useContainer();
   const { mutate: mutateSketches } = useSWR(SKETCHES_PATH);
-  const { data: sketch, mutate: mutateSketch } = useSWR(SKETCH_PATH(id));
+  const { data: sketch = { user: {} }, mutate: mutateSketch } = useSWR(
+    SKETCH_PATH(id)
+  );
   const [dirtyCode, setDirtyCode] = useState(sketch?.code);
   const mine = sketch?.user?.uid === userDetails?.sub;
 
@@ -97,13 +99,13 @@ const Editor = ({ id }) => {
     return () => document.removeEventListener("click", closeMenu);
   }, []);
 
-  if (!sketch) {
-    return (
-      <div className="flex flex-grow">
-        <Logo className="loading-spinner" />
-      </div>
-    );
-  }
+  // if (!sketch) {
+  //   return (
+  //     <div className="flex flex-grow">
+  //       <Logo className="loading-spinner" />
+  //     </div>
+  //   );
+  // }
 
   const confirmAndDelete = () => {
     if (!confirm("Delete this sketch?")) return;
@@ -281,13 +283,20 @@ const Editor = ({ id }) => {
       <div className="flex flex-row flex-grow flex-shrink min-w-0 min-h-0">
         <div className="flex flex-col flex-grow flex-shrink min-w-0 min-h-0">
           <div className="relative flex flex-grow flex-shrink block">
-            <CodeEditor
-              build={build}
-              className="relative flex-grow flex-shrink min-w-0 min-h-0 bg-white"
-              code={code}
-              onChange={(code) => persistCode(sketch.id, code)}
-              onSave={(code) => save(sketch.id, code)}
-            />
+            {sketch.id ? (
+              <CodeEditor
+                build={build}
+                className="relative flex-grow flex-shrink min-w-0 min-h-0 bg-white"
+                code={code}
+                key={sketch.id}
+                onChange={(code) => persistCode(sketch.id, code)}
+                onSave={(code) => save(sketch.id, code)}
+              />
+            ) : (
+              <div className="flex flex-grow">
+                <Logo className="loading-spinner" />
+              </div>
+            )}
           </div>
           <div className="flex-row items-center hidden p-4 py-3 text-sm border-t h-14 dark-mode:border-gray-700 md:flex">
             <span className="px-4 font-light">Public URL</span>
