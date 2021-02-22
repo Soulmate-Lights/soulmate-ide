@@ -1,5 +1,30 @@
+import { AiOutlineCheckCircle, AiOutlineCloseCircle } from "react-icons/ai";
+
 import Header from "./components/Header";
 import NetworkContainer from "./containers/network";
+
+const UrlValidator = ({ url }) => {
+  const [valid, setValid] = useState(undefined);
+
+  useEffect(() => {
+    console.log(url);
+    fetch(url)
+      .then((r) => {
+        console.log(r.status);
+        setValid(true);
+      })
+      .catch(() => setValid(false));
+  }, [url]);
+
+  switch (valid) {
+    case undefined:
+      return "Loading...";
+    case true:
+      return <AiOutlineCheckCircle className="text-xl text-green-400" />;
+    default:
+      return <AiOutlineCloseCircle className="text-xl text-red-400" />;
+  }
+};
 
 const Options = ({ options, selectedOption, onChange }) => {
   const optionSelected = options
@@ -32,8 +57,11 @@ const Options = ({ options, selectedOption, onChange }) => {
               </span>
             </label>
 
-            <span className="ml-3 text-sm font-medium text-gray-900">
-              {option}
+            <span className="flex flex-row ml-3 text-sm font-medium text-gray-900 space-x-2">
+              <span className="flex-grow-0">
+                <UrlValidator url={option} />
+              </span>
+              <span>{option}</span>
             </span>
           </div>
         </li>
