@@ -1,11 +1,11 @@
 import "regenerator-runtime/runtime";
 
 import createAuth0Client from "@auth0/auth0-spa-js";
+import normalizeUrl from "normalize-url";
 
-import { clientSideUrl, url } from "~/utils/network";
+import { headersAndCredentials } from "~/utils/network";
 
 import isElectron from "./isElectron";
-import { get, postWithToken } from "./network";
 
 const config = {
   domain: "yellow-boat-0900.auth0.com",
@@ -15,6 +15,25 @@ const config = {
 };
 
 const specialKey = `@@auth0spajs@@::${config.clientId}::${config.audience}::${config.scope}`;
+
+// Special URLs used for login
+const host = "https://editor.soulmatelights.com";
+const clientSideUrl = (path) => normalizeUrl(host + "/" + path);
+const url = (path) => normalizeUrl(host + "/" + path);
+
+const get = async (path, params) => {
+  return fetch(url(path) + "?" + new URLSearchParams(params), {
+    ...(await headersAndCredentials()),
+  }).then((d) => d.json());
+};
+
+const postWithToken = async (path, params) => {
+  return fetch(url(path), {
+    method: "post",
+    ...(await headersAndCredentials()),
+    body: JSON.stringify({ ...params }),
+  }).then((d) => d.json());
+};
 
 export var auth0Promise = () => {};
 if (window.crypto) {
