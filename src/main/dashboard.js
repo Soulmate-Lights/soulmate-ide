@@ -3,7 +3,7 @@ import { Helmet } from "react-helmet";
 import { AiFillApple, AiFillWindows } from "react-icons/ai";
 import { Link } from "react-router-dom";
 
-import Sketch from "~/components/Sketch";
+import Sketch from "~/components/sketch";
 import UserContainer from "~/containers/user";
 import useSWR from "~/hooks/useSwr";
 import isDev from "~/utils/isDev";
@@ -102,11 +102,13 @@ const Dashboard = () => {
                       key={sketch.id}
                       to={`/gallery/${sketch.id}`}
                     >
-                      <img
-                        className="absolute z-10 w-8 h-8 border rounded-full"
-                        src={sketch.user.image}
-                        style={{ left: -8, top: -8 }}
-                      />
+                      {sketch.user?.image && (
+                        <img
+                          className="absolute z-10 w-8 h-8 border rounded-full"
+                          src={sketch.user.image}
+                          style={{ left: -8, top: -8 }}
+                        />
+                      )}
                       <Sketch sketch={sketch} width={92} />
                     </Link>
                   ))}

@@ -1,6 +1,12 @@
 [submodule "services/build-server"]
 	path = services/build-server
 	url = git@github.com:Soulmate-Lights/soulmate-builder-server.git
+[submodule "services/soulmate-builder-server"]
+	path = services/soulmate-builder-server
+	url = git@github.com:Soulmate-Lights/soulmate-builder-server.git
+[submodule "services/soulmate-server"]
+	path = services/soulmate-server
+	url = git@github.com:Soulmate-Lights/soulmate-server.git
 [submodule "services/wokwi-server"]
 	path = services/wokwi-server
-	url = https://github.com/Soulmate-Lights/wokwi-server.git
+	url = git@github.com:Soulmate-Lights/wokwi-server.git
