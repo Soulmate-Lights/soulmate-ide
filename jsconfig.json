@@ -4,6 +4,7 @@
     "target": "es2016",
     "jsx": "preserve",
     "strictFunctionTypes": true,
+    "baseUrl": ".",
     "paths": {
       "~/*": ["./src/main/*"]
     }
