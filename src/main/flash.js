@@ -19,6 +19,7 @@ import { emptyCode } from "~/utils/code";
 import FlashButton from "./components/flashButton";
 const Console = React.lazy(() => import("./console"));
 
+import InstallPython, { needsPython } from "~/components/InstallPython";
 import useSWR from "~/hooks/useSwr";
 import { ALL_SKETCHES_PATH, SKETCHES_PATH } from "~/utils/network";
 
@@ -86,6 +87,8 @@ const Flash = () => {
       setSelected([...selected, sketch.id]);
     }
   };
+
+  if (needsPython()) return <InstallPython />;
 
   return (
     <div className="flex flex-row flex-grow">

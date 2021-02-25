@@ -225,7 +225,7 @@ export async function buildHex(code, config, url) {
 
 export async function getFullBuildAsBlob(source, firmwareUrl) {
   const body = JSON.stringify({ sketch: source });
-  console.log("[getFullBuild]", { body });
+  console.log("[getFullBuildAsBlob]", { body });
   const res = await window.fetch(firmwareUrl, {
     ...options,
     body,
@@ -266,7 +266,14 @@ export async function getFullBuild(source, firmwareUrl) {
   const finalLength =
     length || parseInt(res.headers.get("Content-Length" || "0"), 10);
   console.log("[getFullBuild]", { finalLength });
-  await streamWithProgress(finalLength, reader, writer, () => {});
+
+  try {
+    await streamWithProgress(finalLength, reader, writer, () => {});
+  } catch (e) {
+    console.log("[getFullBuild] Error: streamWithProgress failed", e);
+  }
+
+  console.log(`[getFullBuild] Written to ${filePath}`);
 
   return filePath;
 }

@@ -138,13 +138,6 @@ const SoulmatesContainer = () => {
     ipcRenderer?.send("scan", {});
   }, 5000);
 
-  const getBuild = async (sketches, config) => {
-    const preparedCode = prepareSketches(sketches, config);
-    let build = await getFullBuild(preparedCode);
-
-    return build;
-  };
-
   const flashSketches = async (sketches, config, firmwareUrl) => {
     setFlashing(true);
 
@@ -153,6 +146,7 @@ const SoulmatesContainer = () => {
       const preparedCode = prepareSketches(sketches, config);
       build = await getFullBuild(preparedCode, firmwareUrl);
     } catch (e) {
+      console.log("[flashSketches] Error getting full build", e);
       setError(e);
       setFlashing(false);
       throw e;
@@ -176,13 +170,16 @@ const SoulmatesContainer = () => {
       );
     } else {
       try {
+        console.log(`[flashSketches] Flashing to ${port}...`);
         await flashBuild(port, build, (progress) => {
           setUsbFlashingPercentage(progress);
           setFlashing(progress < 100);
         }).catch((e) => {
+          console.log(`[flashSketches] Error flashing to ${port}`, e);
           setError(e);
         });
       } catch (e) {
+        console.log(`[flashSketches] Wrapped error flashing ${port}`, e);
         setError(e);
         throw e;
       }
@@ -313,7 +310,6 @@ const SoulmatesContainer = () => {
     error,
     setError,
     setSavedConfig,
-    getBuild,
   };
 };
 
