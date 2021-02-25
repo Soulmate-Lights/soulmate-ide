@@ -43,11 +43,12 @@ export const installDependencies = () => {
     childProcess.execSync("/usr/bin/python ./get-pip.py", { cwd: dir });
     childProcess.execSync(`/usr/bin/python -m pip install "pyserial>=3.5"`);
   } else {
-    const which = remote && remote?.require("which");
-    const python = which.sync("python");
-    childProcess.execSync(`${python} ./get-pip.py`, { cwd: dir });
-    const pip = which.sync("pip");
-    childProcess.execSync(`${pip} install "pyserial>=3.5"`);
+    // `which` doesn't seem to work in Windows.
+    // const which = remote && remote?.require("which");
+    // const python = which.sync("python");
+    // childProcess.execSync(`${python} ./get-pip.py`, { cwd: dir });
+    // const pip = which.sync("pip");
+    childProcess.execSync(`pip install "pyserial>=3.5"`);
   }
 };
 
@@ -63,10 +64,10 @@ if (isElectron()) {
 /** Flash a build file to a USB output */
 export const flashBuild = async (port, file, progressCallback) => {
   let errorOutput = [];
-  const which = remote && remote?.require("which");
+  // const which = remote && remote?.require("which");
   let python = "/usr/bin/python";
   if (remote.require("os").platform() !== "darwin") {
-    python = which.sync("python");
+    python = "python";
   }
 
   console.log(`[utils.flashBuild] Python: ${python}`);

@@ -1,4 +1,5 @@
 import { SiPython } from "react-icons/si";
+import { VscDebugRestart } from "react-icons/vsc";
 
 import Header from "~/components/Header";
 
@@ -21,7 +22,15 @@ const InstallPython = () => (
           type="button"
         >
           <SiPython className="w-8 h-8 mr-4 " />
-          Install Python to flash Soulmates
+          1. Install Python to flash Soulmates
+        </button>
+        <button
+          className="flex-grow-0 text-white whitespace-pre bg-purple-800 rounded-l-none hover:bg-purple-500 footer-button"
+          onClick={() => window.location.reload()}
+          type="button"
+        >
+          <VscDebugRestart className="w-8 h-8 mr-4 " />
+          2. Then click here to reload Soulmate IDE!
         </button>
       </div>
     </div>
@@ -34,7 +43,7 @@ export const needsPython = () => {
   if (!isWindows()) return false;
 
   try {
-    remote.require("which").sync("python");
+    remote.require("child_process").execSync("python --version");
   } catch (e) {
     return true;
   }
