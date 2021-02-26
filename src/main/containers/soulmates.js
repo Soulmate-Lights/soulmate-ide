@@ -33,7 +33,7 @@ const readConfig = () => {
 export const defaultConfig = {
   rows: 20,
   cols: 20,
-  serpentine: true,
+  serpentine: false,
   button: 39,
   data: 32,
   clock: 26,
