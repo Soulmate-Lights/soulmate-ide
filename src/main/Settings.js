@@ -1,35 +1,5 @@
-// import useInterval from "@use-it/interval";
-// import { AiOutlineCheckCircle, AiOutlineCloseCircle } from "react-icons/ai";
-
 import Header from "./components/Header";
 import NetworkContainer from "./containers/network";
-
-// const UrlValidator = ({ url }) => {
-//   const [valid, setValid] = useState(undefined);
-
-//   const check = () => {
-//     console.log(url);
-//     // const origin = new URL(url).origin;
-//     fetch(url, { method: "POST", body: JSON.stringify({ sketch: "" }) })
-//       .then((r) => {
-//         console.log(url, r.status);
-//         setValid(r.status === 200);
-//       })
-//       .catch(() => setValid(false));
-//   };
-
-//   useEffect(check, [url]);
-//   useInterval(check, 5000);
-
-//   switch (valid) {
-//     case undefined:
-//       return "Loading...";
-//     case true:
-//       return <AiOutlineCheckCircle className="text-xl text-green-400" />;
-//     default:
-//       return <AiOutlineCloseCircle className="text-xl text-red-400" />;
-//   }
-// };
 
 const Options = ({ options, selectedOption, onChange }) => {
   const optionSelected = options

@@ -4,15 +4,21 @@ import { createContainer } from "unstated-next";
 import { auth0Promise } from "~/utils/auth";
 import { headersAndCredentials } from "~/utils/network";
 
-const initialSimulatorUrl =
+let initialSimulatorUrl =
   localStorage.simulatorUrl ||
   "https://editor.soulmatelights.com/sketches/build";
 
-const initialFirmwareUrl =
+let initialFirmwareUrl =
   localStorage.firmwareUrl || "https://firmware.soulmatelights.com:8083/build";
 
-const initialAppServerUrl =
+let initialAppServerUrl =
   localStorage.appServerUrl || "https://editor.soulmatelights.com/";
+
+if (process.env.LOCAL) {
+  initialSimulatorUrl = "http://localhost:3001";
+  initialFirmwareUrl = "http://localhost:8080/build";
+  initialAppServerUrl = "http://localhost:8081/build";
+}
 
 function Config() {
   // TODO: Rename to simualtorUrl, firmwareUrl, appServerUrl
