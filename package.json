@@ -92,7 +92,7 @@
     "concurrently": "^5.2.0",
     "cross-env": "^7.0.2",
     "electron": "^11.1.0",
-    "electron-builder": "22.10.5",
+    "electron-builder": "^22.10.5",
     "electron-builder-notarize": "^1.2.0",
     "electron-notarize": "^1.0.0",
     "electron-rebuild": "^2.3.4",
@@ -127,12 +127,13 @@
     "start-app-local": "concurrently \"cross-env local=true BROWSER=none yarn react-start\" \"wait-on http://localhost:3000 && electron . \" \"yarn build-worker-dev\"",
     "rebuild-electron": "yarn node-gyp clean && yarn electron-rebuild",
     "build": "yarn build-worker && parcel build index.html --out-dir build --public-url . --no-source-maps",
-    "build-publish": "./postinstall && yarn build && yarn electron-builder -p always",
+    "build-publish": "yarn install-app-deps && yarn build && yarn electron-builder -p always",
     "build-worker": "parcel build node_modules/monaco-editor/esm/vs/editor/editor.worker.js -d build --no-source-maps",
     "build-worker-dev": "parcel build node_modules/monaco-editor/esm/vs/editor/editor.worker.js --no-source-maps",
-    "postinstall": "./postinstall.sh",
+    "postinstall": "yarn run electron-builder install-app-deps",
     "release": "yarn clean && yarn version --patch && yarn build && yarn rebuild-electron && AWS_PROFILE=soulmate-ide-updates electron-builder -mw --publish always",
     "clean": "rm -rf ./build ./.cache ./dist",
+    "install-app-deps": "./postinstall.sh",
     "install-arm": "npm_config_arch=$(uname -m) yarn",
     "build-with-dependencies-from-source": "yarn run electron-builder --config.buildDependenciesFromSource=true -mwl",
     "web": "NODE_ENV=development parcel index.html --open -p 3000",
@@ -158,7 +159,9 @@
       "target": [
         {
           "target": "default",
-          "arch": "universal"
+          "arch": [
+            "universal"
+          ]
         }
       ],
       "publish": {
