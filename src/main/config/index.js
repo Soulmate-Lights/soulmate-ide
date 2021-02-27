@@ -311,7 +311,7 @@ const Config = () => {
         <div className="md:col-span-1"></div>
 
         <div className="flex justify-end mt-0 col-span-6 sm:col-span-3 space-x-2">
-          <span className="flex items-center justify-center flex-grow block pr-4 leading-2">
+          <span className="flex items-center justify-end flex-grow block pr-4 leading-2">
             {flashing && <>Your Soulmate is being configured. Hang tight!</>}
 
             {justFlashed && !dirty && (
