@@ -177,7 +177,7 @@ const Simulator = ({
             className="mr-auto"
             cols={cols}
             onChange={({ rows, cols }) => {
-              setSavedConfig({ rows, cols });
+              setSavedConfig({ ...config, rows, cols });
             }}
             rows={rows}
           />
