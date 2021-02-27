@@ -37,7 +37,12 @@ const Config = () => {
   // Config
 
   const [config, setConfig] = useState(
-    originalConfig || { button: 39, data: 32, clock: 26, milliamps: 1000 }
+    originalConfig || {
+      button: 39,
+      data: 32,
+      clock: 26,
+      milliamps: 1000,
+    }
   );
 
   const updateConfig = (newConfig) => {

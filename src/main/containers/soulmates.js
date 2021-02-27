@@ -38,6 +38,7 @@ export const defaultConfig = {
   data: 32,
   clock: 26,
   milliamps: 700,
+  ledType: "apa102",
 };
 
 // TODO:
