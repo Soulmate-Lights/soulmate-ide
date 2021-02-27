@@ -107,7 +107,6 @@ const Config = () => {
             </label>
             <select
               className="block w-full px-3 py-2 mt-1 bg-white border-gray-300 form-select rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5"
-              id="country"
               onChange={(e) => updateConfig({ ledType: e.target.value })}
               value={config.ledType}
             >
@@ -156,14 +155,10 @@ const Config = () => {
 
           <div>
             <div className="col-span-6 sm:col-span-3">
-              <label
-                className="block text-sm font-medium text-gray-700 leading-5"
-                htmlFor="first_name"
-              >
+              <label className="block text-sm font-medium text-gray-700 leading-5">
                 Power (milliamps)
                 <input
                   className="block w-full px-3 py-2 mt-1 border-gray-300 form-input rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5"
-                  id="first_name"
                   onChange={(e) =>
                     updateConfig({ milliamps: parseInt(e.target.value) || 0 })
                   }
@@ -176,41 +171,29 @@ const Config = () => {
           </div>
 
           <div className="flex flex-row space-x-8">
-            <label
-              className="flex flex-row items-center block text-sm font-medium text-gray-700 leading-5"
-              htmlFor="first_name"
-            >
+            <label className="flex flex-row items-center block text-sm font-medium text-gray-700 leading-5">
               <input
                 checked={config.serpentine}
                 className="mr-2"
-                id="serpentine"
                 onChange={(e) => updateConfig({ serpentine: e.target.checked })}
                 type="checkbox"
               />
               Serpentine layout
             </label>
-            <label
-              className="flex flex-row items-center block text-sm font-medium text-gray-700 leading-5"
-              htmlFor="first_name"
-            >
+            <label className="flex flex-row items-center block text-sm font-medium text-gray-700 leading-5">
               <input
                 checked={config.mirror}
                 className="mr-2"
-                id="mirror"
                 onChange={(e) => updateConfig({ mirror: e.target.checked })}
                 type="checkbox"
               />
               Mirror Horizontal
             </label>
 
-            <label
-              className="flex flex-row items-center block text-sm font-medium text-gray-700 leading-5"
-              htmlFor="first_name"
-            >
+            <label className="flex flex-row items-center block text-sm font-medium text-gray-700 leading-5">
               <input
                 checked={config.reverse}
                 className="mr-2"
-                id="reverse"
                 onChange={(e) => updateConfig({ reverse: e.target.checked })}
                 type="checkbox"
               />
