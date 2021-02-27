@@ -110,7 +110,7 @@ const Config = () => {
                       className="h-auto p-2 mr-2 button"
                       key={t.label}
                       onClick={() => {
-                        setConfig({ ...config, ...t.config });
+                        flashSketches([sketch], t.config, firmware);
                       }}
                     >
                       {t.label}
