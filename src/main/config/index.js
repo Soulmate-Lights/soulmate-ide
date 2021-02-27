@@ -56,14 +56,14 @@ const Config = () => {
 
   if (needsPython()) return <InstallPython />;
 
-  if (!selectedSoulmate) {
-    return (
-      <div className="flex flex-col items-center p-8 mx-auto my-auto text-center bg-white rounded-lg shadow w-72">
-        <RiUsbLine className="w-24 h-24 mb-4 opacity-80" />
-        <span>Connect your Soulmate with a USB cable to configure.</span>
-      </div>
-    );
-  }
+  // if (!selectedSoulmate) {
+  //   return (
+  //     <div className="flex flex-col items-center p-8 mx-auto my-auto text-center bg-white rounded-lg shadow w-72">
+  //       <RiUsbLine className="w-24 h-24 mb-4 opacity-80" />
+  //       <span>Connect your Soulmate with a USB cable to configure.</span>
+  //     </div>
+  //   );
+  // }
 
   return (
     <div className="flex flex-col flex-shrink min-h-0 p-8 overflow-auto space-y-10">
@@ -311,7 +311,7 @@ const Config = () => {
         <div className="md:col-span-1"></div>
 
         <div className="flex justify-end mt-0 col-span-6 sm:col-span-3 space-x-2">
-          <span className="flex flex-grow block pr-4 leading-2">
+          <span className="flex items-center justify-center flex-grow block pr-4 leading-2">
             {flashing && <>Your Soulmate is being configured. Hang tight!</>}
 
             {justFlashed && !dirty && (
