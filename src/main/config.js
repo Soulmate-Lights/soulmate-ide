@@ -4,6 +4,7 @@ import { RiUsbLine } from "react-icons/ri";
 import { Link } from "react-router-dom";
 
 import InstallPython, { needsPython } from "~/components/InstallPython";
+import NetworkContainer from "~/containers/network";
 import SoulmatesContainer from "~/containers/soulmates";
 import UserContainer from "~/containers/user";
 import Logo from "~/images/logo.svg";
@@ -47,6 +48,7 @@ const Config = () => {
     selectedSoulmate,
     usbFlashingPercentage,
   } = SoulmatesContainer.useContainer();
+  const { firmware } = NetworkContainer.useContainer();
 
   const [justFlashed, setJustFlashed] = useState(false);
 
@@ -108,7 +110,7 @@ const Config = () => {
                       className="h-auto p-2 mr-2 button"
                       key={t.label}
                       onClick={() => {
-                        flashSketches([sketch], t.config);
+                        flashSketches([sketch], t.config, firmware);
                       }}
                     >
                       {t.label}
