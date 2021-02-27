@@ -110,7 +110,7 @@ const Config = () => {
                       className="h-auto p-2 mr-2 button"
                       key={t.label}
                       onClick={() => {
-                        flashSketches([sketch], t.config, firmware);
+                        setConfig({ ...config, ...t.config });
                       }}
                     >
                       {t.label}
@@ -456,7 +456,7 @@ const Config = () => {
                         <button
                           className="flex-shrink-0 footer-button"
                           onClick={() => {
-                            flashSketches([sketch], config);
+                            flashSketches([sketch], config, firmware);
                           }}
                         >
                           {flashing ? (
