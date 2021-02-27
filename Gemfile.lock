@@ -4,6 +4,7 @@ GEM
     foreman (0.87.2)
 
 PLATFORMS
+  ruby
   x86_64-darwin-20
 
 DEPENDENCIES
