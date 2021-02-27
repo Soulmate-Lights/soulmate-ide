@@ -140,7 +140,6 @@
     "bump": "yarn version --patch && git push && git push --tags"
   },
   "build": {
-    "afterSign": "electron-builder-notarize",
     "afterPack": "./afterpack",
     "win": {
       "publish": {
@@ -159,9 +158,7 @@
       "target": [
         {
           "target": "default",
-          "arch": [
-            "universal"
-          ]
+          "arch": "universal"
         }
       ],
       "publish": {

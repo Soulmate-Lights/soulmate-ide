@@ -6,9 +6,10 @@ if (!window.remote) {
 const path = remote?.require("path");
 const IS_PROD = process.env.NODE_ENV === "production";
 const getAppPath = remote?.app.getAppPath;
-const isPackaged =
-  remote?.process.mainModule.filename.indexOf("app.asar") !== -1;
-const rootPath = remote?.require("electron-root-path").rootPath;
+const isPackaged = remote?.process.mainModule.filename.indexOf(".asar") !== -1;
+const rootPath = remote?.require(
+  `../app-${electron.remote.process.arch}.asar/node_modules/electron-root-path`
+).rootPath;
 const childProcess = remote?.require("child_process");
 const dir =
   IS_PROD && isPackaged
