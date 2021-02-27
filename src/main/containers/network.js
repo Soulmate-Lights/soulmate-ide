@@ -15,6 +15,7 @@ const initialAppServerUrl =
   localStorage.appServerUrl || "https://editor.soulmatelights.com/";
 
 function Config() {
+  // TODO: Rename to simualtorUrl, firmwareUrl, appServerUrl
   const [simulator, setSimulator] = useState(initialSimulatorUrl);
   const [firmware, setFirmware] = useState(initialFirmwareUrl);
   const [appServer, setAppServer] = useState(initialAppServerUrl);
