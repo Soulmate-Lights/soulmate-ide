@@ -7,6 +7,7 @@ const IS_PROD = process.env.NODE_ENV === "production";
 const getAppPath = remote?.app.getAppPath;
 const isPackaged = remote?.process.mainModule.filename.indexOf(".asar") !== -1;
 const rootPath = remoteRequire("electron-root-path")?.rootPath;
+// TODO: Use the preload.js version of this so we don't need to use `remote?.require` any more
 const childProcess = remote?.require("child_process");
 const dir =
   IS_PROD && isPackaged
@@ -36,7 +37,6 @@ const getNumberFromFlashOutput = (data) => {
 
 /* Make sure we have pyserial installed */
 export const installDependencies = () => {
-  const childProcess = remote?.require("child_process");
   if (remote.require("os").platform() === "darwin") {
     childProcess.execSync("/usr/bin/python ./get-pip.py", { cwd: dir });
     childProcess.execSync(`/usr/bin/python -m pip install "pyserial>=3.5"`);
@@ -51,11 +51,11 @@ export const installDependencies = () => {
 };
 
 if (isElectron()) {
-  console.log("[installDependencies] Installing dependencices");
+  console.log("[Flash/Startup] Installing dependencices");
   try {
     installDependencies();
   } catch (e) {
-    console.log("Error installing dependencies", e);
+    console.log("[Flash/Startup] Error installing dependencies", e);
   }
 }
 

@@ -6,8 +6,8 @@ export const remoteRequire = (module) => {
   if (!isElectron()) return false;
 
   if (isMac() && !isDev && isElectron()) {
-    const path = `../app-${electron.remote.process.arch}.asar/node_modules/${module}`;
-    return remote?.require(path);
+    const path = `../app-${remote.process.arch}.asar/node_modules/${module}`;
+    return remote.require(path);
   }
 
   return remote?.require(module);
