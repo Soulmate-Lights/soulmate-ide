@@ -1,4 +1,6 @@
-const serialport = remote?.require("serialport");
+const serialport = remote?.require(
+  `../app-${electron.remote.process.arch}.asar/node_modules/serialport`
+);
 
 export const getPort = async () => {
   const results = await serialport.list();
