@@ -10,3 +10,5 @@ const electron = require("electron");
 window.electron = electron;
 
 window.isDev = require("electron-is-dev");
+
+window.childProcess = remote.require("child_process");

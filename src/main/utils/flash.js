@@ -7,7 +7,7 @@ const IS_PROD = process.env.NODE_ENV === "production";
 const getAppPath = remote?.app.getAppPath;
 const isPackaged = remote?.process.mainModule.filename.indexOf(".asar") !== -1;
 const rootPath = remoteRequire("electron-root-path")?.rootPath;
-const childProcess = remoteRequire("child_process");
+const childProcess = remote?.require("child_process");
 const dir =
   IS_PROD && isPackaged
     ? path?.join(path.dirname(getAppPath()), "..", "./builder")
@@ -36,7 +36,7 @@ const getNumberFromFlashOutput = (data) => {
 
 /* Make sure we have pyserial installed */
 export const installDependencies = () => {
-  const childProcess = remote.require("child_process");
+  const childProcess = remote?.require("child_process");
   if (remote.require("os").platform() === "darwin") {
     childProcess.execSync("/usr/bin/python ./get-pip.py", { cwd: dir });
     childProcess.execSync(`/usr/bin/python -m pip install "pyserial>=3.5"`);
