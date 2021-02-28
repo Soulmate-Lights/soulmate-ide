@@ -4908,7 +4908,7 @@ electron-updater@^4.3.8:
     lodash.isequal "^4.5.0"
     semver "^7.3.4"
 
-electron@^11.1.0:
+electron@^11.3.0:
   version "11.3.0"
   resolved "https://registry.yarnpkg.com/electron/-/electron-11.3.0.tgz#87e8528fd23ae53b0eeb3a738f1fe0a3ad27c2db"
   integrity sha512-MhdS0gok3wZBTscLBbYrOhLaQybCSAfkupazbK1dMP5c+84eVMxJE/QGohiWQkzs0tVFIJsAHyN19YKPbelNrQ==
