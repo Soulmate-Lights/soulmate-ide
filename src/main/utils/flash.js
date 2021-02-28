@@ -1,16 +1,13 @@
-import isElectron from "~/utils/isElectron";
-if (!window.remote) {
-  window.remote = undefined;
-}
+window.remote ||= undefined;
 
+import isElectron from "~/utils/isElectron";
+import { remoteRequire } from "~/utils/remoteRequire";
 const path = remote?.require("path");
 const IS_PROD = process.env.NODE_ENV === "production";
 const getAppPath = remote?.app.getAppPath;
 const isPackaged = remote?.process.mainModule.filename.indexOf(".asar") !== -1;
-const rootPath = remote?.require(
-  `../app-${electron.remote.process.arch}.asar/node_modules/electron-root-path`
-).rootPath;
-const childProcess = remote?.require("child_process");
+const rootPath = remoteRequire("electron-root-path")?.rootPath;
+const childProcess = remoteRequire("child_process");
 const dir =
   IS_PROD && isPackaged
     ? path?.join(path.dirname(getAppPath()), "..", "./builder")

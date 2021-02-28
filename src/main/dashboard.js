@@ -8,17 +8,10 @@ import UserContainer from "~/containers/user";
 import useSWR from "~/hooks/useSwr";
 import isDev from "~/utils/isDev";
 import isElectron from "~/utils/isElectron";
+import { isMac, isWindows } from "~/utils/isMac";
 import { ALL_SKETCHES_PATH } from "~/utils/network";
 
 import packagedotjson from "../../package.json";
-
-function isMacintosh() {
-  return navigator.platform.indexOf("Mac") > -1;
-}
-
-function isWindows() {
-  return navigator.platform.indexOf("Win") > -1;
-}
 
 const Dashboard = () => {
   const { userDetails, login } = UserContainer.useContainer();
@@ -124,12 +117,12 @@ const Dashboard = () => {
                     <a
                       className="inline-flex items-center px-4 py-2 text-base font-medium text-purple-600 bg-white border border-transparent leading-6 rounded-md hover:text-purple-500 focus:outline-none focus:border-purple-300 focus:shadow-outline-gray active:bg-purple-50 active:text-purple-700 transition duration-150 ease-in-out"
                       href={
-                        isMacintosh()
+                        isMac()
                           ? "https://editor.soulmatelights.com/download/mac"
                           : "https://editor.soulmatelights.com/download/windows"
                       }
                     >
-                      {isMacintosh() ? (
+                      {isMac() ? (
                         <AiFillApple className="mr-2" />
                       ) : (
                         <AiFillWindows className="mr-2" />
@@ -139,24 +132,15 @@ const Dashboard = () => {
                   </div>
                 </div>
               )}
-              {isMacintosh() && (
+              {isMac() && (
                 <div className="flex flex-col mt-4 space-y-4 md:space-y-0 md:flex-row sm:justify-center md:space-x-4">
                   <div className="shadow rounded-md">
                     <a
                       className="inline-flex items-center justify-center w-full px-4 py-2 text-base font-medium text-purple-600 bg-white border border-transparent leading-6 rounded-md hover:text-purple-500 focus:outline-none focus:border-purple-300 focus:shadow-outline-gray active:bg-purple-50 active:text-purple-700 transition duration-150 ease-in-out"
-                      href="https://editor.soulmatelights.com/download/mac"
+                      href="https://editor.soulmatelights.com/download/mac-universal"
                     >
                       <AiFillApple className="mr-2" />
-                      Download the app (Intel)
-                    </a>
-                  </div>
-                  <div className="shadow rounded-md">
-                    <a
-                      className="inline-flex items-center justify-center w-full px-4 py-2 text-base font-medium text-purple-600 bg-white border border-transparent leading-6 rounded-md hover:text-purple-500 focus:outline-none focus:border-purple-300 focus:shadow-outline-gray active:bg-purple-50 active:text-purple-700 transition duration-150 ease-in-out"
-                      href="https://editor.soulmatelights.com/download/mac-arm64"
-                    >
-                      <AiFillApple className="mr-2" />
-                      Download the app (Apple Silicon)
+                      Download the app
                     </a>
                   </div>
                 </div>

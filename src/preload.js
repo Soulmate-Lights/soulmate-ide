@@ -8,3 +8,5 @@ window.fs = electronFs;
 
 const electron = require("electron");
 window.electron = electron;
+
+window.isDev = require("electron-is-dev");
