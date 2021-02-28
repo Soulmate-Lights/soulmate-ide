@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# rm -rf node_modules/monaco-editor/dev node_modules/monaco-editor/min-maps
+rm -rf node_modules/monaco-editor/dev node_modules/monaco-editor/min-maps
 
 case $(arch) in
   arm64)
