@@ -1,4 +1,4 @@
-window.remote ||= undefined;
+if (!window.remote) window.remote = undefined;
 
 import isElectron from "~/utils/isElectron";
 import { remoteRequire } from "~/utils/remoteRequire";
