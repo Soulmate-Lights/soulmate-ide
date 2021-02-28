@@ -141,6 +141,7 @@
   },
   "build": {
     "afterPack": "./afterpack",
+    "beforeBuild": "./beforeBuild"
     "win": {
       "publish": {
         "provider": "s3",
