@@ -49,11 +49,6 @@ int16_t gridIndexHorizontal(int16_t x, int16_t y) {
     xIndex = LED_COLS - 1 - xIndex;
   }
 
-  // // Mirrored left-to-right
-  // if (SOULMATE_MIRROR) {
-  //   xIndex = LED_COLS - 1 - xIndex;
-  // }
-
   int16_t index = y * LED_COLS + xIndex;
 
   if (index > -1 && index < N_LEDS) {
