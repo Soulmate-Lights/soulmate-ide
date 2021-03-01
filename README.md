@@ -9,7 +9,7 @@
 
 `$ foreman start`
 
-This command runs four processes:
+This command runs four processes (Procfile)
 
 ```
 ide: yarn; LOCAL=true yarn start
@@ -18,10 +18,10 @@ firmware: cd services/soulmate-builder-server && yarn --quiet && PORT=8081 yarn 
 emulator: cd services/wokwi-server && yarn --quiet && PORT=8080 yarn start
 ```
 
-IDE: The local IDE electron app
-server: The Rails app that stores patterns
-firmware: Firmware builder server 
-emulator: Wokwi-based arduino emulator hex builder
+- IDE: The local IDE electron app
+- server: The Rails app that stores patterns
+- firmware: Firmware builder server 
+- emulator: Wokwi-based arduino emulator hex builder
 
 This is the best way to run the whole ecosystem at once. You won't get any previews or thumbnails of your local patterns, but that's on the list of things to do. Changes you make to the firmware (soulmate-builder-server/soulmate-core) will be used the next time you flash.
 
