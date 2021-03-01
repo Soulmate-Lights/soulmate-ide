@@ -5,8 +5,7 @@ import { auth0Promise } from "~/utils/auth";
 import { headersAndCredentials } from "~/utils/network";
 
 let initialSimulatorUrl =
-  localStorage.simulatorUrl ||
-  "https://editor.soulmatelights.com/sketches/build";
+  localStorage.simulatorUrl || "https://firmware.soulmatelights.com:8082/build";
 
 let initialFirmwareUrl =
   localStorage.firmwareUrl || "https://firmware.soulmatelights.com:8083/build";
@@ -15,9 +14,9 @@ let initialAppServerUrl =
   localStorage.appServerUrl || "https://editor.soulmatelights.com/";
 
 if (process.env.LOCAL) {
-  initialSimulatorUrl = "http://localhost:3001";
+  initialSimulatorUrl = "http://localhost:8081";
   initialFirmwareUrl = "http://localhost:8080/build";
-  initialAppServerUrl = "http://localhost:8081/build";
+  initialAppServerUrl = "http://localhost:3001/build";
 }
 
 function Config() {

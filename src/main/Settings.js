@@ -118,12 +118,12 @@ const Settings = () => {
               onChange={setSimulator}
               options={[
                 {
-                  option: "https://editor.soulmatelights.com/sketches/build",
-                  name: "Production (cached)",
+                  option: "https://firmware.soulmatelights.com:8082/build",
+                  name: "Production",
                 },
                 {
-                  option: "https://firmware.soulmatelights.com:8082/build",
-                  name: "Server",
+                  option: "https://editor.soulmatelights.com/sketches/build",
+                  name: "Heroku",
                 },
                 { option: "http://localhost:8080/build", name: "Local" },
               ]}
