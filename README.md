@@ -23,6 +23,10 @@ emulator: cd services/wokwi-server && yarn --quiet && PORT=8080 yarn start
 - firmware: Firmware builder server 
 - emulator: Wokwi-based arduino emulator hex builder
 
+If something goes wrong and Foreman crashes, use this command to show all running processes:
+
+`lsof -nP -iTCP:3000 -iTCP:3001 -iTCP:8080 -iTCP:8081 |grep -v homed`
+
 This is the best way to run the whole ecosystem at once. You won't get any previews or thumbnails of your local patterns, but that's on the list of things to do. Changes you make to the firmware (soulmate-builder-server/soulmate-core) will be used the next time you flash.
 
 Recursively commit and push everything by running
