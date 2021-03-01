@@ -35,6 +35,8 @@ function createWindow() {
     ""
   );
 
+  app.allowRendererProcessReuse = false;
+
   mainWindow = new BrowserWindow({
     width: 1400,
     height: 800,
@@ -45,7 +47,7 @@ function createWindow() {
       enableRemoteModule: true,
       // nodeIntegrationInWorker: true,
       // Removed these June 11th for security
-      nodeIntegration: false,
+      nodeIntegration: true,
       // webSecurity: false,
       preload: __dirname + "/preload.js",
     },

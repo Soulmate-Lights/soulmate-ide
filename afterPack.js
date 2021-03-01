@@ -6,6 +6,7 @@ exports.default = function (_context) {
   console.log("Starting afterPack steps =====");
   execSync("yarn node-gyp clean");
   execSync("yarn electron-rebuild .");
+  // execSync("yarn electron-rebuild -f -w serialport");
   execSync("yarn build");
   console.log("Finished afterPack steps =====");
 };

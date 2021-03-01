@@ -9,6 +9,7 @@
   "license": "MIT",
   "dependencies": {
     "@sentry/electron": "^2.0.1",
+    "@serialport/bindings": "9.0.2",
     "bonjour": "^3.5.0",
     "electron-auth0-login": "^1.3.1",
     "electron-context-menu": "^2.0.1",
@@ -143,6 +144,7 @@
   },
   "build": {
     "buildDependenciesFromSource": true,
+    "npmRebuild": true,
     "afterPack": "./afterpack",
     "win": {
       "publish": {
@@ -195,5 +197,9 @@
   },
   "engines": {
     "node": ">=10.6.0"
+  },
+  "resolutions": {
+    "@serialport/bindings": "9.0.2",
+    "@serialport/stream": "9.0.2"
   }
 }

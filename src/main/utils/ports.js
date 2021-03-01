@@ -1,7 +1,7 @@
 // import { remoteRequire } from "./remoteRequire";
 
 export const getPort = async () => {
-  const serialport = remote.require("serialport");
+  const serialport = window.require("serialport");
   const results = await serialport.list();
 
   const port = results.find((result) => {
@@ -17,7 +17,7 @@ export const getPort = async () => {
 };
 
 export const getPorts = async () => {
-  const serialport = remote.require("serialport");
+  const serialport = window.require("serialport");
   const results = await serialport.list();
 
   const ports = results.filter((result) => {
@@ -33,11 +33,11 @@ export const getPorts = async () => {
 
 export class PortListener {
   constructor(path, callback) {
-    const serialport = remote.require("serialport");
     this.path = path;
     this.callback = callback;
     if (path) {
       console.log("Listening to", path);
+      const serialport = window.require("serialport");
       const port = new serialport(path, { baudRate: 115200 });
       this.port = port;
       const parser = port.pipe(new serialport.parsers.Readline());
