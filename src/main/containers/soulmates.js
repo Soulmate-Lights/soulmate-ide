@@ -48,7 +48,7 @@ export const defaultConfig = {
 
 const SoulmatesContainer = () => {
   const notificationsContainer = NotificationsContainer.useContainer();
-  const { simulator, firmware, appServer } = NetworkContainer.useContainer();
+  const { firmware } = NetworkContainer.useContainer();
   const [soulmateLoading, setSoulmateLoading] = useState(false);
 
   const [ports, setPorts] = useState([]);
