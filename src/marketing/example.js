@@ -22,9 +22,8 @@ const Example = ({ code, className }) => {
         autoFormat={false}
         className="relative flex-grow flex-shrink w-7/12 min-w-0 bg-white"
         code={code}
-        onSave={(code) => {
-          setEditorCode(code);
-        }}
+        onHesitation={setEditorCode}
+        onSave={setEditorCode}
       />
 
       <Simulator

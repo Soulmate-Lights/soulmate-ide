@@ -290,6 +290,7 @@ const Editor = ({ id }) => {
                 code={code}
                 key={sketch.id}
                 onChange={(code) => persistCode(sketch.id, code)}
+                onHesitation={setDirtyCode}
                 onSave={(code) => save(sketch.id, code)}
               />
             ) : (
