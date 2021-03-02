@@ -1,5 +1,6 @@
 import "regenerator-runtime/runtime";
 import "../tailwind.config";
+import "./monaco-language";
 
 import { RewriteFrames } from "@sentry/integrations";
 import * as SentryReact from "@sentry/react";
