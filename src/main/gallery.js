@@ -82,7 +82,7 @@ const Gallery = () => {
                     <div className="flex-1 min-w-0 px-4 md:grid md:grid-cols-3 md:gap-4">
                       <div className="flex flex-col justify-center max-w-10">
                         <div className="text-sm font-medium text-gray-800 truncate leading-5 dark-mode:text-white">
-                          {user.name || "Unknown user"}
+                          {user.name || "Loading..."}
                         </div>
                         <div className="flex items-center mt-2 text-sm text-gray-500 leading-5">
                           <span className="truncate">
