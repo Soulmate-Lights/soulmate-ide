@@ -10,7 +10,7 @@ function isWindows() {
   return navigator.platform.indexOf("Win") > -1;
 }
 
-const LINE_OFFSET = 64;
+const LINE_OFFSET = 61;
 
 const jsBeautifierConfig = {
   indent_size: 2,
