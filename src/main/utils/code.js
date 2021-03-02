@@ -187,7 +187,7 @@ export const emptyCode = `void draw() {
   // leds: the LED array to print to
   //
   // You can also use:
-  // uint16_t gridIndexHorizontal(x, y) - the index of a given x/y coordinate
+  // uint16_t XY(x, y) - the index of a given x/y coordinate
   // uint8_t beatsin8(bpm, minimum, maximum, offset) - an 8-bit sine wave
   //
   // For more information, visit https://github.com/FastLED/FastLED/wiki/Overview
