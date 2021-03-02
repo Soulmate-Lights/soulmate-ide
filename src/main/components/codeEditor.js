@@ -26,7 +26,7 @@ const formatCode = (code) => {
 
 const editorConfig = {
   links: false,
-  language: "cpp",
+  language: "soulmate",
   scrollBeyondLastLine: false,
   tabSize: 2,
   lineNumbers: true,
