@@ -167,6 +167,12 @@ export const methods = [
   "fill_solid",
   "fill_rainbow",
 
+  // new blur functions
+  "blur1d",
+  "blur2d",
+  "blurRows",
+  "blurColumns",
+
   // Colors
   "CRGB::AliceBlue",
   "CRGB::Amethyst",
