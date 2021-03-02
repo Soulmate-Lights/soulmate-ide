@@ -4,7 +4,7 @@ import "../tailwind.config";
 import { RewriteFrames } from "@sentry/integrations";
 import * as SentryReact from "@sentry/react";
 import { Integrations } from "@sentry/tracing";
-import * as monaco from "monaco-editor/esm/vs/editor/editor.main.js";
+import * as monaco from "monaco-editor";
 import React from "react";
 import ReactDOM from "react-dom";
 
