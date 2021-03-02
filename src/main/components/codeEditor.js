@@ -2,7 +2,7 @@ import parser from "@wokwi/gcc-output-parser";
 import classnames from "classnames";
 import jsBeautifier from "js-beautify";
 import debounce from "lodash/debounce";
-import startCase from "lodash/startCase";
+// import startCase from "lodash/startCase";
 import Monaco from "react-monaco-editor";
 import { Mode, useLightSwitch } from "use-light-switch";
 
@@ -54,7 +54,7 @@ const CodeEditor = ({
   const [dirty, setDirty] = useState(false);
 
   const debouncedOnChange = onHesitation
-    ? debounce(onHesitation, 2000)
+    ? debounce(onHesitation, 1500)
     : undefined;
 
   const mode = useLightSwitch();
