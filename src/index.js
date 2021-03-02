@@ -1,11 +1,10 @@
 import "regenerator-runtime/runtime";
 import "../tailwind.config";
-import "./monaco-language";
+import "./monaco";
 
 import { RewriteFrames } from "@sentry/integrations";
 import * as SentryReact from "@sentry/react";
 import { Integrations } from "@sentry/tracing";
-import * as monaco from "monaco-editor";
 import React from "react";
 import ReactDOM from "react-dom";
 
@@ -32,17 +31,6 @@ self.MonacoEnvironment = {
     );
   },
 };
-
-import { language } from "./monaco-cpp-arduino";
-export const languageID = "soulmate";
-
-const languageExtensionPoint = { id: languageID };
-monaco.languages.register(languageExtensionPoint);
-monaco.languages.onLanguage(languageID, () => {
-  monaco.languages.setMonarchTokensProvider(languageID, language);
-});
-
-monaco.editor.createWebWorker({});
 
 ReactDOM.render(<Main />, document.getElementById("root"));
 
