@@ -147,7 +147,7 @@ export const methods = [
   "UpscalePalette",
   "blend",
   "fadeLightBy",
-  "fadeToBlackBy",
+  // "fadeToBlackBy",
   "fade_raw",
   "fade_video",
   "fill_gradient",
