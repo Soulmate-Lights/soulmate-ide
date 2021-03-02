@@ -5,6 +5,7 @@ import uniqBy from "lodash/uniqBy";
 import { useState } from "react";
 import { createContainer } from "unstated-next";
 
+import NetworkContainer from "~/containers/network";
 import NotificationsContainer from "~/containers/notifications";
 import { getFullBuild, prepareSketches } from "~/utils/code";
 import { flashBuild } from "~/utils/flash";
@@ -47,6 +48,7 @@ export const defaultConfig = {
 
 const SoulmatesContainer = () => {
   const notificationsContainer = NotificationsContainer.useContainer();
+  const { simulator, firmware, appServer } = NetworkContainer.useContainer();
   const [soulmateLoading, setSoulmateLoading] = useState(false);
 
   const [ports, setPorts] = useState([]);
@@ -139,13 +141,13 @@ const SoulmatesContainer = () => {
     ipcRenderer?.send("scan", {});
   }, 5000);
 
-  const flashSketches = async (sketches, config, firmwareUrl) => {
+  const flashSketches = async (sketches, config) => {
     setFlashing(true);
 
     let build;
     try {
       const preparedCode = prepareSketches(sketches, config);
-      build = await getFullBuild(preparedCode, firmwareUrl);
+      build = await getFullBuild(preparedCode, firmware);
     } catch (e) {
       console.log("[flashSketches] Error getting full build", e);
       setError(e);
