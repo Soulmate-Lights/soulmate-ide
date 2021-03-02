@@ -40,15 +40,17 @@ const getNumberFromFlashOutput = (data) => {
 export const installDependencies = () => {
   const childProcess = remote.require("child_process");
   if (remote.require("os").platform() === "darwin") {
-    childProcess.execSync("/usr/bin/python ./get-pip.py", { cwd: dir });
-    childProcess.execSync(`/usr/bin/python -m pip install "pyserial>=3.5"`);
+    childProcess.exec(
+      `/usr/bin/python ./get-pip.py && /usr/bin/python -m pip install "pyserial>=3.5`,
+      { cwd: dir }
+    );
   } else {
     // `which` doesn't seem to work in Windows.
     // const which = remote && remote?.require("which");
     // const python = which.sync("python");
     // childProcess.execSync(`${python} ./get-pip.py`, { cwd: dir });
     // const pip = which.sync("pip");
-    childProcess.execSync(`pip install "pyserial>=3.5"`);
+    childProcess.exec(`pip install "pyserial>=3.5"`);
   }
 };
 
