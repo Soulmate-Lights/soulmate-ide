@@ -146,8 +146,8 @@ export const methods = [
   "HeatColor",
   "UpscalePalette",
   "blend",
-  // "fadeLightBy",
-  // "fadeToBlackBy",
+  "fadeLightBy",
+  "fadeToBlackBy",
   "fade_raw",
   "fade_video",
   "fill_gradient",
@@ -168,10 +168,10 @@ export const methods = [
   "fill_rainbow",
 
   // new blur functions
-  // "blur1d",
-  // "blur2d",
-  // "blurRows",
-  // "blurColumns",
+  "blur1d",
+  "blur2d",
+  "blurRows",
+  "blurColumns",
 
   // Colors
   "CRGB::AliceBlue",
@@ -424,7 +424,8 @@ export const constants = [
 import * as monaco from "monaco-editor";
 function createDependencyProposals(range) {
   // Some of these come from https://github.com/FastLED/FastLED/blob/d5ddf40d3f3731adb36c122abba29cbf80654be3/src/colorutils.h
-  const insertTextRules = monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet;
+  const insertTextRules =
+    monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet;
   const kind = monaco.languages.CompletionItemKind.Function;
   return [
     {
@@ -450,7 +451,8 @@ function createDependencyProposals(range) {
     },
     {
       label: "fadeToBlackBy(CRGB* leds, int NUM_LEDS, int fade);",
-      description: "reduce the brightness of an array of pixels all at once.  These functions will eventually fade all the way to black.",
+      description:
+        "reduce the brightness of an array of pixels all at once.  These functions will eventually fade all the way to black.",
       kind,
       insertText: "fadeToBlackBy(${1:leds}, ${2:NUM_LEDS}, ${3:64});",
       insertTextRules,
@@ -458,7 +460,8 @@ function createDependencyProposals(range) {
     },
     {
       label: "fadeLightBy(CRGB* leds, int NUM_LEDS, int fade);",
-      description: "Reduce the brightness of an array of pixels all at once.  Guaranteed to never fade all the way to black.",
+      description:
+        "Reduce the brightness of an array of pixels all at once.  Guaranteed to never fade all the way to black.",
       kind,
       insertText: "fadeToBlackBy(${1:leds}, ${2:NUM_LEDS}, ${3:64});",
       insertTextRules,
@@ -551,14 +554,16 @@ function createDependencyProposals(range) {
       range,
     },
     {
-      label: "blur2d(CRGB* leds, uint8_t width, uint8_t height, fract8 blur_amount);",
+      label:
+        "blur2d(CRGB* leds, uint8_t width, uint8_t height, fract8 blur_amount);",
       kind: monaco.languages.CompletionItemKind.Function,
       insertText: "blur2d(leds, ${1:LED_COLS}, ${2:LED_ROWS}, ${3:64});",
       insertTextRules,
       range,
     },
     {
-      label: "blurRows(CRGB* leds, uint8_t width, uint8_t height, fract8 blur_amount);",
+      label:
+        "blurRows(CRGB* leds, uint8_t width, uint8_t height, fract8 blur_amount);",
       description: "perform a blur1d on every row of a rectangular matrix",
       kind: monaco.languages.CompletionItemKind.Function,
       insertText: "blurRows(leds, ${1:LED_COLS}, ${2:LED_ROWS}, ${3:64});",
@@ -566,7 +571,8 @@ function createDependencyProposals(range) {
       range,
     },
     {
-      label: "blurColumns(CRGB* leds, uint8_t width, uint8_t height, fract8 blur_amount);",
+      label:
+        "blurColumns(CRGB* leds, uint8_t width, uint8_t height, fract8 blur_amount);",
       description: "perform a blur1d on each column of a rectangular matrix",
       kind: monaco.languages.CompletionItemKind.Function,
       insertText: "blurColumns(leds, ${1:LED_COLS}, ${2:LED_ROWS}, ${3:64});",
