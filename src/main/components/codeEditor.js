@@ -84,6 +84,28 @@ const CodeEditor = ({
     debouncedResize();
   }, [build?.stderr]);
 
+  useEffect(() => {
+    const monacoEditor = monacoInstance.current?.editor;
+    const model = monacoEditor.getModel();
+    let errors = [];
+
+    if (build?.stderr) {
+      errors = parser
+        .parseString(build.stderr)
+        .map(({ line, text, column, tokenLength }) => ({
+          startLineNumber: line - LINE_OFFSET,
+          startColumn: column,
+          endLineNumber: line - LINE_OFFSET,
+          endColumn: column + tokenLength,
+          message: text,
+          severity: monaco.MarkerSeverity.Error,
+        }));
+    }
+
+    monaco.editor.setModelMarkers(model, "owner", errors);
+    monacoEditor.setModel(model);
+  }, [build]);
+
   const save = () => {
     // Build for the simulator
     const monacoEditor = monacoInstance.current?.editor;

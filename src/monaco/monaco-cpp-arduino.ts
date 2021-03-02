@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 
 
-import * as monaco from "monaco-editor";
+// import * as monaco from "monaco-editor";
 
 // const IRichLanguageConfiguration = monaco.languages.LanguageConfiguration;
 // const ILanguage = monaco.languages.IMonarchLanguage;
