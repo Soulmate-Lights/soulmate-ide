@@ -20,6 +20,7 @@ export const getPorts = async () => {
 
   const ports = results.filter((result) => {
     if (result.vendorId === "1a86") return true;
+    if (result.vendorId === "10c4") return true;
     if (result.vendorId === "0403") return true;
     if (result.path.includes("usbserial")) return true;
     if (result.path.includes("tty.wchusbserial")) return true;
