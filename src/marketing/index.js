@@ -45,29 +45,6 @@ export default function MarketingPage() {
                         src={logo}
                       />
                     </a>
-                    <div className="flex items-center -mr-2 md:hidden">
-                      <button
-                        aria-haspopup="true"
-                        aria-label="Main menu"
-                        className="inline-flex items-center justify-center p-2 text-gray-400 rounded-md hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out"
-                        id="main-menu"
-                        type="button"
-                      >
-                        <svg
-                          className="w-6 h-6"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            d="M4 6h16M4 12h16M4 18h16"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                          />
-                        </svg>
-                      </button>
-                    </div>
                   </div>
                 </div>
               </nav>
