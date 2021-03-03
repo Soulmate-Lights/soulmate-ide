@@ -2,7 +2,6 @@ import { FaChevronUp, FaUsb, FaWifi } from "react-icons/fa";
 import { RiPlayList2Fill } from "react-icons/ri";
 
 import SoulmatesMenu from "~/components/SoulmatesMenu";
-import NetworkContainer from "~/containers/network";
 import NotificationsContainer from "~/containers/notifications";
 import Soulmates from "~/containers/soulmates";
 import UserContainer from "~/containers/user";
@@ -26,11 +25,10 @@ const FlashButton = ({
     selectedSoulmate,
   } = Soulmates.useContainer();
   const { notify } = NotificationsContainer.useContainer();
-  const { firmware } = NetworkContainer.useContainer();
 
   const flash = async () => {
     try {
-      await flashSketches(selectedSketches, config, firmware);
+      await flashSketches(selectedSketches, config);
     } catch (e) {
       notify("Error flashing!", "error");
     }
