@@ -2,13 +2,7 @@ import { AiFillApple, AiFillWindows } from "react-icons/ai";
 import { FaShoppingCart } from "react-icons/fa";
 
 import isElectron from "~/utils/isElectron";
-function isMacintosh() {
-  return navigator.platform.indexOf("Mac") > -1;
-}
-
-function isWindows() {
-  return navigator.platform.indexOf("Win") > -1;
-}
+import { isMac, isWindows } from "~/utils/isMac";
 
 const Download = () => {
   return (
@@ -24,7 +18,7 @@ const Download = () => {
           </p>
         </span>
 
-        {!isElectron() && (isWindows() || isMacintosh()) && (
+        {!isElectron() && (isWindows() || isMac()) && (
           <div className="mt-auto opacity-75 hover:opacity-100 transition-opacity duration-500">
             <div className="mx-auto sm:flex sm:justify-center space-x-4">
               <div className="shadow rounded-md">
@@ -70,12 +64,12 @@ const Download = () => {
                 <a
                   className="inline-flex items-center px-4 py-2 text-base font-medium text-purple-600 bg-white border border-transparent leading-6 rounded-md hover:text-purple-500 focus:outline-none focus:border-purple-300 focus:shadow-outline-gray active:bg-purple-50 active:text-purple-700 transition duration-150 ease-in-out"
                   href={
-                    isMacintosh()
+                    isMac()
                       ? "https://editor.soulmatelights.com/download/mac"
                       : "https://editor.soulmatelights.com/download/windows"
                   }
                 >
-                  {isMacintosh() ? (
+                  {isMac() ? (
                     <AiFillApple className="mr-2" />
                   ) : (
                     <AiFillWindows className="mr-2" />
@@ -85,7 +79,7 @@ const Download = () => {
               </div>
             </div>
           )}
-          {isMacintosh() && (
+          {isMac() && (
             <div className="flex flex-col mt-4 space-y-4 md:space-y-0 md:flex-row sm:justify-center md:space-x-4">
               <div className="shadow rounded-md">
                 <a

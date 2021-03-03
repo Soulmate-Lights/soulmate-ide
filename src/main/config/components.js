@@ -5,7 +5,7 @@ export const Section = (props) => (
 );
 
 export const Left = (props) => (
-  <div className="md:col-span-1">
+  <div className="md:col-span-1 dark-mode:text-white">
     <div className="px-4 sm:px-0">{props.children}</div>
   </div>
 );
