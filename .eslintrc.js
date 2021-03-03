@@ -9,6 +9,7 @@ module.exports = {
     "plugin:tailwind/recommended",
     "plugin:react-hooks/recommended",
   ],
+  ignorePatterns: ["services/**/*"],
   globals: {
     Atomics: "readonly",
     SharedArrayBuffer: "readonly",
