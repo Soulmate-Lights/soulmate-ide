@@ -29,7 +29,7 @@ const Dashboard = () => {
       <Helmet>
         <title>Home</title>
       </Helmet>
-      <div className="relative flex flex-col items-center justify-center flex-grow p-6 overflow-hidden">
+      <div className="relative flex flex-col items-center justify-center flex-grow flex-shrink p-6 overflow-auto">
         <nav className="absolute top-0 flex flex-row items-center justify-center justify-between w-full p-2 px-5 pt-5">
           <span className="inline-flex w-full rounded-md">
             {!userDetails && (
