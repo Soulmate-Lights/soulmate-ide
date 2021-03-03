@@ -118,7 +118,6 @@ export const prepareSketches = (sketches, config, id) => {
     .join("\n");
 
   return `
-// Don't forget to change this!
 #define FIRMWARE_NAME "soulmate-custom"
 // The number of LEDs in each parallel strip
 #define LED_COLS ${cols}

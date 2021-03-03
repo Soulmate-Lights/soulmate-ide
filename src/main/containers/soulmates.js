@@ -231,22 +231,26 @@ const SoulmatesContainer = () => {
     let receivedData;
     const listener = new PortListener(port, (text) => {
       if (text[0] === "{") {
-        const config = JSON.parse(text);
-        receivedData = config;
-        const newSoulmate = {
-          config,
-          type: "usb",
-          port,
-        };
-        const filteredSoulmates = soulmates.filter(
-          (soulmate) => soulmate.port !== port
-        );
-        setSoulmates([...filteredSoulmates, newSoulmate]);
-        setSelectedSoulmate(newSoulmate);
-        setSoulmateLoading(false);
-        notificationsContainer.notify(
-          `${soulmateName(newSoulmate)} connected!`
-        );
+        try {
+          const config = JSON.parse(text);
+          receivedData = config;
+          const newSoulmate = {
+            config,
+            type: "usb",
+            port,
+          };
+          const filteredSoulmates = soulmates.filter(
+            (soulmate) => soulmate.port !== port
+          );
+          setSoulmates([...filteredSoulmates, newSoulmate]);
+          setSelectedSoulmate(newSoulmate);
+          setSoulmateLoading(false);
+          notificationsContainer.notify(
+            `${soulmateName(newSoulmate)} connected!`
+          );
+        } catch (e) {
+          console.log("Error parsing", e, text);
+        }
       }
       setText((oldText) => [...takeRight(oldText, LINE_LIMIT), text]);
     });
