@@ -20,7 +20,7 @@ export const PersonSection = ({ user }) => (
     ) : (
       <IoPersonCircleOutline className="w-8 h-8 mr-2" />
     )}
-    {user.name || "Unknown User"}
+    {user.name || "Loading..."}
   </div>
 );
 

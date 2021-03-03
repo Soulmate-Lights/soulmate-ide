@@ -1,10 +1,10 @@
 import "regenerator-runtime/runtime";
 import "../tailwind.config";
+import "./monaco";
 
 import { RewriteFrames } from "@sentry/integrations";
 import * as SentryReact from "@sentry/react";
 import { Integrations } from "@sentry/tracing";
-import * as monaco from "monaco-editor/esm/vs/editor/editor.main.js";
 import React from "react";
 import ReactDOM from "react-dom";
 
@@ -31,8 +31,6 @@ self.MonacoEnvironment = {
     );
   },
 };
-
-monaco.editor.createWebWorker({});
 
 ReactDOM.render(<Main />, document.getElementById("root"));
 

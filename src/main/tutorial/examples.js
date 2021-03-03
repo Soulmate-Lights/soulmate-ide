@@ -9,8 +9,8 @@ export default [
 void draw() {
   // We'll loop through every led in the leds array, and set its color
 
-  // N_LEDS is the total number of LEDs (LED_COLS * LED_ROWS)
-  for (int index = 0; index < N_LEDS; index++) {
+  // NUM_LEDS is the total number of LEDs (LED_COLS * LED_ROWS)
+  for (int index = 0; index < NUM_LEDS; index++) {
     // leds is the LED array, and CRGB::Blue is the FastLED color we want
     leds[index] = CRGB::Blue;
 
@@ -29,7 +29,7 @@ void draw() {
   // This line increments the hue variable every loop
   hue++;
 
-  for (int index = 0; index < N_LEDS; index++) {
+  for (int index = 0; index < NUM_LEDS; index++) {
     // CHSV stands for hue, saturation, value, all 0-255
     leds[index] = CHSV(hue, 255, 255);
   }
@@ -43,13 +43,13 @@ void draw() {
     hue++;
   }
 
-  for (int index = 0; index < N_LEDS; index++) {
+  for (int index = 0; index < NUM_LEDS; index++) {
     leds[index] = CHSV(hue, 255, 255);
   }
 }`,
   `void draw() {
   // Let's use the index to determine the hue:
-  for (int index = 0; index < N_LEDS; index++) {
+  for (int index = 0; index < NUM_LEDS; index++) {
     leds[index] = CHSV(index, 255, 255);
   }
 }`,
@@ -95,7 +95,7 @@ void draw() {
 
   EVERY_N_MILLISECONDS(20) {
     for (int i = 0; i < numberOfSparkles; i++) {
-      int pos = random16(N_LEDS);
+      int pos = random16(NUM_LEDS);
 
       if (!leds[pos]) {
         leds[pos] = CHSV(hue + (pos / 10), 255, 255);
@@ -107,7 +107,7 @@ void draw() {
     hue -= 1;
   }
 
-  fade_raw(leds, N_LEDS, 4);
+  fade_raw(leds, NUM_LEDS, 4);
 }`,
   `// OK, you're good to go!
 // Hit the "Log in" to log in and start making new patterns.

@@ -2,8 +2,9 @@ import parser from "@wokwi/gcc-output-parser";
 import classnames from "classnames";
 import jsBeautifier from "js-beautify";
 import debounce from "lodash/debounce";
-import startCase from "lodash/startCase";
+// import startCase from "lodash/startCase";
 import * as monaco from "monaco-editor/esm/vs/editor/editor.main.js";
+
 import Monaco from "react-monaco-editor";
 import { Mode, useLightSwitch } from "use-light-switch";
 
@@ -11,7 +12,7 @@ function isWindows() {
   return navigator.platform.indexOf("Win") > -1;
 }
 
-const LINE_OFFSET = 64;
+const LINE_OFFSET = 61;
 
 const jsBeautifierConfig = {
   indent_size: 2,
@@ -27,7 +28,7 @@ const formatCode = (code) => {
 
 const editorConfig = {
   links: false,
-  language: "cpp",
+  language: "soulmate",
   scrollBeyondLastLine: false,
   tabSize: 2,
   lineNumbers: true,
@@ -43,6 +44,7 @@ const CodeEditor = ({
   build,
   code,
   onChange,
+  onHesitation,
   onSave,
   onChangeSelection,
   className,
@@ -52,6 +54,10 @@ const CodeEditor = ({
 }) => {
   let monacoInstance = useRef(false);
   const [dirty, setDirty] = useState(false);
+
+  const debouncedOnChange = onHesitation
+    ? debounce(onHesitation, 1500)
+    : undefined;
 
   const mode = useLightSwitch();
   const dark = mode === Mode.Dark;
@@ -84,6 +90,28 @@ const CodeEditor = ({
   useEffect(() => {
     debouncedResize();
   }, [build?.stderr]);
+
+  useEffect(() => {
+    const monacoEditor = monacoInstance.current?.editor;
+    const model = monacoEditor.getModel();
+    let errors = [];
+
+    if (build?.stderr) {
+      errors = parser
+        .parseString(build.stderr)
+        .map(({ line, text, column, tokenLength }) => ({
+          startLineNumber: line - LINE_OFFSET,
+          startColumn: column,
+          endLineNumber: line - LINE_OFFSET,
+          endColumn: column + tokenLength,
+          message: text,
+          severity: monaco.MarkerSeverity.Error,
+        }));
+    }
+
+    monaco.editor.setModelMarkers(model, "owner", errors);
+    monacoEditor.setModel(model);
+  }, [build]);
 
   const save = () => {
     // Build for the simulator
@@ -170,7 +198,8 @@ const CodeEditor = ({
           }}
           key={dark ? "dark" : "light"}
           onChange={(code) => {
-            onChange && onChange(code);
+            if (onChange) onChange(code);
+            if (debouncedOnChange) debouncedOnChange(code);
             setDirty(true);
           }}
           options={{
@@ -182,7 +211,7 @@ const CodeEditor = ({
         />
       </div>
 
-      {build?.stderr && (
+      {/* {build?.stderr && (
         <pre className="bottom-0 left-0 right-0 z-10 flex-shrink-0 px-6 py-3 overflow-auto text-sm text-red-800 break-all bg-red-200 border-t border-red-800 max-h-64">
           {!build.stderr.includes("\n") && <p>{build.stderr}</p>}
           {parser.parseString(build.stderr).map(
@@ -195,7 +224,7 @@ const CodeEditor = ({
               )
           )}
         </pre>
-      )}
+      )} */}
 
       {autoFormat && (
         <label

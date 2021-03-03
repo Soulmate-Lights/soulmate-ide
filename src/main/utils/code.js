@@ -57,7 +57,7 @@ int16_t gridIndexHorizontal(int16_t x, int16_t y) {
   return -1;
 }
 
-uint16_t XY(uint16_t x, uint16_t y) {
+uint16_t XY(uint8_t x, uint8_t y) {
   return gridIndexHorizontal(x, y);
 }
 
@@ -78,7 +78,7 @@ void loop() {
 `.trim();
 };
 
-export const prepareSketches = (sketches, config) => {
+export const prepareSketches = (sketches, config, id) => {
   const {
     rows,
     cols,
@@ -118,7 +118,6 @@ export const prepareSketches = (sketches, config) => {
     .join("\n");
 
   return `
-// Don't forget to change this!
 #define FIRMWARE_NAME "soulmate-custom"
 // The number of LEDs in each parallel strip
 #define LED_COLS ${cols}
@@ -126,6 +125,8 @@ export const prepareSketches = (sketches, config) => {
 #define LED_ROWS ${rows}
 // Normally LED_COLS * LED_ROWS
 // #define N_LEDS ${cols * rows}
+
+${id ? `#define SOULMATE_BUILD "${id}"` : ""}
 
 #define SOULMATE_REVERSE ${reverse ? "true" : "false"}
 #define SOULMATE_MIRROR ${mirror ? "true" : "false"}
@@ -187,7 +188,7 @@ export const emptyCode = `void draw() {
   // leds: the LED array to print to
   //
   // You can also use:
-  // uint16_t gridIndexHorizontal(x, y) - the index of a given x/y coordinate
+  // uint16_t XY(x, y) - the index of a given x/y coordinate
   // uint8_t beatsin8(bpm, minimum, maximum, offset) - an 8-bit sine wave
   //
   // For more information, visit https://github.com/FastLED/FastLED/wiki/Overview

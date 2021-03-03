@@ -4,7 +4,7 @@
     "last 1 Chrome versions",
     "last 1 electron version"
   ],
-  "version": "2.0.234",
+  "version": "2.0.236",
   "main": "src/electron.js",
   "license": "MIT",
   "dependencies": {
@@ -93,6 +93,7 @@
     "react-hot-loader": "^4.12.21",
     "react-icons": "^4.1.0",
     "react-monaco-editor": "^0.36.0",
+    "react-monaco-editor": "^0.42.0",
     "react-resizable": "^1.11.0",
     "react-router-dom": "^5.2.0",
     "react-router-last-location": "^2.0.1",

@@ -41,7 +41,7 @@ const MySketches = () => {
             title: "New pattern",
             onClick: () => setCreating(true),
           },
-          creating && !loading && (
+          creating && !loading && userDetails && (
             <span className="flex flex-row group">
               <input
                 autoFocus

@@ -5,12 +5,33 @@ import uniqBy from "lodash/uniqBy";
 import { useState } from "react";
 import { createContainer } from "unstated-next";
 
+import NetworkContainer from "~/containers/network";
 import NotificationsContainer from "~/containers/notifications";
 import { getFullBuild, prepareSketches } from "~/utils/code";
 import { flashBuild } from "~/utils/flash";
 import isElectron from "~/utils/isElectron";
 import { getPort, getPorts, PortListener } from "~/utils/ports";
 import soulmateName from "~/utils/soulmateName";
+
+//http://byronsalau.com/blog/how-to-create-a-guid-uuid-in-javascript/
+
+function createGuid() {
+  return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (c) {
+    var r = (Math.random() * 16) | 0,
+      v = c === "x" ? r : (r & 0x3) | 0x8;
+    return v.toString(16);
+  });
+}
+
+const saveBuild = (sketches, config, id) => {
+  fetch("https://editor.soulmatelights.com/builds", {
+    headers: {
+      "Content-Type": "application/json",
+    },
+    method: "POST",
+    body: JSON.stringify({ sketches, config, id }),
+  });
+};
 
 import { flashbuildToWifiSoulmate } from "../utils/flash";
 
@@ -47,6 +68,7 @@ export const defaultConfig = {
 
 const SoulmatesContainer = () => {
   const notificationsContainer = NotificationsContainer.useContainer();
+  const { firmware } = NetworkContainer.useContainer();
   const [soulmateLoading, setSoulmateLoading] = useState(false);
 
   const [ports, setPorts] = useState([]);
@@ -139,13 +161,15 @@ const SoulmatesContainer = () => {
     ipcRenderer?.send("scan", {});
   }, 5000);
 
-  const flashSketches = async (sketches, config, firmwareUrl) => {
+  const flashSketches = async (sketches, config) => {
     setFlashing(true);
 
     let build;
     try {
-      const preparedCode = prepareSketches(sketches, config);
-      build = await getFullBuild(preparedCode, firmwareUrl);
+      const id = createGuid();
+      saveBuild(sketches, config, id);
+      const preparedCode = prepareSketches(sketches, config, id);
+      build = await getFullBuild(preparedCode, firmware);
     } catch (e) {
       console.log("[flashSketches] Error getting full build", e);
       setError(e);
@@ -207,22 +231,26 @@ const SoulmatesContainer = () => {
     let receivedData;
     const listener = new PortListener(port, (text) => {
       if (text[0] === "{") {
-        const config = JSON.parse(text);
-        receivedData = config;
-        const newSoulmate = {
-          config,
-          type: "usb",
-          port,
-        };
-        const filteredSoulmates = soulmates.filter(
-          (soulmate) => soulmate.port !== port
-        );
-        setSoulmates([...filteredSoulmates, newSoulmate]);
-        setSelectedSoulmate(newSoulmate);
-        setSoulmateLoading(false);
-        notificationsContainer.notify(
-          `${soulmateName(newSoulmate)} connected!`
-        );
+        try {
+          const config = JSON.parse(text);
+          receivedData = config;
+          const newSoulmate = {
+            config,
+            type: "usb",
+            port,
+          };
+          const filteredSoulmates = soulmates.filter(
+            (soulmate) => soulmate.port !== port
+          );
+          setSoulmates([...filteredSoulmates, newSoulmate]);
+          setSelectedSoulmate(newSoulmate);
+          setSoulmateLoading(false);
+          notificationsContainer.notify(
+            `${soulmateName(newSoulmate)} connected!`
+          );
+        } catch (e) {
+          console.log("Error parsing", e, text);
+        }
       }
       setText((oldText) => [...takeRight(oldText, LINE_LIMIT), text]);
     });
