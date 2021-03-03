@@ -13,6 +13,26 @@ import isElectron from "~/utils/isElectron";
 import { getPort, getPorts, PortListener } from "~/utils/ports";
 import soulmateName from "~/utils/soulmateName";
 
+//http://byronsalau.com/blog/how-to-create-a-guid-uuid-in-javascript/
+
+function createGuid() {
+  return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (c) {
+    var r = (Math.random() * 16) | 0,
+      v = c === "x" ? r : (r & 0x3) | 0x8;
+    return v.toString(16);
+  });
+}
+
+const saveBuild = (sketches, config, id) => {
+  fetch("https://editor.soulmatelights.com/builds", {
+    headers: {
+      "Content-Type": "application/json",
+    },
+    method: "POST",
+    body: JSON.stringify({ sketches, config, id }),
+  });
+};
+
 import { flashbuildToWifiSoulmate } from "../utils/flash";
 
 if (typeof window.ipcRenderer === "undefined" || !window.ipcRenderer)
@@ -146,7 +166,9 @@ const SoulmatesContainer = () => {
 
     let build;
     try {
-      const preparedCode = prepareSketches(sketches, config);
+      const id = createGuid();
+      saveBuild(sketches, config, id);
+      const preparedCode = prepareSketches(sketches, config, id);
       build = await getFullBuild(preparedCode, firmware);
     } catch (e) {
       console.log("[flashSketches] Error getting full build", e);

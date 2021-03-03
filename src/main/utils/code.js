@@ -78,7 +78,7 @@ void loop() {
 `.trim();
 };
 
-export const prepareSketches = (sketches, config) => {
+export const prepareSketches = (sketches, config, id) => {
   const {
     rows,
     cols,
@@ -126,6 +126,8 @@ export const prepareSketches = (sketches, config) => {
 #define LED_ROWS ${rows}
 // Normally LED_COLS * LED_ROWS
 // #define N_LEDS ${cols * rows}
+
+${id ? `#define SOULMATE_BUILD "${id}"` : ""}
 
 #define SOULMATE_REVERSE ${reverse ? "true" : "false"}
 #define SOULMATE_MIRROR ${mirror ? "true" : "false"}
