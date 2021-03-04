@@ -83,26 +83,40 @@ export const logIn = async () => {
 // Called on page first load by the user container
 export const logBackIn = async () => {
   const auth0 = await auth0Promise;
+  const { search, pathname, hash } = window.location;
+  const code = hash.replace("#", "");
+  let token, user;
+
   console.log("Logging back in");
-  await auth0.getTokenSilently();
-  const { search, pathname } = window.location;
+
+  try {
+    token = await auth0.getTokenSilently();
+  } catch (e) {
+    console.log("No token", e);
+  }
+
+  if (token) user = await auth0.getUser();
+
+  const authToken = localStorage[specialKey];
 
   if (pathname === "/desktop-sign-in") {
-    const code = document.location.hash.replace("#", "");
     const redirect_uri = clientSideUrl(`/desktop-callback#${code}`);
-    auth0.loginWithRedirect({ redirect_uri });
+
+    if (token && authToken) {
+      await postWithToken("/save-token", { code, token: authToken });
+      window.location = redirect_uri;
+      return user;
+    } else {
+      auth0.loginWithRedirect({ redirect_uri });
+    }
   } else if (pathname === "/desktop-callback") {
     await auth0.handleRedirectCallback();
-    const code = document.location.hash.replace("#", "");
-    const token = localStorage[specialKey];
-    await postWithToken("/save-token", { code, token });
+    await postWithToken("/save-token", { code, token: authToken });
   }
 
   if (search.includes("code=")) await auth0.handleRedirectCallback();
 
-  const oauth = await auth0Promise;
-
-  return oauth.getUser();
+  return auth0.getUser();
 };
 
 // Called when clicking a button
@@ -119,7 +133,7 @@ export const logOut = async () => {
 
   if (isElectron()) {
     remote.require("electron").session.defaultSession.clearStorageData;
-    auth0.logout({ returnTo: window.location.href });
+    auth0.logout();
   } else {
     auth0.logout({ returnTo: window.location.origin });
   }

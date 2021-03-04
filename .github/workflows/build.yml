@@ -6,7 +6,6 @@ on:
   push:
     tags:
       - "v*"
-      - "osx-test-*"
 
 jobs:
   release:
@@ -105,3 +104,18 @@ jobs:
         run: |
           file dist/mac-arm64/Soulmate.app/Contents/MacOS/Soulmate
           file dist/mac/Soulmate.app/Contents/MacOS/Soulmate
+
+      - name: Setup Sentry CLI
+        uses: mathrix-education/setup-sentry-cli@0.1.0
+        with:
+          version: latest # optional if 'latest'
+          token: ${{ secrets.SENTRY_AUTH_TOKEN }} # from GitHub secrets
+          organization: soulmate
+          project: ide
+
+      - name: Upload to Sentry
+        run: "./sentry.sh"
+        env:
+          SENTRY_ORG: soulmate
+          SENTRY_PROJECT: ide
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
