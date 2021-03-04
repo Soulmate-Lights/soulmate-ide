@@ -133,7 +133,7 @@ export const logOut = async () => {
 
   if (isElectron()) {
     remote.require("electron").session.defaultSession.clearStorageData;
-    auth0.logout({ returnTo: window.location.href });
+    auth0.logout();
   } else {
     auth0.logout({ returnTo: window.location.origin });
   }
