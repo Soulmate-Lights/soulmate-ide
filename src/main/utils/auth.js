@@ -100,15 +100,15 @@ export const logBackIn = async () => {
   const authToken = localStorage[specialKey];
 
   if (pathname === "/desktop-sign-in") {
-    if (token) {
-      await postWithToken("/save-token", {
-        code,
-        token: authToken,
-      });
-      return user;
-    }
     const redirect_uri = clientSideUrl(`/desktop-callback#${code}`);
-    auth0.loginWithRedirect({ redirect_uri });
+
+    if (token && authToken) {
+      await postWithToken("/save-token", { code, token: authToken });
+      window.location = redirect_uri;
+      return user;
+    } else {
+      auth0.loginWithRedirect({ redirect_uri });
+    }
   } else if (pathname === "/desktop-callback") {
     await auth0.handleRedirectCallback();
     await postWithToken("/save-token", { code, token: authToken });
