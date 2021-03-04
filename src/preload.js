@@ -8,4 +8,3 @@ window.fs = electronFs;
 
 const electron = require("electron");
 window.electron = electron;
-window.childProcess = remote.require("child_process");
