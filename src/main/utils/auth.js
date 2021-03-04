@@ -91,9 +91,9 @@ export const logBackIn = async () => {
 
   try {
     token = await auth0.getTokenSilently();
-    user = await oauth.getUser();
+    user = await auth0.getUser();
   } catch (e) {
-    console.log("No token");
+    console.log("No token", e);
   }
 
   if (pathname === "/desktop-sign-in") {
@@ -111,9 +111,7 @@ export const logBackIn = async () => {
 
   if (search.includes("code=")) await auth0.handleRedirectCallback();
 
-  const oauth = await auth0Promise;
-
-  return oauth.getUser();
+  return auth0.getUser();
 };
 
 // Called when clicking a button
