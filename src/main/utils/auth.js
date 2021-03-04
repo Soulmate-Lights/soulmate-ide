@@ -83,30 +83,35 @@ export const logIn = async () => {
 // Called on page first load by the user container
 export const logBackIn = async () => {
   const auth0 = await auth0Promise;
-  const { search, pathname } = window.location;
-  const code = document.location.hash.replace("#", "");
+  const { search, pathname, hash } = window.location;
+  const code = hash.replace("#", "");
   let token, user;
 
   console.log("Logging back in");
 
   try {
     token = await auth0.getTokenSilently();
-    user = await auth0.getUser();
   } catch (e) {
     console.log("No token", e);
   }
 
+  if (token) user = await auth0.getUser();
+
+  const authToken = localStorage[specialKey];
+
   if (pathname === "/desktop-sign-in") {
     if (token) {
-      await postWithToken("/save-token", { code, token });
+      await postWithToken("/save-token", {
+        code,
+        token: authToken,
+      });
       return user;
     }
     const redirect_uri = clientSideUrl(`/desktop-callback#${code}`);
     auth0.loginWithRedirect({ redirect_uri });
   } else if (pathname === "/desktop-callback") {
     await auth0.handleRedirectCallback();
-    const token = localStorage[specialKey];
-    await postWithToken("/save-token", { code, token });
+    await postWithToken("/save-token", { code, token: authToken });
   }
 
   if (search.includes("code=")) await auth0.handleRedirectCallback();
