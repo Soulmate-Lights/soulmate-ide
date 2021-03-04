@@ -84,6 +84,7 @@ export const logIn = async () => {
 export const logBackIn = async () => {
   const auth0 = await auth0Promise;
   console.log("Logging back in");
+  await auth0.getTokenSilently();
   const { search, pathname } = window.location;
 
   if (pathname === "/desktop-sign-in") {
@@ -100,7 +101,7 @@ export const logBackIn = async () => {
   if (search.includes("code=")) await auth0.handleRedirectCallback();
 
   const oauth = await auth0Promise;
-  await auth0.getTokenSilently();
+
   return oauth.getUser();
 };
 
