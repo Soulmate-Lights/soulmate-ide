@@ -11,6 +11,7 @@ import useSWR from "~/hooks/useSwr";
 import Logo from "~/images/logo.svg";
 import { emptyCode } from "~/utils/code";
 import { ALL_SKETCHES_PATH } from "~/utils/network";
+import slugify from "~/utils/slugify";
 
 const Gallery = () => {
   const { userDetails } = UserContainer.useContainer();
@@ -63,7 +64,7 @@ const Gallery = () => {
             <li className="border-b dark-mode:border-gray-800" key={user.id}>
               <Link
                 className="block rounded hover:bg-gray-50 dark-mode:hover:bg-gray-700 focus:outline-none transition duration-150 ease-in-out"
-                to={`/gallery/user/${user.id}`}
+                to={`/gallery/user/${user.id}-${slugify(user.name)}`}
               >
                 <div className="flex items-center px-4 py-4 sm:px-6">
                   <div className="flex items-center flex-1 min-w-0">

@@ -1,10 +1,10 @@
 {
-  "name": "Soulmate",
+  "name": "soulmate-ide",
   "browserslist": [
     "last 1 Chrome versions",
     "last 1 electron version"
   ],
-  "version": "2.0.236",
+  "version": "2.1.0",
   "main": "src/electron.js",
   "license": "MIT",
   "dependencies": {
@@ -137,6 +137,7 @@
     "install-arm": "npm_config_arch=$(uname -m) yarn",
     "build-with-dependencies-from-source": "yarn run electron-builder --config.buildDependenciesFromSource=true -mwl",
     "web": "NODE_ENV=development parcel index.html --open -p 3000",
+    "update-server": "(cd services/soulmate-server && ./update-ui.sh) && git add services/soulmate-server && git commit -m 'New server'",
     "bump": "yarn version --patch && git push && git push --tags"
   },
   "build": {

@@ -159,7 +159,7 @@ const IDE = () => {
                         match: {
                           params: { id },
                         },
-                      }) => <User id={id} />}
+                      }) => <User id={parseInt(id)} />}
                     />
 
                     <Route
@@ -168,7 +168,7 @@ const IDE = () => {
                         match: {
                           params: { id },
                         },
-                      }) => <Editor id={id} />}
+                      }) => <Editor id={parseInt(id)} />}
                     />
 
                     <Route
@@ -177,7 +177,7 @@ const IDE = () => {
                         match: {
                           params: { id },
                         },
-                      }) => <Editor id={id} mine />}
+                      }) => <Editor id={parseInt(id)} mine />}
                     />
 
                     <Route path="/console">
@@ -194,7 +194,7 @@ const IDE = () => {
                         match: {
                           params: { id },
                         },
-                      }) => <Playlist id={id} />}
+                      }) => <Playlist id={parseInt(id)} />}
                     />
 
                     <Route path="/playlists">
