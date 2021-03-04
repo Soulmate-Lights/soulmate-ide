@@ -143,6 +143,7 @@
     "prepare": "husky install"
   },
   "build": {
+    "afterSign": "electron-builder-notarize",
     "buildDependenciesFromSource": true,
     "npmRebuild": true,
     "afterPack": "./afterpack",
