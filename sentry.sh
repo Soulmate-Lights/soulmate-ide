@@ -4,8 +4,6 @@ VERSION=$(node ./get-version.js)
 echo "[Sentry] Uploading sourcemaps for version: $VERSION"
 sentry-cli releases new $VERSION
 
-yarn react-build
-
 sentry-cli releases files $VERSION upload-sourcemaps dist --rewrite
 
 # Finalize the release and mark it deployed
