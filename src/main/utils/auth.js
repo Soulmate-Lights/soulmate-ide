@@ -43,6 +43,7 @@ if (window.crypto) {
     audience: config.audience,
     cacheLocation: "localstorage",
   });
+  window.auth0Promise = auth0Promise;
 }
 
 export const logIn = async () => {
@@ -82,6 +83,7 @@ export const logIn = async () => {
 // Called on page first load by the user container
 export const logBackIn = async () => {
   const auth0 = await auth0Promise;
+  console.log("Logging back in");
   const { search, pathname } = window.location;
 
   if (pathname === "/desktop-sign-in") {
@@ -98,6 +100,7 @@ export const logBackIn = async () => {
   if (search.includes("code=")) await auth0.handleRedirectCallback();
 
   const oauth = await auth0Promise;
+  await auth0.getTokenSilently();
   return oauth.getUser();
 };
 
