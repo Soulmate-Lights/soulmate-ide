@@ -4,7 +4,6 @@ import jsBeautifier from "js-beautify";
 import debounce from "lodash/debounce";
 // import startCase from "lodash/startCase";
 import * as monaco from "monaco-editor/esm/vs/editor/editor.main.js";
-
 import Monaco from "react-monaco-editor";
 import { Mode, useLightSwitch } from "use-light-switch";
 
