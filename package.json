@@ -92,7 +92,6 @@
     "react-helmet": "^6.1.0",
     "react-hot-loader": "^4.12.21",
     "react-icons": "^4.1.0",
-    "react-monaco-editor": "^0.36.0",
     "react-monaco-editor": "^0.42.0",
     "react-resizable": "^1.11.0",
     "react-router-dom": "^5.2.0",
@@ -110,9 +109,6 @@
     "unstated-next": "^1.1.0",
     "use-light-switch": "^1.0.1",
     "wait-on": "^5.0.0"
-  },
-  "resolutions": {
-    "babel-core": "7.0.0-bridge.0"
   },
   "alias": {
     "@auth0/auth0-spa-js": "./node_modules/@auth0/auth0-spa-js/dist/lib/auth0-spa-js.cjs.js",
@@ -201,6 +197,7 @@
   },
   "resolutions": {
     "@serialport/bindings": "9.0.2",
-    "@serialport/stream": "9.0.2"
+    "@serialport/stream": "9.0.2",
+    "babel-core": "7.0.0-bridge.0"
   }
 }
