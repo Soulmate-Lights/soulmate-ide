@@ -15,6 +15,7 @@ import Logo from "~/images/logo.svg";
 import { emptyCode } from "~/utils/code";
 import history from "~/utils/history";
 import { SKETCH_PATH, SKETCHES_PATH } from "~/utils/network";
+import slugify from "~/utils/slugify";
 
 import { PersonSection } from "./components/Header";
 
@@ -232,7 +233,7 @@ const Editor = ({ id }) => {
           !mine && { title: "Gallery", to: "/gallery" },
           !mine && {
             title: <PersonSection user={sketch.user} />,
-            to: `/gallery/user/${sketch.user.id}`,
+            to: `/gallery/user/${sketch.user.id}-${slugify(sketch.user.name)}`,
           },
           mine && { title: "My patterns", to: "/my-patterns" },
         ]}

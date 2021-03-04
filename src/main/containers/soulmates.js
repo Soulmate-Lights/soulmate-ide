@@ -13,17 +13,6 @@ import isElectron from "~/utils/isElectron";
 import { getPort, getPorts, PortListener } from "~/utils/ports";
 import soulmateName from "~/utils/soulmateName";
 
-function makeID(length = 6) {
-  var result = "";
-  var characters =
-    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-  var charactersLength = characters.length;
-  for (var i = 0; i < length; i++) {
-    result += characters.charAt(Math.floor(Math.random() * charactersLength));
-  }
-  return result;
-}
-
 const saveBuild = (sketches, config, id) => {
   fetch("https://editor.soulmatelights.com/builds", {
     headers: {
@@ -167,7 +156,7 @@ const SoulmatesContainer = () => {
 
     let build;
     try {
-      const id = makeID(5);
+      const id = Math.random().toString(36).substring(2, 8);
       saveBuild(sketches, config, id);
       const preparedCode = prepareSketches(sketches, config, id);
       build = await getFullBuild(preparedCode, firmware);

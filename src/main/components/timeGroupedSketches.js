@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 
 import Sketch from "~/components/sketch";
 import Logo from "~/images/logo.svg";
+import slugify from "~/utils/slugify";
 
 const groupSketches = (sketches) => {
   const monthName = (item) =>
@@ -34,7 +35,9 @@ const TimeGroupedSketches = ({ sketches, mine }) => {
                 <Link
                   key={sketch.id}
                   to={
-                    mine ? `/my-patterns/${sketch.id}` : `/gallery/${sketch.id}`
+                    mine
+                      ? `/my-patterns/${sketch.id}`
+                      : `/gallery/${sketch.id}-${slugify(sketch.name)}`
                   }
                 >
                   <Sketch

@@ -6,6 +6,7 @@ import Header from "~/components/Header";
 import useSWR from "~/hooks/useSwr";
 import Logo from "~/images/logo.svg";
 import { PLAYLISTS_PATH } from "~/utils/network";
+import slugify from "~/utils/slugify";
 
 import NewPlaylist from "./newPlaylist";
 
@@ -34,7 +35,9 @@ const Playlists = () => {
                       <li key={playlist.id}>
                         <Link
                           className="block bg-white hover:bg-gray-500 dark-mode:hover:bg-gray-700 hover:text-white focus:outline-none  transition duration-150 ease-in-out"
-                          to={`/playlists/${playlist.id}`}
+                          to={`/playlists/${playlist.id}-${slugify(
+                            playlist.name
+                          )}`}
                         >
                           <div className="flex items-center px-4 py-4 sm:px-6">
                             <div className="flex items-center flex-1 min-w-0">
