@@ -59,11 +59,11 @@ export const installDependencies = () => {
 };
 
 if (isElectron()) {
-  console.log("[Flash/Startup] Installing dependencices");
+  console.log("[installDependencies] Installing dependencices");
   try {
     installDependencies();
   } catch (e) {
-    console.log("[Flash/Startup] Error installing dependencies", e);
+    console.log("Error installing dependencies", e);
   }
 }
 
