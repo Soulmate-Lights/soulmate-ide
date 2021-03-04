@@ -1,4 +1,4 @@
-name: Lint
+name: Lint and test
 
 on: push
 
@@ -30,3 +30,6 @@ jobs:
 
       - name: eslint
         run: npx eslint src
+
+      - name: jest
+        run: npx jest
