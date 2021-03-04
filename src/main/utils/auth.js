@@ -84,10 +84,22 @@ export const logIn = async () => {
 export const logBackIn = async () => {
   const auth0 = await auth0Promise;
   console.log("Logging back in");
-  await auth0.getTokenSilently();
+
+  let token, user;
+  try {
+    token = await auth0.getTokenSilently();
+    user = await oauth.getUser();
+  } catch (e) {
+    console.log("No token");
+  }
   const { search, pathname } = window.location;
 
   if (pathname === "/desktop-sign-in") {
+    if (token) {
+      await postWithToken("/save-token", { code, token });
+      return user;
+    }
+
     const code = document.location.hash.replace("#", "");
     const redirect_uri = clientSideUrl(`/desktop-callback#${code}`);
     auth0.loginWithRedirect({ redirect_uri });
