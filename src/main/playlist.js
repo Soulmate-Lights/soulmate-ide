@@ -13,7 +13,6 @@ import Logo from "~/images/logo.svg";
 import { emptyCode } from "~/utils/code";
 import { getFullBuildAsBlob, prepareSketches } from "~/utils/code";
 import history from "~/utils/history";
-import { post, postDelete, put } from "~/utils/network";
 import {
   ALL_SKETCHES_PATH,
   PLAYLISTS_PATH,
@@ -22,7 +21,7 @@ import {
 const Playlist = (props) => {
   const id = parseInt(props.id);
 
-  const { firmware } = NetworkContainer.useContainer();
+  const { firmware, post, postDelete, put } = NetworkContainer.useContainer();
 
   const { data: mySketches = [] } = useSWR(SKETCHES_PATH);
   const { data: allSketches = [] } = useSWR(ALL_SKETCHES_PATH);
@@ -70,7 +69,7 @@ const Playlist = (props) => {
   const { config } = playlist || {};
 
   let build;
-  const code = playlist.sketches[index]?.code || emptyCode;
+  const code = playlist?.sketches[index]?.code || emptyCode;
   build = useBuild(code, config);
 
   const save = () => {

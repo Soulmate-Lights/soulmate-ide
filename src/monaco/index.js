@@ -1,6 +1,7 @@
 import "./monaco-language";
 
 import * as monaco from "monaco-editor";
+window.monaco = monaco;
 
 import { language, monarchLanguage } from "./monaco-cpp-arduino";
 const languageExtensionPoint = { id: "soulmate" };
