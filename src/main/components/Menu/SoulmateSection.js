@@ -36,7 +36,13 @@ const SoulmatesSection = () => {
           <div>
             {soulmates.map((soulmate, i) => (
               <div
-                className="px-4 py-2 bg-transparent cursor-pointer dark-mode:hover:bg-gray-800 hover:bg-gray-300"
+                className={classnames(
+                  "px-4 py-2 bg-transparent cursor-pointer dark-mode:hover:bg-gray-800 hover:bg-gray-300 rounded mb-1",
+                  {
+                    "bg-gray-300 dark-mode:bg-gray-800":
+                      soulmate === selectedSoulmate,
+                  }
+                )}
                 key={i}
                 onClick={() => {
                   setSelectedSoulmate(
