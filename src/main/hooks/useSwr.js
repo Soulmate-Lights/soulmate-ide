@@ -10,12 +10,10 @@ export const fetcher = async (url) => {
   return fetch(url, { ...headers }).then((d) => d.json());
 };
 
-const useRequest = (path) => {
-  if (!path) throw new Error("Path is required");
-
+const useRequest = (path, fetchFunction = fetcher) => {
   const { appServer } = NetworkContainer.useContainer();
-  const url = normalizeUrl(appServer + "/" + path);
-  return useSwr(url, fetcher);
+  const url = path ? normalizeUrl(appServer + "/" + path) : path;
+  return useSwr(url, fetchFunction);
 };
 
 export default useRequest;

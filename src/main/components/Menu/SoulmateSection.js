@@ -85,6 +85,18 @@ const SoulmatesSection = () => {
             </NavLink>
           )}
 
+          {!needsSetup && (
+            <NavLink
+              activeClassName={activeLinkClass}
+              className={linkClass}
+              location={location}
+              to="/soulmate"
+            >
+              <HiOutlineLightningBolt className={iconClass} />
+              Edit Patterns
+            </NavLink>
+          )}
+
           {isElectron() && (
             <>
               {!needsSetup && usbConnected && (

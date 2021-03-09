@@ -33,6 +33,7 @@ import NewPlaylist from "./newPlaylist";
 import Playlist from "./playlist";
 import Playlists from "./playlists";
 import Settings from "./Settings";
+import SoulmateEditor from "./soulmateEditor";
 import Tutorial from "./tutorial";
 import User from "./user";
 
@@ -143,6 +144,10 @@ const IDE = () => {
 
                     <Route exact path="/flash">
                       {isElectron() ? <Flash /> : <Download />}
+                    </Route>
+
+                    <Route exact path="/soulmate">
+                      <SoulmateEditor />
                     </Route>
 
                     <Route exact path="/config">

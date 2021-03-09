@@ -68,9 +68,8 @@ const Playlist = (props) => {
   const sketch = sketches ? sketches[index] : {};
   const { config } = playlist || {};
 
-  let build;
   const code = playlist?.sketches[index]?.code || emptyCode;
-  build = useBuild(code, config);
+  const build = useBuild(code, config);
 
   const save = () => {
     savePlaylist(playlist.id, { sketches });
@@ -254,7 +253,7 @@ const Playlist = (props) => {
                 <Simulator
                   build={build}
                   className="flex flex-col flex-grow"
-                  config={config}
+                  config={config || {}}
                   hideResolutionMenu
                   minWidth={400}
                 />
