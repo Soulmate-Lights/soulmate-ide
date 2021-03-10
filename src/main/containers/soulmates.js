@@ -168,6 +168,7 @@ const SoulmatesContainer = () => {
     }
 
     if (!build) {
+      console.log("No build received");
       setFlashing(false);
       return false;
     }

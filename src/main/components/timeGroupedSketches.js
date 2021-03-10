@@ -40,7 +40,7 @@ const TimeGroupedSketches = ({ sketches, mine, onClick }) => {
                 return (
                   <Link
                     key={sketch.id}
-                    onClick={() => onClick(sketch)}
+                    onClick={() => onClick && onClick(sketch)}
                     to={path}
                   >
                     <Sketch

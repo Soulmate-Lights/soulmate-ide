@@ -84,18 +84,6 @@ const SoulmatesSection = () => {
               activeClassName={activeLinkClass}
               className={linkClass}
               location={location}
-              to="/flash"
-            >
-              <HiOutlineLightningBolt className={iconClass} />
-              Change Patterns
-            </NavLink>
-          )}
-
-          {!needsSetup && (
-            <NavLink
-              activeClassName={activeLinkClass}
-              className={linkClass}
-              location={location}
               to="/soulmate"
             >
               <HiOutlineLightningBolt className={iconClass} />
