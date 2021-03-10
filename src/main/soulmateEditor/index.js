@@ -1,4 +1,3 @@
-import { AiOutlinePlus } from "react-icons/ai";
 import { useList, useStateList } from "react-use";
 
 import CodeEditor from "~/components/codeEditor";
@@ -7,6 +6,7 @@ import Simulator from "~/components/Simulator";
 import Sketch from "~/components/sketch";
 import SoulmatesContainer from "~/containers/soulmates";
 import useBuild from "~/hooks/useBuild";
+import useSavedFirmware from "~/hooks/useSavedFirmware";
 import useSWR from "~/hooks/useSwr";
 import Logo from "~/images/logo.svg";
 import { emptyCode } from "~/utils/code";
@@ -25,11 +25,7 @@ const SoulmateEditor = () => {
   } = SoulmatesContainer.useContainer();
   const { config = {} } = selectedSoulmate || {};
   const [adding, setAdding] = useState(false);
-
-  const buildId = selectedSoulmate?.config?.build;
-  const fetcher = (url) => fetch(url).then((d) => d.json());
-  const path = buildId ? `builds/${buildId}` : null;
-  const { data } = useSWR(path, fetcher);
+  const savedFirmware = useSavedFirmware(selectedSoulmate);
 
   const [
     sketches,
@@ -41,7 +37,7 @@ const SoulmateEditor = () => {
       removeAt: removeSketchAt,
       insertAt: insertSketchAt,
     },
-  ] = useList(data?.sketches);
+  ] = useList(savedFirmware?.sketches);
 
   const {
     state: sketch,
@@ -51,8 +47,8 @@ const SoulmateEditor = () => {
   } = useStateList(sketches);
 
   useEffect(() => {
-    setSketches(data?.sketches || []);
-  }, [data?.sketches, selectedSoulmate]);
+    setSketches(savedFirmware?.sketches || []);
+  }, [savedFirmware?.sketches, selectedSoulmate]);
 
   useEffect(() => {
     if (!adding && sketches[0] && selectedSketchIndex === undefined) {
@@ -74,7 +70,8 @@ const SoulmateEditor = () => {
   const { data: allSketches } = useSWR(ALL_SKETCHES_PATH);
   let users = groupSketchesToUsers(allSketches);
 
-  const dirty = JSON.stringify(sketches) !== JSON.stringify(data?.sketches);
+  const dirty =
+    JSON.stringify(sketches) !== JSON.stringify(savedFirmware?.sketches);
 
   return (
     <div className="flex flex-col flex-grow flex-shrink h-full min-w-0">
@@ -82,7 +79,7 @@ const SoulmateEditor = () => {
         actions={[
           dirty && {
             title: "Revert",
-            onClick: () => setSketches(data.sketches),
+            onClick: () => setSketches(savedFirmware.sketches),
             className: "bg-red-200 border-red-300",
           },
           {
@@ -107,6 +104,7 @@ const SoulmateEditor = () => {
       />
       <div className="flex flex-row flex-shrink-0 w-full pl-4 overflow-auto bg-gray-200 dark-mode:text-gray-800 dark-mode:bg-gray-700">
         <SketchTabs
+          adding={adding}
           axis="x"
           distance={1}
           items={sketches}
@@ -125,24 +123,11 @@ const SoulmateEditor = () => {
             setSelectedSketch(sketch);
           }}
           selectedSketchIndex={selectedSketchIndex}
+          setAdding={(isAdding) => {
+            setAdding(isAdding);
+            if (isAdding) setSelectedSketchIndex(undefined);
+          }}
         />
-
-        <div className="flex flex-col justify-center ml-auto mr-4">
-          <div
-            className={classnames(
-              "text-sm text-white button-small whitespace-nowrap hover:bg-purple-600 active:bg-purple-800",
-              { "bg-purple-700": adding },
-              { "bg-purple-700": !adding }
-            )}
-            onClick={() => {
-              setSelectedSketchIndex(undefined);
-              setAdding(true);
-            }}
-          >
-            <AiOutlinePlus className="mr-2" />
-            Add sketch from gallery
-          </div>
-        </div>
       </div>
 
       {!adding && selectedSketchIndex > -1 && sketch && (

@@ -6,7 +6,9 @@ import { Link } from "react-router-dom";
 import InstallPython, { needsPython } from "~/components/InstallPython";
 import SoulmatesContainer from "~/containers/soulmates";
 import UserContainer from "~/containers/user";
+import useSavedFirmware from "~/hooks/useSavedFirmware";
 import Logo from "~/images/logo.svg";
+import soulmateName from "~/utils/soulmateName";
 import { types } from "~/utils/types";
 
 import Header from "../components/Header";
@@ -23,6 +25,9 @@ const Config = () => {
     selectedSoulmate,
     usbFlashingPercentage,
   } = SoulmatesContainer.useContainer();
+
+  const savedFirmware = useSavedFirmware(selectedSoulmate);
+  const sketches = savedFirmware?.sketches || [sketch];
 
   // Flashing
 
@@ -337,7 +342,7 @@ const Config = () => {
           {!justFlashed && (
             <button
               className="flex-shrink-0 footer-button"
-              onClick={() => flashSketches([sketch], config)}
+              onClick={() => flashSketches(sketches, config)}
             >
               {flashing ? (
                 <>
@@ -351,7 +356,7 @@ const Config = () => {
                   </progress>
                 </>
               ) : (
-                <>Save changes to my Soulmate</>
+                <>Reconfigure {soulmateName(selectedSoulmate)}</>
               )}
             </button>
           )}

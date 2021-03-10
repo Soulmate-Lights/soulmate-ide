@@ -264,7 +264,7 @@ const SoulmatesContainer = () => {
   useEffect(() => {
     if (!isElectron()) return;
 
-    if (!port || port !== previousPort.current) {
+    if (!port && port !== previousPort.current) {
       if (previousPort.current && !port) {
         notificationsContainer.notify(`Soulmate disconnected.`);
       }
