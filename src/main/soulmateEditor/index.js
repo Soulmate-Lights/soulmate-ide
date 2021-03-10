@@ -32,12 +32,17 @@ const SoulmateEditor = () => {
     {
       set: setSketches,
       update: updateSketch,
-      push: addSketch,
+      push: pushSketch,
       remove: removeSketch,
       removeAt: removeSketchAt,
       insertAt: insertSketchAt,
     },
   ] = useList(savedFirmware?.sketches);
+
+  // Hack for uniqueness
+  const addSketch = (sketch) => {
+    if (!sketches.includes(sketch)) pushSketch(sketch);
+  };
 
   const {
     state: sketch,
