@@ -156,9 +156,6 @@ const Simulator = ({
     height *= 0.5;
   }
 
-  if (height < 10) height = 10;
-  if (width < 10) width = 10;
-
   // Event listeners
 
   let stopResizeTimeout = useRef();

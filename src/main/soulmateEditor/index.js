@@ -197,6 +197,13 @@ const SoulmateEditor = () => {
 
 const SoulmateEditorWrapper = () => {
   const { selectedSoulmate } = SoulmatesContainer.useContainer();
+  if (!selectedSoulmate) {
+    return (
+      <div className="flex flex-col items-center p-8 mx-auto my-auto text-center text-gray-400 bg-white rounded-lg shadow w-72">
+        <span>No Soulmate selected!</span>
+      </div>
+    );
+  }
   if (!selectedSoulmate?.config) return <Logo className="loading-spinner" />;
   return <SoulmateEditor />;
 };

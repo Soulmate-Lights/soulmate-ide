@@ -51,8 +51,10 @@ export const calculateDimensions = (rows, cols) => {
     height = width / ratio;
   }
 
-  height = parseInt(height / rows) * rows;
-  width = parseInt(width / cols) * cols;
+  // height = parseInt(height / rows) * rows;
+  // width = parseInt(width / cols) * cols;
+  if (height < 20) height = 20;
+  if (width < 20) width = 20;
 
   return { width, height };
 };

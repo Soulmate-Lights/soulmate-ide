@@ -1,6 +1,5 @@
 import { Helmet } from "react-helmet";
 import { HiOutlineLightningBolt } from "react-icons/hi";
-import { RiUsbLine } from "react-icons/ri";
 import { Link } from "react-router-dom";
 
 import InstallPython, { needsPython } from "~/components/InstallPython";
@@ -67,8 +66,7 @@ const Config = () => {
   if (!selectedSoulmate) {
     return (
       <div className="flex flex-col items-center p-8 mx-auto my-auto text-center bg-white rounded-lg shadow w-72">
-        <RiUsbLine className="w-24 h-24 mb-4 opacity-80" />
-        <span>Connect your Soulmate with a USB cable to configure.</span>
+        <span>No Soulmate selected!</span>
       </div>
     );
   }
