@@ -36,7 +36,7 @@ const Breadcrumb = ({ sections, title }) => (
           <div className="flex items-center">
             {i > 0 && <Chevron />}
             <Link
-              className="font-normal text-gray-600 dark-mode:text-gray-200 hover:text-gray-700 dark-mode:hover:text-white text-md"
+              className="text-gray-600 dark-mode:text-gray-200 hover:text-gray-700 dark-mode:hover:text-white text-md"
               to={to}
             >
               {title}

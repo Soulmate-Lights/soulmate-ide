@@ -96,7 +96,8 @@ const SoulmatesContainer = () => {
   const [soulmates, setSoulmates] = useState([]);
   const [selectedSoulmate, setSelectedSoulmate] = useState(undefined);
   const usbSoulmate = soulmates.find((s) => s.type === "usb");
-  const needsSetup = !!port && !usbSoulmate?.config;
+  const needsSetup =
+    selectedSoulmate?.type === "usb" && !selectedSoulmate?.config;
 
   const [savedConfig, _setSavedConfig] = useState({
     ...defaultConfig,

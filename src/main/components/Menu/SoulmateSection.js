@@ -7,6 +7,7 @@ import { NavLink, useLocation } from "react-router-dom";
 import SoulmateMenuItem from "~/components/SoulmatesMenu/SoulmateMenuItem";
 import SoulmatesContainer from "~/containers/soulmates";
 import UserContainer from "~/containers/user";
+import history from "~/utils/history";
 import isElectron from "~/utils/isElectron";
 import soulmateName from "~/utils/soulmateName";
 
@@ -45,19 +46,12 @@ const SoulmatesSection = () => {
                 )}
                 key={i}
                 onClick={() => {
-                  setSelectedSoulmate(
-                    soulmate === selectedSoulmate ? undefined : soulmate
-                  );
+                  setSelectedSoulmate(soulmate);
+                  history.push("/soulmate");
                 }}
               >
                 <SoulmateMenuItem
                   className="bg-transparent dark-mode:text-white"
-                  onSelect={() => {
-                    console.log("select");
-                    setSelectedSoulmate(
-                      soulmate === selectedSoulmate ? undefined : soulmate
-                    );
-                  }}
                   selected={soulmate === selectedSoulmate}
                   soulmate={soulmate}
                 />
@@ -93,7 +87,7 @@ const SoulmatesSection = () => {
 
           {isElectron() && (
             <>
-              {!needsSetup && usbConnected && (
+              {!needsSetup && usbConnected && selectedSoulmate.type === "usb" && (
                 <NavLink
                   activeClassName={activeLinkClass}
                   className={linkClass}

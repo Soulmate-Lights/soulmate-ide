@@ -10,10 +10,11 @@ import useSavedFirmware from "~/hooks/useSavedFirmware";
 import useSWR from "~/hooks/useSwr";
 import Logo from "~/images/logo.svg";
 import { emptyCode } from "~/utils/code";
+import groupSketchesToUsers from "~/utils/groupSketchesToUsers";
+import history from "~/utils/history";
 import { ALL_SKETCHES_PATH } from "~/utils/network";
+import soulmateName from "~/utils/soulmateName";
 
-import groupSketchesToUsers from "../utils/groupSketchesToUsers";
-import soulmateName from "../utils/soulmateName";
 import { SketchTabs } from "./tabs";
 
 const SoulmateEditor = () => {
@@ -24,7 +25,6 @@ const SoulmateEditor = () => {
     usbFlashingPercentage,
   } = SoulmatesContainer.useContainer();
   const { config = {} } = selectedSoulmate || {};
-  const [adding, setAdding] = useState(false);
   const savedFirmware = useSavedFirmware(selectedSoulmate);
 
   const [
@@ -38,6 +38,8 @@ const SoulmateEditor = () => {
       insertAt: insertSketchAt,
     },
   ] = useList(savedFirmware?.sketches);
+
+  const [adding, setAdding] = useState(sketches.length === 0);
 
   // Hack for uniqueness
   const addSketch = (sketch) => {
@@ -88,6 +90,8 @@ const SoulmateEditor = () => {
             className: "bg-red-200 border-red-300",
           },
           {
+            className: "bg-purple-200 text-white",
+            linkClass: "text-bold text-white",
             title: flashing ? (
               <>
                 <Logo className="w-4 h-4 mr-4 spinner" />
@@ -197,13 +201,7 @@ const SoulmateEditor = () => {
 
 const SoulmateEditorWrapper = () => {
   const { selectedSoulmate } = SoulmatesContainer.useContainer();
-  if (!selectedSoulmate) {
-    return (
-      <div className="flex flex-col items-center p-8 mx-auto my-auto text-center text-gray-400 bg-white rounded-lg shadow w-72">
-        <span>No Soulmate selected!</span>
-      </div>
-    );
-  }
+  if (!selectedSoulmate) history.push("/gallery");
   if (!selectedSoulmate?.config) return <Logo className="loading-spinner" />;
   return <SoulmateEditor />;
 };
