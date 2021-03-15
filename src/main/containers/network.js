@@ -1,8 +1,8 @@
 import normalizeUrl from "normalize-url";
-import { createContainer } from "unstated-next";
 
 import { auth0Promise } from "~/utils/auth";
 import { headersAndCredentials } from "~/utils/network";
+import { createContainer } from "~/utils/unstated-next";
 
 let initialSimulatorUrl =
   localStorage.simulatorUrl || "https://firmware.soulmatelights.com:8082/build";

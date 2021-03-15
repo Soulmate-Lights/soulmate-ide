@@ -1,4 +1,4 @@
-import { createContainer } from "unstated-next";
+import { createContainer } from "~/utils/unstated-next";
 
 function Notifications() {
   const [notifications, setNotifications] = useState([]);

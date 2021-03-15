@@ -3,7 +3,6 @@ import map from "lodash/map";
 import takeRight from "lodash/takeRight";
 import uniqBy from "lodash/uniqBy";
 import { useState } from "react";
-import { createContainer } from "unstated-next";
 
 import NetworkContainer from "~/containers/network";
 import NotificationsContainer from "~/containers/notifications";
@@ -12,6 +11,7 @@ import { flashBuild } from "~/utils/flash";
 import isElectron from "~/utils/isElectron";
 import { getPort, getPorts, PortListener } from "~/utils/ports";
 import soulmateName from "~/utils/soulmateName";
+import { createContainer } from "~/utils/unstated-next";
 
 const saveBuild = (sketches, config, id) => {
   fetch("https://editor.soulmatelights.com/builds", {
