@@ -6,7 +6,10 @@ import { hot } from "react-hot-loader";
 import { HashRouter, Route, Router, Switch } from "react-router-dom";
 import { LastLocationProvider } from "react-router-last-location";
 
-import { IDEProvider } from "~/containers/providers";
+import BuildsContainer from "~/containers/builds";
+import NetworkContainer from "~/containers/network";
+import NotificationsContainer from "~/containers/notifications";
+import SoulmatesContainer from "~/containers/soulmates";
 import Logo from "~/images/logo.svg";
 import history from "~/utils/history";
 import isElectron from "~/utils/isElectron";
@@ -60,9 +63,15 @@ const Main = () => {
 };
 
 const WrappedMain = () => (
-  <IDEProvider>
-    <Main />
-  </IDEProvider>
+  <NetworkContainer.Provider>
+    <NotificationsContainer.Provider>
+      <SoulmatesContainer.Provider>
+        <BuildsContainer.Provider>
+          <Main />
+        </BuildsContainer.Provider>
+      </SoulmatesContainer.Provider>
+    </NotificationsContainer.Provider>
+  </NetworkContainer.Provider>
 );
 
 const HotMain = hot(module)((params) => <WrappedMain {...params} />);
