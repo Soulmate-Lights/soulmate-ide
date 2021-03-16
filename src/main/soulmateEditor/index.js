@@ -1,3 +1,4 @@
+import { HiOutlineArrowCircleRight } from "react-icons/hi";
 import { useList, useStateList } from "react-use";
 
 import CodeEditor from "~/components/codeEditor";
@@ -104,7 +105,10 @@ const SoulmateEditor = () => {
                 </progress>
               </>
             ) : (
-              <>Save changes</>
+              <span className="flex flex-row text-md">
+                <HiOutlineArrowCircleRight className="mr-2 text-xl" />
+                Save patterns
+              </span>
             ),
             onClick: () => flashSketches(sketches, config),
           },

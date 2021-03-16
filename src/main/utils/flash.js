@@ -1,18 +1,18 @@
-if (!window.remote) {
-  window.remote = undefined;
-}
+if (!window.remote) window.remote = undefined;
 
-import isElectron from "~/utils/isElectron";
+import isElectron, { isPackaged } from "~/utils/isElectron";
+
 const path = remote?.require("path");
-const IS_PROD = process.env.NODE_ENV === "production";
+const isProduction = process.env.NODE_ENV === "production";
 const getAppPath = remote?.app.getAppPath;
-const isPackaged = remote?.process.mainModule.filename.indexOf(".asar") !== -1;
 const rootPath = require("electron-root-path")?.rootPath;
-
-const dir =
-  IS_PROD && isPackaged
+const builderPath = () => {
+  return isProduction && isPackaged()
     ? path?.join(path.dirname(getAppPath()), "..", "./builder")
     : path?.join(rootPath, "builder");
+};
+
+const cwd = builderPath();
 
 // Flashing
 
@@ -20,13 +20,7 @@ const dir =
 const getNumberFromFlashOutput = (data) => {
   try {
     const text = data.toString().trim();
-    if (
-      text.includes("Writing at 0x0000e000") ||
-      text.includes("Writing at 0x00001000")
-    ) {
-      return;
-    }
-
+    if (text.includes("Writing at 0x0000")) return;
     let number = parseInt(text.split("...")[1].split("(")[1].split(" ")[0]);
     number = Math.min(number, 100);
     return number;
@@ -45,7 +39,7 @@ export const installDependencies = () => {
         console.log("Pip not installed. Installing pip.");
         childProcess.execSync(`/usr/bin/python ./get-pip.py`);
         childProcess.execSync(`/usr/bin/python -m pip install "pyserial>=3.5`, {
-          cwd: dir,
+          cwd,
         });
       }
     });
@@ -53,7 +47,7 @@ export const installDependencies = () => {
     // `which` doesn't seem to work in Windows.
     // const which = remote && remote?.require("which");
     // const python = which.sync("python");
-    // childProcess.execSync(`${python} ./get-pip.py`, { cwd: dir });
+    // childProcess.execSync(`${python} ./get-pip.py`, { cwd });
     // const pip = which.sync("pip");
     childProcess.exec(`pip install "pyserial>=3.5"`);
   }
@@ -84,7 +78,7 @@ export const flashBuild = async (port, file, progressCallback) => {
   console.log("[flashBuild]", { cmd });
 
   const childProcess = require("child_process");
-  const child = childProcess.exec(cmd, { cwd: dir });
+  const child = childProcess.exec(cmd, { cwd });
   child.stderr.on("data", (line) => (errorOutput = [...errorOutput, line]));
   child.stdout.on("data", (data) => {
     const number = getNumberFromFlashOutput(data);
