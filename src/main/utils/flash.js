@@ -77,7 +77,7 @@ export const flashBuild = async (port, file, progressCallback) => {
 
   console.log("[flashBuild]", { cmd });
 
-  const childProcess = require("child_process");
+  const childProcess = window.require("child_process");
   const child = childProcess.exec(cmd, { cwd });
   child.stderr.on("data", (line) => (errorOutput = [...errorOutput, line]));
   child.stdout.on("data", (data) => {
