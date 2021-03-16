@@ -10,8 +10,7 @@ const getAppPath = remote?.app.getAppPath;
 const isPackaged =
   remote?.process.mainModule.filename.indexOf(".asar") !== -1;
 const rootPath = remoteRequire("electron-root-path")?.rootPath;
-// TODO: Use the preload.js version of this so we don't need to use `remote?.require` any more
-const childProcess = remote?.require("child_process");
+const childProcess = remoteRequire("child_process");
 const dir =
   IS_PROD && isPackaged
     ? path?.join(path.dirname(getAppPath()), "..", "./builder")
