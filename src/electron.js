@@ -35,6 +35,11 @@ function createWindow() {
     ""
   );
 
+  // This allows non-context-aware modules to be loaded in the renderer process.
+  // This will not be an option in Electron 12, so we should probably look to remove
+  // this whenever Electron is updated.
+  // Used for the new nodeIntegration / require logic for app.asar changes.
+  // https://github.com/electron/electron/issues/18397
   app.allowRendererProcessReuse = false;
 
   mainWindow = new BrowserWindow({
