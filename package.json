@@ -1,4 +1,4 @@
-{
+{  
   "name": "Soulmate",
   "browserslist": [
     "last 1 Chrome versions",
@@ -145,8 +145,6 @@
   },
   "build": {
     "afterSign": "electron-builder-notarize",
-    "buildDependenciesFromSource": true,
-    "npmRebuild": true,
     "afterPack": "./afterpack",
     "win": {
       "publish": {

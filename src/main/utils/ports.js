@@ -34,6 +34,7 @@ export class PortListener {
   constructor(path, callback) {
     this.path = path;
     this.callback = callback;
+
     if (path) {
       console.log("Listening to", path);
       const port = new serialport(path, { baudRate: 115200 });
