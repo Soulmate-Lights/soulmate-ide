@@ -7,6 +7,7 @@ import * as SentryReact from "@sentry/react";
 import { Integrations } from "@sentry/tracing";
 import React from "react";
 import ReactDOM from "react-dom";
+import { hot } from "react-hot-loader";
 
 import isDev from "~/utils/isDev";
 
@@ -32,7 +33,9 @@ self.MonacoEnvironment = {
   },
 };
 
-ReactDOM.render(<Main />, document.getElementById("root"));
+const HotMain = hot(module)((params) => <Main {...params} />);
+ReactDOM.render(<HotMain />, document.getElementById("root"));
+module.hot?.accept();
 
 window.dataLayer = window.dataLayer || [];
 function gtag() {
@@ -40,5 +43,3 @@ function gtag() {
 }
 gtag("js", new Date());
 gtag("config", "UA-131034779-4");
-
-module.hot?.accept();

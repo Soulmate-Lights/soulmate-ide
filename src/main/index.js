@@ -2,7 +2,6 @@ import "react-resizable/css/styles.css";
 
 import classnames from "classnames";
 import React, { Suspense } from "react";
-import { hot } from "react-hot-loader";
 import { HashRouter, Route, Router, Switch } from "react-router-dom";
 import { LastLocationProvider } from "react-router-last-location";
 
@@ -10,6 +9,7 @@ import BuildsContainer from "~/containers/builds";
 import NetworkContainer from "~/containers/network";
 import NotificationsContainer from "~/containers/notifications";
 import SoulmatesContainer from "~/containers/soulmates";
+import UserContainer from "~/containers/user";
 import Logo from "~/images/logo.svg";
 import history from "~/utils/history";
 import isElectron from "~/utils/isElectron";
@@ -67,13 +67,13 @@ const WrappedMain = () => (
     <NotificationsContainer.Provider>
       <SoulmatesContainer.Provider>
         <BuildsContainer.Provider>
-          <Main />
+          <UserContainer.Provider>
+            <Main />
+          </UserContainer.Provider>
         </BuildsContainer.Provider>
       </SoulmatesContainer.Provider>
     </NotificationsContainer.Provider>
   </NetworkContainer.Provider>
 );
 
-const HotMain = hot(module)((params) => <WrappedMain {...params} />);
-
-export default HotMain;
+export default WrappedMain;

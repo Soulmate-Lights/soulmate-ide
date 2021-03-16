@@ -240,10 +240,6 @@ const IDE = () => {
   );
 };
 
-const WrappedIde = (props) => (
-  <UserContainer.Provider>
-    <IDE {...props} />
-  </UserContainer.Provider>
-);
+const WrappedIde = (props) => <IDE {...props} />;
 
 export default WrappedIde;
