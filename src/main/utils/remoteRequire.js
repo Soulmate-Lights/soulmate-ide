@@ -1,3 +1,6 @@
+// This isn't used, but I'm preserving it just in case we need it in future
+// once we can't use nodeIntegration or process reuse.
+
 import isDev from "./isDev";
 import isElectron from "./isElectron";
 import { isMac } from "./isMac";

@@ -1,4 +1,4 @@
-const serialport = remote?.require("serialport");
+const serialport = require("serialport");
 
 export const getPort = async () => {
   const results = await serialport.list();

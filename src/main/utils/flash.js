@@ -3,14 +3,12 @@ if (!window.remote) {
 }
 
 import isElectron from "~/utils/isElectron";
-import { remoteRequire } from "~/utils/remoteRequire";
 const path = remote?.require("path");
 const IS_PROD = process.env.NODE_ENV === "production";
 const getAppPath = remote?.app.getAppPath;
-const isPackaged =
-  remote?.process.mainModule.filename.indexOf(".asar") !== -1;
-const rootPath = remoteRequire("electron-root-path")?.rootPath;
-const childProcess = remoteRequire("child_process");
+const isPackaged = remote?.process.mainModule.filename.indexOf(".asar") !== -1;
+const rootPath = require("electron-root-path")?.rootPath;
+const childProcess = require("child_process");
 const dir =
   IS_PROD && isPackaged
     ? path?.join(path.dirname(getAppPath()), "..", "./builder")
