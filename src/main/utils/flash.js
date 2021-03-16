@@ -31,7 +31,7 @@ const getNumberFromFlashOutput = (data) => {
 
 /* Make sure we have pyserial installed */
 export const installDependencies = () => {
-  const childProcess = require("child_process");
+  const childProcess = window.require("child_process");
   if (remote.require("os").platform() === "darwin") {
     const hasPip = childProcess.exec("/usr/bin/python -m pip");
     hasPip.on("close", (result) => {

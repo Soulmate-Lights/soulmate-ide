@@ -13,7 +13,7 @@ export const remoteRequire = (module) => {
   if (isMac() && !isDev && isElectron()) {
     const fullPath = path.join(
       remote.app.getAppPath(),
-      `../app-${remote.process.arch}.asar/node_modules/serialport`
+      `../app-${remote.process.arch}.asar/node_modules/${module}`
     );
     return remote.require(fullPath);
   }
