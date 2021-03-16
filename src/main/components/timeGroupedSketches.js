@@ -18,7 +18,7 @@ const groupSketches = (sketches) => {
   return keys.map((key) => ({ key, sketches: groupedSketches[key] }));
 };
 
-const TimeGroupedSketches = ({ sketches, mine }) => {
+const TimeGroupedSketches = ({ sketches, mine, onClick }) => {
   const groups = groupSketches(sketches);
 
   return (
@@ -31,22 +31,26 @@ const TimeGroupedSketches = ({ sketches, mine }) => {
               {_.capitalize(moment(sketches[0].updated_at).fromNow())}
             </h3>
             <div className="flex flex-row flex-wrap">
-              {sortBy(sketches, (s) => s.updated_at).map((sketch) => (
-                <Link
-                  key={sketch.id}
-                  to={
-                    mine
-                      ? `/my-patterns/${sketch.id}`
-                      : `/gallery/${sketch.id}-${slugify(sketch.name)}`
-                  }
-                >
-                  <Sketch
-                    className="w-24 h-24 m-1 md:mb-4 md:mr-4"
-                    sketch={sketch}
-                    width={144}
-                  />
-                </Link>
-              ))}
+              {sortBy(sketches, (s) => s.updated_at).map((sketch) => {
+                let path = mine
+                  ? `/my-patterns/${sketch.id}`
+                  : `/gallery/${sketch.id}-${slugify(sketch.name)}`;
+
+                if (onClick) path = false;
+                return (
+                  <Link
+                    key={sketch.id}
+                    onClick={() => onClick && onClick(sketch)}
+                    to={path}
+                  >
+                    <Sketch
+                      className="w-24 h-24 m-1 md:mb-4 md:mr-4"
+                      sketch={sketch}
+                      width={144}
+                    />
+                  </Link>
+                );
+              })}
             </div>
           </div>
         );

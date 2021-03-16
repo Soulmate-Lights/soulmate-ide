@@ -2,7 +2,7 @@ import CodeEditor from "~/components/codeEditor";
 import Simulator from "~/components/Simulator";
 import useBuild from "~/hooks/useBuild";
 
-const config = { rows: 30, cols: 30 };
+const config = { rows: 24, cols: 24 };
 
 const Example = ({ code, className }) => {
   const [editorCode, setEditorCode] = useState(code);
@@ -30,8 +30,8 @@ const Example = ({ code, className }) => {
         build={build}
         classpame="flex flex-col flex-shrink w-5/12 bg-gray-300 dark-mode:bg-gray-800"
         config={config}
+        hideResolutionMenu
         minWidth={400}
-        showConfig={false}
       />
     </div>
   );

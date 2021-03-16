@@ -33,6 +33,7 @@ import NewPlaylist from "./newPlaylist";
 import Playlist from "./playlist";
 import Playlists from "./playlists";
 import Settings from "./Settings";
+import SoulmateEditor from "./soulmateEditor";
 import Tutorial from "./tutorial";
 import User from "./user";
 
@@ -145,6 +146,10 @@ const IDE = () => {
                       {isElectron() ? <Flash /> : <Download />}
                     </Route>
 
+                    <Route exact path="/soulmate">
+                      <SoulmateEditor />
+                    </Route>
+
                     <Route exact path="/config">
                       <Config />
                     </Route>
@@ -235,10 +240,6 @@ const IDE = () => {
   );
 };
 
-const WrappedIde = (props) => (
-  <UserContainer.Provider>
-    <IDE {...props} />
-  </UserContainer.Provider>
-);
+const WrappedIde = (props) => <IDE {...props} />;
 
 export default WrappedIde;

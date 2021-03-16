@@ -300,31 +300,36 @@ const Editor = ({ id }) => {
               </div>
             )}
           </div>
-          <div className="flex-row items-center hidden p-4 py-3 text-sm border-t h-14 dark-mode:border-gray-700 md:flex">
-            <span className="px-4 font-light">Public URL</span>
-            <input
-              className="flex-grow h-8 px-2 py-2 text-gray-900 border rounded-l dark-mode:bg-gray-200 dark-mode:border-gray-300"
-              onClick={(e) => {
-                e.target.select();
-              }}
-              readOnly
-              value={`https://editor.soulmatelights.com/gallery/${sketch.id}`}
-            />
-            <span className="inline-flex rounded-md shadow-sm">
-              <button
-                className="inline-flex items-center h-8 text-xs font-medium text-white bg-purple-600 border border-transparent rounded rounded-l-none px-2.5 leading-4 hover:bg-purple-500 focus:outline-none focus:border-purple-700 focus:shadow-outline-purple active:bg-purple-700 transition ease-in-out duration-150"
-                onClick={() => {
-                  navigator.clipboard.writeText(
-                    `https://editor.soulmatelights.com/gallery/${sketch.id}`
-                  );
-                  notify("Copied link to clipboard");
+
+          {sketch.id && (
+            <div className="flex-row items-center hidden p-4 py-3 text-sm border-t h-14 dark-mode:border-gray-700 md:flex">
+              <span className="px-4 font-light">Public URL</span>
+              <input
+                className="flex-grow h-8 px-2 py-2 text-gray-900 border rounded-l dark-mode:bg-gray-200 dark-mode:border-gray-300"
+                onClick={(e) => {
+                  e.target.select();
                 }}
-                type="button"
-              >
-                <HiOutlineLink />
-              </button>
-            </span>
-          </div>
+                readOnly
+                value={`https://editor.soulmatelights.com/gallery/${sketch.id}`}
+              />
+              <span className="inline-flex rounded-md shadow-sm">
+                <button
+                  className="inline-flex items-center h-8 text-xs font-medium text-white bg-purple-600 border border-transparent rounded rounded-l-none px-2.5 leading-4 hover:bg-purple-500 focus:outline-none focus:border-purple-700 focus:shadow-outline-purple active:bg-purple-700 transition ease-in-out duration-150"
+                  onClick={() => {
+                    navigator.clipboard.writeText(
+                      `https://editor.soulmatelights.com/gallery/${
+                        sketch.id
+                      }-${slugify(sketch.name)}`
+                    );
+                    notify("Copied link to clipboard");
+                  }}
+                  type="button"
+                >
+                  <HiOutlineLink />
+                </button>
+              </span>
+            </div>
+          )}
         </div>
 
         <div className="flex flex-col border-l dark-mode:border-gray-700">

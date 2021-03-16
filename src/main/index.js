@@ -2,7 +2,6 @@ import "react-resizable/css/styles.css";
 
 import classnames from "classnames";
 import React, { Suspense } from "react";
-import { hot } from "react-hot-loader";
 import { HashRouter, Route, Router, Switch } from "react-router-dom";
 import { LastLocationProvider } from "react-router-last-location";
 
@@ -10,6 +9,7 @@ import BuildsContainer from "~/containers/builds";
 import NetworkContainer from "~/containers/network";
 import NotificationsContainer from "~/containers/notifications";
 import SoulmatesContainer from "~/containers/soulmates";
+import UserContainer from "~/containers/user";
 import Logo from "~/images/logo.svg";
 import history from "~/utils/history";
 import isElectron from "~/utils/isElectron";
@@ -20,24 +20,13 @@ const Ide = React.lazy(() => import("./ide"));
 
 const SpecificRouter = isElectron() ? HashRouter : Router;
 
-const MainProvider = ({ children }) => (
-  <NetworkContainer.Provider>
-    <NotificationsContainer.Provider>
-      <SoulmatesContainer.Provider>
-        <BuildsContainer.Provider>{children}</BuildsContainer.Provider>
-      </SoulmatesContainer.Provider>
-    </NotificationsContainer.Provider>
-  </NetworkContainer.Provider>
-);
-
 const Main = () => {
-  const marketing =
-    document.location.href === "https://www.soulmatelights.com/";
-
+  const href = document.location.href;
+  const marketing = href === "https://www.soulmatelights.com/";
   const showTopBar = isMac() && isElectron();
 
   return (
-    <div className="relative flex flex-col flex-grow h-full dark-mode:bg-gray-300 dark-mode:bg-gray-700">
+    <div className="relative flex flex-col flex-grow h-full dark-mode:bg-gray-700">
       {showTopBar && (
         <div
           className={classnames("absolute w-full h-7 border-b ", {
@@ -54,27 +43,37 @@ const Main = () => {
             "pt-7": showTopBar,
           })}
         >
-          <MainProvider>
-            <SpecificRouter history={history}>
-              <LastLocationProvider>
-                <Switch>
-                  <Route path={marketing ? "/" : "/marketing"}>
-                    <Marketing />
-                  </Route>
+          <SpecificRouter history={history}>
+            <LastLocationProvider>
+              <Switch>
+                <Route path={marketing ? "/" : "/marketing"}>
+                  <Marketing />
+                </Route>
 
-                  <Route>
-                    <Ide />
-                  </Route>
-                </Switch>
-              </LastLocationProvider>
-            </SpecificRouter>
-          </MainProvider>
+                <Route>
+                  <Ide />
+                </Route>
+              </Switch>
+            </LastLocationProvider>
+          </SpecificRouter>
         </div>
       </Suspense>
     </div>
   );
 };
 
-const HotMain = hot(module)((params) => <Main {...params} />);
+const WrappedMain = () => (
+  <NetworkContainer.Provider>
+    <NotificationsContainer.Provider>
+      <SoulmatesContainer.Provider>
+        <BuildsContainer.Provider>
+          <UserContainer.Provider>
+            <Main />
+          </UserContainer.Provider>
+        </BuildsContainer.Provider>
+      </SoulmatesContainer.Provider>
+    </NotificationsContainer.Provider>
+  </NetworkContainer.Provider>
+);
 
-export default HotMain;
+export default WrappedMain;

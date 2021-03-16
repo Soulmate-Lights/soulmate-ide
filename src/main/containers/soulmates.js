@@ -3,7 +3,6 @@ import map from "lodash/map";
 import takeRight from "lodash/takeRight";
 import uniqBy from "lodash/uniqBy";
 import { useState } from "react";
-import { createContainer } from "unstated-next";
 
 import NetworkContainer from "~/containers/network";
 import NotificationsContainer from "~/containers/notifications";
@@ -12,6 +11,7 @@ import { flashBuild } from "~/utils/flash";
 import isElectron from "~/utils/isElectron";
 import { getPort, getPorts, PortListener } from "~/utils/ports";
 import soulmateName from "~/utils/soulmateName";
+import { createContainer } from "~/utils/unstated-next";
 
 const saveBuild = (sketches, config, id) => {
   fetch("https://editor.soulmatelights.com/builds", {
@@ -96,7 +96,8 @@ const SoulmatesContainer = () => {
   const [soulmates, setSoulmates] = useState([]);
   const [selectedSoulmate, setSelectedSoulmate] = useState(undefined);
   const usbSoulmate = soulmates.find((s) => s.type === "usb");
-  const needsSetup = !!port && !usbSoulmate?.config;
+  const needsSetup =
+    selectedSoulmate?.type === "usb" && !selectedSoulmate?.config;
 
   const [savedConfig, _setSavedConfig] = useState({
     ...defaultConfig,
@@ -168,6 +169,7 @@ const SoulmatesContainer = () => {
     }
 
     if (!build) {
+      console.log("No build received");
       setFlashing(false);
       return false;
     }
@@ -263,7 +265,7 @@ const SoulmatesContainer = () => {
   useEffect(() => {
     if (!isElectron()) return;
 
-    if (!port || port !== previousPort.current) {
+    if (!port && port !== previousPort.current) {
       if (previousPort.current && !port) {
         notificationsContainer.notify(`Soulmate disconnected.`);
       }

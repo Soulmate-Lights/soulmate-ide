@@ -1,5 +1,4 @@
 import { Helmet } from "react-helmet";
-import { useContainer } from "unstated-next";
 import { Mode, useLightSwitch } from "use-light-switch";
 
 import CodeEditor from "~/components/codeEditor";
@@ -8,6 +7,7 @@ import Simulator from "~/components/Simulator";
 import SoulmatesContainer from "~/containers/soulmates";
 import UserContainer from "~/containers/user";
 import Logo from "~/images/logo.svg";
+import { useContainer } from "~/utils/unstated-next";
 
 import screenshotDark from "./dark.png";
 import examples from "./examples";

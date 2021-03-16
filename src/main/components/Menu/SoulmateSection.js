@@ -7,6 +7,7 @@ import { NavLink, useLocation } from "react-router-dom";
 import SoulmateMenuItem from "~/components/SoulmatesMenu/SoulmateMenuItem";
 import SoulmatesContainer from "~/containers/soulmates";
 import UserContainer from "~/containers/user";
+import history from "~/utils/history";
 import isElectron from "~/utils/isElectron";
 import soulmateName from "~/utils/soulmateName";
 
@@ -36,22 +37,21 @@ const SoulmatesSection = () => {
           <div>
             {soulmates.map((soulmate, i) => (
               <div
-                className="px-4 py-2 bg-transparent cursor-pointer dark-mode:hover:bg-gray-800 hover:bg-gray-300"
+                className={classnames(
+                  "px-4 py-2 bg-transparent cursor-pointer dark-mode:hover:bg-gray-800 hover:bg-gray-300 rounded mb-1",
+                  {
+                    "bg-gray-300 dark-mode:bg-gray-800":
+                      soulmate === selectedSoulmate,
+                  }
+                )}
                 key={i}
                 onClick={() => {
-                  setSelectedSoulmate(
-                    soulmate === selectedSoulmate ? undefined : soulmate
-                  );
+                  setSelectedSoulmate(soulmate);
+                  history.push("/soulmate");
                 }}
               >
                 <SoulmateMenuItem
                   className="bg-transparent dark-mode:text-white"
-                  onSelect={() => {
-                    console.log("select");
-                    setSelectedSoulmate(
-                      soulmate === selectedSoulmate ? undefined : soulmate
-                    );
-                  }}
                   selected={soulmate === selectedSoulmate}
                   soulmate={soulmate}
                 />
@@ -78,16 +78,16 @@ const SoulmatesSection = () => {
               activeClassName={activeLinkClass}
               className={linkClass}
               location={location}
-              to="/flash"
+              to="/soulmate"
             >
               <HiOutlineLightningBolt className={iconClass} />
-              Change Patterns
+              Edit Patterns
             </NavLink>
           )}
 
           {isElectron() && (
             <>
-              {!needsSetup && usbConnected && (
+              {!needsSetup && usbConnected && selectedSoulmate.type === "usb" && (
                 <NavLink
                   activeClassName={activeLinkClass}
                   className={linkClass}

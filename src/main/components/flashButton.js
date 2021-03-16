@@ -14,6 +14,7 @@ const FlashButton = ({
   selectedSketches,
   showMenu = true,
   disabled = false,
+  className,
 }) => {
   const { isAdmin } = UserContainer.useContainer();
   const {
@@ -76,7 +77,7 @@ const FlashButton = ({
   return (
     <div className="flex items-center justify-end flex-shrink w-auto w-full ml-auto space-x-4">
       <div className="flex flex-row items-center flex-grow block">
-        <div className="flex flex-row items-start justify-start flex-grow mr-auto space-x-4">
+        <div className="flex flex-row items-start justify-start flex-grow mr-8 space-x-4">
           {isAdmin() && selectedSketches.length >= 1 && (
             <button
               className="footer-button"
@@ -95,14 +96,18 @@ const FlashButton = ({
         </div>
 
         <button
-          className={classnames("footer-button space-x-4", {
-            "rounded-r-none": showMenu,
-            "cursor-auto": disableFlashButton,
-            "hover:bg-purple-500": !disableFlashButton,
-            "bg-purple-500": disableFlashButton,
-            "flex-grow-0": true,
-            "whitespace-pre": true,
-          })}
+          className={classnames(
+            "footer-button space-x-4",
+            {
+              "rounded-r-none": showMenu,
+              "cursor-auto": disableFlashButton,
+              "hover:bg-purple-500": !disableFlashButton,
+              "bg-purple-500": disableFlashButton,
+              "flex-grow-0": true,
+              "whitespace-pre": true,
+            },
+            className
+          )}
           disabled={disableFlashButton}
           onClick={flash}
           type="button"
