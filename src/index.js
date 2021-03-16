@@ -35,7 +35,6 @@ self.MonacoEnvironment = {
 
 const HotMain = hot(module)((params) => <Main {...params} />);
 ReactDOM.render(<HotMain />, document.getElementById("root"));
-module.hot?.accept();
 
 window.dataLayer = window.dataLayer || [];
 function gtag() {

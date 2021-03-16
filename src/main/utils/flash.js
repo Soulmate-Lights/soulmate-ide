@@ -7,7 +7,8 @@ import { remoteRequire } from "~/utils/remoteRequire";
 const path = remote?.require("path");
 const IS_PROD = process.env.NODE_ENV === "production";
 const getAppPath = remote?.app.getAppPath;
-const isPackaged = remote?.process.mainModule.filename.indexOf(".asar") !== -1;
+const isPackaged =
+  remote?.process.mainModule.filename.indexOf(".asar") !== -1;
 const rootPath = remoteRequire("electron-root-path")?.rootPath;
 // TODO: Use the preload.js version of this so we don't need to use `remote?.require` any more
 const childProcess = remote?.require("child_process");
