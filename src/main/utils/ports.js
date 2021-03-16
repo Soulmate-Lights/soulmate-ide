@@ -1,4 +1,5 @@
-const serialport = window.require("serialport");
+let serialport;
+if (window.require) serialport = window.require("serialport");
 
 export const getPort = async () => {
   const results = await serialport.list();
