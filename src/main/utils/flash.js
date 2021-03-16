@@ -8,7 +8,7 @@ const IS_PROD = process.env.NODE_ENV === "production";
 const getAppPath = remote?.app.getAppPath;
 const isPackaged = remote?.process.mainModule.filename.indexOf(".asar") !== -1;
 const rootPath = require("electron-root-path")?.rootPath;
-const childProcess = require("child_process");
+
 const dir =
   IS_PROD && isPackaged
     ? path?.join(path.dirname(getAppPath()), "..", "./builder")
@@ -37,6 +37,7 @@ const getNumberFromFlashOutput = (data) => {
 
 /* Make sure we have pyserial installed */
 export const installDependencies = () => {
+  const childProcess = require("child_process");
   if (remote.require("os").platform() === "darwin") {
     const hasPip = childProcess.exec("/usr/bin/python -m pip");
     hasPip.on("close", (result) => {
@@ -82,6 +83,7 @@ export const flashBuild = async (port, file, progressCallback) => {
 
   console.log("[flashBuild]", { cmd });
 
+  const childProcess = require("child_process");
   const child = childProcess.exec(cmd, { cwd: dir });
   child.stderr.on("data", (line) => (errorOutput = [...errorOutput, line]));
   child.stdout.on("data", (data) => {
