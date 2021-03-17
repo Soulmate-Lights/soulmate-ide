@@ -8,7 +8,7 @@ function createContainer(useHook) {
   function Provider(props) {
     var value = useHook(props.initialState);
 
-    if (isDev()) {
+    if (isDev) {
       if (!React.__containerCache) React.__containerCache = {};
       React.__containerCache[useHook.name] = value;
     }
@@ -23,7 +23,7 @@ function createContainer(useHook) {
   function useContainer() {
     var value = React.useContext(Context);
 
-    if (!value && isDev()) {
+    if (!value && isDev) {
       value = React.__containerCache[useHook.name];
     }
 
