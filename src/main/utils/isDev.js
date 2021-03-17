@@ -1,7 +1,7 @@
 let isDev = false;
 if (typeof electron !== "undefined") {
   try {
-    require("electron-is-dev");
+    isDev = require("electron-is-dev");
   } catch (e) {
     // First time requiring this module fails on fs.existsSync
   }

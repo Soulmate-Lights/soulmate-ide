@@ -22,7 +22,7 @@ SentryReact.init({
     "https://d71092cee93f41a1a5c02404ad236f82@o141622.ingest.sentry.io/5433159",
   integrations: [new Integrations.BrowserTracing(), new RewriteFrames()],
   release: require("../package.json").version,
-  environment: process.env.NODE_ENV,
+  environment: isDev() ? "development" : "production",
 });
 
 self.MonacoEnvironment = {

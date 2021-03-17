@@ -3,11 +3,10 @@ if (!window.remote) window.remote = undefined;
 import isElectron, { isPackaged } from "~/utils/isElectron";
 
 const path = remote?.require("path");
-const isProduction = process.env.NODE_ENV !== "development";
 const getAppPath = remote?.app.getAppPath;
 const rootPath = require("electron-root-path")?.rootPath;
 const builderPath = () => {
-  return isProduction && isPackaged()
+  return isPackaged()
     ? path?.join(path.dirname(getAppPath()), "..", "./builder")
     : path?.join(rootPath, "builder");
 };
