@@ -69,7 +69,7 @@ jobs:
 
       - name: Yarn
         run: |
-          yarn install
+          yarn --frozen-lockfile
           yarn clean
           yarn node-gyp clean
 
