@@ -1,6 +1,6 @@
 import React from "react";
 
-const isDev = process.env.NODE_ENV === "development";
+import isDev from "~/utils/isDev";
 
 function createContainer(useHook) {
   var Context = React.createContext(null);
