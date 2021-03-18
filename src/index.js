@@ -18,12 +18,14 @@ require("./index.pcss");
 
 SentryReact.init({
   dsn:
-    !isDev &&
+    !isDev() &&
     "https://d71092cee93f41a1a5c02404ad236f82@o141622.ingest.sentry.io/5433159",
   integrations: [new Integrations.BrowserTracing(), new RewriteFrames()],
   release: require("../package.json").version,
-  environment: isDev ? "development" : "production",
+  environment: isDev() ? "development" : "production",
 });
+
+console.log("Dev: ", isDev());
 
 self.MonacoEnvironment = {
   getWorker: function (_moduleId, _label) {

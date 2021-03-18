@@ -5,7 +5,7 @@ import isElectron, { isPackaged } from "~/utils/isElectron";
 const cwd = () => {
   const path = remote?.require("path");
   const getAppPath = remote?.app.getAppPath;
-  const rootPath = require("electron-root-path")?.rootPath;
+  const rootPath = window.require("electron-root-path")?.rootPath;
   return isPackaged()
     ? path?.join(path.dirname(getAppPath()), "..", "./builder")
     : path?.join(rootPath, "builder");

@@ -149,7 +149,7 @@ const Dashboard = () => {
           )}
 
           <div className="p-4 text-xs text-center opacity-25 dark-mode:text-white">
-            Version {packagedotjson.version} {isDev && "(dev)"}
+            Version {packagedotjson.version} {isDev() && "(dev)"}
           </div>
         </main>
       </div>

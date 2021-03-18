@@ -16,7 +16,7 @@ const ErrorMessage = () => (
 );
 
 const ErrorBoundary = (props) => {
-  if (isDev) return props.children;
+  if (isDev()) return props.children;
 
   return (
     <Sentry.ErrorBoundary fallback={ErrorMessage}>
