@@ -321,10 +321,7 @@ const Config = () => {
             {flashing && <>Your Soulmate is being configured. Hang tight!</>}
 
             {justFlashed && !dirty && (
-              <>
-                You&apos;re all set! Your Soulmate&apos;s LEDs should be green.
-                Time to add some patterns!
-              </>
+              <>You&apos;re all set! Time to add some patterns!</>
             )}
           </span>
 
