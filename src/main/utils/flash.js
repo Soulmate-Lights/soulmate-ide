@@ -2,16 +2,14 @@ if (!window.remote) window.remote = undefined;
 
 import isElectron, { isPackaged } from "~/utils/isElectron";
 
-const path = remote?.require("path");
-const getAppPath = remote?.app.getAppPath;
-const rootPath = require("electron-root-path")?.rootPath;
-const builderPath = () => {
+const cwd = () => {
+  const path = remote?.require("path");
+  const getAppPath = remote?.app.getAppPath;
+  const rootPath = require("electron-root-path")?.rootPath;
   return isPackaged()
     ? path?.join(path.dirname(getAppPath()), "..", "./builder")
     : path?.join(rootPath, "builder");
 };
-
-const cwd = builderPath();
 
 // Flashing
 
@@ -38,7 +36,7 @@ export const installDependencies = () => {
         console.log("Pip not installed. Installing pip.");
         childProcess.execSync(`/usr/bin/python ./get-pip.py`);
         childProcess.execSync(`/usr/bin/python -m pip install "pyserial>=3.5`, {
-          cwd,
+          cwd: cwd(),
         });
       }
     });
@@ -74,10 +72,10 @@ export const flashBuild = async (port, file, progressCallback) => {
 
   const cmd = `${python} ./esptool.py --chip esp32 -p ${port} --baud 1500000 --before default_reset --after hard_reset write_flash -z --flash_mode dio --flash_freq 80m --flash_size detect 0xe000 ./ota_data_initial.bin 0x1000 ./bootloader.bin 0x10000 ${file} 0x8000 ./partitions.bin`;
 
-  console.log("[flashBuild]", { cmd, cwd });
+  console.log("[flashBuild]", { cmd, cwd: cwd() });
 
   const childProcess = window.require("child_process");
-  const child = childProcess.exec(cmd, { cwd });
+  const child = childProcess.exec(cmd, { cwd: cwd() });
   child.stderr.on("data", (line) => (errorOutput = [...errorOutput, line]));
   child.stdout.on("data", (data) => {
     const number = getNumberFromFlashOutput(data);
