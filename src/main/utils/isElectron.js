@@ -3,5 +3,5 @@ export default () => {
 };
 
 export const isPackaged = () => {
-  remote?.process.mainModule.filename.indexOf(".asar") !== -1;
+  return remote?.process.mainModule.filename.indexOf(".asar") !== -1;
 };
