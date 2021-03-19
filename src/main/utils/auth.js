@@ -7,41 +7,35 @@ import { headersAndCredentials } from "~/utils/network";
 
 import isElectron from "./isElectron";
 
-let redirect_uri = window.location.origin;
-if (isElectron()) redirect_uri = "https://editor.soulmatelights.com/";
-window.createAuth0Client = createAuth0Client;
-
 const config = {
   domain: "yellow-boat-0900.auth0.com",
   client_id: "OsKmsunrgzhFv2znzUHpd9JsFSsOl46o",
   audience: "https://editor.soulmatelights.com/",
   scope: "openid profile email offline_access",
   cacheLocation: "localstorage",
-  redirect_uri: redirect_uri,
+  redirect_uri: isElectron()
+    ? "https://editor.soulmatelights.com/"
+    : window.location.origin,
   useRefreshTokens: true,
 };
+
+const specialKey = `@@auth0spajs@@::${config.client_id}::${config.audience}::${config.scope}`;
 
 export var auth0Promise = () => {};
 if (window.crypto) {
   window.auth0Promise = auth0Promise = createAuth0Client(config);
 }
 
-const specialKey = `@@auth0spajs@@::${config.client_id}::${config.audience}::${config.scope}`;
-
 if (isElectron()) {
-  const username = window.require("os").userInfo().username;
-  ipcRenderer.invoke("get-password", username).then((key) => {
-    if (key) localStorage[specialKey] = key;
-  });
+  ipcRenderer
+    .invoke("get-password", window.require("os").userInfo().username)
+    .then((key) => {
+      if (key) localStorage[specialKey] = key;
+    });
 }
-
-// TODO:
-// const refreshToken = await keytar.getPassword(keytarService, keytarAccount)
-// keytar.setPassword(keytarService, keytarAccount, refreshToken)
 
 // Special URLs used for login
 const host = "https://editor.soulmatelights.com";
-const clientSideUrl = (path) => normalizeUrl(host + "/" + path);
 const url = (path) => normalizeUrl(host + "/" + path);
 
 // HTTP
@@ -67,8 +61,7 @@ export const logIn = async () => {
     const id = Math.random();
 
     // Log in on the server
-    const url = clientSideUrl(`/desktop-sign-in#${id}`);
-    electron.shell.openExternal(url);
+    electron.shell.openExternal(url(`/desktop-sign-in#${id}`));
 
     // And now just ping it until we hear back
     return new Promise((resolve) => {
@@ -78,8 +71,11 @@ export const logIn = async () => {
         clearInterval(interval);
         localStorage[specialKey] = response.token;
 
-        const username = window.require("os").userInfo().username;
-        ipcRenderer.invoke("set-password", username, response.token);
+        ipcRenderer.invoke(
+          "set-password",
+          window.require("os").userInfo().username,
+          response.token
+        );
 
         remote.getCurrentWindow().show();
         resolve(auth0.getUser());
@@ -120,7 +116,7 @@ export const logBackIn = async () => {
   const authToken = localStorage[specialKey];
 
   if (pathname === "/desktop-sign-in") {
-    const redirect_uri = clientSideUrl(`/desktop-callback#${code}`);
+    const redirect_uri = url(`/desktop-callback#${code}`);
 
     if (token && authToken) {
       await postWithToken("/save-token", { code, token: authToken });
