@@ -324,7 +324,6 @@ const Config = () => {
               <>You&apos;re all set! Time to add some patterns!</>
             )}
           </span>
-
           {dirty && (
             <button
               className="text-gray-500 bg-white footer-button"
@@ -355,7 +354,6 @@ const Config = () => {
               )}
             </button>
           )}
-
           {justFlashed && (
             <Link className="flex-shrink-0 footer-button" to="/soulmate">
               <HiOutlineLightningBolt className="w-6 h-6 mr-3 transition ease-in-out duration-150" />

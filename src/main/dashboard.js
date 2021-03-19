@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import Sketch from "~/components/sketch";
 import UserContainer from "~/containers/user";
 import useSWR from "~/hooks/useSwr";
+import DiscordLogo from "~/images/discord.svg";
 import isDev from "~/utils/isDev";
 import isElectron from "~/utils/isElectron";
 import { isMac, isWindows } from "~/utils/isMac";
@@ -44,9 +45,6 @@ const Dashboard = () => {
                 LED firmware
               </span>
             </h2>
-            <p className="max-w-md mx-auto mt-3 text-base text-purple-500 sm:text-lg md:mt-5 md:text-xl md:max-w-3xl">
-              {"Making LED art easy and fun. Let's get started."}
-            </p>
             <div className="mx-auto mt-5 sm:flex sm:justify-center md:mt-8">
               {!userDetails && (
                 <div className="shadow rounded-md">
@@ -65,6 +63,16 @@ const Dashboard = () => {
                 >
                   Gallery
                 </Link>
+              </div>
+              <div className="mt-3 shadow rounded-md sm:mt-0 sm:ml-3">
+                <a
+                  className="flex items-center justify-center w-full px-8 py-3 text-base font-medium text-white bg-purple-600 border border-transparent leading-6 rounded-md hover:bg-purple-500 focus:outline-none focus:border-purple-700 focus:shadow-outline-gray transition duration-150 ease-in-out md:py-4 md:text-lg md:px-10"
+                  href="https://discord.gg/tNMBn5p7"
+                  rel="noreferrer"
+                  target="_blank"
+                >
+                  <DiscordLogo className="w-8 h-8 mr-4 -my-4 -ml-4" /> Discord
+                </a>
               </div>
 
               {userDetails && (
