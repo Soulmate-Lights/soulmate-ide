@@ -7,12 +7,24 @@ import { headersAndCredentials } from "~/utils/network";
 
 import isElectron from "./isElectron";
 
+let redirectUri;
+if (isElectron()) redirectUri = "https://editor.soulmatelights.com/";
+window.createAuth0Client = createAuth0Client;
+
 const config = {
   domain: "yellow-boat-0900.auth0.com",
   clientId: "OsKmsunrgzhFv2znzUHpd9JsFSsOl46o",
   audience: "https://editor.soulmatelights.com/",
   scope: "openid profile email",
+  cacheLocation: "localstorage",
+  redirectUri,
+  useRefreshTokens: true,
 };
+
+export var auth0Promise = () => {};
+if (window.crypto) {
+  window.auth0Promise = auth0Promise = createAuth0Client(config);
+}
 
 const specialKey = `@@auth0spajs@@::${config.clientId}::${config.audience}::${config.scope}`;
 
@@ -21,6 +33,7 @@ const host = "https://editor.soulmatelights.com";
 const clientSideUrl = (path) => normalizeUrl(host + "/" + path);
 const url = (path) => normalizeUrl(host + "/" + path);
 
+// HTTP
 const get = async (path, params) => {
   return fetch(url(path) + "?" + new URLSearchParams(params), {
     ...(await headersAndCredentials()),
@@ -35,17 +48,6 @@ const postWithToken = async (path, params) => {
   }).then((d) => d.json());
 };
 
-export var auth0Promise = () => {};
-if (window.crypto) {
-  auth0Promise = createAuth0Client({
-    domain: config.domain,
-    client_id: config.clientId,
-    audience: config.audience,
-    cacheLocation: "localstorage",
-  });
-  window.auth0Promise = auth0Promise;
-}
-
 export const logIn = async () => {
   const auth0 = await auth0Promise;
 
@@ -55,7 +57,6 @@ export const logIn = async () => {
 
     // Log in on the server
     const url = clientSideUrl(`/desktop-sign-in#${id}`);
-    console.log(url);
     electron.shell.openExternal(url);
 
     // And now just ping it until we hear back
@@ -91,11 +92,15 @@ export const logBackIn = async () => {
 
   try {
     token = await auth0.getTokenSilently();
+    if (token) {
+      user = await auth0.getUser();
+      console.log("Welcome back!");
+    } else {
+      console.log("No token.");
+    }
   } catch (e) {
-    console.log("No token", e);
+    console.log("Exception getting token", e);
   }
-
-  if (token) user = await auth0.getUser();
 
   const authToken = localStorage[specialKey];
 
