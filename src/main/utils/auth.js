@@ -28,6 +28,13 @@ if (window.crypto) {
 
 const specialKey = `@@auth0spajs@@::${config.client_id}::${config.audience}::${config.scope}`;
 
+if (isElectron()) {
+  const username = window.require("os").userInfo().username;
+  ipcRenderer.invoke("get-password", username).then((key) => {
+    if (key) localStorage[specialKey] = key;
+  });
+}
+
 // TODO:
 // const refreshToken = await keytar.getPassword(keytarService, keytarAccount)
 // keytar.setPassword(keytarService, keytarAccount, refreshToken)
@@ -70,6 +77,10 @@ export const logIn = async () => {
         if (!response.token) return;
         clearInterval(interval);
         localStorage[specialKey] = response.token;
+
+        const username = window.require("os").userInfo().username;
+        ipcRenderer.invoke("set-password", username, response.token);
+
         remote.getCurrentWindow().show();
         resolve(auth0.getUser());
       }, 1000);
@@ -141,6 +152,9 @@ export const logOut = async () => {
   const auth0 = await auth0Promise;
 
   if (isElectron()) {
+    const username = window.require("os").userInfo().username;
+    ipcRenderer.invoke("delete-password", username);
+
     remote.require("electron").session.defaultSession.clearStorageData;
     auth0.logout();
   } else {

@@ -5,6 +5,7 @@ const isDev = require("electron-is-dev");
 const bonjour = require("bonjour")();
 const { autoUpdater } = require("electron-updater");
 const SentryElectron = require("@sentry/electron");
+const keytar = require("keytar");
 
 const options = {
   release: require("../package.json").version,
@@ -84,6 +85,18 @@ function createWindow() {
         mainWindow.webContents.send("soulmate", service);
       }
     });
+  });
+
+  ipcMain.handle("get-password", async (event, user) => {
+    return await keytar.getPassword("Soulmate IDE", user);
+  });
+
+  ipcMain.handle("set-password", async (event, user, pass) => {
+    return await keytar.setPassword("Soulmate IDE", user, pass);
+  });
+
+  ipcMain.handle("delete-password", async (event, user) => {
+    return await keytar.deletePassword("Soulmate IDE", user);
   });
 
   mainWindow.once("ready-to-show", mainWindow.show);
