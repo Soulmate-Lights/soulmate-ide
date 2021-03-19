@@ -7,17 +7,17 @@ import { headersAndCredentials } from "~/utils/network";
 
 import isElectron from "./isElectron";
 
-let redirectUri;
-if (isElectron()) redirectUri = "https://editor.soulmatelights.com/";
+let redirect_uri = window.location.origin;
+if (isElectron()) redirect_uri = "https://editor.soulmatelights.com/";
 window.createAuth0Client = createAuth0Client;
 
 const config = {
   domain: "yellow-boat-0900.auth0.com",
-  clientId: "OsKmsunrgzhFv2znzUHpd9JsFSsOl46o",
+  client_id: "OsKmsunrgzhFv2znzUHpd9JsFSsOl46o",
   audience: "https://editor.soulmatelights.com/",
-  scope: "openid profile email",
+  scope: "openid profile email offline_access",
   cacheLocation: "localstorage",
-  redirectUri,
+  redirect_uri: redirect_uri,
   useRefreshTokens: true,
 };
 
@@ -26,7 +26,11 @@ if (window.crypto) {
   window.auth0Promise = auth0Promise = createAuth0Client(config);
 }
 
-const specialKey = `@@auth0spajs@@::${config.clientId}::${config.audience}::${config.scope}`;
+const specialKey = `@@auth0spajs@@::${config.client_id}::${config.audience}::${config.scope}`;
+
+// TODO:
+// const refreshToken = await keytar.getPassword(keytarService, keytarAccount)
+// keytar.setPassword(keytarService, keytarAccount, refreshToken)
 
 // Special URLs used for login
 const host = "https://editor.soulmatelights.com";
@@ -73,8 +77,8 @@ export const logIn = async () => {
   } else {
     try {
       await auth0.loginWithPopup();
-    } catch {
-      await auth0.loginWithRedirect({ redirect_uri: url("/") });
+    } catch (e) {
+      console.error("Error logging in with popup", e);
     }
 
     return auth0.getUser();
