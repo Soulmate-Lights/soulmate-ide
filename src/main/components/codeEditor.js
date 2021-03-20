@@ -49,6 +49,7 @@ const CodeEditor = ({
   selection,
   autoFocus = false,
   autoFormat = true,
+  mine
 }) => {
   let monacoInstance = useRef(false);
   const [dirty, setDirty] = useState(false);
@@ -254,7 +255,9 @@ const CodeEditor = ({
             onClick={save}
             type="button"
           >
-            Preview ({isWindows() ? "CTRL" : "CMD"}+S)
+            {mine ? "Save changes" : "Preview"}
+            {' '}
+            ({isWindows() ? "CTRL" : "CMD"}+S)
           </button>
         </span>
       )}

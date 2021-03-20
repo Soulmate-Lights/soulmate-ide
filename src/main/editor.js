@@ -290,6 +290,7 @@ const Editor = ({ id }) => {
                 className="relative flex-grow flex-shrink min-w-0 min-h-0 bg-white"
                 code={code}
                 key={sketch.id}
+                mine={mine}
                 onChange={(code) => persistCode(sketch.id, code)}
                 onHesitation={setDirtyCode}
                 onSave={(code) => save(sketch.id, code)}
