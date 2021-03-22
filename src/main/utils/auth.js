@@ -71,11 +71,15 @@ export const logIn = async () => {
         clearInterval(interval);
         localStorage[specialKey] = response.token;
 
-        ipcRenderer.invoke(
-          "set-password",
-          window.require("os").userInfo().username,
-          response.token
-        );
+        try {
+          ipcRenderer.invoke(
+            "set-password",
+            window.require("os").userInfo().username,
+            response.token
+          );
+        } catch (e) {
+          console.log("Error saving to keytar:", e);
+        }
 
         remote.getCurrentWindow().show();
         resolve(auth0.getUser());
