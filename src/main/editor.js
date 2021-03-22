@@ -15,9 +15,9 @@ import Logo from "~/images/logo.svg";
 import { emptyCode } from "~/utils/code";
 import history from "~/utils/history";
 import { SKETCH_PATH, SKETCHES_PATH } from "~/utils/network";
-import slugify from "~/utils/slugify";
 
 import { PersonSection } from "./components/Header";
+import { sketchUrl } from "./utils/urlHelpers";
 
 const Editor = ({ id }) => {
   const { post, postDelete } = NetworkContainer.useContainer();
@@ -233,7 +233,7 @@ const Editor = ({ id }) => {
           !mine && { title: "Gallery", to: "/gallery" },
           !mine && {
             title: <PersonSection user={sketch.user} />,
-            to: `/gallery/user/${sketch.user.id}-${slugify(sketch.user.name)}`,
+            to: sketchUrl(sketch)
           },
           mine && { title: "My patterns", to: "/my-patterns" },
         ]}
@@ -311,16 +311,14 @@ const Editor = ({ id }) => {
                   e.target.select();
                 }}
                 readOnly
-                value={`https://editor.soulmatelights.com/gallery/${sketch.id}`}
+                value={`https://editor.soulmatelights.com${sketchUrl(sketch)}`}
               />
               <span className="inline-flex rounded-md shadow-sm">
                 <button
                   className="inline-flex items-center h-8 text-xs font-medium text-white bg-purple-600 border border-transparent rounded rounded-l-none px-2.5 leading-4 hover:bg-purple-500 focus:outline-none focus:border-purple-700 focus:shadow-outline-purple active:bg-purple-700 transition ease-in-out duration-150"
                   onClick={() => {
                     navigator.clipboard.writeText(
-                      `https://editor.soulmatelights.com/gallery/${
-                        sketch.id
-                      }-${slugify(sketch.name)}`
+                      `https://editor.soulmatelights.com${sketchUrl(sketch)}`
                     );
                     notify("Copied link to clipboard");
                   }}

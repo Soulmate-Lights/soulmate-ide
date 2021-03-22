@@ -13,6 +13,7 @@ import { isMac, isWindows } from "~/utils/isMac";
 import { ALL_SKETCHES_PATH } from "~/utils/network";
 
 import packagedotjson from "../../package.json";
+import { sketchUrl } from "./utils/urlHelpers";
 
 const Dashboard = () => {
   const { userDetails, login } = UserContainer.useContainer();
@@ -101,7 +102,7 @@ const Dashboard = () => {
                     <Link
                       className="relative m-2"
                       key={sketch.id}
-                      to={`/gallery/${sketch.id}`}
+                      to={sketchUrl(sketch)}
                     >
                       {sketch.user?.image && (
                         <img

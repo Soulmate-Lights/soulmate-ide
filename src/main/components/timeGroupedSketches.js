@@ -5,7 +5,8 @@ import { Link } from "react-router-dom";
 
 import Sketch from "~/components/sketch";
 import Logo from "~/images/logo.svg";
-import slugify from "~/utils/slugify";
+
+import { sketchUrl } from "../utils/urlHelpers";
 
 const groupSketches = (sketches) => {
   const monthName = (item) =>
@@ -18,7 +19,7 @@ const groupSketches = (sketches) => {
   return keys.map((key) => ({ key, sketches: groupedSketches[key] }));
 };
 
-const TimeGroupedSketches = ({ sketches, mine, onClick }) => {
+const TimeGroupedSketches = ({ sketches, onClick }) => {
   const groups = groupSketches(sketches);
 
   return (
@@ -32,9 +33,7 @@ const TimeGroupedSketches = ({ sketches, mine, onClick }) => {
             </h3>
             <div className="flex flex-row flex-wrap">
               {sortBy(sketches, (s) => s.updated_at).map((sketch) => {
-                let path = mine
-                  ? `/my-patterns/${sketch.id}`
-                  : `/gallery/${sketch.id}-${slugify(sketch.name)}`;
+                let path = sketchUrl(sketch);
 
                 if (onClick) path = false;
                 return (

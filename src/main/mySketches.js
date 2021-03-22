@@ -10,6 +10,8 @@ import Logo from "~/images/logo.svg";
 import history from "~/utils/history";
 import { SKETCHES_PATH } from "~/utils/network";
 
+import { sketchUrl } from "./utils/urlHelpers";
+
 const MySketches = () => {
   const { post } = NetworkContainer.useContainer();
   const { data: sketches, mutate } = useSWR(SKETCHES_PATH);
@@ -27,7 +29,7 @@ const MySketches = () => {
   const createSketchFromName = async () => {
     setLoading(true);
     const sketch = await createSketch(newSketchName);
-    history.push(`/my-patterns/${sketch.id}`);
+    history.push(sketchUrl(sketch));
   };
 
   return (

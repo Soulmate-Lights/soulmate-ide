@@ -5,5 +5,5 @@ export const sketchUrl = (sketch) => (
 )
 
 export const userUrl = (user) => (
-  `/user/${user.id}-${slugify(user.name)}`
+  `/gallery/user/${user.id}-${slugify(user.name)}`
 )
