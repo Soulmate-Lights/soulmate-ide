@@ -14,11 +14,9 @@ import Menu from "~/components/Menu";
 import Notifications from "~/components/notifications";
 import SoulmatesContainer from "~/containers/soulmates";
 import UserContainer from "~/containers/user";
-import useSWR from "~/hooks/useSwr";
 import Logo from "~/images/logo.svg";
 import history from "~/utils/history";
 import isElectron from "~/utils/isElectron";
-import { ALL_SKETCHES_PATH, SKETCHES_PATH } from "~/utils/network";
 
 import ErrorBoundary from "./components/ErrorBoundary";
 import Config from "./config";
@@ -38,9 +36,6 @@ import Tutorial from "./tutorial";
 import User from "./user";
 
 const IDE = () => {
-  useSWR(SKETCHES_PATH);
-  useSWR(ALL_SKETCHES_PATH);
-
   UserContainer.useContainer();
   const {
     needsSetup,

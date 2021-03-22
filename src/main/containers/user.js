@@ -24,8 +24,10 @@ const UserContainer = () => {
       ...userDetails,
     });
 
-    mutate();
-  }, [userDetails]);
+    if (userDetails) {
+      mutate();
+    }
+  }, [userDetails?.sub]);
 
   const login = async () => logIn().then(setUserDetails);
   const logout = async () => logOut().then(setUserDetails);
