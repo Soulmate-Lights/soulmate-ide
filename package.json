@@ -38,7 +38,7 @@
     "@hot-loader/react-dom": "^16.13.0",
     "@sentry/cli": "^1.62.0",
     "@sentry/integrations": "^5.24.2",
-    "@sentry/react": "^5.27.4",
+    "@sentry/react": "^6.2.3",
     "@sentry/tracing": "^5.24.2",
     "@svgr/parcel-plugin-svgr": "^5.4.0",
     "@szhsin/react-menu": "^1.5.0",
