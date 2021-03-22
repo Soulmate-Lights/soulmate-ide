@@ -11,6 +11,7 @@ function makeid(length) {
 }
 
 const renameDefines = (sketch, prefix) => {
+  if (!sketch) return sketch;
   if (!prefix) prefix = makeid(3);
   let defines = [];
 
@@ -32,7 +33,7 @@ const renameDefines = (sketch, prefix) => {
 
     sketch = sketch
       .split("\n")
-      .map((line) => line.replaceAll(regex, `${prefix}${define}`))
+      .map((line) => line.replace(regex, `${prefix}${define}`))
       .join("\n");
   });
 
