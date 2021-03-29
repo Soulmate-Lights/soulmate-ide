@@ -68,7 +68,7 @@ const Dashboard = () => {
               <div className="mt-3 shadow rounded-md sm:mt-0 sm:ml-3">
                 <a
                   className="flex items-center justify-center w-full px-8 py-3 text-base font-medium text-white bg-purple-600 border border-transparent leading-6 rounded-md hover:bg-purple-500 focus:outline-none focus:border-purple-700 focus:shadow-outline-gray transition duration-150 ease-in-out md:py-4 md:text-lg md:px-10"
-                  href="https://discord.gg/tNMBn5p7"
+                  href="https://discord.gg/W9wAKFkYyF"
                   rel="noreferrer"
                   target="_blank"
                 >
