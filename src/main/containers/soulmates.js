@@ -214,10 +214,9 @@ const SoulmatesContainer = () => {
     if (!isElectron()) return;
 
     setSelectedSoulmate(undefined);
-    setSoulmates(soulmates.filter((soulmate) => soulmate.type !== "usb"));
-
     let newSoulmate = { type: "usb", port, config: null };
-    setSoulmates([...soulmates, newSoulmate]);
+    const existingSoulmates = soulmates.filter(soulmate => soulmate.port !== port);
+    setSoulmates([...existingSoulmates, newSoulmate]);
     setSelectedSoulmate(newSoulmate);
 
     let receivedData;

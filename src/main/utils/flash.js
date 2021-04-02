@@ -35,10 +35,10 @@ export const installDependencies = () => {
       if (result !== 0) {
         console.log("Pip not installed. Installing pip.");
         childProcess.execSync(`/usr/bin/python ./get-pip.py`);
-        childProcess.execSync(`/usr/bin/python -m pip install "pyserial>=3.5`, {
-          cwd: cwd(),
-        });
       }
+      childProcess.execSync(`/usr/bin/python -m pip install "pyserial>=3.5"`, {
+        cwd: cwd(),
+      });
     });
   } else {
     // `which` doesn't seem to work in Windows.

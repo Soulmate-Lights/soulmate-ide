@@ -25,7 +25,7 @@ SentryReact.init({
   environment: isDev() ? "development" : "production",
 });
 
-console.log("Dev: ", isDev());
+if (isDev()) console.log("Running development environment");
 
 self.MonacoEnvironment = {
   getWorker: function (_moduleId, _label) {
