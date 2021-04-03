@@ -17,7 +17,7 @@ import history from "~/utils/history";
 import { SKETCH_PATH, SKETCHES_PATH } from "~/utils/network";
 
 import { PersonSection } from "./components/Header";
-import { sketchUrl } from "./utils/urlHelpers";
+import { sketchUrl, userUrl } from "./utils/urlHelpers";
 
 const Editor = ({ id }) => {
   const { post, postDelete } = NetworkContainer.useContainer();
@@ -233,7 +233,7 @@ const Editor = ({ id }) => {
           !mine && { title: "Gallery", to: "/gallery" },
           !mine && {
             title: <PersonSection user={sketch.user} />,
-            to: sketchUrl(sketch)
+            to: userUrl(sketch.user)
           },
           mine && { title: "My patterns", to: "/my-patterns" },
         ]}
