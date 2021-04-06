@@ -126,10 +126,7 @@
   "scripts": {
     "react-start": "parcel -p 3000 index.html",
     "react-build": "yarn build-worker && parcel build index.html --out-dir build --public-url / --no-source-maps",
-    "start-servers": "concurrently \"yarn --cwd services/build-server start\" \"docker run -p 8080:8080 -d elliottkember/wokwi-hexi\"",
     "start": "concurrently \"cross-env BROWSER=none yarn react-start\" \"wait-on http://localhost:3000 && electron . \" \"yarn build-worker-dev\"",
-    "start-local": "concurrently \"yarn start-servers\" \"yarn start-app-local\"",
-    "start-app-local": "concurrently \"cross-env local=true BROWSER=none yarn react-start\" \"wait-on http://localhost:3000 && electron . \" \"yarn build-worker-dev\"",
     "rebuild-electron": "yarn node-gyp clean && yarn electron-rebuild",
     "build": "yarn build-worker && parcel build index.html --out-dir build --public-url . --no-source-maps",
     "// build-app": "Use this for building the app locally to test out a production build",

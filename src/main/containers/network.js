@@ -18,12 +18,6 @@ if (localStorage.appServerUrl === "https://editor.soulmatelights.com/") {
 let initialAppServerUrl =
   localStorage.appServerUrl || "https://server.soulmatelights.com/";
 
-if (process.env.LOCAL) {
-  initialSimulatorUrl = "http://localhost:8081";
-  initialFirmwareUrl = "http://localhost:8080/build";
-  initialAppServerUrl = "http://localhost:3001/build";
-}
-
 function Config() {
   // TODO: Rename to simualtorUrl, firmwareUrl, appServerUrl
   const [simulator, setSimulator] = useState(initialSimulatorUrl);
