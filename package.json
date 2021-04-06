@@ -23,6 +23,9 @@
     "react-user": "^0.1.4",
     "serialport": "9.0.2"
   },
+  "optionalDependencies": {
+    "keytar": "^7.4.0"
+  },
   "devDependencies": {
     "@auth0/auth0-spa-js": "^1.13.6",
     "@babel/core": "^7.12.10",
