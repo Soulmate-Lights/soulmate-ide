@@ -10,6 +10,9 @@
     },
     "/firmware/": {
       "origin": "http://firmware.soulmatelights.com:8081/"
+    },
+    "/cdn/": {
+      "origin": "${EDGE_URL}"
     }
   }
 }
