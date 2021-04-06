@@ -142,7 +142,8 @@
     "web": "NODE_ENV=development parcel index.html --open -p 3000",
     "update-server": "(cd services/soulmate-server && ./update-ui.sh) && git add services/soulmate-server && git commit -m 'New server'",
     "bump": "yarn version --patch && git push && git push --tags",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "heroku-postbuild" : "yarn react-build"
   },
   "build": {
     "afterSign": "electron-builder-notarize",
