@@ -1,4 +1,4 @@
-// import "react-resizable/css/styles.css";
+import "react-resizable/css/styles.css";
 
 import classnames from "classnames";
 import React, { Suspense } from "react";
