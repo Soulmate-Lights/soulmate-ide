@@ -11,7 +11,7 @@ let initialFirmwareUrl =
   localStorage.firmwareUrl || "https://firmware.soulmatelights.com:8083/build";
 
 let initialAppServerUrl =
-  localStorage.appServerUrl || "https://editor.soulmatelights.com/";
+  localStorage.appServerUrl || "https://server.soulmatelights.com/";
 
 if (process.env.LOCAL) {
   initialSimulatorUrl = "http://localhost:8081";
