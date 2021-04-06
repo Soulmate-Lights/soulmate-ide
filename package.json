@@ -119,6 +119,7 @@
     "@auth0/auth0-spa-js": "./node_modules/@auth0/auth0-spa-js/dist/lib/auth0-spa-js.cjs.js",
     "react-dom": "@hot-loader/react-dom"
   },
+  "cacheDirectories": [".cache"],
   "scripts": {
     "react-start": "parcel -p 3000 index.html",
     "react-build": "yarn build-worker && parcel build index.html --out-dir build --public-url / --no-source-maps",
