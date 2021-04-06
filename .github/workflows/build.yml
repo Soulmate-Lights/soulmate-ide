@@ -4,8 +4,8 @@ name: Build/release
 
 on:
   push:
-    tags:
-      - "v*"
+    branches:
+      - "master"
 
 jobs:
   release:
@@ -28,6 +28,14 @@ jobs:
 
       - name: Check out Git repository
         uses: actions/checkout@v2
+
+      - name: "Automated Version Bump"
+        id: version-bump
+        uses: "phips28/gh-action-bump-version@master"
+        with:
+          tag-prefix: 'v'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - uses: actions/setup-python@v2
         with:
