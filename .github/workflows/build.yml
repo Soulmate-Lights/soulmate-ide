@@ -8,23 +8,8 @@ on:
       - "master"
 
 jobs:
-  bump:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check out Git repository
-        uses: actions/checkout@v2
-
-      - name: "Automated Version Bump"
-        id: version-bump
-        uses: "phips28/gh-action-bump-version@master"
-        with:
-          tag-prefix: 'v'
-        env:
-          GITHUB_TOKEN: ${{ secrets.PUSH_TOKEN }}
-
   release:
     runs-on: ${{ matrix.os }}
-    needs: bump
 
     timeout-minutes: 30
     env:
