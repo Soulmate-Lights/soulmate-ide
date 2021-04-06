@@ -146,7 +146,6 @@
     "install-arm": "npm_config_arch=$(uname -m) yarn",
     "build-with-dependencies-from-source": "yarn run electron-builder --config.buildDependenciesFromSource=true -mwl",
     "web": "NODE_ENV=development parcel index.html --open -p 3000",
-    "update-server": "(cd services/soulmate-server && ./update-ui.sh) && git add services/soulmate-server && git commit -m 'New server'",
     "bump": "yarn version --patch && git push && git push --tags",
     "prepare": "husky install",
     "heroku-postbuild": "yarn build-worker && parcel build index.html --out-dir build --no-source-maps && mv build/index.html build/_index.html"
