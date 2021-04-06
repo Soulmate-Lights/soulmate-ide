@@ -3,6 +3,14 @@
   "routes": {
     "/*.*": "/web",
     "/**": "index.html"
+  },
+  "proxies": {
+    "/emulator/": {
+      "origin": "http://firmware.soulmatelights.com:8080/"
+    },
+    "/firmware/": {
+      "origin": "http://firmware.soulmatelights.com:8081/"
+    }
   }
 }
 
