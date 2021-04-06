@@ -23,9 +23,6 @@ jobs:
       - name: Check out Git repository
         uses: actions/checkout@v2
 
-      - name: jest
-        run: npx jest
-
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -76,6 +73,9 @@ jobs:
           yarn --frozen-lockfile
           yarn clean
           yarn node-gyp clean
+
+      - name: jest
+        run: npx jest
 
       - name: Prepare for app notarization
         if: startsWith(matrix.os, 'macos')
