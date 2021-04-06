@@ -145,7 +145,7 @@
     "update-server": "(cd services/soulmate-server && ./update-ui.sh) && git add services/soulmate-server && git commit -m 'New server'",
     "bump": "yarn version --patch && git push && git push --tags",
     "prepare": "husky install",
-    "heroku-postbuild" : "yarn react-build && mkdir assets && mv build/* assets && mv assets build/assets && mv build/assets/index.html build/index.html"
+    "heroku-postbuild" : "yarn react-build && mkdir web && mv build/* web && mv web build/web && mv build/web/index.html build/index.html"
   },
   "build": {
     "afterSign": "electron-builder-notarize",
