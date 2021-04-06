@@ -19,10 +19,13 @@
     "electron-log": "^4.3.0",
     "electron-root-path": "^1.0.16",
     "electron-updater": "^4.3.8",
-    "keytar": "^7.4.0",
+    "express": "^4.17.1",
     "react-use": "^17.1.1",
     "react-user": "^0.1.4",
     "serialport": "9.0.2"
+  },
+  "optionalDependencies": {
+    "keytar": "^7.4.0"
   },
   "devDependencies": {
     "@auth0/auth0-spa-js": "^1.13.6",
@@ -117,13 +120,13 @@
     "@auth0/auth0-spa-js": "./node_modules/@auth0/auth0-spa-js/dist/lib/auth0-spa-js.cjs.js",
     "react-dom": "@hot-loader/react-dom"
   },
+  "cacheDirectories": [
+    ".cache"
+  ],
   "scripts": {
     "react-start": "parcel -p 3000 index.html",
     "react-build": "yarn build-worker && parcel build index.html --out-dir build --public-url / --no-source-maps",
-    "start-servers": "concurrently \"yarn --cwd services/build-server start\" \"docker run -p 8080:8080 -d elliottkember/wokwi-hexi\"",
     "start": "concurrently \"cross-env BROWSER=none yarn react-start\" \"wait-on http://localhost:3000 && electron . \" \"yarn build-worker-dev\"",
-    "start-local": "concurrently \"yarn start-servers\" \"yarn start-app-local\"",
-    "start-app-local": "concurrently \"cross-env local=true BROWSER=none yarn react-start\" \"wait-on http://localhost:3000 && electron . \" \"yarn build-worker-dev\"",
     "rebuild-electron": "yarn node-gyp clean && yarn electron-rebuild",
     "build": "yarn build-worker && parcel build index.html --out-dir build --public-url . --no-source-maps",
     "// build-app": "Use this for building the app locally to test out a production build",
@@ -140,10 +143,8 @@
     "install-arm": "npm_config_arch=$(uname -m) yarn",
     "build-with-dependencies-from-source": "yarn run electron-builder --config.buildDependenciesFromSource=true -mwl",
     "web": "NODE_ENV=development parcel index.html --open -p 3000",
-    "update-server": "(cd services/soulmate-server && ./update-ui.sh) && git add services/soulmate-server && git commit -m 'New server'",
-    "bump": "yarn version --patch && git push && git push --tags",
     "prepare": "husky install",
-    "heroku-postbuild" : "yarn react-build"
+    "heroku-postbuild": "yarn build-worker && parcel build index.html --out-dir build --no-source-maps && mv build/index.html build/_index.html"
   },
   "build": {
     "afterSign": "electron-builder-notarize",
