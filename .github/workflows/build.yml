@@ -20,7 +20,7 @@ jobs:
         with:
           tag-prefix: 'v'
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GIT_AUTH_TOKEN }}
 
   release:
     runs-on: ${{ matrix.os }}
@@ -35,15 +35,18 @@ jobs:
         os: [macos-10.15, windows-latest]
 
     steps:
+      - name: Check out Git repository
+        uses: actions/checkout@v2
+
+      - name: jest
+        run: npx jest
+
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
-
-      - name: Check out Git repository
-        uses: actions/checkout@v2
 
       - uses: actions/setup-python@v2
         with:
