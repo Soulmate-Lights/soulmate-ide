@@ -10,6 +10,11 @@ let initialSimulatorUrl =
 let initialFirmwareUrl =
   localStorage.firmwareUrl || "https://firmware.soulmatelights.com:8083/build";
 
+// Legacy URL
+if (localStorage.appServerUrl === "https://editor.soulmatelights.com/") {
+  localStorage.appServerUrl = "https://server.soulmatelights.com/";
+}
+
 let initialAppServerUrl =
   localStorage.appServerUrl || "https://server.soulmatelights.com/";
 
