@@ -1,5 +1,9 @@
 {
-  "root": "build/"
+  "root": "build/",
+  "routes": {
+    "assets/*": "/assets",
+    "/**": "index.html"
+  }
 }
 
 
