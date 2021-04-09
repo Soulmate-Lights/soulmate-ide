@@ -165,7 +165,7 @@ const SoulmatesContainer = () => {
       console.log("[flashSketches] Error getting full build", e);
       setError(e);
       setFlashing(false);
-      throw e;
+      return false;
     }
 
     if (!build) {
@@ -215,7 +215,9 @@ const SoulmatesContainer = () => {
 
     setSelectedSoulmate(undefined);
     let newSoulmate = { type: "usb", port, config: null };
-    const existingSoulmates = soulmates.filter(soulmate => soulmate.port !== port);
+    const existingSoulmates = soulmates.filter(
+      (soulmate) => soulmate.port !== port
+    );
     setSoulmates([...existingSoulmates, newSoulmate]);
     setSelectedSoulmate(newSoulmate);
 
