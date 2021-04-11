@@ -36,7 +36,7 @@
     "@babel/preset-env": "^7.10.2",
     "@babel/preset-react": "^7.10.1",
     "@babel/runtime": "^7.10.2",
-    "@elliottkember/leduino": "^1.0.7",
+    "@elliottkember/leduino": "^1.0.9",
     "@fullhuman/postcss-purgecss": "^2.3.0",
     "@hot-loader/react-dom": "^16.13.0",
     "@sentry/cli": "^1.62.0",
