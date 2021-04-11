@@ -98,7 +98,7 @@ const Settings = () => {
               onChange={setAppServer}
               options={[
                 {
-                  option: "https://editor.soulmatelights.com/",
+                  option: "https://server.soulmatelights.com/",
                   name: "Production",
                 },
                 {

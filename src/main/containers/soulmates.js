@@ -14,7 +14,7 @@ import soulmateName from "~/utils/soulmateName";
 import { createContainer } from "~/utils/unstated-next";
 
 const saveBuild = (sketches, config, id) => {
-  fetch("https://editor.soulmatelights.com/builds", {
+  fetch("https://server.soulmatelights.com/builds", {
     headers: {
       "Content-Type": "application/json",
     },
@@ -215,7 +215,9 @@ const SoulmatesContainer = () => {
 
     setSelectedSoulmate(undefined);
     let newSoulmate = { type: "usb", port, config: null };
-    const existingSoulmates = soulmates.filter(soulmate => soulmate.port !== port);
+    const existingSoulmates = soulmates.filter(
+      (soulmate) => soulmate.port !== port
+    );
     setSoulmates([...existingSoulmates, newSoulmate]);
     setSelectedSoulmate(newSoulmate);
 
