@@ -125,6 +125,7 @@
   },
   "cacheDirectories": [
     ".cache",
+    ".cache/yarn",
     "node_modules"
   ],
   "scripts": {
