@@ -35,18 +35,31 @@ if (isElectron()) {
 }
 
 // Special URLs used for login
-const host = "https://server.soulmatelights.com";
-const url = (path) => normalizeUrl(host + "/" + path);
+// const host = "https://editor.soulmatelights.com";
+// const url = (path) => normalizeUrl(host + "/" + path);
+
+const clientUrl = (path) =>
+  normalizeUrl(`https://editor.soulmatelights.com/${path}`);
+const serverUrl = (path) =>
+  normalizeUrl(`https://server.soulmatelights.com/${path}`);
 
 // HTTP
-const get = async (path, params) => {
-  return fetch(url(path) + "?" + new URLSearchParams(params), {
+// const getClient = async (path, params) => {
+//   return fetch(clientUrl(path) + "?" + new URLSearchParams(params), {
+//     ...(await headersAndCredentials()),
+//   }).then((d) => d.json());
+// };
+
+// HTTP
+const getServer = async (path, params) => {
+  const url = normalizeUrl(serverUrl(path) + "?" + new URLSearchParams(params));
+  return fetch(url, {
     ...(await headersAndCredentials()),
   }).then((d) => d.json());
 };
 
 const postWithToken = async (path, params) => {
-  return fetch(url(path), {
+  return fetch(serverUrl(path), {
     method: "post",
     ...(await headersAndCredentials()),
     body: JSON.stringify({ ...params }),
@@ -60,13 +73,13 @@ export const logIn = async () => {
     // Generate a random ID to share with the server
     const id = Math.random();
 
-    // Log in on the server
-    electron.shell.openExternal(url(`/desktop-sign-in#${id}`));
+    // Log in on the website
+    electron.shell.openExternal(clientUrl(`/desktop-sign-in#${id}`));
 
     // And now just ping it until we hear back
     return new Promise((resolve) => {
       const interval = setInterval(async () => {
-        const response = await get("/desktop-code", { code: id });
+        const response = await getServer("/desktop-code", { code: id });
         if (!response.token) return;
         clearInterval(interval);
         localStorage[specialKey] = response.token;
@@ -120,7 +133,7 @@ export const logBackIn = async () => {
   const authToken = localStorage[specialKey];
 
   if (pathname === "/desktop-sign-in") {
-    const redirect_uri = url(`/desktop-callback#${code}`);
+    const redirect_uri = clientUrl(`/desktop-callback#${code}`);
 
     if (token && authToken) {
       await postWithToken("/save-token", { code, token: authToken });
