@@ -34,23 +34,11 @@ if (isElectron()) {
     });
 }
 
-// Special URLs used for login
-// const host = "https://editor.soulmatelights.com";
-// const url = (path) => normalizeUrl(host + "/" + path);
-
 const clientUrl = (path) =>
   normalizeUrl(`https://editor.soulmatelights.com/${path}`);
 const serverUrl = (path) =>
   normalizeUrl(`https://server.soulmatelights.com/${path}`);
 
-// HTTP
-// const getClient = async (path, params) => {
-//   return fetch(clientUrl(path) + "?" + new URLSearchParams(params), {
-//     ...(await headersAndCredentials()),
-//   }).then((d) => d.json());
-// };
-
-// HTTP
 const getServer = async (path, params) => {
   const url = normalizeUrl(serverUrl(path) + "?" + new URLSearchParams(params));
   return fetch(url, {
@@ -58,7 +46,7 @@ const getServer = async (path, params) => {
   }).then((d) => d.json());
 };
 
-const postWithToken = async (path, params) => {
+const postServer = async (path, params) => {
   return fetch(serverUrl(path), {
     method: "post",
     ...(await headersAndCredentials()),
@@ -136,7 +124,7 @@ export const logBackIn = async () => {
     const redirect_uri = clientUrl(`/desktop-callback#${code}`);
 
     if (token && authToken) {
-      await postWithToken("/save-token", { code, token: authToken });
+      await postServer("/save-token", { code, token: authToken });
       window.location = redirect_uri;
       return user;
     } else {
@@ -145,7 +133,7 @@ export const logBackIn = async () => {
   } else if (pathname === "/desktop-callback") {
     try {
       await auth0.handleRedirectCallback();
-      await postWithToken("/save-token", { code, token: authToken });
+      await postServer("/save-token", { code, token: authToken });
     } catch (e) {
       console.log("Error parsing desktop-callback", e);
     }
