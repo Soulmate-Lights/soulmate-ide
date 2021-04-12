@@ -67,8 +67,12 @@ jobs:
         with:
           node-version: 12 # v15 causes "Error: Command failed: yarn" in Windows?
 
+      # Cache both Yarn cache directory and node_modules
       - uses: c-hive/gha-yarn-cache@v1
-
+      - uses: actions/cache@v2.1.0
+        with:
+          path: "**/node_modules"
+          key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
       - name: yarn --frozen-lockfile
         uses: nick-invision/retry@v2
         with:
