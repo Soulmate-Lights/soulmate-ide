@@ -1,3 +1,4 @@
+import sortBy from "lodash/sortBy";
 import { BsTerminal } from "react-icons/bs";
 import { FiAlertCircle, FiSettings } from "react-icons/fi";
 import { HiOutlineLightningBolt } from "react-icons/hi";
@@ -10,6 +11,7 @@ import UserContainer from "~/containers/user";
 import history from "~/utils/history";
 import isElectron from "~/utils/isElectron";
 import soulmateName from "~/utils/soulmateName";
+import { canStream, isLoaded } from "~/utils/streaming";
 
 const iconClass = "mr-3 h-6 w-6 transition ease-in-out duration-150";
 const menuSectionClass = `group flex items-center px-4 py-2 text-sm leading-5 font-medium rounded-md`;
@@ -27,21 +29,28 @@ const SoulmatesSection = () => {
   } = SoulmatesContainer.useContainer();
   const { isAdmin } = UserContainer.useContainer();
 
+  const sortedSoulmates = sortBy(soulmates, (s) =>
+    isLoaded(s) && canStream(s) ? s.name : "zzz"
+  );
+
   return (
     <>
-      {soulmates?.length > 0 && (
+      {sortedSoulmates?.length > 0 && (
         <>
           <hr className="mx-2 mt-4 app-border" />
           <div className={menuSectionClass}>Choose a Soulmate</div>
 
           <div>
-            {soulmates.map((soulmate, i) => (
+            {sortedSoulmates.map((soulmate, i) => (
               <div
                 className={classnames(
-                  "px-4 py-2 bg-transparent cursor-pointer dark-mode:hover:bg-gray-800 hover:bg-gray-300 rounded mb-1",
+                  "px-4 py-2 bg-transparent dark-mode:hover:bg-gray-800 rounded mb-1",
                   {
                     "bg-gray-300 dark-mode:bg-gray-800":
                       soulmate === selectedSoulmate,
+                    "hover:bg-gray-300 cursor-pointer":
+                      isLoaded(soulmate) && canStream(soulmate),
+                    "opacity-50": !isLoaded(soulmate) || !canStream(soulmate),
                   }
                 )}
                 key={i}

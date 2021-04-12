@@ -5,12 +5,9 @@ import sortBy from "lodash/sortBy";
 import { FaRegPlayCircle } from "react-icons/fa";
 
 import Soulmates from "~/containers/soulmates";
+import { canStream, isLoaded } from "~/utils/streaming";
 
 import SoulmateMenuItem from "./SoulmateMenuItem";
-
-const canStream = (soulmate) => {
-  return parseInt(soulmate.config?.version) >= 8 && soulmate.type !== "usb";
-};
 
 const SoulmatesMenu = ({
   buttonClassName,
