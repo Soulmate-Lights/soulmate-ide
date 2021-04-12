@@ -1,6 +1,7 @@
 import { auth0Promise } from "./auth";
 
 export const SKETCHES_PATH = "/sketches/list";
+export const USER_PATH = "/user";
 export const SKETCH_PATH = (id) => `/sketches/${id}`;
 export const ALL_SKETCHES_PATH = "/sketches/all";
 export const PLAYLISTS_PATH = "/my-playlists";
