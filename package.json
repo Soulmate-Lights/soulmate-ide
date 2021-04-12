@@ -124,7 +124,8 @@
     "react-dom": "@hot-loader/react-dom"
   },
   "cacheDirectories": [
-    ".cache"
+    ".cache",
+    "node_modules"
   ],
   "scripts": {
     "react-start": "parcel -p 3000 index.html",
