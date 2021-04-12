@@ -1103,10 +1103,10 @@
     dir-compare "^2.4.0"
     fs-extra "^9.0.1"
 
-"@elliottkember/leduino@^1.0.7":
-  version "1.0.7"
-  resolved "https://registry.yarnpkg.com/@elliottkember/leduino/-/leduino-1.0.7.tgz#b882f4f69fd34ecaa394d793564b5d29fbb1759f"
-  integrity sha512-jyFkXhdaV45lDGJtkKALEAEa+GgKQ4PUBMKdjduAdRiTbKgrPUT9gT/iJMuXaXnJAXBVe+4+aGIrWX/84Vxl5A==
+"@elliottkember/leduino@^1.0.9":
+  version "1.0.9"
+  resolved "https://registry.yarnpkg.com/@elliottkember/leduino/-/leduino-1.0.9.tgz#b7f6223338eb1be6821c1c676955bf5ff9b01fd1"
+  integrity sha512-yiSLTS91Qnc3RfMlGS6sR3HS/phwkewspXUrlS2G6DngzhpRvbuQkvhXr7VDPV8HIasRuNNQto40YsMlVpZwtg==
   dependencies:
     avr8js "^0.14.10"
     babel-core "^6.26.3"
@@ -9891,6 +9891,13 @@ prepend-http@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/prepend-http/-/prepend-http-2.0.0.tgz"
   integrity sha1-6SQ0v6XqjBn0HN/UAddBo8gZ2Jc=
+
+prerender-node@^3.2.5:
+  version "3.2.5"
+  resolved "https://registry.yarnpkg.com/prerender-node/-/prerender-node-3.2.5.tgz#536fc903f1e0141f6a38611ee7bbc23f2d0bf355"
+  integrity sha512-8vV2kXkYp82mgOqNbcQUBEzVEreB0khNxsASiHVRLfK9PR60mHg2m33QHe/TcOrr0XRsBFYK4j8FgmLMah9ZXw==
+  dependencies:
+    request "^2.88.0"
 
 prettier@2.2.1:
   version "2.2.1"

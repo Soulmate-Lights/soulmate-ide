@@ -88,11 +88,19 @@ function createWindow() {
   });
 
   ipcMain.handle("get-password", async (event, user) => {
-    return await keytar.getPassword("Soulmate IDE", user);
+    try {
+      return await keytar.getPassword("Soulmate IDE", user);
+    } catch (e) {
+      return false;
+    }
   });
 
   ipcMain.handle("set-password", async (event, user, pass) => {
-    return await keytar.setPassword("Soulmate IDE", user, pass);
+    try {
+      return await keytar.setPassword("Soulmate IDE", user, pass);
+    } catch (e) {
+      return false;
+    }
   });
 
   ipcMain.handle("delete-password", async (event, user) => {

@@ -165,7 +165,7 @@ const SoulmatesContainer = () => {
       console.log("[flashSketches] Error getting full build", e);
       setError(e);
       setFlashing(false);
-      throw e;
+      return false;
     }
 
     if (!build) {
