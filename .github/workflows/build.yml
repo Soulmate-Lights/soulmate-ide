@@ -13,6 +13,7 @@ on:
 jobs:
   release:
     runs-on: ${{ matrix.os }}
+    if: startsWith(github.ref, 'refs/tags/v')
 
     timeout-minutes: 30
     env:
@@ -89,9 +90,7 @@ jobs:
         run: "yarn build"
 
       - name: Release Mac
-        if: |
-          startsWith(matrix.os, 'macos') &&
-          startsWith(github.ref, 'refs/tags/v')
+        if: startsWith(matrix.os, 'macos')
         run: "yarn run electron-builder -m --publish always"
         env:
           API_KEY_ID: ${{ secrets.api_key_id }}
@@ -100,9 +99,7 @@ jobs:
           CSC_KEY_PASSWORD: ${{ secrets.mac_certs_password }}
 
       - name: Release Windows
-        if: |
-          startsWith(matrix.os, 'windows') &&
-          startsWith(github.ref, 'refs/tags/v')
+        if: startsWith(matrix.os, 'windows')
         run: "yarn run electron-builder -w --publish always"
 
       - name: Setup Sentry CLI
