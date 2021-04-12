@@ -68,9 +68,12 @@ jobs:
 
       - uses: c-hive/gha-yarn-cache@v1
 
-      - name: Yarn
-        run: |
-          yarn --frozen-lockfile
+      - name: yarn --frozen-lockfile
+        uses: nick-invision/retry@v2
+        with:
+          timeout_minutes: 10
+          max_attempts: 3
+          command: yarn --frozen-lockfile
 
       - name: jest
         run: npx jest
