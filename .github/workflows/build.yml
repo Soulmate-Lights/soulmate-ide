@@ -4,8 +4,8 @@ name: Build/release
 
 on:
   push:
-    branches:
-      - "master"
+    tags:
+      - "v*"
 
 jobs:
   release:
