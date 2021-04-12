@@ -23,17 +23,17 @@ jobs:
       - name: Check out Git repository
         uses: actions/checkout@v2
 
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-east-1
+      # - name: Configure AWS Credentials
+      #   uses: aws-actions/configure-aws-credentials@v1
+      #   with:
+      #     aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      #     aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      #     aws-region: us-east-1
 
-      - uses: actions/setup-python@v2
-        with:
-          python-version: "3.x" # Version range or exact version of a Python version to use, using SemVer's version range syntax
-          architecture: "x64" # optional x64 or x86. Defaults to x64 if not specified
+      # - uses: actions/setup-python@v2
+      #   with:
+      #     python-version: "3.x" # Version range or exact version of a Python version to use, using SemVer's version range syntax
+      #     architecture: "x64" # optional x64 or x86. Defaults to x64 if not specified
 
       - name: Setup Xcode version
         if: startsWith(matrix.os, 'macos')
