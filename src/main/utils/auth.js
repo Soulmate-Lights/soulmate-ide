@@ -35,7 +35,7 @@ if (isElectron()) {
 }
 
 // Special URLs used for login
-const host = "https://editor.soulmatelights.com";
+const host = "https://server.soulmatelights.com";
 const url = (path) => normalizeUrl(host + "/" + path);
 
 // HTTP
