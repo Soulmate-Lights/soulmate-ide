@@ -2,14 +2,13 @@ import * as SentryReact from "@sentry/react";
 
 import useSWR from "~/hooks/useSwr";
 import { logBackIn, logIn, logOut } from "~/utils/auth";
-import { SKETCHES_PATH } from "~/utils/network";
+import { SKETCHES_PATH, USER_PATH } from "~/utils/network";
 import { createContainer } from "~/utils/unstated-next";
-
-const admin = "google-oauth2|102941484361041922849";
 
 const UserContainer = () => {
   const [userDetails, setUserDetails] = useState(undefined);
   const { mutate } = useSWR(SKETCHES_PATH);
+  const { data: { admin } = {} } = useSWR(USER_PATH);
 
   useEffect(() => {
     logBackIn().then(setUserDetails);
@@ -24,14 +23,12 @@ const UserContainer = () => {
       ...userDetails,
     });
 
-    if (userDetails) {
-      mutate();
-    }
+    if (userDetails) mutate();
   }, [userDetails?.sub]);
 
   const login = async () => logIn().then(setUserDetails);
   const logout = async () => logOut().then(setUserDetails);
-  const isAdmin = () => userDetails?.sub === admin;
+  const isAdmin = () => admin;
 
   return { userDetails, login, logout, isAdmin };
 };
