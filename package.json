@@ -137,7 +137,7 @@
     "// build-worker": "Used internally",
     "build-worker": "parcel build node_modules/monaco-editor/esm/vs/editor/editor.worker.js -d build --no-source-maps",
     "build-worker-dev": "parcel build node_modules/monaco-editor/esm/vs/editor/editor.worker.js --no-source-maps",
-    "postinstall": "yarn run electron-builder install-app-deps",
+    "// postinstall": "yarn run electron-builder install-app-deps",
     "release": "yarn clean && yarn version --patch && yarn build && yarn rebuild-electron && AWS_PROFILE=soulmate-ide-updates electron-builder -mw --publish always",
     "clean": "rm -rf ./build ./.cache ./dist",
     "install-app-deps": "./postinstall.sh",
