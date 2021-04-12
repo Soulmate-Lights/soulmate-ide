@@ -84,8 +84,8 @@ jobs:
 
       - name: Release Mac
         if: |
-          - startsWith(matrix.os, 'macos')
-          - startsWith(github.ref, 'refs/tags/v')
+          startsWith(matrix.os, 'macos')
+          startsWith(github.ref, 'refs/tags/v')
         run: "yarn run electron-builder -m --publish always"
         env:
           API_KEY_ID: ${{ secrets.api_key_id }}
@@ -95,8 +95,8 @@ jobs:
 
       - name: Release Windows
         if: |
-          - startsWith(matrix.os, 'windows')
-          - startsWith(github.ref, 'refs/tags/v')
+          startsWith(matrix.os, 'windows')
+          startsWith(github.ref, 'refs/tags/v')
         run: "yarn run electron-builder -w --publish always"
 
       - name: Setup Sentry CLI
