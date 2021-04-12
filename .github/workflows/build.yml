@@ -83,7 +83,7 @@ jobs:
         run: "yarn build"
 
       - name: Release Mac
-        if:
+        if: |
           - startsWith(matrix.os, 'macos')
           - startsWith(github.ref, 'refs/tags/v')
         run: "yarn run electron-builder -m --publish always"
@@ -94,7 +94,7 @@ jobs:
           CSC_KEY_PASSWORD: ${{ secrets.mac_certs_password }}
 
       - name: Release Windows
-        if:
+        if: |
           - startsWith(matrix.os, 'windows')
           - startsWith(github.ref, 'refs/tags/v')
         run: "yarn run electron-builder -w --publish always"
