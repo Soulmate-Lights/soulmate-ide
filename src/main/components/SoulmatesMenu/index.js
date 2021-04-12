@@ -80,7 +80,7 @@ const SoulmatesMenu = ({
           <MenuHeader className="pl-4">{text}</MenuHeader>
 
           {sortBy(soulmates, (s) => s.config?.chipId).map((soulmate, i) => {
-            let disabled = !canStream(soulmate);
+            let disabled = !canStream(soulmate) || !isLoaded(soulmate);
             if (allowUsb) disabled = false;
 
             return (
