@@ -4,8 +4,8 @@ name: Build/release
 
 on:
   push:
-    tags:
-      - "v*"
+    branches:
+      - master
 
 jobs:
   release:
@@ -83,7 +83,9 @@ jobs:
         run: "yarn build"
 
       - name: Release Mac
-        if: startsWith(matrix.os, 'macos')
+        if:
+          - startsWith(matrix.os, 'macos')
+          - startsWith(github.ref, 'refs/tags/v')
         run: "yarn run electron-builder -m --publish always"
         env:
           API_KEY_ID: ${{ secrets.api_key_id }}
@@ -92,17 +94,10 @@ jobs:
           CSC_KEY_PASSWORD: ${{ secrets.mac_certs_password }}
 
       - name: Release Windows
-        if: startsWith(matrix.os, 'windows')
+        if:
+          - startsWith(matrix.os, 'windows')
+          - startsWith(github.ref, 'refs/tags/v')
         run: "yarn run electron-builder -w --publish always"
-
-      - name: List dmgs
-        run: "ls dist/*.dmg"
-
-      - name: Check Soulmate app file
-        if: startsWith(matrix.os, 'macos')
-        run: |
-          file dist/mac-arm64/Soulmate.app/Contents/MacOS/Soulmate
-          file dist/mac/Soulmate.app/Contents/MacOS/Soulmate
 
       - name: Setup Sentry CLI
         uses: mathrix-education/setup-sentry-cli@0.1.0
