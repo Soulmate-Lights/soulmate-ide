@@ -125,7 +125,6 @@
   },
   "cacheDirectories": [
     ".cache",
-    ".cache/yarn",
     "node_modules"
   ],
   "scripts": {
@@ -139,7 +138,7 @@
     "// build-publish": "build-publish is for publishing. Used by CI",
     "build-publish": "yarn install-app-deps && yarn build && yarn electron-builder -p always",
     "// build-worker": "Used internally",
-    "build-worker": "parcel build node_modules/monaco-editor/esm/vs/editor/editor.worker.js -d build",
+    "build-worker": "parcel build node_modules/monaco-editor/esm/vs/editor/editor.worker.js -d build --no-autoinstall",
     "build-worker-dev": "parcel build node_modules/monaco-editor/esm/vs/editor/editor.worker.js",
     "// postinstall": "yarn run electron-builder install-app-deps",
     "release": "yarn clean && yarn version --patch && yarn build && yarn rebuild-electron && AWS_PROFILE=soulmate-ide-updates electron-builder -mw --publish always",
@@ -149,7 +148,7 @@
     "build-with-dependencies-from-source": "yarn run electron-builder --config.buildDependenciesFromSource=true -mwl",
     "web": "NODE_ENV=development parcel index.html --open -p 3000",
     "prepare": "husky install",
-    "heroku-postbuild": "parcel build index.html --cache-dir .cache --out-dir build && mv build/index.html build/_index.html && yarn build-worker && parcel build index.html --cache-dir .cache --out-dir build",
+    "heroku-postbuild": "parcel build index.html --cache-dir .cache --out-dir build --no-autoinstall && mv build/index.html build/_index.html && yarn build-worker",
     "bump": "yarn version --patch && git push && git push --tags"
   },
   "build": {
