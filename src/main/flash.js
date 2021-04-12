@@ -10,18 +10,18 @@ import { IoAddCircleSharp } from "react-icons/io5";
 import { ResizableBox } from "react-resizable";
 
 import Header from "~/components/Header";
+import InstallPython, { needsPython } from "~/components/InstallPython";
 import Sketch from "~/components/sketch";
 import Soulmates from "~/containers/soulmates";
 import UserContainer from "~/containers/user";
+import useSWR from "~/hooks/useSwr";
 import Logo from "~/images/logo.svg";
 import { emptyCode } from "~/utils/code";
+import { ALL_SKETCHES_PATH, SKETCHES_PATH } from "~/utils/network";
 
 import FlashButton from "./components/flashButton";
-const Console = React.lazy(() => import("./console"));
 
-import InstallPython, { needsPython } from "~/components/InstallPython";
-import useSWR from "~/hooks/useSwr";
-import { ALL_SKETCHES_PATH, SKETCHES_PATH } from "~/utils/network";
+const Console = React.lazy(() => import("./console"));
 
 const Flash = () => {
   const { data: sketches } = useSWR(SKETCHES_PATH);

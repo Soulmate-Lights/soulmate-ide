@@ -130,8 +130,12 @@ export const logBackIn = async () => {
       auth0.loginWithRedirect({ redirect_uri });
     }
   } else if (pathname === "/desktop-callback") {
-    await auth0.handleRedirectCallback();
-    await postWithToken("/save-token", { code, token: authToken });
+    try {
+      await auth0.handleRedirectCallback();
+      await postWithToken("/save-token", { code, token: authToken });
+    } catch (e) {
+      console.log("Error parsing desktop-callback", e);
+    }
   }
 
   if (search.includes("code=")) await auth0.handleRedirectCallback();
