@@ -71,8 +71,6 @@ jobs:
       - name: Yarn
         run: |
           yarn --frozen-lockfile
-          yarn clean
-          yarn node-gyp clean
 
       - name: jest
         run: npx jest
