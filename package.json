@@ -23,7 +23,7 @@
       "distDir": "electron-dist",
       "scopeHoist": false,
       "publicUrl": ".",
-      "context": "electron-renderer"
+      "context": "browser"
     },
     "browser": {
       "distDir": "dist",
@@ -165,11 +165,11 @@
   ],
   "scripts": {
     "// web stuff": "online",
-    "react-start": "parcel -p 3000 index.html",
+    "react-start": "parcel -p 3000 index.html --target browser",
     "react-build": "parcel build index.html --target browser",
-    "build-worker": "parcel build node_modules/monaco-editor/esm/vs/editor/editor.worker.js",
+    "// build-worker": "parcel build node_modules/monaco-editor/esm/vs/editor/editor.worker.js",
     "build-web": "yarn react-build",
-    "start": "concurrently \"cross-env BROWSER=none yarn react-start\" \"wait-on http://localhost:3000 && electron . \" \"yarn build-worker\"",
+    "start": "concurrently \"cross-env BROWSER=none yarn react-start\" \"wait-on http://localhost:3000 && electron . \"",
     "web": "NODE_ENV=development parcel index.html --open -p 3000",
     "heroku-postbuild": "yarn build-web && mv build/index.html build/_index.html && yarn build-worker",
     "// electron stuff": "builds",
@@ -220,7 +220,7 @@
       "sign": false
     },
     "directories": {
-      "buildResources": "electron-dist",
+      "buildResources": "assets",
       "output": "app-builds"
     },
     "appId": "com.elliottkember.soulmate",
@@ -230,7 +230,7 @@
       "src/electron.js",
       "src/preload.js",
       "src/auth.js",
-      "build/**/*",
+      "electron-dist",
       "package.json"
     ],
     "extraFiles": [
