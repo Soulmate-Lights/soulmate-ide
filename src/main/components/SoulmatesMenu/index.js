@@ -2,7 +2,7 @@ import "@szhsin/react-menu/dist/index.css";
 
 import { Menu, MenuHeader, MenuItem } from "@szhsin/react-menu";
 import sortBy from "lodash/sortBy";
-import { FaRegPlayCircle } from "react-icons/fa";
+import { FaRegPlayCircle } from "@react-icons";
 
 import Soulmates from "~/containers/soulmates";
 

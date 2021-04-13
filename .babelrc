@@ -12,6 +12,16 @@
   ],
   "plugins": [
     [
+      "import",
+      {
+        "libraryName": "@react-icons",
+        "camel2DashComponentName": false,
+        "transformToDefaultImport": false,
+        "customName": "../../..//react-icons.js"
+      },
+      "@react-icons"
+    ],
+    [
       "babel-plugin-root-import",
       {
         "rootPathSuffix": "./src/main",
@@ -26,12 +36,7 @@
           {
             "default": "React",
             "path": "react",
-            "members": [
-              "useState",
-              "useEffect",
-              "useContext",
-              "useRef"
-            ]
+            "members": ["useState", "useEffect", "useContext", "useRef"]
           },
           {
             "default": "PropTypes",

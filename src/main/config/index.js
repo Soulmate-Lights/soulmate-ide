@@ -1,5 +1,5 @@
 import { Helmet } from "react-helmet";
-import { HiOutlineLightningBolt } from "react-icons/hi";
+import { HiOutlineLightningBolt } from "@react-icons";
 import { Link } from "react-router-dom";
 
 import InstallPython, { needsPython } from "~/components/InstallPython";

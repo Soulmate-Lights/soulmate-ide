@@ -1,11 +1,11 @@
 import "@szhsin/react-menu/dist/index.css";
 
-import { FaUsb, FaWifi } from "react-icons/fa";
+import { FaUsb, FaWifi } from "@react-icons";
 import {
   RiCheckboxBlankCircleFill,
   RiCheckboxCircleFill,
   RiIndeterminateCircleLine,
-} from "react-icons/ri";
+} from "@react-icons";
 
 import soulmateName from "~/utils/soulmateName";
 

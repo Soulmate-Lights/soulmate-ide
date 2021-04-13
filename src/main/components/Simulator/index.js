@@ -2,8 +2,8 @@ import { drawPixels } from "@elliottkember/leduino";
 import useEventListener from "@use-it/event-listener";
 import _ from "lodash";
 import { useCallback } from "react";
-import { BsFillPauseFill, BsPlayFill } from "react-icons/bs";
-import { FiCast } from "react-icons/fi";
+import { BsFillPauseFill, BsPlayFill } from "@react-icons";
+import { FiCast } from "@react-icons";
 
 import SoulmatesMenu from "~/components/SoulmatesMenu";
 import SoulmatesContainer from "~/containers/soulmates";

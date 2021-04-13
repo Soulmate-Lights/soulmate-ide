@@ -1,6 +1,6 @@
 import { Helmet } from "react-helmet";
-import { HiOutlineLink } from "react-icons/hi";
-import { RiVideoDownloadLine } from "react-icons/ri";
+import { HiOutlineLink } from "@react-icons";
+import { RiVideoDownloadLine } from "@react-icons";
 
 import CodeEditor from "~/components/codeEditor";
 import Header from "~/components/Header";
@@ -233,7 +233,7 @@ const Editor = ({ id }) => {
           !mine && { title: "Gallery", to: "/gallery" },
           !mine && {
             title: <PersonSection user={sketch.user} />,
-            to: userUrl(sketch.user)
+            to: userUrl(sketch.user),
           },
           mine && { title: "My patterns", to: "/my-patterns" },
         ]}
