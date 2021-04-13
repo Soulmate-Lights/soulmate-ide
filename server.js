@@ -5,7 +5,7 @@ const PORT = process.env.PORT || 5000;
 const EDGE_URL = process.env.EDGE_URL || "";
 const PRERENDER_TOKEN = process.env.PRERENDER_TOKEN;
 
-let html = fs.readFileSync("./build/index.html").toString();
+let html = fs.readFileSync("./dist/index.html").toString();
 html = html.replaceAll("/src", `${EDGE_URL}/src`);
 
 express()
