@@ -10,6 +10,6 @@ html = html.replaceAll("/src", `${EDGE_URL}/src`);
 
 express()
   .use(require("prerender-node").set("prerenderToken", PRERENDER_TOKEN))
-  .use(express.static(path.join(__dirname, "build")))
+  .use(express.static(path.join(__dirname, "dist")))
   .get("/(*)", (req, res) => res.send(html))
   .listen(PORT, () => console.log(`Listening on ${PORT}`));
