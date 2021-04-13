@@ -232,7 +232,8 @@
       "src/preload.js",
       "src/auth.js",
       "electron-dist",
-      "package.json"
+      "package.json",
+      "_redirects"
     ],
     "extraFiles": [
       "builder"
