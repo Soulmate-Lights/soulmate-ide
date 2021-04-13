@@ -14,3 +14,6 @@ coverage
 .parcel-cache
 electron-dist
 app-builds
+
+# Local Netlify folder
+.netlify

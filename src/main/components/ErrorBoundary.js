@@ -1,5 +1,5 @@
-import * as Sentry from "@sentry/react";
 import { MdError } from "@react-icons";
+import * as Sentry from "@sentry/react";
 
 import isDev from "~/utils/isDev";
 

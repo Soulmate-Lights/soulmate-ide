@@ -1,7 +1,7 @@
+import { IoPersonCircleOutline } from "@react-icons";
 import sortBy from "lodash/sortBy";
 import uniqBy from "lodash/uniqBy";
 import { Helmet } from "react-helmet";
-import { IoPersonCircleOutline } from "@react-icons";
 import { Link } from "react-router-dom";
 
 import Header from "~/components/Header";

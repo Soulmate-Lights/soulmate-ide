@@ -1,12 +1,12 @@
 import "./progress.pcss";
 
+import { AiFillCheckCircle } from "@react-icons";
+import { BsLayoutSidebarInsetReverse } from "@react-icons";
+import { IoAddCircleSharp } from "@react-icons";
 import compact from "lodash/compact";
 import sortBy from "lodash/sortBy";
 import uniqBy from "lodash/uniqBy";
 import { Suspense } from "react";
-import { AiFillCheckCircle } from "@react-icons";
-import { BsLayoutSidebarInsetReverse } from "@react-icons";
-import { IoAddCircleSharp } from "@react-icons";
 import { ResizableBox } from "react-resizable";
 
 import Header from "~/components/Header";
