@@ -5,6 +5,7 @@
     "last 1 electron version"
   ],
   "version": "2.2.26",
+  "main": "build/index.html",
   "license": "MIT",
   "dependencies": {
     "@react-icons/all-files": "^4.1.0",
