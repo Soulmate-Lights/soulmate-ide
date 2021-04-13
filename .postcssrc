@@ -1,0 +1,9 @@
+{
+  "modules": true,
+  "plugins": {
+    "tailwindcss": "./tailwind.config.js",
+    "autoprefixer": {
+      "grid": true
+    }
+  }
+}
