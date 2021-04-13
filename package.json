@@ -148,7 +148,7 @@
     "build-with-dependencies-from-source": "yarn run electron-builder --config.buildDependenciesFromSource=true -mwl",
     "web": "NODE_ENV=development parcel index.html --open -p 3000",
     "prepare": "husky install",
-    "heroku-postbuild": "pwd; parcel build index.html --cache-dir .build-cache --out-dir build --no-autoinstall && mv build/index.html build/_index.html && yarn build-worker",
+    "heroku-postbuild": "build_dir=$(pwd); mv $build_dir /tmp/build; cd /tmp/build; parcel build index.html --cache-dir .build-cache --out-dir build --no-autoinstall && mv build/index.html build/_index.html && yarn build-worker; mv /tmp/build $build_dir",
     "bump": "yarn version --patch && git push && git push --tags"
   },
   "build": {
