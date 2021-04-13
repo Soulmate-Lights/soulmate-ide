@@ -6,8 +6,31 @@
   ],
   "version": "2.2.26",
   "main": "src/electron.js",
+  "electron": "electron-dist/index.html",
+  "browser": "dist/index.html",
+  "engines": {
+    "browsers": "last 1 chrome version",
+    "electron": ">=11.x",
+    "node": ">=10.6.0"
+  },
+  "entries": {
+    "electron": "index.html",
+    "worker": "node_modules/monaco-editor/esm/vs/editor/editor.worker.js"
+  },
   "targets": {
-    "main": false
+    "main": false,
+    "electron": {
+      "distDir": "electron-dist",
+      "scopeHoist": false,
+      "publicUrl": ".",
+      "context": "electron-renderer"
+    },
+    "browser": {
+      "distDir": "dist",
+      "scopeHoist": false,
+      "publicUrl": "/",
+      "context": "browser"
+    }
   },
   "license": "MIT",
   "dependencies": {
@@ -143,27 +166,26 @@
   "scripts": {
     "// web stuff": "online",
     "react-start": "parcel -p 3000 index.html",
-    "react-build": "parcel build index.html --dist-dir build --public-url / --no-autoinstall --no-scope-hoist",
-    "build-worker": "parcel build node_modules/monaco-editor/esm/vs/editor/editor.worker.js --dist-dir build --no-autoinstall --no-scope-hoist",
-    "build-web": "yarn build-worker && yarn react-build",
-    "build-worker-dev": "parcel build node_modules/monaco-editor/esm/vs/editor/editor.worker.js --no-scope-hoist",
-    "start": "concurrently \"cross-env BROWSER=none yarn react-start\" \"wait-on http://localhost:3000 && electron . \" \"yarn build-worker-dev\"",
+    "react-build": "parcel build index.html --target browser",
+    "build-worker": "parcel build node_modules/monaco-editor/esm/vs/editor/editor.worker.js",
+    "build-web": "yarn react-build",
+    "start": "concurrently \"cross-env BROWSER=none yarn react-start\" \"wait-on http://localhost:3000 && electron . \" \"yarn build-worker\"",
     "web": "NODE_ENV=development parcel index.html --open -p 3000",
     "heroku-postbuild": "yarn build-web && mv build/index.html build/_index.html && yarn build-worker",
     "// electron stuff": "builds",
-    "build-electron": "yarn build-worker && parcel build index.html --dist-dir build --public-url . --no-scope-hoist",
-    "build-app": "yarn build-electron; electron-builder -m",
+    "build-electron": "parcel build index.html --target electron",
+    "build-app": "yarn clean; yarn build-electron; electron-builder -m",
     "release": "yarn version --patch && yarn build-electron && yarn rebuild-electron && AWS_PROFILE=soulmate-ide-updates electron-builder -mw --publish always",
     "rebuild-electron": "yarn node-gyp clean && yarn electron-rebuild",
+    "preelectron-pack": "yarn build-app",
     "bump": "yarn version --patch && git push && git push --tags",
     "// setup and cleanup": "write and delete stuff",
-    "clean": "rm -rf ./build ./.parcel-cache ./.cache ./dist",
+    "clean": "rm -rf ./build ./.parcel-cache ./.cache ./dist ./electron-dist ./app-builds",
     "install-app-deps": "./postinstall.sh",
     "install-arm": "npm_config_arch=$(uname -m) yarn",
     "prepare": "husky install"
   },
   "build": {
-    "afterSign": "electron-builder-notarize",
     "afterPack": "./afterpack",
     "win": {
       "publish": {
@@ -198,7 +220,8 @@
       "sign": false
     },
     "directories": {
-      "buildResources": "assets"
+      "buildResources": "electron-dist",
+      "output": "app-builds"
     },
     "appId": "com.elliottkember.soulmate",
     "files": [
@@ -213,9 +236,6 @@
     "extraFiles": [
       "builder"
     ]
-  },
-  "engines": {
-    "node": ">=10.6.0"
   },
   "resolutions": {
     "@serialport/bindings": "9.0.2",
