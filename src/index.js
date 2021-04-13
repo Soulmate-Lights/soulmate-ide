@@ -30,7 +30,10 @@ if (isDev()) console.log("Running development environment");
 self.MonacoEnvironment = {
   getWorker: function (_moduleId, _label) {
     return new Worker(
-      "../node_modules/monaco-editor/esm/vs/editor/editor.worker.js"
+      new URL(
+        "../node_modules/monaco-editor/esm/vs/editor/editor.worker.js",
+        import.meta.url
+      )
     );
   },
 };

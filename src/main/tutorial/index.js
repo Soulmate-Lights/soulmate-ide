@@ -1,4 +1,6 @@
 import { Helmet } from "react-helmet";
+import screenshotDark from "url:./dark.png";
+import screenshotLight from "url:./light.png";
 import { Mode, useLightSwitch } from "use-light-switch";
 
 import CodeEditor from "~/components/codeEditor";
@@ -9,9 +11,7 @@ import UserContainer from "~/containers/user";
 import Logo from "~/images/logo.svg";
 import { useContainer } from "~/utils/unstated-next";
 
-import screenshotDark from "./dark.png";
 import examples from "./examples";
-import screenshotLight from "./light.png";
 
 const Finished = () => {
   const { login } = useContainer(UserContainer);

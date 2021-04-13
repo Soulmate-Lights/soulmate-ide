@@ -11,3 +11,4 @@ electron-builder.env
 yarn-error.log
 coverage
 !.git/hooks
+.parcel-cache
