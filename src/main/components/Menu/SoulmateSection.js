@@ -1,7 +1,7 @@
-import { BsTerminal } from "@react-icons";
-import { FiAlertCircle, FiSettings } from "@react-icons";
-import { HiOutlineLightningBolt } from "@react-icons";
-import { RiPlayList2Fill } from "@react-icons";
+import { BsTerminal } from "react-icons/bs";
+import { FiAlertCircle, FiSettings } from "react-icons/fi";
+import { HiOutlineLightningBolt } from "react-icons/hi";
+import { RiPlayList2Fill } from "react-icons/ri";
 import { NavLink, useLocation } from "react-router-dom";
 
 import SoulmateMenuItem from "~/components/SoulmatesMenu/SoulmateMenuItem";

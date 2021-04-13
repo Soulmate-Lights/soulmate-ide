@@ -1,6 +1,6 @@
-import { VscDebugRestart } from "@react-icons";
 import { parse } from "ansicolor";
 import React from "react";
+import { VscDebugRestart } from "react-icons/vsc";
 import Style from "style-it";
 
 import soulmatesContainer from "~/containers/soulmates";

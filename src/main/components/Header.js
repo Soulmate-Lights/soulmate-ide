@@ -1,7 +1,7 @@
-import { BiChevronRight } from "@react-icons";
-import { IoPersonCircleOutline } from "@react-icons";
 import compact from "lodash/compact";
 import React from "react";
+import { BiChevronRight } from "react-icons/bi";
+import { IoPersonCircleOutline } from "react-icons/io5";
 import { Link } from "react-router-dom";
 
 export const PersonSection = ({ user }) => (

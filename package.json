@@ -5,10 +5,12 @@
     "last 1 electron version"
   ],
   "version": "2.2.26",
-  "main": "build/index.html",
+  "main": "src/electron.js",
+  "targets": {
+    "main": false
+  },
   "license": "MIT",
   "dependencies": {
-    "@react-icons/all-files": "^4.1.0",
     "@sentry/electron": "^2.0.1",
     "@serialport/bindings": "9.0.2",
     "account-realm-client": "^1.2.2",
@@ -28,7 +30,7 @@
     "serialport": "9.0.2"
   },
   "optionalDependencies": {
-    "keytar": "^7.4.0"
+    "keytar": "^7.6.0"
   },
   "devDependencies": {
     "@auth0/auth0-spa-js": "^1.13.6",
@@ -42,6 +44,10 @@
     "@elliottkember/leduino": "^1.0.9",
     "@fullhuman/postcss-purgecss": "^2.3.0",
     "@hot-loader/react-dom": "^16.13.0",
+    "@parcel/packager-raw-url": "2.0.0-beta.2",
+    "@parcel/transformer-image": "2.0.0-beta.2",
+    "@parcel/transformer-svg-react": "^2.0.0-nightly.1739",
+    "@parcel/transformer-svgo": "^2.0.0-nightly.1739",
     "@parcel/transformer-webmanifest": "2.0.0-beta.2",
     "@sentry/cli": "^1.62.0",
     "@sentry/integrations": "^5.24.2",
@@ -63,7 +69,6 @@
     "babel-core": "^7.0.0-bridge.0",
     "babel-eslint": "^10.1.0",
     "babel-plugin-auto-import": "^1.0.5",
-    "babel-plugin-import": "^1.13.3",
     "babel-plugin-root-import": "^6.5.0",
     "babel-preset-env": "^1.7.0",
     "classnames": "^2.2.6",
@@ -103,7 +108,7 @@
     "react": "16.11.0",
     "react-helmet": "^6.1.0",
     "react-hot-loader": "^4.12.21",
-    "react-icons": "^4.2.0",
+    "react-icons": "^4.1.0",
     "react-monaco-editor": "^0.42.0",
     "react-resizable": "^1.11.0",
     "react-router-dom": "^5.2.0",
@@ -125,7 +130,7 @@
     "react-dom": "@hot-loader/react-dom"
   },
   "cacheDirectories": [
-    ".build-cache",
+    ".parcel-cache",
     "node_modules"
   ],
   "scripts": {
@@ -149,7 +154,7 @@
     "build-with-dependencies-from-source": "yarn run electron-builder --config.buildDependenciesFromSource=true -mwl",
     "web": "NODE_ENV=development parcel index.html --open -p 3000",
     "prepare": "husky install",
-    "heroku-postbuild": "build_dir=$(pwd); mv $build_dir /tmp/parcel-build; cd /tmp/parcel-build; parcel build index.html --cache-dir .build-cache --out-dir build --no-autoinstall && mv build/index.html build/_index.html && yarn build-worker; mv /tmp/parcel-build $build_dir",
+    "heroku-postbuild": "parcel build index.html --out-dir build --no-autoinstall && mv build/index.html build/_index.html && yarn build-worker",
     "bump": "yarn version --patch && git push && git push --tags"
   },
   "build": {

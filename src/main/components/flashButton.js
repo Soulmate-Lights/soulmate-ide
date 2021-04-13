@@ -1,5 +1,5 @@
-import { FaChevronUp, FaUsb, FaWifi } from "@react-icons";
-import { RiPlayList2Fill } from "@react-icons";
+import { FaChevronUp, FaUsb, FaWifi } from "react-icons/fa";
+import { RiPlayList2Fill } from "react-icons/ri";
 
 import SoulmatesMenu from "~/components/SoulmatesMenu";
 import NotificationsContainer from "~/containers/notifications";

@@ -1,4 +1,4 @@
-import { HiOutlineArrowCircleRight } from "@react-icons";
+import { HiOutlineArrowCircleRight } from "react-icons/hi";
 import { useList, useStateList } from "react-use";
 
 import CodeEditor from "~/components/codeEditor";

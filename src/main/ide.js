@@ -1,11 +1,11 @@
 import "react-resizable/css/styles.css";
 
-import { FiSettings } from "@react-icons";
-import { GrClose } from "@react-icons";
-import { IoMenuSharp } from "@react-icons";
 import classnames from "classnames";
 import React, { Suspense } from "react";
 import { Helmet } from "react-helmet";
+import { FiSettings } from "react-icons/fi";
+import { GrClose } from "react-icons/gr";
+import { IoMenuSharp } from "react-icons/io5";
 import { Link } from "react-router-dom";
 import { Route, Switch } from "react-router-dom";
 

@@ -1,4 +1,4 @@
-import { ImCross } from "@react-icons";
+import { ImCross } from "react-icons/im";
 
 const ResolutionPopup = ({ rows, cols, button, className, onChange }) => {
   const [open, setOpen] = useState();

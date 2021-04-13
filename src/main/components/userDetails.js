@@ -1,4 +1,4 @@
-import { FiLogIn, FiLogOut } from "@react-icons";
+import { FiLogIn, FiLogOut } from "react-icons/fi";
 
 import UserContainer from "~/containers/user";
 

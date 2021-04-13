@@ -1,6 +1,6 @@
-import { FiCloud, FiFolder, FiHome, FiSmile } from "@react-icons";
-import { GoSettings } from "@react-icons";
-import { RiToolsFill } from "@react-icons";
+import { FiCloud, FiFolder, FiHome, FiSmile } from "react-icons/fi";
+import { GoSettings } from "react-icons/go";
+import { RiToolsFill } from "react-icons/ri";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import square from "url:./Square.jpg";
 
