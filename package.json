@@ -171,7 +171,7 @@
     "build-web": "yarn react-build",
     "start": "concurrently \"cross-env BROWSER=none yarn react-start\" \"wait-on http://localhost:3000 && electron . \"",
     "web": "NODE_ENV=development parcel index.html --open -p 3000",
-    "heroku-postbuild": "yarn build-web && mv build/index.html build/_index.html && yarn build-worker",
+    "heroku-postbuild": "yarn build-web",
     "// electron stuff": "builds",
     "build-electron": "parcel build index.html --target electron",
     "build-app": "yarn clean; yarn build-electron; electron-builder -m",
@@ -186,6 +186,7 @@
     "prepare": "husky install"
   },
   "build": {
+    "afterSign": "electron-builder-notarize",
     "afterPack": "./afterpack",
     "win": {
       "publish": {
