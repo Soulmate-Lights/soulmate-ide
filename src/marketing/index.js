@@ -27,7 +27,7 @@ export default function MarketingPage() {
         />
         <meta content="product" property="og:type" />
         <meta
-          content="https://www.soulmatelights.com/hand.fd7ece86.jpg"
+          content={hand}
           property="og:image"
         />
       </Helmet>
