@@ -6,12 +6,38 @@
   ],
   "version": "2.2.26",
   "main": "src/electron.js",
+  "electron": "electron-dist/index.html",
+  "browser": "dist/index.html",
+  "engines": {
+    "browsers": "last 1 chrome version",
+    "electron": ">=11.x",
+    "node": ">=10.6.0"
+  },
+  "entries": {
+    "electron": "index.html",
+    "worker": "node_modules/monaco-editor/esm/vs/editor/editor.worker.js"
+  },
+  "targets": {
+    "main": false,
+    "electron": {
+      "distDir": "electron-dist",
+      "scopeHoist": false,
+      "publicUrl": ".",
+      "context": "browser"
+    },
+    "browser": {
+      "distDir": "dist",
+      "scopeHoist": false,
+      "publicUrl": "/",
+      "context": "browser"
+    }
+  },
   "license": "MIT",
   "dependencies": {
     "@react-icons/all-files": "^4.1.0",
     "@sentry/electron": "^2.0.1",
     "@serialport/bindings": "9.0.2",
-    "account-realm-client": "^1.2.2",
+    "babel-plugin-import": "^1.13.3",
     "bonjour": "^3.5.0",
     "date-fns": "^2.19.0",
     "electron-auth0-login": "^1.3.1",
@@ -23,11 +49,10 @@
     "express": "^4.17.1",
     "prerender-node": "^3.2.5",
     "react-use": "^17.1.1",
-    "react-user": "^0.1.4",
     "serialport": "9.0.2"
   },
   "optionalDependencies": {
-    "keytar": "^7.4.0"
+    "keytar": "^7.6.0"
   },
   "devDependencies": {
     "@auth0/auth0-spa-js": "^1.13.6",
@@ -41,11 +66,16 @@
     "@elliottkember/leduino": "^1.0.9",
     "@fullhuman/postcss-purgecss": "^2.3.0",
     "@hot-loader/react-dom": "^16.13.0",
+    "@parcel/packager-raw-url": "2.0.0-beta.2",
+    "@parcel/transformer-image": "2.0.0-beta.2",
+    "@parcel/transformer-svg-react": "^2.0.0-nightly.1739",
+    "@parcel/transformer-svgo": "^2.0.0-nightly.1739",
+    "@parcel/transformer-webmanifest": "2.0.0-beta.2",
     "@sentry/cli": "^1.62.0",
     "@sentry/integrations": "^5.24.2",
     "@sentry/react": "^6.2.3",
     "@sentry/tracing": "^5.24.2",
-    "@svgr/parcel-plugin-svgr": "^5.4.0",
+    "@svgr/parcel-plugin-svgr": "^5.5.0",
     "@szhsin/react-menu": "^1.5.0",
     "@tailwindcss/forms": "^0.2.1",
     "@tailwindcss/ui": "^0.5.0",
@@ -61,7 +91,6 @@
     "babel-core": "^7.0.0-bridge.0",
     "babel-eslint": "^10.1.0",
     "babel-plugin-auto-import": "^1.0.5",
-    "babel-plugin-import": "^1.13.3",
     "babel-plugin-root-import": "^6.5.0",
     "babel-preset-env": "^1.7.0",
     "classnames": "^2.2.6",
@@ -89,20 +118,27 @@
     "js-cookie": "^2.2.1",
     "jwt-decode": "^2.2.0",
     "lodash": "^4.17.15",
+    "lost": "^8.3.1",
     "moment": "^2.27.0",
     "node-abi": "^2.19.3",
     "node-gyp": "^7.1.2",
     "normalize-url": "4",
     "npm-version": "^1.1.0",
-    "parcel-bundler": "^1.12.4",
-    "postcss": "^8.1.10",
+    "parcel": "^2.0.0-beta.2",
+    "postcss": "^8.2.10",
+    "postcss-color-function": "^4.1.0",
+    "postcss-custom-media": "^8.0.0",
+    "postcss-custom-properties": "^11.0.0",
+    "postcss-import": "^14.0.1",
     "postcss-modules": "^3.2.0",
+    "postcss-utilities": "^0.8.4",
+    "posthtml-include": "^1.7.0",
     "prettier": "2.2.1",
     "prop-types": "^15.7.2",
     "react": "16.11.0",
     "react-helmet": "^6.1.0",
     "react-hot-loader": "^4.12.21",
-    "react-icons": "^4.2.0",
+    "react-icons": "^4.1.0",
     "react-monaco-editor": "^0.42.0",
     "react-resizable": "^1.11.0",
     "react-router-dom": "^5.2.0",
@@ -124,31 +160,30 @@
     "react-dom": "@hot-loader/react-dom"
   },
   "cacheDirectories": [
+    ".parcel-cache",
     "node_modules"
   ],
   "scripts": {
-    "react-start": "parcel -p 3000 index.html",
-    "react-build": "yarn build-worker && parcel build index.html --out-dir build --public-url /",
-    "start": "concurrently \"cross-env BROWSER=none yarn react-start\" \"wait-on http://localhost:3000 && electron . \" \"yarn build-worker-dev\"",
+    "// web stuff": "online",
+    "react-start": "parcel -p 3000 index.html --target browser",
+    "react-build": "parcel build index.html --target browser",
+    "// build-worker": "parcel build node_modules/monaco-editor/esm/vs/editor/editor.worker.js",
+    "build-web": "yarn react-build",
+    "start": "concurrently \"cross-env BROWSER=none yarn react-start\" \"wait-on http://localhost:3000 && electron . \"",
+    "web": "NODE_ENV=development parcel index.html --open -p 3000",
+    "heroku-postbuild": "yarn build-web",
+    "// electron stuff": "builds",
+    "build-electron": "parcel build index.html --target electron",
+    "build-app": "yarn clean; yarn build-electron; electron-builder -m",
+    "release": "yarn version --patch && yarn build-electron && yarn rebuild-electron && AWS_PROFILE=soulmate-ide-updates electron-builder -mw --publish always",
     "rebuild-electron": "yarn node-gyp clean && yarn electron-rebuild",
-    "build": "yarn build-worker && parcel build index.html --out-dir build --public-url .",
-    "// build-app": "Use this for building the app locally to test out a production build",
-    "build-app": "yarn clean; yarn; yarn build; electron-builder -m",
-    "// build-publish": "build-publish is for publishing. Used by CI",
-    "build-publish": "yarn install-app-deps && yarn build && yarn electron-builder -p always",
-    "// build-worker": "Used internally",
-    "build-worker": "parcel build node_modules/monaco-editor/esm/vs/editor/editor.worker.js -d build --no-autoinstall",
-    "build-worker-dev": "parcel build node_modules/monaco-editor/esm/vs/editor/editor.worker.js",
-    "// postinstall": "yarn run electron-builder install-app-deps",
-    "release": "yarn clean && yarn version --patch && yarn build && yarn rebuild-electron && AWS_PROFILE=soulmate-ide-updates electron-builder -mw --publish always",
-    "clean": "rm -rf ./build ./.cache ./dist",
+    "preelectron-pack": "yarn build-app",
+    "bump": "yarn version --patch && git push && git push --tags",
+    "// setup and cleanup": "write and delete stuff",
+    "clean": "rm -rf ./build ./.parcel-cache ./.cache ./dist ./electron-dist ./app-builds",
     "install-app-deps": "./postinstall.sh",
     "install-arm": "npm_config_arch=$(uname -m) yarn",
-    "build-with-dependencies-from-source": "yarn run electron-builder --config.buildDependenciesFromSource=true -mwl",
-    "web": "NODE_ENV=development parcel index.html --open -p 3000",
-    "prepare": "husky install",
-    "heroku-postbuild": "parcel build index.html --out-dir build --no-autoinstall && mv build/index.html build/_index.html && yarn build-worker",
-    "bump": "yarn version --patch && git push && git push --tags"
+    "prepare": "husky install"
   },
   "build": {
     "afterSign": "electron-builder-notarize",
@@ -186,7 +221,8 @@
       "sign": false
     },
     "directories": {
-      "buildResources": "assets"
+      "buildResources": "assets",
+      "output": "app-builds"
     },
     "appId": "com.elliottkember.soulmate",
     "files": [
@@ -195,15 +231,12 @@
       "src/electron.js",
       "src/preload.js",
       "src/auth.js",
-      "build/**/*",
+      "electron-dist",
       "package.json"
     ],
     "extraFiles": [
       "builder"
     ]
-  },
-  "engines": {
-    "node": ">=10.6.0"
   },
   "resolutions": {
     "@serialport/bindings": "9.0.2",

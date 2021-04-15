@@ -1,13 +1,13 @@
 /* eslint-disable no-useless-escape */
 import React from "react";
 import { Helmet } from "react-helmet";
+import hand from "url:./hand.jpg";
+import logo from "url:./logo.png";
+import theboyz from "url:./theboyz.jpg";
 
 import examples from "~/tutorial/examples";
 
 import Example from "./example";
-import hand from "./hand.jpg";
-import logo from "./logo.png";
-import theboyz from "./theboyz.jpg";
 
 export default function MarketingPage() {
   const [index, setIndex] = useState(0);
@@ -27,7 +27,7 @@ export default function MarketingPage() {
         />
         <meta content="product" property="og:type" />
         <meta
-          content="https://www.soulmatelights.com/hand.fd7ece86.jpg"
+          content={hand}
           property="og:image"
         />
       </Helmet>
@@ -444,27 +444,27 @@ export default function MarketingPage() {
                 {
                   twitter: "elliottkember",
                   name: "Elliott Kember",
-                  image: require("./elliott.jpg"),
+                  image: require("url:./elliott.jpg"),
                 },
                 {
                   twitter: "lazyJL",
                   name: "Jess Lam",
-                  image: require("./jess.jpg"),
+                  image: require("url:./jess.jpg"),
                 },
                 {
                   twitter: "kalan_k",
                   name: "Kalan Kircher",
-                  image: require("./kalan.jpg"),
+                  image: require("url:./kalan.jpg"),
                 },
                 {
                   twitter: "pirruccello",
                   name: "Brent Piruccello",
-                  image: require("./brent.jpg"),
+                  image: require("url:./brent.jpg"),
                 },
                 {
                   twitter: "maxvoltar",
                   name: "Tim Van Damme",
-                  image: require("./tim.jpeg"),
+                  image: require("url:./tim.jpeg"),
                 },
               ].map(({ name, image, twitter }) => (
                 <li key={name}>

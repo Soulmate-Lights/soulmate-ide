@@ -1,0 +1,7 @@
+{
+    "xmlMode": true,
+    "lowerCaseAttributeNames": false,
+    "plugins": {
+      "posthtml-include": {}
+    }
+}

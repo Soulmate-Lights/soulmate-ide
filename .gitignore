@@ -11,3 +11,9 @@ electron-builder.env
 yarn-error.log
 coverage
 !.git/hooks
+.parcel-cache
+electron-dist
+app-builds
+
+# Local Netlify folder
+.netlify

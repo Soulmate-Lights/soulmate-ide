@@ -104,7 +104,7 @@ const Simulator = ({
     const { hex } = build;
 
     if (!worker) {
-      worker = new Worker("./worker.js");
+      worker = new Worker(new URL("./worker.js", import.meta.url));
       worker.addEventListener("message", workerMessage);
       worker.postMessage({ hex: hex, rows, cols });
     } else {

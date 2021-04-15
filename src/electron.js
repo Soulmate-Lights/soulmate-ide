@@ -66,7 +66,7 @@ function createWindow() {
 
   const mainUrl = isDev
     ? "http://localhost:3000"
-    : `file://${path.join(__dirname, "../build/index.html")}`;
+    : `file://${path.join(__dirname, "../electron-dist/index.html")}`;
 
   mainWindow.loadURL(mainUrl);
   mainWindow.webContents.on("did-fail-load", () => {

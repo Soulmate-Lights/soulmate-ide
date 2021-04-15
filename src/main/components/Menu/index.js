@@ -2,6 +2,7 @@ import { FiCloud, FiFolder, FiHome, FiSmile } from "@react-icons";
 import { GoSettings } from "@react-icons";
 import { RiToolsFill } from "@react-icons";
 import { Link, NavLink, useLocation } from "react-router-dom";
+import square from "url:./Square.jpg";
 
 import UserDetails from "~/components/userDetails";
 import SoulmatesContainer from "~/containers/soulmates";
@@ -10,7 +11,6 @@ import Logo from "~/images/logo.svg";
 import isElectron from "~/utils/isElectron";
 
 import SoulmateSection from "./SoulmateSection";
-import square from "./Square.jpg";
 
 const iconClass = "mr-3 h-6 w-6 transition ease-in-out duration-150";
 const menuSectionClass =
