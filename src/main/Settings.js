@@ -101,10 +101,6 @@ const Settings = () => {
                   option: "https://server.soulmatelights.com/",
                   name: "Production",
                 },
-                {
-                  option: "https://soulmate-staging.herokuapp.com/",
-                  name: "Staging",
-                },
                 { option: "http://localhost:3001/", name: "Local" },
               ]}
               selectedOption={appServer}
@@ -120,10 +116,6 @@ const Settings = () => {
                 {
                   option: "https://firmware.soulmatelights.com:8082/build",
                   name: "Production",
-                },
-                {
-                  option: "https://editor.soulmatelights.com/sketches/build",
-                  name: "Heroku",
                 },
                 { option: "http://localhost:8080/build", name: "Local" },
               ]}

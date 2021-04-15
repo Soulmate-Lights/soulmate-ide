@@ -4,16 +4,18 @@ import { auth0Promise } from "~/utils/auth";
 import { headersAndCredentials } from "~/utils/network";
 import { createContainer } from "~/utils/unstated-next";
 
+// Legacy URLs
+if (localStorage.appServerUrl === "https://editor.soulmatelights.com/")
+  localStorage.appServerUrl = "https://server.soulmatelights.com/";
+
+if (localStorage.simulatorUrl == "https://editor.soulmatelights.com/sketches/build")
+  localStorage.simulatorUrl = "https://firmware.soulmatelights.com:8082/build"
+
 let initialSimulatorUrl =
   localStorage.simulatorUrl || "https://firmware.soulmatelights.com:8082/build";
 
 let initialFirmwareUrl =
   localStorage.firmwareUrl || "https://firmware.soulmatelights.com:8083/build";
-
-// Legacy URL
-if (localStorage.appServerUrl === "https://editor.soulmatelights.com/") {
-  localStorage.appServerUrl = "https://server.soulmatelights.com/";
-}
 
 let initialAppServerUrl =
   localStorage.appServerUrl || "https://server.soulmatelights.com/";
