@@ -182,7 +182,8 @@
     "clean": "rm -rf ./build ./.parcel-cache ./.cache ./dist ./electron-dist ./app-builds",
     "install-app-deps": "./postinstall.sh",
     "install-arm": "npm_config_arch=$(uname -m) yarn",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "postinstall": "cp node_modules/monaco-editor/esm/vs/editor/editor.worker.js src/editor.worker.js"
   },
   "build": {
     "afterPack": "./afterpack",
