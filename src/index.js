@@ -8,6 +8,7 @@ import { Integrations } from "@sentry/tracing";
 import React from "react";
 import ReactDOM from "react-dom";
 import { hot } from "react-hot-loader";
+import workerUrl from 'url:./editor.worker';
 
 import isDev from "~/utils/isDev";
 
@@ -29,12 +30,7 @@ if (isDev()) console.log("Running development environment");
 
 self.MonacoEnvironment = {
   getWorker: function (_moduleId, _label) {
-    return new Worker(
-      new URL(
-        "../node_modules/monaco-editor/esm/vs/editor/editor.worker.js",
-        import.meta.url
-      )
-    );
+    return new Worker(workerUrl);
   },
 };
 

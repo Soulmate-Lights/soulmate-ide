@@ -8,3 +8,9 @@
 ### Dev environment
 
 `$ yarn start`
+
+###
+
+Don't forget to update the editor.worker.js file. Right now it's bundled in with the app. Something tricky with URLs.
+
+cp node_modules/monaco-editor/esm/vs/editor/editor.worker.js src/editor.worker.js
