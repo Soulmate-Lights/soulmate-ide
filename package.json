@@ -172,7 +172,7 @@
     "heroku-postbuild": "yarn build-web",
     "// electron stuff": "builds",
     "build-electron": "parcel build index.html --target electron",
-    "build-app": "yarn build-electron; electron-builder -m",
+    "build-app": "yarn build-electron && electron-builder -m",
     "rebuild-electron": "yarn node-gyp clean && yarn electron-rebuild",
     "bump": "yarn version --patch && git push && git push --tags",
     "// setup and cleanup": "write and delete stuff",
