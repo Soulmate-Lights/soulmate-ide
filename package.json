@@ -166,17 +166,14 @@
   "scripts": {
     "// web stuff": "online",
     "react-start": "parcel -p 3000 index.html --target browser",
-    "react-build": "parcel build index.html --target browser",
-    "build-web": "yarn react-build",
+    "build-web": "parcel build index.html --target browser",
     "start": "concurrently \"cross-env BROWSER=none yarn react-start\" \"wait-on http://localhost:3000 && electron . \"",
     "web": "NODE_ENV=development parcel index.html --open -p 3000",
     "heroku-postbuild": "yarn build-web",
     "// electron stuff": "builds",
     "build-electron": "parcel build index.html --target electron",
-    "build-app": "yarn clean; yarn build-worker; yarn build-electron; electron-builder -m",
-    "release": "yarn version --patch && yarn build-electron && yarn rebuild-electron && AWS_PROFILE=soulmate-ide-updates electron-builder -mw --publish always",
+    "build-app": "yarn build-electron; electron-builder -m",
     "rebuild-electron": "yarn node-gyp clean && yarn electron-rebuild",
-    "preelectron-pack": "yarn build-app",
     "bump": "yarn version --patch && git push && git push --tags",
     "// setup and cleanup": "write and delete stuff",
     "clean": "rm -rf ./build ./.parcel-cache ./.cache ./dist ./electron-dist ./app-builds",
@@ -186,6 +183,7 @@
     "postinstall": "cp node_modules/monaco-editor/esm/vs/editor/editor.worker.js src/editor.worker.js"
   },
   "build": {
+    "afterSign": "electron-builder-notarize",
     "afterPack": "./afterpack",
     "win": {
       "publish": {
