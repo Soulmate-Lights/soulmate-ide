@@ -1,5 +1,8 @@
 "use strict";
 
+// This file exists because Parcel doesn't know how to load web worker files on a file:// origin.
+// I have a PR out that should help with this.
+
 /* globals document:readonly */
 var bundleURL = null;
 
