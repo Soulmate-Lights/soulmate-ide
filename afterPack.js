@@ -6,6 +6,7 @@ exports.default = function (_context) {
   console.log("Starting afterPack steps =====");
   execSync("yarn node-gyp clean");
   execSync("yarn electron-rebuild .");
+  // TODO: I don't know whether we still actually need this.
   execSync("yarn build-electron");
   console.log("Finished afterPack steps =====");
 };

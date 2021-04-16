@@ -8,14 +8,8 @@
   "main": "src/electron.js",
   "electron": "electron-dist/index.html",
   "browser": "dist/index.html",
-  "engines": {
-    "browsers": "last 1 chrome version",
-    "electron": ">=11.x",
-    "node": ">=10.6.0"
-  },
   "entries": {
-    "electron": "index.html",
-    "worker": "node_modules/monaco-editor/esm/vs/editor/editor.worker.js"
+    "electron": "index.html"
   },
   "targets": {
     "main": false,
@@ -183,8 +177,6 @@
     "postinstall": "cp node_modules/monaco-editor/esm/vs/editor/editor.worker.js src/editor.worker.js"
   },
   "build": {
-    "afterSign": "electron-builder-notarize",
-    "afterPack": "./afterpack",
     "win": {
       "publish": {
         "provider": "s3",
@@ -202,7 +194,7 @@
       "target": [
         {
           "target": "default",
-          "arch": "universal"
+          "arch": "arm64"
         }
       ],
       "publish": {

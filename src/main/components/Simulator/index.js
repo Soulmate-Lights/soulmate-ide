@@ -104,7 +104,8 @@ const Simulator = ({
     const { hex } = build;
 
     if (!worker) {
-      worker = new Worker(new URL("./worker.js", import.meta.url));
+      worker = new Worker("./ledWorker.js");
+      // worker = new Worker("blob-url:./ledWorker.js");
       worker.addEventListener("message", workerMessage);
       worker.postMessage({ hex: hex, rows, cols });
     } else {
