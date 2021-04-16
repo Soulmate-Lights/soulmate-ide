@@ -1,0 +1,59 @@
+# Commented while we wait for the new Electron versions to ship
+
+name: Update yarn cache
+
+on:
+  push:
+    branches:
+      - "master"
+    paths:
+      - "yarn"
+      - "yarn.lock"
+
+jobs:
+  release:
+    runs-on: ${{ matrix.os }}
+    if: startsWith(github.event.head_commit.message, 'v')
+
+    timeout-minutes: 30
+    env:
+      ACTIONS_ALLOW_UNSECURE_COMMANDS: true
+
+    strategy:
+      matrix:
+        os: [macos-10.15, windows-latest]
+
+    steps:
+      - name: Check out Git repository
+        uses: actions/checkout@v2
+
+      - uses: actions/setup-python@v2
+        with:
+          python-version: "3.x" # Version range or exact version of a Python version to use, using SemVer's version range syntax
+          architecture: "x64" # optional x64 or x86. Defaults to x64 if not specified
+
+      - name: Install Node.js, NPM and Yarn for Mac
+        if: startsWith(matrix.os, 'macos')
+        uses: actions/setup-node@v1
+        with:
+          node-version: 15 # v15 causes "Error: Command failed: yarn" in Windows?
+
+      - name: Install Node.js, NPM and Yarn for Windows
+        if: startsWith(matrix.os, 'windows')
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12 # v15 causes "Error: Command failed: yarn" in Windows?
+
+      # Cache both Yarn cache directory and node_modules
+      - uses: c-hive/gha-yarn-cache@v1
+      - uses: actions/cache@v2.1.0
+        with:
+          path: "**/node_modules"
+          key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
+
+      - name: yarn --frozen-lockfile
+        uses: nick-invision/retry@v2
+        with:
+          timeout_minutes: 10
+          max_attempts: 3
+          command: yarn --frozen-lockfile

@@ -7,8 +7,8 @@ name: Build/release
 # Further down the build, we check whether the tag key is present.
 on:
   push:
-    branches:
-      - master
+    tags:
+      - "v*"
 
 jobs:
   release:
