@@ -11,9 +11,8 @@ on:
       - "yarn.lock"
 
 jobs:
-  release:
+  Update yarn cache:
     runs-on: ${{ matrix.os }}
-    if: startsWith(github.event.head_commit.message, 'v')
 
     timeout-minutes: 30
     env:
