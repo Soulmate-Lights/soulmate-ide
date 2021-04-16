@@ -1,5 +1,6 @@
 /* eslint-disable no-useless-escape */
 import React from "react";
+import ReactGA from "react-ga"
 import { Helmet } from "react-helmet";
 import hand from "url:./hand.jpg";
 import logo from "url:./logo.png";
@@ -249,7 +250,12 @@ export default function MarketingPage() {
                       <a
                         aria-label="Previous"
                         className="inline-flex items-center flex-shrink-0 px-2 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 cursor-pointer select-none rounded-l-md leading-5 focus:z-10 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-100 active:text-gray-500 transition ease-in-out duration-150"
-                        onClick={() => index > 0 && setIndex(index - 1)}
+                        onClick={() => {
+                          if (index > 0) {
+                            ReactGA.event({ category: "Marketing Tutorial", action: "Previous" });
+                            setIndex(index - 1);
+                          }
+                        }}
                       >
                         <svg
                           className="w-5 h-5"
@@ -268,9 +274,10 @@ export default function MarketingPage() {
                       <a
                         aria-label="Next"
                         className="inline-flex items-center flex-shrink-0 px-2 py-2 -ml-px text-sm font-medium text-gray-500 bg-white border border-gray-300 cursor-pointer select-none rounded-r-md leading-5 focus:z-10 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-100 active:text-gray-500 transition ease-in-out duration-150"
-                        onClick={() =>
+                        onClick={() => {
+                          ReactGA.event({ category: "Marketing Tutorial", action: "Next" });
                           setIndex(index + 1 >= examples.length ? 0 : index + 1)
-                        }
+                        }}
                       >
                         Next example
                         <svg

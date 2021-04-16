@@ -1,3 +1,4 @@
+import ReactGA from "react-ga";
 import { Helmet } from "react-helmet";
 import screenshotDark from "url:./dark.png";
 import screenshotLight from "url:./light.png";
@@ -61,17 +62,24 @@ const Tutorial = () => {
   if (index > 0) {
     actions.push({
       disabled: !examples[index - 1],
-      onClick: () => index > 0 && setIndex(index - 1),
+      onClick: () => {
+        if (index > 0) {
+          ReactGA.event({ category: "Tutorial", action: "Previous" });
+          setIndex(index - 1);
+        }
+      },
       title: "Previous example",
     });
   }
 
   if (index < examples.length - 1) {
+    ReactGA.event({ category: "Tutorial", action: "Next" });
     actions.push({
       title: "Next example",
       onClick: () => setIndex(index + 1),
     });
   } else if (index === examples.length - 1) {
+    ReactGA.event({ category: "Tutorial", action: "Complete" });
     actions.push({
       title: "Done!",
       onClick: () => setIndex(index + 1),

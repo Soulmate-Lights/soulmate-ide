@@ -1,3 +1,4 @@
+import ReactGA from "react-ga";
 import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";
 
@@ -21,6 +22,10 @@ const MySketches = () => {
   const [loading, setLoading] = useState(false);
 
   const createSketch = async (name) => {
+    ReactGA.event({
+      category: "Sketch",
+      action: "Sketch created"
+    });
     const newSketch = await post("/sketches/create", { name });
     mutate();
     return newSketch;
