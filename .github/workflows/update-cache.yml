@@ -11,7 +11,7 @@ on:
       - "yarn.lock"
 
 jobs:
-  Update yarn cache:
+  yarn-cache:
     runs-on: ${{ matrix.os }}
 
     timeout-minutes: 30
