@@ -8,7 +8,6 @@ import { Integrations } from "@sentry/tracing";
 import React from "react";
 import ReactDOM from "react-dom";
 import { hot } from "react-hot-loader";
-import workerUrl from 'url:./editor.worker';
 
 import isDev from "~/utils/isDev";
 
@@ -27,12 +26,6 @@ SentryReact.init({
 });
 
 if (isDev()) console.log("Running development environment");
-
-self.MonacoEnvironment = {
-  getWorker: function (_moduleId, _label) {
-    return new Worker(workerUrl);
-  },
-};
 
 const HotMain = hot(module)((params) => <Main {...params} />);
 ReactDOM.render(<HotMain />, document.getElementById("root"));

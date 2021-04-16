@@ -2,7 +2,6 @@ import parser from "@wokwi/gcc-output-parser";
 import classnames from "classnames";
 import jsBeautifier from "js-beautify";
 import debounce from "lodash/debounce";
-// import startCase from "lodash/startCase";
 import Monaco from "react-monaco-editor";
 import { Mode, useLightSwitch } from "use-light-switch";
 
@@ -10,7 +9,7 @@ function isWindows() {
   return navigator.platform.indexOf("Win") > -1;
 }
 
-const LINE_OFFSET = 61;
+const LINE_OFFSET = 59;
 
 const jsBeautifierConfig = {
   indent_size: 2,
