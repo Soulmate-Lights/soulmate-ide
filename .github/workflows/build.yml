@@ -59,13 +59,13 @@ jobs:
         if: startsWith(matrix.os, 'macos')
         uses: actions/setup-node@v1
         with:
-          node-version: 15 # v15 causes "Error: Command failed: yarn" in Windows?
+          node-version: 15
 
       - name: Install Node.js, NPM and Yarn for Windows
         if: startsWith(matrix.os, 'windows')
         uses: actions/setup-node@v1
         with:
-          node-version: 12 # v15 causes "Error: Command failed: yarn" in Windows?
+          node-version: 15
 
       # Cache both Yarn cache directory and node_modules
       - uses: c-hive/gha-yarn-cache@v1
@@ -78,7 +78,7 @@ jobs:
         with:
           timeout_minutes: 10
           max_attempts: 3
-          command: yarn --frozen-lockfile
+          command: yarn --frozen-lockfile --ignore-engines
 
       - name: jest
         run: npx jest
