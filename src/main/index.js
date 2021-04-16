@@ -20,6 +20,11 @@ const Ide = React.lazy(() => import("./ide"));
 
 const SpecificRouter = isElectron() ? HashRouter : Router;
 
+history.listen((location) => {
+  window.ga('set', 'page', location.pathname + location.search);
+  window.ga('send', 'pageview');
+});
+
 const Main = () => {
   const href = document.location.href;
   const marketing = href === "https://www.soulmatelights.com/";

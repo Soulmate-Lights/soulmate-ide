@@ -1,4 +1,5 @@
 import { dataPin } from "@elliottkember/leduino";
+import ReactGA from 'react-ga';
 
 import renameDefines from "~/utils/replaceDefines";
 
@@ -238,9 +239,19 @@ export async function getFullBuildAsBlob(source, firmwareUrl) {
 export async function getFullBuild(source, firmwareUrl) {
   const body = JSON.stringify({ sketch: source });
   console.log("[getFullBuild]", { body });
+
+  const t = new Date();
+
   const res = await window.fetch(firmwareUrl, {
     ...options,
     body,
+  });
+
+  ReactGA.timing({
+    category: 'Firmware',
+    variable: 'build',
+    value: new Date() - t,
+    label: 'Firmware build time'
   });
 
   console.log("[getFullBuild]", { res });

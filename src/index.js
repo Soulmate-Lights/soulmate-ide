@@ -7,6 +7,7 @@ import * as SentryReact from "@sentry/react";
 import { Integrations } from "@sentry/tracing";
 import React from "react";
 import ReactDOM from "react-dom";
+import ReactGA from 'react-ga';
 import { hot } from "react-hot-loader";
 
 import isDev from "~/utils/isDev";
@@ -15,6 +16,13 @@ import Main from "./main";
 
 require("@tailwindcss/ui");
 require("./index.pcss");
+
+ReactGA.initialize('UA-131034779-4', {
+  gaOptions: {
+    siteSpeedOptions: 100
+  }
+});
+ReactGA.pageview(window.location.pathname + window.location.search);
 
 SentryReact.init({
   dsn:
@@ -30,10 +38,3 @@ if (isDev()) console.log("Running development environment");
 const HotMain = hot(module)((params) => <Main {...params} />);
 ReactDOM.render(<HotMain />, document.getElementById("root"));
 module.hot?.accept();
-
-window.dataLayer = window.dataLayer || [];
-function gtag() {
-  window.dataLayer.push(arguments);
-}
-gtag("js", new Date());
-gtag("config", "UA-131034779-4");

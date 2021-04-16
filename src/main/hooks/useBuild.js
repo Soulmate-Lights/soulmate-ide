@@ -1,3 +1,5 @@
+import ReactGA from "react-ga";
+
 import BuildsContainer from "~/containers/builds";
 import NetworkContainer from "~/containers/network";
 import { buildHex } from "~/utils/code";
@@ -16,9 +18,21 @@ const useBuild = (code, config) => {
 
     setIsBuilding(code, config, true);
 
-    buildHex(code, config, simulator).then((build) =>
-      setBuild(code, config, build)
-    );
+    ReactGA.event({
+      category: "Emulator",
+      action: "Emulator build"
+    });
+
+    let t = new Date();
+    buildHex(code, config, simulator).then((build) => {
+      ReactGA.timing({
+        category: 'Emulator',
+        variable: 'build',
+        value: new Date() - t,
+        label: 'Emulator build time'
+      });
+      setBuild(code, config, build);
+    });
   }, [code, config, simulator]);
 
   return getBuild(code, config);
