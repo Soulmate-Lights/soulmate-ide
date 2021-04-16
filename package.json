@@ -176,7 +176,7 @@
     "install-app-deps": "./postinstall.sh",
     "install-arm": "npm_config_arch=$(uname -m) yarn",
     "prepare": "husky install",
-    "postinstall": "cp node_modules/monaco-editor/esm/vs/editor/editor.worker.js src/monaco/editor.worker.js && cp bundle-url.js node_modules/@parcel/runtime-js/lib/bundle-url.js",
+    "postinstall": "cp bundle-url.js node_modules/@parcel/runtime-js/lib/bundle-url.js",
     "// testing": "run tests",
     "test": "mocha"
   },
