@@ -177,6 +177,8 @@
     "postinstall": "cp node_modules/monaco-editor/esm/vs/editor/editor.worker.js src/editor.worker.js && cp bundle-url.js node_modules/@parcel/runtime-js/lib/bundle-url.js"
   },
   "build": {
+    "afterSign": "electron-builder-notarize",
+    "afterPack": "./afterpack",
     "win": {
       "publish": {
         "provider": "s3",
@@ -194,7 +196,7 @@
       "target": [
         {
           "target": "default",
-          "arch": "arm64"
+          "arch": "universal"
         }
       ],
       "publish": {
