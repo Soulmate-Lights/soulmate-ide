@@ -11,6 +11,9 @@
   "entries": {
     "electron": "index.html"
   },
+  "engines": {
+    "node": "15.x"
+  },
   "targets": {
     "main": false,
     "electron": {
