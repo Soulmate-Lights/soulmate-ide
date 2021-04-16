@@ -50,9 +50,9 @@ jobs:
           path: "**/node_modules"
           key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
 
-      - name: yarn --frozen-lockfile
+      - name: yarn install
         uses: nick-invision/retry@v2
         with:
           timeout_minutes: 10
           max_attempts: 3
-          command: yarn --frozen-lockfile
+          command: yarn --frozen-lockfile --ignore-engines
