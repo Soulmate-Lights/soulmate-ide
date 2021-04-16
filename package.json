@@ -113,6 +113,7 @@
     "jwt-decode": "^2.2.0",
     "lodash": "^4.17.15",
     "lost": "^8.3.1",
+    "mocha": "^8.3.2",
     "moment": "^2.27.0",
     "node-abi": "^2.19.3",
     "node-gyp": "^7.1.2",
@@ -142,6 +143,7 @@
     "request": "^2.88.2",
     "request-promise-native": "^1.0.8",
     "semantic-ui-css": "^2.4.1",
+    "spectron": "13",
     "style-it": "^2.1.4",
     "swr": "^0.3.11",
     "tailwindcss": "^2.0.1",
@@ -174,7 +176,9 @@
     "install-app-deps": "./postinstall.sh",
     "install-arm": "npm_config_arch=$(uname -m) yarn",
     "prepare": "husky install",
-    "postinstall": "cp node_modules/monaco-editor/esm/vs/editor/editor.worker.js src/editor.worker.js && cp bundle-url.js node_modules/@parcel/runtime-js/lib/bundle-url.js"
+    "postinstall": "cp node_modules/monaco-editor/esm/vs/editor/editor.worker.js src/editor.worker.js && cp bundle-url.js node_modules/@parcel/runtime-js/lib/bundle-url.js",
+    "// testing": "run tests",
+    "test": "mocha"
   },
   "build": {
     "afterSign": "electron-builder-notarize",
