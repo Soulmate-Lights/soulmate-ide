@@ -3,6 +3,7 @@ import classnames from "classnames";
 import jsBeautifier from "js-beautify";
 import debounce from "lodash/debounce";
 import Monaco from "react-monaco-editor";
+import { useDebounce } from 'react-use';
 import { Mode, useLightSwitch } from "use-light-switch";
 
 function isWindows() {
@@ -53,9 +54,11 @@ const CodeEditor = ({
   let monacoInstance = useRef(false);
   const [dirty, setDirty] = useState(false);
 
-  const debouncedOnChange = onHesitation
-    ? debounce(onHesitation, 1500)
-    : undefined;
+  const [localCode, setLocalCode] = useState(code);
+
+  useDebounce(() => {
+    onHesitation(localCode);
+  }, 1500, [localCode, code])
 
   const mode = useLightSwitch();
   const dark = mode === Mode.Dark;
@@ -196,8 +199,8 @@ const CodeEditor = ({
           }}
           key={dark ? "dark" : "light"}
           onChange={(code) => {
+            setLocalCode(code);
             if (onChange) onChange(code);
-            if (debouncedOnChange) debouncedOnChange(code);
             setDirty(true);
           }}
           options={{
