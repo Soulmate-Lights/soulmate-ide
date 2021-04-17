@@ -81,9 +81,6 @@ jobs:
           max_attempts: 3
           command: yarn --frozen-lockfile --ignore-engines
 
-      - name: jest
-        run: npx jest
-
       - name: Prepare for app notarization
         if: startsWith(matrix.os, 'macos')
         # Import Apple API key for app notarization on macOS
