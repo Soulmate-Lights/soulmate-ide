@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Monaco from "react-monaco-editor";
 import { Mode, useLightSwitch } from "use-light-switch";
 
@@ -27,6 +27,25 @@ const imageClass = "mx-auto w-full";
 const Blog = () => {
   const mode = useLightSwitch();
   const dark = mode === Mode.Dark;
+
+  useEffect(() => {
+    const targets = document.querySelectorAll("p, img, pre");
+    const callback = function(entries) {
+      entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("motion-safe:animate-fadeIn");
+          } else if (entry.boundingClientRect.top > 0) {
+            // entry.target.classList.remove("motion-safe:animate-fadeIn");
+          }
+      });
+    };
+    const observer = new IntersectionObserver(callback);
+    targets.forEach(function(target) {
+      target.classList.add("opacity-0");
+      observer.observe(target);
+    });
+  }, [])
+
   return (
     <div>
       <div className="relative py-16 overflow-hidden bg-white">

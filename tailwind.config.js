@@ -8,6 +8,9 @@ module.exports = {
     purgeLayersByDefault: true,
     removeDeprecatedGapUtilities: true,
   },
+  variants: {
+    animation: ["motion-safe"]
+  },
   theme: {
     extend: {
       fontSize: {
@@ -22,6 +25,13 @@ module.exports = {
       },
       animation: {
         "spin-slow": "spin 3s linear infinite",
+        fadeIn: "fadeIn 0.5s ease forwards"
+      },
+      keyframes: {
+        fadeIn: {
+          "0%": { opacity: 0, position: 'relative', top: 40 },
+          "100%": { opacity: 1, position: 'relative', top: 0 }
+        }
       },
       transitionDuration: {
         0: "0ms",
