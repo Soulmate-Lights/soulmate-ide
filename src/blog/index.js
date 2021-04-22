@@ -4,8 +4,9 @@ import { Mode, useLightSwitch } from "use-light-switch";
 
 import Example from "~/../marketing/example";
 
-import code from "./code";
-import sampleCode from './sampleCode';
+import code from "./line/code";
+import sampleCode from './line/sampleCode';
+import simpleLineCode from './line/simpleLine';
 
 const editorConfig = {
   links: false,
@@ -208,10 +209,15 @@ const Blog = () => {
           </div>
 
           <div className="px-24 mx-auto mt-6 text-gray-500 prose prose-indigo prose-lg max-w-none">
-            <Example className="w-full max-w-10/12" code={code} />
+            <Example className="w-full max-w-10/12" code={simpleLineCode} />
           </div>
 
           <div className="mx-auto mt-6 text-gray-500 prose prose-indigo prose-lg">
+          <p>Not bad at all. But it's a little boring. What if we animated the start and end points?</p>
+          </div>
+
+          <div className="px-24 mx-auto mt-6 text-gray-500 prose prose-indigo prose-lg max-w-none">
+            <Example className="w-full max-w-10/12" code={code} />
           </div>
 
         </div>
