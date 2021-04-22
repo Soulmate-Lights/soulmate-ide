@@ -1,0 +1,29 @@
+<svg width="577" height="204" viewBox="0 0 577 204" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="577" height="204" fill="white"/>
+<g opacity="0.4">
+<circle cx="455.835" cy="108.548" r="71.5053" fill="url(#paint0_radial)"/>
+<circle cx="101.984" cy="108.548" r="71.5053" fill="url(#paint1_radial)"/>
+<rect x="103.311" y="37.043" width="349.321" height="142.854" fill="url(#paint2_linear)"/>
+</g>
+<line x1="104.719" y1="107.687" x2="455.29" y2="107.687" stroke="black" stroke-width="1.56296"/>
+<path d="M106.042 122.917H103.151L102.602 124.565H100.849L103.827 116.565H105.355L108.349 124.565H106.597L106.042 122.917ZM103.596 121.582H105.596L104.591 118.587L103.596 121.582Z" fill="black"/>
+<path d="M332.186 36.3844H329.021V38.5273H332.735V39.8516H327.373V31.8512H332.724V33.1864H329.021V35.0931H332.186V36.3844Z" fill="black"/>
+<path d="M452.095 124.565V116.565H454.898C455.868 116.565 456.605 116.752 457.106 117.126C457.608 117.495 457.859 118.039 457.859 118.757C457.859 119.149 457.758 119.496 457.557 119.796C457.356 120.093 457.075 120.311 456.716 120.45C457.127 120.552 457.449 120.759 457.683 121.071C457.921 121.382 458.041 121.763 458.041 122.214C458.041 122.983 457.795 123.565 457.304 123.961C456.813 124.357 456.114 124.558 455.205 124.565H452.095ZM453.744 121.082V123.241H455.156C455.544 123.241 455.846 123.15 456.062 122.966C456.282 122.78 456.392 122.523 456.392 122.197C456.392 121.465 456.013 121.093 455.255 121.082H453.744ZM453.744 119.917H454.963C455.795 119.902 456.211 119.571 456.211 118.922C456.211 118.56 456.105 118.3 455.892 118.142C455.683 117.981 455.352 117.9 454.898 117.9H453.744V119.917Z" fill="black"/>
+<circle cx="329.941" cy="50.6397" r="6.87701" fill="#FF0000"/>
+<circle cx="330.565" cy="50.6397" r="6.87701" fill="#FF0000"/>
+<defs>
+<radialGradient id="paint0_radial" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(455.835 108.548) rotate(90) scale(71.5053)">
+<stop/>
+<stop offset="1" stop-color="white"/>
+</radialGradient>
+<radialGradient id="paint1_radial" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(101.984 108.548) rotate(90) scale(71.5053)">
+<stop/>
+<stop offset="1" stop-color="white"/>
+</radialGradient>
+<linearGradient id="paint2_linear" x1="277.971" y1="37.043" x2="277.971" y2="179.897" gradientUnits="userSpaceOnUse">
+<stop stop-color="white"/>
+<stop offset="0.520833"/>
+<stop offset="1" stop-color="white"/>
+</linearGradient>
+</defs>
+</svg>

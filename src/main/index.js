@@ -15,6 +15,7 @@ import history from "~/utils/history";
 import isElectron from "~/utils/isElectron";
 import isMac from "~/utils/isMac";
 
+const Blog = React.lazy(() => import('../blog'));
 const Marketing = React.lazy(() => import("../marketing"));
 const Ide = React.lazy(() => import("./ide"));
 
@@ -53,6 +54,10 @@ const Main = () => {
               <Switch>
                 <Route path={marketing ? "/" : "/marketing"}>
                   <Marketing />
+                </Route>
+
+                <Route path="/blog">
+                  <Blog />
                 </Route>
 
                 <Route>
