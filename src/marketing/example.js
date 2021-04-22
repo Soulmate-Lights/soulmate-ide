@@ -20,7 +20,7 @@ const Example = ({ code, className }) => {
       <CodeEditor
         autoFocus={false}
         autoFormat={false}
-        className="relative flex-grow flex-shrink w-7/12 min-w-0 bg-white"
+        className="relative flex-grow flex-shrink hidden w-7/12 min-w-0 bg-white md:flex"
         code={code}
         onHesitation={setEditorCode}
         onSave={setEditorCode}
