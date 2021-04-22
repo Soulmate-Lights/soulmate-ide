@@ -32,11 +32,11 @@ const Blog = () => {
     const targets = document.querySelectorAll("p, img, pre");
     const callback = function(entries) {
       entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("motion-safe:animate-fadeIn");
-          } else if (entry.boundingClientRect.top > 0) {
-            // entry.target.classList.remove("motion-safe:animate-fadeIn");
-          }
+        if (entry.isIntersecting) {
+          entry.target.classList.add("motion-safe:animate-fadeIn");
+        } else if (entry.boundingClientRect.top > 0) {
+          // entry.target.classList.remove("motion-safe:animate-fadeIn");
+        }
       });
     };
     const observer = new IntersectionObserver(callback);
