@@ -25,11 +25,11 @@ module.exports = {
       },
       animation: {
         "spin-slow": "spin 3s linear infinite",
-        fadeIn: "fadeIn 0.5s ease forwards"
+        fadeIn: "fadeIn 0.8s ease forwards"
       },
       keyframes: {
         fadeIn: {
-          "0%": { opacity: 0, position: 'relative', top: 40 },
+          "0%": { opacity: 0, position: 'relative', top: 20 },
           "100%": { opacity: 1, position: 'relative', top: 0 }
         }
       },

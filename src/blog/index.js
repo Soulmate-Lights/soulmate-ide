@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useLayoutEffect } from "react";
 import Monaco from "react-monaco-editor";
 import { Mode, useLightSwitch } from "use-light-switch";
 
@@ -23,21 +23,29 @@ const editorConfig = {
 };
 
 const imageClass = "mx-auto w-full";
+const pClass = "";
 
 const Blog = () => {
   const mode = useLightSwitch();
   const dark = mode === Mode.Dark;
 
-  useEffect(() => {
-    const targets = document.querySelectorAll("p, img, pre");
+  useLayoutEffect(() => {
+    const targets = document.querySelectorAll(".soulmate-content > p, .soulmate-content > img, .soulmate-content > div, .soulmate-content > pre");
     const callback = function(entries) {
+      const fadeEntries = [];
       entries.forEach(entry => {
         if (entry.isIntersecting) {
-          entry.target.classList.add("motion-safe:animate-fadeIn");
+          fadeEntries.push(entry);
         } else if (entry.boundingClientRect.top > 0) {
           // entry.target.classList.remove("motion-safe:animate-fadeIn");
         }
       });
+
+      fadeEntries.forEach((fadeEntry, i) => {
+        setTimeout(() => {
+          fadeEntry.target.classList.add("motion-safe:animate-fadeIn");
+        }, i * 100)
+      })
     };
     const observer = new IntersectionObserver(callback);
     targets.forEach(function(target) {
@@ -48,7 +56,7 @@ const Blog = () => {
 
   return (
     <div>
-      <div className="relative py-16 overflow-hidden bg-white">
+      <div className="relative py-16 overflow-hidden bg-white soulmate-content">
         <div className="relative px-4 sm:px-6 lg:px-8">
           <div className="mx-auto text-lg max-w-prose">
             <h1>
@@ -60,12 +68,12 @@ const Blog = () => {
               </span>
             </h1>
           </div>
-          <div className="mx-auto mt-6 text-gray-500 prose prose-indigo prose-lg">
-            <p>So you want to draw a line.</p>
+          <div className="mx-auto mt-6 text-gray-500 soulmate-content prose prose-indigo prose-lg">
+            <p className={pClass}>So you want to draw a line.</p>
 
             <img className={imageClass} src={require("url:./line/1.svg")}></img>
 
-            <p>
+            <p className={pClass}>
               But not just any line! You want a nice line. One with some
               thickness and shading. That means you’ll need to choose every
               pixel around the line, and figure out how far it is from the line.
@@ -73,7 +81,7 @@ const Blog = () => {
 
             <img className={imageClass} src={require("url:./line/2.svg")}></img>
 
-            <p>
+            <p className={pClass}>
               You’ll have to do this a lot. Once for every pixel around the
               line. But there are a few different ways of calculating these
               distances. It’s not always the same.
@@ -81,7 +89,7 @@ const Blog = () => {
 
             <img className={imageClass} src={require("url:./line/3.svg")}></img>
 
-            <p>
+            <p className={pClass}>
               For this, we’ll need to use a thing called a Vector. A vector
               starts at one point and ends at another. In our setup here, AB is
               a vector between A and B, and AE is a vector from A to E.
@@ -89,14 +97,14 @@ const Blog = () => {
 
             <img className={imageClass} src={require("url:./line/4.svg")}></img>
 
-            <p>
+            <p className={pClass}>
               It doesn’t matter where our points are, we can have vectors
               between any two points on a grid. Here’s a whole bunch of them.
             </p>
 
             <img className={imageClass} src={require("url:./line/5.svg")}></img>
 
-            <p>
+            <p className={pClass}>
               There are two different types of points. Points that are a
               distance from one end, and points that are a distance from the
               line. But how do we know what kind of point we’re dealing with?
@@ -105,7 +113,7 @@ const Blog = () => {
 
             <img className={imageClass} src={require("url:./line/6.svg")}></img>
 
-            <p>
+            <p className={pClass}>
               The Dot Product is a vibe check for vectors. If the vectors are
               going the same way, it’s a positive vibe (positive dot product).
               If they’re going the opposite ways, it’s a negative vibe (negative
@@ -114,7 +122,7 @@ const Blog = () => {
             </p>
             <img className={imageClass} src={require("url:./line/7.svg")}></img>
 
-            <p>
+            <p className={pClass}>
               You write the dot product using a • and you calculate it using
               this formula:
             </p>
@@ -123,7 +131,7 @@ const Blog = () => {
 
             <img className={imageClass} src={require("url:./line/8.svg")}></img>
 
-            <p>
+            <p className={pClass}>
               We’ll start by checking if the point E is closest to either end of
               the line. if AB•AE is negative, we’re off to the left. If AB•BE is
               positive, we’re off to the right. These are the easiest lengths to
@@ -132,7 +140,7 @@ const Blog = () => {
 
             <img className={imageClass} src={require("url:./line/9.svg")}></img>
 
-            <p>
+            <p className={pClass}>
               So now that we have AE or BE, we can use pythagoras pretty easily
               becasue we know all the coordinates here. So we can figure out c
               in both these cases. c = sqrt(a2 + b2) in case you forgot
@@ -143,7 +151,7 @@ const Blog = () => {
               src={require("url:./line/10.svg")}
             ></img>
 
-            <p>
+            <p className={pClass}>
               If the dot’s in the middle, we have to use a different clever
               trick. We have AE, the vector from A to the point E. And we have
               AB, the vector from A to B. We’re going to get the product of
@@ -155,7 +163,7 @@ const Blog = () => {
               src={require("url:./line/11.svg")}
             ></img>
 
-            <p>
+            <p className={pClass}>
               What this actually gives us is the area of this parallelogram.
               We’ve multiplied the two sides, and that tells us this gray area.
               Parallelograms work the same way as rectangles. When you calculate
@@ -167,7 +175,7 @@ const Blog = () => {
               src={require("url:./line/12.svg")}
             ></img>
 
-            <p>
+            <p className={pClass}>
               Let’s cut this parallelogram in two and stick it back together.
               Now it’s a rectangle. And we know how to work with rectangles.
               That gray area is the same size as this gray area. Parallelograms
@@ -179,7 +187,7 @@ const Blog = () => {
               src={require("url:./line/13.svg")}
             ></img>
 
-            <p>
+            <p className={pClass}>
               So if we have the area of the rectangle, and we know the length of
               AB, we can figure out the width really easily. We divide the area
               by the length of AB. And that’s our distance!
@@ -190,7 +198,7 @@ const Blog = () => {
               src={require("url:./line/14.svg")}
             ></img>
 
-            <p>
+            <p className={pClass}>
               Now, use the distance as brightness.
               <pre>float brightness = distance / thickness</pre>
             </p>
@@ -200,7 +208,7 @@ const Blog = () => {
               src={require("url:./line/15.svg")}
             ></img>
 
-            <p>
+            <p className={pClass}>
               And there we go! Give every point a brightness that matches its
               distance from the line, and we have a nice blurry line.
             </p>
@@ -210,7 +218,7 @@ const Blog = () => {
               src={require("url:./line/16.svg")}
             ></img>
 
-            <p>Let's try that in C++:</p>
+            <p className={pClass}>Let's try that in C++:</p>
 
             <div className="w-full border border-red" style={{ height: 640 }}>
               <Monaco
@@ -224,18 +232,18 @@ const Blog = () => {
               />
             </div>
 
-            <p>Now, let's see that in a Soulmate sketch!</p>
+            <p className={pClass}>Now, let's see that in a Soulmate sketch!</p>
           </div>
 
-          <div className="px-24 mx-auto mt-6 text-gray-500 prose prose-indigo prose-lg max-w-none">
+          <div className="px-24 mx-auto mt-6 text-gray-500 prose prose-indigo prose-lg max-w-none soulmate-content">
             <Example className="w-full max-w-10/12" code={simpleLineCode} />
           </div>
 
           <div className="mx-auto mt-6 text-gray-500 prose prose-indigo prose-lg">
-          <p>Not bad at all. But it's a little boring. What if we animated the start and end points?</p>
+          <p className={pClass}>Not bad at all. But it's a little boring. What if we animated the start and end points?</p>
           </div>
 
-          <div className="px-24 mx-auto mt-6 text-gray-500 prose prose-indigo prose-lg max-w-none">
+          <div className="px-24 mx-auto mt-6 text-gray-500 prose prose-indigo prose-lg max-w-none soulmate-content">
             <Example className="w-full max-w-10/12" code={code} />
           </div>
 
