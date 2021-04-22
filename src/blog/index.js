@@ -5,15 +5,14 @@ import { Mode, useLightSwitch } from "use-light-switch";
 import Example from "~/../marketing/example";
 
 import code from "./line/code";
-import sampleCode from './line/sampleCode';
-import simpleLineCode from './line/simpleLine';
+import sampleCode from "./line/sampleCode";
+import simpleLineCode from "./line/simpleLine";
 import triangle from "./line/triangle";
 
-
-const blue = { color: 'rgb(1, 1, 250)'};
-const orange = { color: 'rgb(234, 163, 39' };
-const green = { color: 'rgb(73, 128, 31' };
-const red = { color: 'rgb(219, 5, 2' };
+const blue = { color: "rgb(1, 1, 250)" };
+const orange = { color: "rgb(234, 163, 39" };
+const green = { color: "rgb(73, 128, 31" };
+const red = { color: "rgb(219, 5, 2" };
 
 const editorConfig = {
   links: false,
@@ -37,10 +36,12 @@ const Blog = () => {
   const dark = mode === Mode.Dark;
 
   useLayoutEffect(() => {
-    const targets = document.querySelectorAll(".soulmate-content > p, .soulmate-content > img, .soulmate-content > div, .soulmate-content > pre");
-    const callback = function(entries) {
+    const targets = document.querySelectorAll(
+      ".soulmate-content > p, .soulmate-content > img, .soulmate-content > div, .soulmate-content > pre"
+    );
+    const callback = function (entries) {
       const fadeEntries = [];
-      entries.forEach(entry => {
+      entries.forEach((entry) => {
         if (entry.isIntersecting) {
           fadeEntries.push(entry);
         } else if (entry.boundingClientRect.top > 0) {
@@ -51,15 +52,15 @@ const Blog = () => {
       fadeEntries.forEach((fadeEntry, i) => {
         setTimeout(() => {
           fadeEntry.target.classList.add("motion-safe:animate-fadeIn");
-        }, i * 100)
-      })
+        }, i * 100);
+      });
     };
     const observer = new IntersectionObserver(callback);
-    targets.forEach(function(target) {
+    targets.forEach(function (target) {
       target.classList.add("opacity-0");
       observer.observe(target);
     });
-  }, [])
+  }, []);
 
   return (
     <div>
@@ -99,7 +100,8 @@ const Blog = () => {
             <p className={pClass}>
               For this, we’ll need to use a thing called a Vector. A vector
               starts at one point and ends at another. In our setup here, AB is
-              a vector between A and B, and <span style={green}>AE</span> is a vector from A to E.
+              a vector between A and B, and <span style={green}>AE</span> is a
+              vector from A to E.
             </p>
 
             <img className={imageClass} src={require("url:./line/4.svg")}></img>
@@ -112,61 +114,80 @@ const Blog = () => {
             <img className={imageClass} src={require("url:./line/5.svg")}></img>
 
             <p className={pClass}>
-              There are two different types of points. <span style={orange}>Points that are a distance from one end
-              </span>, and <span style={blue}>
-                points that are a distance from the
-                line
-              </span>.
+              There are two different types of points.{" "}
+              <span style={orange}>
+                Points that are a distance from one end
+              </span>
+              , and{" "}
+              <span style={blue}>points that are a distance from the line</span>
+              .
             </p>
 
             <img className={imageClass} src={require("url:./line/6.svg")}></img>
 
             <p className={pClass}>
-              But how do we know what kind of point we’re dealing with?
-              There’s a clever trick! We can use a thing called a Dot Product.
+              But how do we know what kind of point we’re dealing with? There’s
+              a clever trick! We can use a thing called a Dot Product.
             </p>
             <p className={pClass}>
               The Dot Product is a vibe check for vectors. If the vectors are
-              going the <span style={green}>same way</span>, it’s a positive vibe (positive dot product).
-              If they’re going the <span style={red}>opposite ways</span>, it’s a negative vibe (negative
-              dot product). If the dot is <span style={blue}>perpendicular</span>, there’s no vibe. The
-              dot product is zero.
+              going the <span style={green}>same way</span>, it’s a positive
+              vibe (positive dot product). If they’re going the{" "}
+              <span style={red}>opposite ways</span>, it’s a negative vibe
+              (negative dot product). If the dot is{" "}
+              <span style={blue}>perpendicular</span>, there’s no vibe. The dot
+              product is zero.
             </p>
             <img className={imageClass} src={require("url:./line/7.svg")}></img>
 
             <p className={pClass}>
-              You write the dot product using the • symbol, and you calculate it using
-              this formula:
+              You write the dot product using the • symbol, and you calculate it
+              using this formula:
             </p>
 
-            <pre><span style={green}>AB</span> • <span style={orange}>AE</span> = <span style={green}>AB</span>.x * <span style={orange}>AE</span>.x + <span style={green}>AB</span>.y * <span style={orange}>AE</span>.y</pre>
+            <pre>
+              <span style={green}>AB</span> • <span style={orange}>AE</span> = 
+              <span style={green}>AB</span>.x * <span style={orange}>AE</span>.x
+              + <span style={green}>AB</span>.y * <span style={orange}>AE</span>
+              .y
+            </pre>
 
             <img className={imageClass} src={require("url:./line/8.svg")}></img>
 
             <p className={pClass}>
-              We’ll start by checking if the point <span style={red}>E</span> is closest to either end of
-              the line. if <span style={green}>AB</span>•<span style={orange}>AE</span> is negative, we’re off to the left. If <span style={green}>AB</span>•<span style={orange}>BE</span> is
-              positive, we’re off to the right. These are the easiest lengths to
-              figure out. We’ll do that next.
+              We’ll start by checking if the point <span style={red}>E</span> is
+              closest to either end of the line. if{" "}
+              <span style={green}>AB</span>•<span style={orange}>AE</span> is
+              negative, we’re off to the left. If <span style={green}>AB</span>•
+              <span style={orange}>BE</span> is positive, we’re off to the
+              right. These are the easiest lengths to figure out. We’ll do that
+              next.
             </p>
 
             <img className={imageClass} src={require("url:./line/9.svg")}></img>
 
             <p className={pClass}>
-              So now that we have <span style={orange}>AE</span> or <span style={orange}>BE</span>, we can use pythagoras pretty easily
-              since we know all the coordinates here. So we can figure out c
-              in both these cases. <pre>c = sqrt(a2 + b2)</pre>
+              So now that we have <span style={orange}>AE</span> or{" "}
+              <span style={orange}>BE</span>, we can use pythagoras pretty
+              easily since we know all the coordinates here.
             </p>
 
-            <img
-              className={imageClass}
-              src={require("url:./line/10.svg")}
-            ></img>
+            <img className={imageClass} src={require("url:./line/10.svg")} />
+
+            <p className={pClass}>
+              So we can figure out c in both these cases:
+            </p>
+
+            <pre>
+              c = sqrt(a<sup>2</sup> + b<sup>2</sup>)
+            </pre>
 
             <p className={pClass}>
               If the dot’s in the middle, we have to use a different clever
-              trick. We have <span style={orange}>AE</span>, the vector from A to the point E. And we have <span style={green}>AB</span>, the vector from A to B. We’re going to get the product of
-              these two vectors. It’s not the same as the dot product!
+              trick. We have <span style={orange}>AE</span>, the vector from A
+              to the point E. And we have <span style={green}>AB</span>, the
+              vector from A to B. We’re going to get the product of these two
+              vectors. It’s not the same as the dot product!
             </p>
 
             <img
@@ -200,8 +221,9 @@ const Blog = () => {
 
             <p className={pClass}>
               So if we have the area of the rectangle, and we know the length of
-              AB, we can figure out the <span style={blue}>width</span> really easily. We divide the area
-              by the length of AB. And that’s our distance!
+              AB, we can figure out the <span style={blue}>width</span> really
+              easily. We divide the area by the length of AB. And that’s our
+              distance!
             </p>
 
             <img
@@ -220,13 +242,14 @@ const Blog = () => {
             ></img>
 
             <p className={pClass}>
-              And there we go! We now know how to calculate the distance of any point from this line.
-              If the dot product is 0, use that area division thing. If it's 0, use Pythagoras.
+              And there we go! We now know how to calculate the distance of any
+              point from this line. If the dot product is 0, use that area
+              division thing. If it's 0, use Pythagoras.
             </p>
 
             <p className={pClass}>
-              Then, give every point a brightness that matches its
-              distance from the line, and we have a nice blurry line.
+              Then, give every point a brightness that matches its distance from
+              the line, and we have a nice blurry line.
             </p>
 
             <img
@@ -248,7 +271,9 @@ const Blog = () => {
               />
             </div>
 
-            <p className={pClass}>Pretty good. Now let's see that in a Soulmate sketch!</p>
+            <p className={pClass}>
+              Pretty good. Now let's see that in a Soulmate sketch!
+            </p>
           </div>
 
           <div className="px-24 mx-auto mt-6 text-gray-500 prose prose-indigo prose-lg max-w-none soulmate-content">
@@ -268,7 +293,9 @@ const Blog = () => {
           </div>
 
           <div className="mx-auto mt-6 text-gray-500 prose prose-indigo prose-lg">
-            <p className={pClass}>At the bottom of that last sketch, you can see these lines:</p>
+            <p className={pClass}>
+              At the bottom of that last sketch, you can see these lines:
+            </p>
 
             <pre className="whitespace-pre">{`Point start(
   beatsin16(10, 0, 8),
@@ -278,11 +305,18 @@ Point stop(
   beatsin16(12, ROWS - 8, ROWS),
   beatsin16(13, COLS - 8, COLS)
 );`}</pre>
-            <p className={pClass}>Those <span>beatsin16</span> functions call a sine wave every time they're rendered.</p>
+            <p className={pClass}>
+              Those <span>beatsin16</span> functions call a sine wave every time
+              they're rendered.
+            </p>
 
-            <pre className="whitespace-pre">beatsin16(beatsPerMinute, start, end)</pre>
+            <pre className="whitespace-pre">
+              beatsin16(beatsPerMinute, start, end)
+            </pre>
 
-            <p className={pClass}>Now, if you can draw a line, you can draw anything!</p>
+            <p className={pClass}>
+              Now, if you can draw a line, you can draw anything!
+            </p>
           </div>
 
           <div className="px-24 mx-auto mt-6 text-gray-500 prose prose-indigo prose-lg max-w-none soulmate-content">
