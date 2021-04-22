@@ -5,7 +5,6 @@ import Header from "~/components/Header";
 import PlaylistMenu from "~/components/PlaylistMenu";
 import Simulator from "~/components/Simulator";
 import Sketch from "~/components/sketch";
-import BuildsContainer from "~/containers/builds";
 import NetworkContainer from "~/containers/network";
 import useBuild from "~/hooks/useBuild";
 import useSWR from "~/hooks/useSwr";
@@ -268,10 +267,4 @@ const Playlist = (props) => {
   );
 };
 
-const WrappedPlaylist = (props) => (
-  <BuildsContainer.Provider>
-    <Playlist {...props} />
-  </BuildsContainer.Provider>
-);
-
-export default WrappedPlaylist;
+export default Playlist;

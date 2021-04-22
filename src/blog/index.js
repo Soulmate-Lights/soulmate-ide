@@ -8,6 +8,12 @@ import code from "./line/code";
 import sampleCode from './line/sampleCode';
 import simpleLineCode from './line/simpleLine';
 
+
+const blue = { color: 'rgb(1, 1, 250)'};
+const orange = { color: 'rgb(234, 163, 39' };
+const green = { color: 'rgb(73, 128, 31' };
+const red = { color: 'rgb(219, 5, 2' };
+
 const editorConfig = {
   links: false,
   language: "soulmate",
@@ -84,7 +90,7 @@ const Blog = () => {
             <p className={pClass}>
               You’ll have to do this a lot. Once for every pixel around the
               line. But there are a few different ways of calculating these
-              distances. It’s not always the same.
+              distances. It’s not always the same:
             </p>
 
             <img className={imageClass} src={require("url:./line/3.svg")}></img>
@@ -99,15 +105,17 @@ const Blog = () => {
 
             <p className={pClass}>
               It doesn’t matter where our points are, we can have vectors
-              between any two points on a grid. Here’s a whole bunch of them.
+              between any two points on a grid. Here’s a whole bunch of them:
             </p>
 
             <img className={imageClass} src={require("url:./line/5.svg")}></img>
 
             <p className={pClass}>
-              There are two different types of points. Points that are a
-              distance from one end, and points that are a distance from the
-              line. But how do we know what kind of point we’re dealing with?
+              There are two different types of points. <span style={orange}>Points that are a distance from one end
+              </span>, and <span style={blue}>
+                points that are a distance from the
+                line
+              </span>. But how do we know what kind of point we’re dealing with?
               There’s a clever trick! We can use a thing called a Dot Product.
             </p>
 
@@ -115,25 +123,25 @@ const Blog = () => {
 
             <p className={pClass}>
               The Dot Product is a vibe check for vectors. If the vectors are
-              going the same way, it’s a positive vibe (positive dot product).
-              If they’re going the opposite ways, it’s a negative vibe (negative
-              dot product). If the dot is perpendicular, there’s no vibe. The
+              going the <span style={green}>same way</span>, it’s a positive vibe (positive dot product).
+              If they’re going the <span style={red}>opposite ways</span>, it’s a negative vibe (negative
+              dot product). If the dot is <span style={blue}>perpendicular</span>, there’s no vibe. The
               dot product is zero.
             </p>
             <img className={imageClass} src={require("url:./line/7.svg")}></img>
 
             <p className={pClass}>
-              You write the dot product using a • and you calculate it using
+              You write the dot product using the • symbol, and you calculate it using
               this formula:
             </p>
 
-            <pre>AB • AE =  AB.x * AE.x + AB.y * AE.y</pre>
+            <pre><span style={green}>AB</span> • <span style={orange}>AE</span> = <span style={green}>AB</span>.x * <span style={orange}>AE</span>.x + <span style={green}>AB</span>.y * <span style={orange}>AE</span>.y</pre>
 
             <img className={imageClass} src={require("url:./line/8.svg")}></img>
 
             <p className={pClass}>
-              We’ll start by checking if the point E is closest to either end of
-              the line. if AB•AE is negative, we’re off to the left. If AB•BE is
+              We’ll start by checking if the point <span style={red}>E</span> is closest to either end of
+              the line. if <span style={green}>AB</span>•<span style={orange}>AE</span> is negative, we’re off to the left. If <span style={green}>AB</span>•<span style={orange}>BE</span> is
               positive, we’re off to the right. These are the easiest lengths to
               figure out. We’ll do that next.
             </p>
@@ -141,9 +149,9 @@ const Blog = () => {
             <img className={imageClass} src={require("url:./line/9.svg")}></img>
 
             <p className={pClass}>
-              So now that we have AE or BE, we can use pythagoras pretty easily
-              becasue we know all the coordinates here. So we can figure out c
-              in both these cases. c = sqrt(a2 + b2) in case you forgot
+              So now that we have <span style={orange}>AE</span> or <span style={orange}>BE</span>, we can use pythagoras pretty easily
+              since we know all the coordinates here. So we can figure out c
+              in both these cases. <pre>c = sqrt(a2 + b2)</pre>
             </p>
 
             <img
@@ -153,8 +161,7 @@ const Blog = () => {
 
             <p className={pClass}>
               If the dot’s in the middle, we have to use a different clever
-              trick. We have AE, the vector from A to the point E. And we have
-              AB, the vector from A to B. We’re going to get the product of
+              trick. We have <span style={orange}>AE</span>, the vector from A to the point E. And we have <span style={green}>AB</span>, the vector from A to B. We’re going to get the product of
               these two vectors. It’s not the same as the dot product!
             </p>
 
@@ -189,7 +196,7 @@ const Blog = () => {
 
             <p className={pClass}>
               So if we have the area of the rectangle, and we know the length of
-              AB, we can figure out the width really easily. We divide the area
+              AB, we can figure out the <span style={blue}>width</span> really easily. We divide the area
               by the length of AB. And that’s our distance!
             </p>
 

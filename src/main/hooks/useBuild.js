@@ -1,22 +1,14 @@
 import ReactGA from "react-ga";
 
-import BuildsContainer from "~/containers/builds";
 import NetworkContainer from "~/containers/network";
 import { buildHex } from "~/utils/code";
 
 const useBuild = (code, config) => {
   const { simulator } = NetworkContainer.useContainer();
-  const {
-    getBuild,
-    setBuild,
-    isBuilding,
-    setIsBuilding,
-  } = BuildsContainer.useContainer();
+  const [build, setBuild] = useState();
 
   useEffect(() => {
-    if (getBuild(code, config) || isBuilding(code, config)) return;
-
-    setIsBuilding(code, config, true);
+    setBuild(undefined);
 
     ReactGA.event({
       category: "Emulator",
@@ -31,11 +23,12 @@ const useBuild = (code, config) => {
         value: new Date() - t,
         label: 'Emulator build time'
       });
-      setBuild(code, config, build);
+      setBuild(build);
+      // setIsBuilding(false);
     });
   }, [code, config, simulator]);
 
-  return getBuild(code, config);
+  return build;
 };
 
 export default useBuild;

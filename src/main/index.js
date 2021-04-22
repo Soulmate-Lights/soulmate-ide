@@ -5,7 +5,6 @@ import React, { Suspense } from "react";
 import { HashRouter, Route, Router, Switch } from "react-router-dom";
 import { LastLocationProvider } from "react-router-last-location";
 
-import BuildsContainer from "~/containers/builds";
 import NetworkContainer from "~/containers/network";
 import NotificationsContainer from "~/containers/notifications";
 import SoulmatesContainer from "~/containers/soulmates";
@@ -76,11 +75,9 @@ const WrappedMain = () => (
   <NetworkContainer.Provider>
     <NotificationsContainer.Provider>
       <SoulmatesContainer.Provider>
-        <BuildsContainer.Provider>
-          <UserContainer.Provider>
-            <Main />
-          </UserContainer.Provider>
-        </BuildsContainer.Provider>
+        <UserContainer.Provider>
+          <Main />
+        </UserContainer.Provider>
       </SoulmatesContainer.Provider>
     </NotificationsContainer.Provider>
   </NetworkContainer.Provider>

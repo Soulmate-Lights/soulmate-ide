@@ -1,7 +1,7 @@
 export default `// I use this for both Points and vectors
 class Point {
-  public:
-    double x;
+ public:
+  double x;
   double y;
   Point(double newx, double newy) {
     x = newx;
