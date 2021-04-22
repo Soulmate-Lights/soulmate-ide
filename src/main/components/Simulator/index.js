@@ -13,8 +13,6 @@ import soulmateName from "~/utils/soulmateName";
 import ResolutionPopup from "./resolutionPopup";
 import { calculateDimensions, useWindowSize } from "./utils";
 
-let worker;
-
 const Simulator = ({
   className,
   minWidth,
@@ -29,6 +27,7 @@ const Simulator = ({
   const [serialOutput, setSerialOutput] = useState("");
   const serialOutputRef = useRef("");
   const [hasPixels, setHasPixels] = useState(false);
+  const worker = useRef();
 
   const {
     selectedSoulmate,
@@ -100,15 +99,14 @@ const Simulator = ({
   const start = () => {
     if (paused) return;
     if (!build) return;
-
     const { hex } = build;
 
-    if (!worker) {
-      worker = new Worker(new URL('./worker', import.meta.url));
-      worker.addEventListener("message", workerMessage);
-      worker.postMessage({ hex: hex, rows, cols });
+    if (!worker.current) {
+      worker.current = new Worker(new URL('./worker', import.meta.url));
+      worker.current.addEventListener("message", workerMessage);
+      worker.current.postMessage({ hex: hex, rows, cols });
     } else {
-      worker.postMessage({ paused: false, hex: hex, rows, cols });
+      worker.current.postMessage({ paused: false, hex: hex, rows, cols });
     }
 
     setSerialOutput("");
@@ -116,8 +114,8 @@ const Simulator = ({
 
   const stop = () => {
     setHasPixels(false);
-    worker?.terminate();
-    worker = undefined;
+    worker.current?.terminate();
+    worker.current = undefined;
   };
 
   // Lifecycle things
@@ -131,7 +129,7 @@ const Simulator = ({
     if (!paused) {
       start();
     } else {
-      worker?.postMessage({ paused: true });
+      worker.current?.postMessage({ paused: true });
       serialOutputRef.current = "";
     }
   }, [paused]);
