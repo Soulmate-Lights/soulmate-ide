@@ -7,6 +7,7 @@ import Example from "~/../marketing/example";
 import code from "./line/code";
 import sampleCode from './line/sampleCode';
 import simpleLineCode from './line/simpleLine';
+import triangle from "./line/triangle";
 
 
 const blue = { color: 'rgb(1, 1, 250)'};
@@ -98,7 +99,7 @@ const Blog = () => {
             <p className={pClass}>
               For this, we’ll need to use a thing called a Vector. A vector
               starts at one point and ends at another. In our setup here, AB is
-              a vector between A and B, and AE is a vector from A to E.
+              a vector between A and B, and <span style={green}>AE</span> is a vector from A to E.
             </p>
 
             <img className={imageClass} src={require("url:./line/4.svg")}></img>
@@ -115,12 +116,15 @@ const Blog = () => {
               </span>, and <span style={blue}>
                 points that are a distance from the
                 line
-              </span>. But how do we know what kind of point we’re dealing with?
-              There’s a clever trick! We can use a thing called a Dot Product.
+              </span>.
             </p>
 
             <img className={imageClass} src={require("url:./line/6.svg")}></img>
 
+            <p className={pClass}>
+              But how do we know what kind of point we’re dealing with?
+              There’s a clever trick! We can use a thing called a Dot Product.
+            </p>
             <p className={pClass}>
               The Dot Product is a vibe check for vectors. If the vectors are
               going the <span style={green}>same way</span>, it’s a positive vibe (positive dot product).
@@ -216,7 +220,12 @@ const Blog = () => {
             ></img>
 
             <p className={pClass}>
-              And there we go! Give every point a brightness that matches its
+              And there we go! We now know how to calculate the distance of any point from this line.
+              If the dot product is 0, use that area division thing. If it's 0, use Pythagoras.
+            </p>
+
+            <p className={pClass}>
+              Then, give every point a brightness that matches its
               distance from the line, and we have a nice blurry line.
             </p>
 
@@ -239,7 +248,7 @@ const Blog = () => {
               />
             </div>
 
-            <p className={pClass}>Now, let's see that in a Soulmate sketch!</p>
+            <p className={pClass}>Pretty good. Now let's see that in a Soulmate sketch!</p>
           </div>
 
           <div className="px-24 mx-auto mt-6 text-gray-500 prose prose-indigo prose-lg max-w-none soulmate-content">
@@ -247,13 +256,38 @@ const Blog = () => {
           </div>
 
           <div className="mx-auto mt-6 text-gray-500 prose prose-indigo prose-lg">
-          <p className={pClass}>Not bad at all. But it's a little boring. What if we animated the start and end points?</p>
+            <p className={pClass}>Not bad at all. But it's a little boring.</p>
+
+            <p className={pClass}>
+              What if we animated the start and end points?
+            </p>
           </div>
 
           <div className="px-24 mx-auto mt-6 text-gray-500 prose prose-indigo prose-lg max-w-none soulmate-content">
             <Example className="w-full max-w-10/12" code={code} />
           </div>
 
+          <div className="mx-auto mt-6 text-gray-500 prose prose-indigo prose-lg">
+            <p className={pClass}>At the bottom of that last sketch, you can see these lines:</p>
+
+            <pre className="whitespace-pre">{`Point start(
+  beatsin16(10, 0, 8),
+  beatsin16(11, 0, 8)
+);
+Point stop(
+  beatsin16(12, ROWS - 8, ROWS),
+  beatsin16(13, COLS - 8, COLS)
+);`}</pre>
+            <p className={pClass}>Those <span>beatsin16</span> functions call a sine wave every time they're rendered.</p>
+
+            <pre className="whitespace-pre">beatsin16(beatsPerMinute, start, end)</pre>
+
+            <p className={pClass}>Now, if you can draw a line, you can draw anything!</p>
+          </div>
+
+          <div className="px-24 mx-auto mt-6 text-gray-500 prose prose-indigo prose-lg max-w-none soulmate-content">
+            <Example className="w-full max-w-10/12" code={triangle} />
+          </div>
         </div>
       </div>
     </div>
