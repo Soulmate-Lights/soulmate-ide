@@ -9,10 +9,10 @@ import sampleCode from "./line/sampleCode";
 import simpleLineCode from "./line/simpleLine";
 import triangle from "./line/triangle";
 
-const blue = { color: "rgb(1, 1, 250)" };
-const orange = { color: "rgb(234, 163, 39" };
-const green = { color: "rgb(73, 128, 31" };
-const red = { color: "rgb(219, 5, 2" };
+const blue = { fontStyle: 'italic', color: "rgb(1, 1, 250)" };
+const orange = { fontStyle: 'italic', color: "rgb(234, 163, 39" };
+const green = { fontStyle: 'italic', color: "rgb(73, 128, 31" };
+const red = { fontStyle: 'italic', color: "rgb(219, 5, 2" };
 
 const editorConfig = {
   links: false,
@@ -131,8 +131,10 @@ const Blog = () => {
             </p>
             <p className={pClass}>
               The Dot Product is a vibe check for vectors. If the vectors are
-              going the <span style={green}>same way</span>, it’s a positive
-              vibe (positive dot product). If they’re going the{" "}
+              going the <span style={green}>same way</span>, it’s a <span style={green}>
+                positive
+                vibe
+              </span> (positive dot product). If they’re going the{" "}
               <span style={red}>opposite ways</span>, it’s a negative vibe
               (negative dot product). If the dot is{" "}
               <span style={blue}>perpendicular</span>, there’s no vibe. The dot
@@ -321,6 +323,22 @@ Point stop(
 
           <div className="px-24 mx-auto mt-6 text-gray-500 prose prose-indigo prose-lg max-w-none soulmate-content">
             <Example className="w-full max-w-10/12" code={triangle} />
+          </div>
+
+          <div className="mx-auto mt-6 text-gray-500 prose prose-indigo prose-lg">
+            <p className={pClass}>
+              Well, that's all I have for you today. I hope you found this interesting.
+              I've had a lot of fun doing vector algebra and drawing things. I've remembered stuff about matrices and vectors
+              and Pythagoras.
+            </p>
+
+            <p className={pClass}>
+              If you think this was fun, you might like the <a href="https://editor.soulmatelights.com/">Soulmate IDE</a> that I've made. It's a tool for programming LEDs and turning math into art.
+            </p>
+
+            <p className={pClass}>
+              Elliott
+            </p>
           </div>
         </div>
       </div>
