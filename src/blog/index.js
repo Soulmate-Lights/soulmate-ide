@@ -1,4 +1,5 @@
 import React, { useLayoutEffect } from "react";
+import Helmet from 'react-helmet';
 import Monaco from "react-monaco-editor";
 import { Mode, useLightSwitch } from "use-light-switch";
 
@@ -65,12 +66,21 @@ const Blog = () => {
 
   return (
     <div>
+    <Helmet>
+      <title>LEDs, Lines, and Linear Algebra</title>
+      <meta content="https://editor.soulmatelights.com/blog/1-leds-lines-and-linear-algebra" property="og:url" />
+      <meta content="article" property="og:type" />
+      <meta content="LEDs, Lines, and Linear Algebra" property="og:title" />
+      <meta content="How hard can it be to draw a line?" property="og:description" />
+      <meta content={require("url:./line/18.svg")} property="og:image" />
+
+    </Helmet>
       <div className="relative py-16 overflow-hidden bg-white soulmate-content">
         <div className="relative px-4 sm:px-6 lg:px-8">
           <div className="mx-auto text-lg max-w-prose">
             <h1>
               <span className="block text-base font-semibold tracking-wide text-indigo-600 uppercase">
-                LEDs and Linear Algebra
+                LEDs, Lines, and Linear Algebra
               </span>
               <span className="block mt-2 text-3xl font-extrabold tracking-tight text-gray-900 leading-8 sm:text-4xl">
                 Drawing a line
