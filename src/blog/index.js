@@ -279,7 +279,7 @@ const Blog = () => {
             <p className={pClass}>
               And there we go! We now know how to calculate the distance of any
               point from this line. If the dot product is 0, use that area
-              division thing. If it's 0, use Pythagoras.
+              division thing. If it's not 0, use Pythagoras.
             </p>
 
             <p className={pClass}>
