@@ -134,14 +134,18 @@ const Blog = () => {
             <img className={imageClass} src={require("url:./line/6.svg")}></img>
 
             <p className={pClass}>
-              It doesn’t matter where our points are, we can have vectors
-              between any two points on a grid. Here’s a whole bunch of them:
+              It's probably best to point out that I'm using "line" here to describe a "line segment". Technically speaking a line goes on forever.
+            </p>
+
+            <p className={pClass}>
+              Anyway, It doesn’t matter where our points are, we can have vectors
+              between any two points on a grid. Here’s a few <span style={red}>points</span> that we want to know about, our line <span style={green}>AB</span>, and some <span style={orange}>vectors</span>.
             </p>
 
             <img className={imageClass} src={require("url:./line/7.svg")}></img>
 
             <p className={pClass}>
-              There are two different types of points.{" "}
+              When it comes to measuring distance from a line, there are actually two different types of points.{" "}
               <span style={orange}>
                 Points that are a distance from one end
               </span>
@@ -151,6 +155,10 @@ const Blog = () => {
             </p>
 
             <img className={imageClass} src={require("url:./line/8.svg")}></img>
+
+            <p className={pClass}>
+              When a point is closest to the end of a line, we know its closest point on the line - the end of the line. If it's in the middle, we don't know what point on the line is closest. We'll have to figure that out separately.
+            </p>
 
             <p className={pClass}>
               But how do we know what kind of point we’re dealing with? There’s
@@ -204,6 +212,11 @@ const Blog = () => {
               easily since we know all the coordinates here.
             </p>
 
+            <img
+              className={imageClass}
+              src={require("url:./line/12.svg")}
+            ></img>
+
             <p className={pClass}>
               So we can figure out c in both these cases:
             </p>
@@ -212,18 +225,6 @@ const Blog = () => {
               c = sqrt(a<sup>2</sup> + b<sup>2</sup>)
             </pre>
 
-            <img
-              className={imageClass}
-              src={require("url:./line/12.svg")}
-            ></img>
-
-            <p className={pClass}>
-              If the dot’s in the middle, we have to use a different clever
-              trick. We have <span style={orange}>AE</span>, the vector from A
-              to the point E. And we have <span style={green}>AB</span>, the
-              vector from A to B. We’re going to get the product of these two
-              vectors. It’s not the same as the dot product!
-            </p>
 
             <img
               className={imageClass}
@@ -231,10 +232,22 @@ const Blog = () => {
             ></img>
 
             <p className={pClass}>
-              What this actually gives us is the area of this parallelogram.
+              If the dot’s in the middle, we have to use a different clever
+              trick. We have <span style={orange}>AE</span>, the vector from A
+              to the point E. And we have <span style={green}>AB</span>, the
+              vector from A to B. We’re going to get the <em>determinant</em> of these two
+              vectors.
+            </p>
+
+            <pre>
+              determinant = abs(AB.x * AE.y - AB.y * AE.x)
+            </pre>
+
+            <p className={pClass}>
+              What this <em>determinant</em> actually gives us is the area of this parallelogram.
               We’ve multiplied the two sides, and that tells us this gray area.
-              Parallelograms work the same way as rectangles. When you calculate
-              a rectangle, width and height are both actually vectors.
+              Parallelograms work the same way as rectangles - because when you calculate
+              a rectangle, width and height are both actually vectors. All line segments are vectors!
             </p>
 
             <img
