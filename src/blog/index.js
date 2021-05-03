@@ -299,6 +299,14 @@ const Blog = () => {
             <p className={pClass}>
               Pretty good. Now let's see that in a Soulmate sketch!
             </p>
+
+            <p className={pClass}>
+              A little backstory: Soulmate is the LED programming software that I have been building for a few years. You're actually reading this page on the Soulmate website. By writing C++ code, you can program little microchips to power LED art.
+            </p>
+
+            <p className={pClass}>
+              The next few slides are live, editable code! You can change the code and see what it does. If you're on a mobile device, the code isn't visible. Come back later on a computer.
+            </p>
           </div>
 
           <div className={exampleWrapperClass}>
