@@ -389,7 +389,7 @@ Point stop(
 
             <p className={pClass}>
               If you think this was fun, you might like the{" "}
-              <a href="https://editor.soulmatelights.com/">Soulmate IDE</a> that
+              <a href="https://editor.soulmatelights.com/gallery/11-circles">Soulmate IDE</a> that
               I've made. It's a tool for programming LEDs and turning math into
               art.
             </p>
