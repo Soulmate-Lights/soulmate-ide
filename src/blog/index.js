@@ -174,8 +174,6 @@ const Blog = () => {
               product is zero.
             </p>
 
-            <img className={imageClass} src={require("url:./line/10.svg")} />
-
             <p className={pClass}>
               You write the dot product using the • symbol, and you calculate it
               using this formula:
@@ -187,6 +185,8 @@ const Blog = () => {
               + <span style={green}>AB</span>.y * <span style={orange}>AE</span>
               .y
             </pre>
+
+            <img className={imageClass} src={require("url:./line/10.svg")} />
 
             <p className={pClass}>
               We’ll start by checking if the point <span style={red}>E</span> is
@@ -205,27 +205,16 @@ const Blog = () => {
 
             <p className={pClass}>
               So now that we have <span style={orange}>AE</span> or{" "}
-              <span style={orange}>BE</span>, we can use pythagoras pretty
-              easily since we know all the coordinates here.
-            </p>
-
-            <img
-              className={imageClass}
-              src={require("url:./line/12.svg")}
-            ></img>
-
-            <p className={pClass}>
-              So we can figure out c in both these cases:
+              <span style={orange}>BE</span>, we can use pythagoras since we know all the coordinates here.
             </p>
 
             <pre>
               c = sqrt(a<sup>2</sup> + b<sup>2</sup>)
             </pre>
 
-
             <img
               className={imageClass}
-              src={require("url:./line/13.svg")}
+              src={require("url:./line/12.svg")}
             ></img>
 
             <p className={pClass}>
@@ -235,6 +224,11 @@ const Blog = () => {
               vector from A to B. We’re going to get the <em>determinant</em> of these two
               vectors.
             </p>
+
+            <img
+              className={imageClass}
+              src={require("url:./line/13.svg")}
+            ></img>
 
             <pre>
               determinant = abs(AB.x * AE.y - AB.y * AE.x)
@@ -275,6 +269,13 @@ const Blog = () => {
               className={imageClass}
               src={require("url:./line/16.svg")}
             ></img>
+
+<p className={pClass}>
+            <pre className="whitespace-pre">{`float lengthAB = sqrt(AB.x * AB.x + AB.y * AB.y);
+float determinant = abs(AB.x * AE.y - AB.y * AE.x);
+float width = determinant / lengthAB;`}
+            </pre>
+            </p>
 
             <p className={pClass}>
               Now, use the distance as brightness.
