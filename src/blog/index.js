@@ -79,11 +79,8 @@ const Blog = () => {
         <div className="relative px-4 sm:px-6 lg:px-8">
           <div className="mx-auto text-lg max-w-prose">
             <h1>
-              <span className="block text-base font-semibold tracking-wide text-indigo-600 uppercase">
-                LEDs, Lines, and Linear Algebra
-              </span>
               <span className="block mt-2 text-3xl font-extrabold tracking-tight text-gray-900 leading-8 sm:text-4xl">
-                Drawing a line
+                LEDs, Lines, and Linear Algebra
               </span>
             </h1>
           </div>
@@ -392,6 +389,10 @@ Point stop(
               <a href="https://editor.soulmatelights.com/gallery/11-circles">Soulmate IDE</a> that
               I've made. It's a tool for programming LEDs and turning math into
               art.
+            </p>
+
+            <p className={pClass}>
+              Big big thanks to <a href="https://www.geeksforgeeks.org/minimum-distance-from-a-point-to-the-line-segment-using-vectors/">this website</a> for providing code in multiple languages including C++! I was really stuck figuring this out, and sample code helped a lot.
             </p>
 
             <p className={pClass}>Elliott</p>
