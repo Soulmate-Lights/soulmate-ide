@@ -9,10 +9,10 @@ import sampleCode from "./line/sampleCode";
 import simpleLineCode from "./line/simpleLine";
 import triangle from "./line/triangle";
 
-const blue = { fontStyle: 'italic', color: "rgb(1, 1, 250)" };
-const orange = { fontStyle: 'italic', color: "rgb(234, 163, 39" };
-const green = { fontStyle: 'italic', color: "rgb(73, 128, 31" };
-const red = { fontStyle: 'italic', color: "rgb(219, 5, 2" };
+const blue = { fontStyle: "italic", color: "rgb(1, 1, 250)" };
+const orange = { fontStyle: "italic", color: "rgb(234, 163, 39" };
+const green = { fontStyle: "italic", color: "rgb(73, 128, 31" };
+const red = { fontStyle: "italic", color: "rgb(219, 5, 2" };
 
 const editorConfig = {
   links: false,
@@ -29,6 +29,7 @@ const editorConfig = {
 };
 
 const imageClass = "mx-auto w-full";
+const exampleWrapperClass = "mx-auto mt-6 text-gray-500 xl:px-24 prose prose-indigo prose-lg max-w-none soulmate-content";
 const pClass = "";
 
 const Blog = () => {
@@ -107,11 +108,27 @@ const Blog = () => {
             <img className={imageClass} src={require("url:./line/4.svg")}></img>
 
             <p className={pClass}>
+              A vector is a line with direction and length. We can use a vector
+              to describe a line like this one. The line starts and ends, so it
+              has length, and we know where it starts and ends, so we know its
+              direction.
+            </p>
+
+            <img className={imageClass} src={require("url:./line/5.svg")}></img>
+
+            <p className={pClass}>
+              This same vector can actually describe any line with the same
+              length and direction.
+            </p>
+
+            <img className={imageClass} src={require("url:./line/6.svg")}></img>
+
+            <p className={pClass}>
               It doesn’t matter where our points are, we can have vectors
               between any two points on a grid. Here’s a whole bunch of them:
             </p>
 
-            <img className={imageClass} src={require("url:./line/5.svg")}></img>
+            <img className={imageClass} src={require("url:./line/7.svg")}></img>
 
             <p className={pClass}>
               There are two different types of points.{" "}
@@ -123,24 +140,26 @@ const Blog = () => {
               .
             </p>
 
-            <img className={imageClass} src={require("url:./line/6.svg")}></img>
+            <img className={imageClass} src={require("url:./line/8.svg")}></img>
 
             <p className={pClass}>
               But how do we know what kind of point we’re dealing with? There’s
               a clever trick! We can use a thing called a Dot Product.
             </p>
+
+            <img className={imageClass} src={require("url:./line/9.svg")}></img>
+
             <p className={pClass}>
               The Dot Product is a vibe check for vectors. If the vectors are
-              going the <span style={green}>same way</span>, it’s a <span style={green}>
-                positive
-                vibe
-              </span> (positive dot product). If they’re going the{" "}
-              <span style={red}>opposite ways</span>, it’s a negative vibe
-              (negative dot product). If the dot is{" "}
+              going the <span style={green}>same way</span>, it’s a{" "}
+              <span style={green}>positive vibe</span> (positive dot product).
+              If they’re going the <span style={red}>opposite ways</span>, it’s
+              a negative vibe (negative dot product). If the dot is{" "}
               <span style={blue}>perpendicular</span>, there’s no vibe. The dot
               product is zero.
             </p>
-            <img className={imageClass} src={require("url:./line/7.svg")}></img>
+
+            <img className={imageClass} src={require("url:./line/10.svg")} />
 
             <p className={pClass}>
               You write the dot product using the • symbol, and you calculate it
@@ -154,8 +173,6 @@ const Blog = () => {
               .y
             </pre>
 
-            <img className={imageClass} src={require("url:./line/8.svg")}></img>
-
             <p className={pClass}>
               We’ll start by checking if the point <span style={red}>E</span> is
               closest to either end of the line. if{" "}
@@ -166,15 +183,16 @@ const Blog = () => {
               next.
             </p>
 
-            <img className={imageClass} src={require("url:./line/9.svg")}></img>
+            <img
+              className={imageClass}
+              src={require("url:./line/11.svg")}
+            ></img>
 
             <p className={pClass}>
               So now that we have <span style={orange}>AE</span> or{" "}
               <span style={orange}>BE</span>, we can use pythagoras pretty
               easily since we know all the coordinates here.
             </p>
-
-            <img className={imageClass} src={require("url:./line/10.svg")} />
 
             <p className={pClass}>
               So we can figure out c in both these cases:
@@ -183,6 +201,11 @@ const Blog = () => {
             <pre>
               c = sqrt(a<sup>2</sup> + b<sup>2</sup>)
             </pre>
+
+            <img
+              className={imageClass}
+              src={require("url:./line/12.svg")}
+            ></img>
 
             <p className={pClass}>
               If the dot’s in the middle, we have to use a different clever
@@ -194,7 +217,7 @@ const Blog = () => {
 
             <img
               className={imageClass}
-              src={require("url:./line/11.svg")}
+              src={require("url:./line/13.svg")}
             ></img>
 
             <p className={pClass}>
@@ -206,7 +229,7 @@ const Blog = () => {
 
             <img
               className={imageClass}
-              src={require("url:./line/12.svg")}
+              src={require("url:./line/14.svg")}
             ></img>
 
             <p className={pClass}>
@@ -218,7 +241,7 @@ const Blog = () => {
 
             <img
               className={imageClass}
-              src={require("url:./line/13.svg")}
+              src={require("url:./line/15.svg")}
             ></img>
 
             <p className={pClass}>
@@ -230,7 +253,7 @@ const Blog = () => {
 
             <img
               className={imageClass}
-              src={require("url:./line/14.svg")}
+              src={require("url:./line/16.svg")}
             ></img>
 
             <p className={pClass}>
@@ -240,7 +263,7 @@ const Blog = () => {
 
             <img
               className={imageClass}
-              src={require("url:./line/15.svg")}
+              src={require("url:./line/17.svg")}
             ></img>
 
             <p className={pClass}>
@@ -256,7 +279,7 @@ const Blog = () => {
 
             <img
               className={imageClass}
-              src={require("url:./line/16.svg")}
+              src={require("url:./line/18.svg")}
             ></img>
 
             <p className={pClass}>Let's try that in C++:</p>
@@ -278,7 +301,7 @@ const Blog = () => {
             </p>
           </div>
 
-          <div className="px-24 mx-auto mt-6 text-gray-500 prose prose-indigo prose-lg max-w-none soulmate-content">
+          <div className={exampleWrapperClass}>
             <Example className="w-full max-w-10/12" code={simpleLineCode} />
           </div>
 
@@ -290,8 +313,8 @@ const Blog = () => {
             </p>
           </div>
 
-          <div className="px-24 mx-auto mt-6 text-gray-500 prose prose-indigo prose-lg max-w-none soulmate-content">
-            <Example className="w-full max-w-10/12" code={code} />
+          <div className={exampleWrapperClass}>
+            <Example className="w-full md:max-w-10/12" code={code} />
           </div>
 
           <div className="mx-auto mt-6 text-gray-500 prose prose-indigo prose-lg">
@@ -321,24 +344,26 @@ Point stop(
             </p>
           </div>
 
-          <div className="px-24 mx-auto mt-6 text-gray-500 prose prose-indigo prose-lg max-w-none soulmate-content">
+          <div className={exampleWrapperClass}>
             <Example className="w-full max-w-10/12" code={triangle} />
           </div>
 
           <div className="mx-auto mt-6 text-gray-500 prose prose-indigo prose-lg">
             <p className={pClass}>
-              Well, that's all I have for you today. I hope you found this interesting.
-              I've had a lot of fun doing vector algebra and drawing things. I've remembered stuff about matrices and vectors
+              Well, that's all I have for you today. I hope you found this
+              interesting. I've had a lot of fun doing vector algebra and
+              drawing things. I've remembered stuff about matrices and vectors
               and Pythagoras.
             </p>
 
             <p className={pClass}>
-              If you think this was fun, you might like the <a href="https://editor.soulmatelights.com/">Soulmate IDE</a> that I've made. It's a tool for programming LEDs and turning math into art.
+              If you think this was fun, you might like the{" "}
+              <a href="https://editor.soulmatelights.com/">Soulmate IDE</a> that
+              I've made. It's a tool for programming LEDs and turning math into
+              art.
             </p>
 
-            <p className={pClass}>
-              Elliott
-            </p>
+            <p className={pClass}>Elliott</p>
           </div>
         </div>
       </div>
