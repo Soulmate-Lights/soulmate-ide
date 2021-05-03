@@ -72,7 +72,7 @@ const Blog = () => {
       <meta content="article" property="og:type" />
       <meta content="LEDs, Lines, and Linear Algebra" property="og:title" />
       <meta content="How hard can it be to draw a line?" property="og:description" />
-      <meta content={require("url:./line/18.svg")} property="og:image" />
+      <meta content={require("url:./line/18.png")} property="og:image" />
 
     </Helmet>
       <div className="relative py-16 overflow-hidden bg-white soulmate-content">
