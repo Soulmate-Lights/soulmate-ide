@@ -12,7 +12,7 @@
     "electron": "index.html"
   },
   "engines": {
-    "node": "15.x"
+    "node": "12.x"
   },
   "targets": {
     "main": false,
