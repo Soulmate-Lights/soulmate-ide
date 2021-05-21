@@ -22,7 +22,7 @@
       "publicUrl": ".",
       "context": "browser"
     },
-    "browser": {
+    "web": {
       "distDir": "dist",
       "scopeHoist": false,
       "publicUrl": "/",
@@ -161,9 +161,10 @@
   ],
   "scripts": {
     "// web stuff": "online",
-    "react-start": "parcel -p 3000 index.html --target browser",
-    "build-web": "parcel build index.html --target browser",
-    "start": "concurrently \"cross-env BROWSER=none yarn react-start\" \"wait-on http://localhost:3000 && electron . \"",
+    "react-start": "parcel -p 3000 index.html --target web",
+    "electron-react-start": "parcel -p 3000 index.html --target electron",
+    "build-web": "parcel build index.html --target web",
+    "start": "concurrently \"cross-env BROWSER=none yarn electron-react-start\" \"wait-on http://localhost:3000 && electron . \"",
     "web": "NODE_ENV=development parcel index.html --open -p 3000",
     "heroku-postbuild": "yarn build-web",
     "// electron stuff": "builds",

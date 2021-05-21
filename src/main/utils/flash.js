@@ -3,9 +3,10 @@ if (!window.remote) window.remote = undefined;
 import isElectron, { isPackaged } from "~/utils/isElectron";
 
 const cwd = () => {
-  const path = remote?.require("path");
+  const remoteRequire = remote?.['req'+'uire'];
+  const path = remoteRequire("path");
   const getAppPath = remote?.app.getAppPath;
-  const rootPath = window.require("electron-root-path")?.rootPath;
+  const rootPath = window['req'+'uire']("electron-root-path")?.rootPath;
   return isPackaged()
     ? path?.join(path.dirname(getAppPath()), "..", "./builder")
     : path?.join(rootPath, "builder");
@@ -28,8 +29,8 @@ const getNumberFromFlashOutput = (data) => {
 
 /* Make sure we have pyserial installed */
 export const installDependencies = () => {
-  const childProcess = window.require("child_process");
-  if (remote.require("os").platform() === "darwin") {
+  const childProcess = window['req'+'uire']("child_process");
+  if (remote['req'+'uire']("os").platform() === "darwin") {
     const hasPip = childProcess.exec("/usr/bin/python -m pip");
     hasPip.on("close", (result) => {
       if (result !== 0) {
@@ -42,7 +43,7 @@ export const installDependencies = () => {
     });
   } else {
     // `which` doesn't seem to work in Windows.
-    // const which = remote && remote?.require("which");
+    // const which = remote && remoteRequire("which");
     // const python = which.sync("python");
     // childProcess.execSync(`${python} ./get-pip.py`, { cwd });
     // const pip = which.sync("pip");
@@ -62,9 +63,9 @@ if (isElectron()) {
 /** Flash a build file to a USB output */
 export const flashBuild = async (port, file, progressCallback) => {
   let errorOutput = [];
-  // const which = remote && remote?.require("which");
+  // const which = remote && remoteRequire("which");
   let python = "/usr/bin/python";
-  if (remote.require("os").platform() !== "darwin") {
+  if (remote['req'+'uire']("os").platform() !== "darwin") {
     python = "python";
   }
 
@@ -74,7 +75,7 @@ export const flashBuild = async (port, file, progressCallback) => {
 
   console.log("[flashBuild]", { cmd, cwd: cwd() });
 
-  const childProcess = window.require("child_process");
+  const childProcess = window['req'+'uire']("child_process");
   const child = childProcess.exec(cmd, { cwd: cwd() });
   child.stderr.on("data", (line) => (errorOutput = [...errorOutput, line]));
   child.stdout.on("data", (data) => {

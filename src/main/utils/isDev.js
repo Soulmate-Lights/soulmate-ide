@@ -1,7 +1,7 @@
 export default () => {
   let isDev = false;
   if (typeof electron !== "undefined") {
-    isDev = window.require("electron-is-dev");
+    isDev = window['req'+'uire']("electron-is-dev");
   } else if (window.location.host === "localhost:3000") {
     isDev = true;
   } else if (window.location.host.includes(":300")) {

@@ -28,7 +28,7 @@ if (window.crypto) {
 
 if (isElectron()) {
   ipcRenderer
-    .invoke("get-password", window.require("os").userInfo().username)
+    .invoke("get-password", window['req'+'uire']("os").userInfo().username)
     .then((key) => {
       if (key) localStorage[specialKey] = key;
     });
@@ -75,7 +75,7 @@ export const logIn = async () => {
         try {
           ipcRenderer.invoke(
             "set-password",
-            window.require("os").userInfo().username,
+            window['req'+'uire']("os").userInfo().username,
             response.token
           );
         } catch (e) {
@@ -157,7 +157,7 @@ export const logOut = async () => {
   const auth0 = await auth0Promise;
 
   if (isElectron()) {
-    const username = window.require("os").userInfo().username;
+    const username = window['req'+'uire']("os").userInfo().username;
     ipcRenderer.invoke("delete-password", username);
 
     remote.require("electron").session.defaultSession.clearStorageData;
