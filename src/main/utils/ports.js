@@ -1,34 +1,23 @@
 let serialport;
 if (window.require) serialport = window.require("serialport");
 
+const isMatchingPort = (port) => {
+  const { vendorId, path } = port;
+
+  if (["1a86", "10c4", "0403"].includes(vendorId)) return true;
+  if (path.includes("usbserial")) return true;
+  if (path.includes("tty.wchusbserial")) return true;
+  if (path.includes("cu.SLAB_USBtoUART")) return true;
+};
+
 export const getPort = async () => {
-  const results = await serialport.list();
-
-  const port = results.find((result) => {
-    if (result.vendorId === "1a86") return true;
-    if (result.vendorId === "10c4") return true;
-    if (result.vendorId === "0403") return true;
-    if (result.path.includes("usbserial")) return true;
-    if (result.path.includes("tty.wchusbserial")) return true;
-    if (result.path.includes("cu.SLAB_USBtoUART")) return true;
-  });
-
-  if (!port) return false;
-  return port.path;
+  const port = getPorts()[0];
+  return port ? port.path : false;
 };
 
 export const getPorts = async () => {
   const results = await serialport.list();
-
-  const ports = results.filter((result) => {
-    if (result.vendorId === "1a86") return true;
-    if (result.vendorId === "10c4") return true;
-    if (result.vendorId === "0403") return true;
-    if (result.path.includes("usbserial")) return true;
-    if (result.path.includes("tty.wchusbserial")) return true;
-    if (result.path.includes("cu.SLAB_USBtoUART")) return true;
-  });
-
+  const ports = results.filter(isMatchingPort);
   return ports;
 };
 
