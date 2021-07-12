@@ -7,7 +7,10 @@ const paths = ["usbserial", "tty.wchusbserial", "cu.SLAB_USBtoUART"];
 const isMatchingPort = (port) => {
   const { vendorId, path } = port;
 
-  if (vendorIds.includes(vendorId) || paths.find((p) => path.includes(p)))
+  if (
+    vendorIds.includes(vendorId.toLowerCase()) ||
+    paths.find((p) => path.toLowerCase().includes(p.toLowerCase()))
+  )
     return true;
 
   return false;
