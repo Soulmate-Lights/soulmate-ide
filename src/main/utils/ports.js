@@ -1,15 +1,17 @@
 let serialport;
 if (window.require) serialport = window.require("serialport");
 
-const vendorIds = ["1a86", "10c4", "0403"];
-const paths = ["usbserial", "tty.wchusbserial", "cu.SLAB_USBtoUART"];
+const vendorIds = ["1a86", "10c4", "0403"].map((v) => v.toLowerCase());
+const paths = ["usbserial", "tty.wchusbserial", "cu.SLAB_USBtoUART"].map((p) =>
+  p.toLowerCase()
+);
 
 const isMatchingPort = (port) => {
   const { vendorId, path } = port;
 
   if (
-    vendorIds.includes(vendorId.toLowerCase()) ||
-    paths.find((p) => path.toLowerCase().includes(p.toLowerCase()))
+    vendorIds.includes(vendorId?.toLowerCase()) ||
+    paths.find((p) => path.includes(p?.toLowerCase()))
   )
     return true;
 
@@ -17,7 +19,8 @@ const isMatchingPort = (port) => {
 };
 
 export const getPort = async () => {
-  const port = getPorts()[0];
+  const ports = await getPorts();
+  const port = ports[0];
   return port ? port.path : false;
 };
 
