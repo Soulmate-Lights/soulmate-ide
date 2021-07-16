@@ -18,6 +18,7 @@ import Logo from "~/images/logo.svg";
 import history from "~/utils/history";
 import isElectron from "~/utils/isElectron";
 
+import AppRedirect from "./AppRedirect";
 import ErrorBoundary from "./components/ErrorBoundary";
 import Config from "./config";
 import Console from "./console";
@@ -70,6 +71,9 @@ const IDE = () => {
         <meta content="product" property="og:type" />
       </Helmet>
       <Switch>
+        <Route path="/app">
+          <AppRedirect />
+        </Route>
         <Route path="/desktop-sign-in">
           <Logo className="loading-spinner" />
         </Route>
