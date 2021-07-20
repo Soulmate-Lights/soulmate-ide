@@ -70,8 +70,15 @@ export const flashBuild = async (port, file, progressCallback) => {
 
   console.log(`[utils.flashBuild] Python: ${python}`);
 
-  // Used to be 1500000
-  const cmd = `${python} ./esptool.py --chip esp32 -p ${port} --baud 921600 --before default_reset --after hard_reset write_flash -z --flash_mode dio --flash_freq 80m --flash_size detect 0xe000 ./ota_data_initial.bin 0x1000 ./bootloader.bin 0x10000 "${file}" 0x8000 ./partitions.bin`;
+  // This configuration sets the baud to 921600, which works for
+  // normal ESP32s. If the device is an M5 Atom Lite, it will
+  // use a higher baud rate of 1500000.
+  let baud = "921600";
+  if (port.includes("tty.usbserial")) {
+    baud = "1500000";
+  }
+
+  const cmd = `${python} ./esptool.py --chip esp32 -p ${port} --baud ${baud} --before default_reset --after hard_reset write_flash -z --flash_mode dio --flash_freq 80m --flash_size detect 0xe000 ./ota_data_initial.bin 0x1000 ./bootloader.bin 0x10000 "${file}" 0x8000 ./partitions.bin`;
 
   console.log("[flashBuild]", { cmd, cwd: cwd() });
 
