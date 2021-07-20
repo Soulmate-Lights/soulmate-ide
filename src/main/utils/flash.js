@@ -62,6 +62,7 @@ if (isElectron()) {
 /** Flash a build file to a USB output */
 export const flashBuild = async (port, file, progressCallback) => {
   let errorOutput = [];
+  let dataOutput = [];
   // const which = remote && remote?.require("which");
   let python = "/usr/bin/python";
   if (remote.require("os").platform() !== "darwin") {
@@ -86,6 +87,7 @@ export const flashBuild = async (port, file, progressCallback) => {
   const child = childProcess.exec(cmd, { cwd: cwd() });
   child.stderr.on("data", (line) => (errorOutput = [...errorOutput, line]));
   child.stdout.on("data", (data) => {
+    dataOutput = [...dataOutput, data];
     const number = getNumberFromFlashOutput(data);
     if (number) progressCallback(number);
   });
@@ -93,7 +95,12 @@ export const flashBuild = async (port, file, progressCallback) => {
   await new Promise((resolve, reject) => {
     child.on("close", (code) => {
       progressCallback(100);
-      code == 0 ? resolve() : reject(errorOutput);
+      if (code === 0) {
+        resolve();
+      } else {
+        let message = errorOutput.join("\n") + "\n" + dataOutput.join("\n");
+        reject(message);
+      }
     });
   });
 };
