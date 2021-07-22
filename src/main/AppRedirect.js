@@ -21,7 +21,7 @@ const AppRedirect = () => {
     var os = getMobileOperatingSystem();
     switch (os) {
       case "Android":
-        window.location = "google.com";
+        window.location = "https://play.google.com/store/apps/details?id=com.lantern&hl=en_US&gl=US";
         break;
       case "iOS":
         window.location =
