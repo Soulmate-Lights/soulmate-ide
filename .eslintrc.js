@@ -8,6 +8,8 @@ module.exports = {
     "plugin:react/recommended",
     "plugin:tailwind/recommended",
     "plugin:react-hooks/recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended",
   ],
   ignorePatterns: ["services/**/*"],
   globals: {
@@ -38,13 +40,20 @@ module.exports = {
     ecmaFeatures: {
       jsx: true,
     },
-    ecmaVersion: 2018,
     sourceType: "module",
   },
-  plugins: ["react", "react-hooks", "simple-import-sort", "auto-import"],
+  plugins: [
+    "react",
+    "react-hooks",
+    "simple-import-sort",
+    "auto-import",
+    "prettier",
+    "@typescript-eslint",
+  ],
   parser: "babel-eslint",
   rules: {
-    strict: 0,
+    "@typescript-eslint/ban-types": 0,
+    "@typescript-eslint/ban-ts-comment": 0,
     "react/prop-types": 0,
     "no-unused-vars": ["error", { argsIgnorePattern: "^_" }],
     "simple-import-sort/imports": "error",

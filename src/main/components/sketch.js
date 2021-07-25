@@ -2,8 +2,8 @@ import classnames from "classnames";
 
 const Sketch = ({
   sketch,
-  className,
-  autoPlay,
+  className = "",
+  autoPlay = false,
   width = 24,
   showTitle = true,
   ...rest

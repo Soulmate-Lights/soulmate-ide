@@ -1,5 +1,6 @@
 {
   "presets": [
+    "@babel/preset-typescript",
     [
       "@babel/preset-env",
       {
@@ -17,7 +18,7 @@
         "libraryName": "@react-icons",
         "camel2DashComponentName": false,
         "transformToDefaultImport": false,
-        "customName": "../../..//react-icons.js"
+        "customName": "../../../react-icons.js"
       },
       "@react-icons"
     ],

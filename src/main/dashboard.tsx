@@ -1,5 +1,7 @@
+// @ts-ignore
 import { AiFillApple, AiFillWindows } from "@react-icons";
 import sortBy from "lodash/sortBy";
+import React, { FC } from "react";
 import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";
 
@@ -15,7 +17,7 @@ import { ALL_SKETCHES_PATH } from "~/utils/network";
 import packagedotjson from "../../package.json";
 import { sketchUrl } from "./utils/urlHelpers";
 
-const Dashboard = () => {
+const Dashboard: FC<{}> = () => {
   const { userDetails, login } = UserContainer.useContainer();
   const { data: sketches } = useSWR(ALL_SKETCHES_PATH);
 
@@ -30,7 +32,6 @@ const Dashboard = () => {
             {!userDetails && (
               <button
                 className="inline-flex items-center px-4 py-2 ml-auto text-base font-medium text-purple-600 bg-white border border-transparent border-gray-300 leading-6 rounded-md hover:text-purple-500 focus:outline-none focus:border-purple-300 focus:shadow-outline-gray active:bg-purple-50 active:text-purple-700 transition duration-150 ease-in-out"
-                href="#"
                 onClick={login}
               >
                 Log in
