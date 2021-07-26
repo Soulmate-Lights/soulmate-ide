@@ -1,4 +1,4 @@
-import HiOutlineLightningBolt from "@react-icons/all-files/hi/HiOutlineLightningBolt";
+import { HiOutlineLightningBolt } from "@react-icons/all-files/hi/HiOutlineLightningBolt";
 import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";
 

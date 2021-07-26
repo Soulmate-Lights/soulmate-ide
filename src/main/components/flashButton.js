@@ -1,7 +1,7 @@
-import FaChevronUp from "@react-icons/all-files/fa/FaChevronUp";
-import FaUsb from "@react-icons/all-files/fa/FaUsb";
-import FaWifi from "@react-icons/all-files/fa/FaWifi";
-import RiPlayList2Fill from "@react-icons/all-files/ri/RiPlayList2Fill";
+import { FaChevronUp } from "@react-icons/all-files/fa/FaChevronUp";
+import { FaUsb } from "@react-icons/all-files/fa/FaUsb";
+import { FaWifi } from "@react-icons/all-files/fa/FaWifi";
+import { RiPlayList2Fill } from "@react-icons/all-files/ri/RiPlayList2Fill";
 
 import SoulmatesMenu from "~/components/SoulmatesMenu";
 import NotificationsContainer from "~/containers/notifications";

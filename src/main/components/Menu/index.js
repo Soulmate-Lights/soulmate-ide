@@ -1,9 +1,9 @@
-import FiCloud from "@react-icons/all-files/fi/FiCloud";
-import FiFolder from "@react-icons/all-files/fi/FiFolder";
-import FiHome from "@react-icons/all-files/fi/FiHome";
-import FiSmile from "@react-icons/all-files/fi/FiSmile";
-import GoSettings from "@react-icons/all-files/Go/GoSettings";
-import RiToolsFill from "@react-icons/all-files/Ri/RiToolsFill";
+import { FiCloud } from "@react-icons/all-files/fi/FiCloud";
+import { FiFolder } from "@react-icons/all-files/fi/FiFolder";
+import { FiHome } from "@react-icons/all-files/fi/FiHome";
+import { FiSmile } from "@react-icons/all-files/fi/FiSmile";
+import { GoSettings } from "@react-icons/all-files/Go/GoSettings";
+import { RiToolsFill } from "@react-icons/all-files/Ri/RiToolsFill";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import square from "url:./Square.jpg";
 

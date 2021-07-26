@@ -1,4 +1,4 @@
-import VscDebugRestart from "@react-icons/all-files/vsc/VscDebugRestart";
+import { VscDebugRestart } from "@react-icons/all-files/vsc/VscDebugRestart";
 import { parse } from "ansicolor";
 import React from "react";
 import Style from "style-it";

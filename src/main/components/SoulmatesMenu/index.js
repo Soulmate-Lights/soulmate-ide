@@ -1,6 +1,6 @@
 import "@szhsin/react-menu/dist/index.css";
 
-import FaRegPlayCircle from "@react-icons/all-files/fa/FaRegPlayCircle";
+import { FaRegPlayCircle } from "@react-icons/all-files/fa/FaRegPlayCircle";
 import { Menu, MenuHeader, MenuItem } from "@szhsin/react-menu";
 import sortBy from "lodash/sortBy";
 

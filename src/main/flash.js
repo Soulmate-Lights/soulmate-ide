@@ -1,8 +1,8 @@
 import "./progress.pcss";
 
-import AiFillCheckCircle from "@react-icons/all-files/ai/AiFillCheckCircle";
-import BsLayoutSidebarInsetReverse from "@react-icons/all-files/bs/BsLayoutSidebarInsetReverse";
-import IoAddCircleSharp from "@react-icons/all-files/io5/IoAddCircleSharp";
+import { AiFillCheckCircle } from "@react-icons/all-files/ai/AiFillCheckCircle";
+import { BsLayoutSidebarInsetReverse } from "@react-icons/all-files/bs/BsLayoutSidebarInsetReverse";
+import { IoAddCircleSharp } from "@react-icons/all-files/io5/IoAddCircleSharp";
 import compact from "lodash/compact";
 import sortBy from "lodash/sortBy";
 import uniqBy from "lodash/uniqBy";

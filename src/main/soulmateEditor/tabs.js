@@ -1,5 +1,5 @@
-import AiOutlinePlus from "@react-icons/all-files/ai/AiOutlinePlus";
-import ImCross from "@react-icons/all-files/im/ImCross";
+import { AiOutlinePlus } from "@react-icons/all-files/ai/AiOutlinePlus";
+import { ImCross } from "@react-icons/all-files/im/ImCross";
 import { SortableContainer, SortableElement } from "react-sortable-hoc";
 
 const tabClasses = [

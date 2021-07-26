@@ -31,7 +31,6 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@react-icons/all-files": "^4.1.0",
     "@sentry/electron": "^2.0.1",
     "@serialport/bindings": "9.0.2",
     "babel-plugin-import": "^1.13.3",
@@ -68,6 +67,7 @@
     "@parcel/transformer-svg-react": "^2.0.0-nightly.1739",
     "@parcel/transformer-svgo": "^2.0.0-nightly.1739",
     "@parcel/transformer-webmanifest": "2.0.0-beta.2",
+    "@react-icons/all-files": "^4.1.0",
     "@sentry/cli": "^1.64.0",
     "@sentry/integrations": "^5.24.2",
     "@sentry/react": "^6.2.3",
