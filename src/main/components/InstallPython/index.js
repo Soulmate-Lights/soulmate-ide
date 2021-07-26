@@ -1,5 +1,5 @@
-import { SiPython } from "@react-icons";
-import { VscDebugRestart } from "@react-icons";
+import SiPython from "@react-icons/all-files/si/SiPython";
+import VscDebugRestart from "@react-icons/all-files/vsc/VscDebugRestart";
 
 import Header from "~/components/Header";
 

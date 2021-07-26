@@ -1,6 +1,7 @@
 import { drawPixels } from "@elliottkember/leduino";
-import { BsFillPauseFill, BsPlayFill } from "@react-icons";
-import { FiCast } from "@react-icons";
+import BsPlayFill from "@react-icons/all-files/bs/BsPlayFill";
+import FiCast from "@react-icons/all-icons/fi/FiCast";
+import BsFillPauseFill from "@react-icons/bs/bs-fill-pause-fill";
 import useEventListener from "@use-it/event-listener";
 import _ from "lodash";
 import { useCallback } from "react";
@@ -29,10 +30,8 @@ const Simulator = ({
   const [hasPixels, setHasPixels] = useState(false);
   const worker = useRef();
 
-  const {
-    selectedSoulmate,
-    setSavedConfig,
-  } = SoulmatesContainer.useContainer();
+  const { selectedSoulmate, setSavedConfig } =
+    SoulmatesContainer.useContainer();
 
   const isStreamingSoulmate =
     selectedSoulmate && selectedSoulmate.type !== "usb";
@@ -102,7 +101,7 @@ const Simulator = ({
     const { hex } = build;
 
     if (!worker.current) {
-      worker.current = new Worker(new URL('./worker', import.meta.url));
+      worker.current = new Worker(new URL("./worker", import.meta.url));
       worker.current.addEventListener("message", workerMessage);
       worker.current.postMessage({ hex: hex, rows, cols });
     } else {

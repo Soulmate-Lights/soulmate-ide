@@ -1,6 +1,6 @@
 import "@szhsin/react-menu/dist/index.css";
 
-import { FaRegPlayCircle } from "@react-icons";
+import FaRegPlayCircle from "@react-icons/all-files/fa/FaRegPlayCircle";
 import { Menu, MenuHeader, MenuItem } from "@szhsin/react-menu";
 import sortBy from "lodash/sortBy";
 
@@ -19,11 +19,8 @@ const SoulmatesMenu = ({
   allowUsb,
   ...menuProps
 }) => {
-  let {
-    soulmates,
-    selectedSoulmate,
-    setSelectedSoulmate,
-  } = Soulmates.useContainer();
+  let { soulmates, selectedSoulmate, setSelectedSoulmate } =
+    Soulmates.useContainer();
 
   const [open, setOpen] = useState();
   const wrapperRef = useRef();

@@ -1,4 +1,4 @@
-import { HiOutlineLightningBolt } from "@react-icons";
+import HiOutlineLightningBolt from "@react-icons/all-files/hi/HiOutlineLightningBolt";
 import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";
 
@@ -222,7 +222,8 @@ const Config = () => {
               className={classnames(
                 "w-6/12 p-5 rounded-lg rounded-r-none focus:outline-none border border-gray-200 bg-gray-50",
                 {
-                  "shadow-inner bg-purple-600 border-purple-600 text-white": !isUsingCustomChip,
+                  "shadow-inner bg-purple-600 border-purple-600 text-white":
+                    !isUsingCustomChip,
                 }
               )}
               onClick={() => updateConfig({ button: 39, data: 32, clock: 26 })}
@@ -233,7 +234,8 @@ const Config = () => {
               className={classnames(
                 "w-6/12 p-5 rounded-lg rounded-l-none focus:outline-none border border-gray-200 bg-gray-50",
                 {
-                  "shadow-inner bg-purple-600 border-purple-600 text-white": isUsingCustomChip,
+                  "shadow-inner bg-purple-600 border-purple-600 text-white":
+                    isUsingCustomChip,
                 }
               )}
               onClick={() =>

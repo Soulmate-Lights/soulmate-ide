@@ -1,4 +1,4 @@
-import { VscDebugRestart } from "@react-icons";
+import VscDebugRestart from "@react-icons/all-files/vsc/VscDebugRestart";
 import { parse } from "ansicolor";
 import React from "react";
 import Style from "style-it";
@@ -30,12 +30,8 @@ const format = (line) => {
 };
 
 const Console = ({ className }) => {
-  const {
-    text,
-    flashing,
-    usbFlashingPercentage,
-    restart,
-  } = soulmatesContainer.useContainer();
+  const { text, flashing, usbFlashingPercentage, restart } =
+    soulmatesContainer.useContainer();
 
   const textDiv = useRef(false);
 

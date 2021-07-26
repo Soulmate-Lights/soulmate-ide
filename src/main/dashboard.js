@@ -1,4 +1,5 @@
-import { AiFillApple, AiFillWindows } from "@react-icons";
+import AiFillWindows from "@react-icons/all-files/ai/AiFillApple";
+import AiFillApple from "@react-icons/all-files/ai/AiFillApple";
 import sortBy from "lodash/sortBy";
 import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";

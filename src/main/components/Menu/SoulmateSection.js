@@ -1,7 +1,8 @@
-import { BsTerminal } from "@react-icons";
-import { FiAlertCircle, FiSettings } from "@react-icons";
-import { HiOutlineLightningBolt } from "@react-icons";
-import { RiPlayList2Fill } from "@react-icons";
+import BsTerminal from "@react-icons/all-files/bs/BsTerminal";
+import FiAlertCircle from "@react-icons/all-files/fi/FiAlertCircle";
+import FiSettings from "@react-icons/all-files/fi/FiSettings";
+import HiOutlineLightningBolt from "@react-icons/all-files/hi/HiOutlineLightningBolt";
+import RiPlayList2Fill from "@react-icons/all-files/ri/RiPlayList2Fill";
 import { NavLink, useLocation } from "react-router-dom";
 
 import SoulmateMenuItem from "~/components/SoulmatesMenu/SoulmateMenuItem";

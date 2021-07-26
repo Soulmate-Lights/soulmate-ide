@@ -1,5 +1,5 @@
-import { AiOutlinePlus } from "@react-icons";
-import { ImCross } from "@react-icons";
+import AiOutlinePlus from "@react-icons/all-files/ai/AiOutlinePlus";
+import ImCross from "@react-icons/all-files/im/ImCross";
 import { SortableContainer, SortableElement } from "react-sortable-hoc";
 
 const tabClasses = [
@@ -62,7 +62,8 @@ export const SketchTabs = SortableContainer(
           { "text-gray-700": !adding },
           { "bg-white dark-mode:bg-white": adding },
           {
-            "dark-mode:text-white dark-mode:bg-purple-500 dark-mode:text-white": !adding,
+            "dark-mode:text-white dark-mode:bg-purple-500 dark-mode:text-white":
+              !adding,
           }
         )}
         onClick={() => setAdding(!adding)}

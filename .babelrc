@@ -12,16 +12,6 @@
   ],
   "plugins": [
     [
-      "import",
-      {
-        "libraryName": "@react-icons",
-        "camel2DashComponentName": false,
-        "transformToDefaultImport": false,
-        "customName": "../../..//react-icons.js"
-      },
-      "@react-icons"
-    ],
-    [
       "babel-plugin-root-import",
       {
         "rootPathSuffix": "./src/main",

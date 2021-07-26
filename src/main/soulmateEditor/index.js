@@ -1,4 +1,4 @@
-import { HiOutlineArrowCircleRight } from "@react-icons";
+import HiOutlineArrowCircleRight from "@react-icons/all-files/hi/HiOutlineArrowCircleRight";
 import { useList, useStateList } from "react-use";
 
 import CodeEditor from "~/components/codeEditor";
@@ -19,12 +19,8 @@ import soulmateName from "~/utils/soulmateName";
 import { SketchTabs } from "./tabs";
 
 const SoulmateEditor = () => {
-  const {
-    selectedSoulmate,
-    flashSketches,
-    flashing,
-    usbFlashingPercentage,
-  } = SoulmatesContainer.useContainer();
+  const { selectedSoulmate, flashSketches, flashing, usbFlashingPercentage } =
+    SoulmatesContainer.useContainer();
   const { config = {} } = selectedSoulmate || {};
   const savedFirmware = useSavedFirmware(selectedSoulmate);
 

@@ -1,5 +1,5 @@
-import { BiChevronRight } from "@react-icons";
-import { IoPersonCircleOutline } from "@react-icons";
+import BiChevronRight from "@react-icons/all-files/bi/BiChevronRight";
+import IoPersonCircleOutline from "@react-icons/all-files/io/IoPersonCircleOutline";
 import compact from "lodash/compact";
 import React from "react";
 import { Link } from "react-router-dom";

@@ -1,5 +1,5 @@
-import { HiOutlineLink } from "@react-icons";
-import { RiVideoDownloadLine } from "@react-icons";
+import HiOutlineLink from "@react-icons/all-files/hi/HiOutlineLink";
+import RiVideoDownloadLine from "@react-icons/all-files/ri/RiVideoDownloadLine";
 import { Helmet } from "react-helmet";
 
 import CodeEditor from "~/components/codeEditor";

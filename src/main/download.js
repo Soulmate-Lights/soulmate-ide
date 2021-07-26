@@ -1,5 +1,6 @@
-import { AiFillApple, AiFillWindows } from "@react-icons";
-import { FaShoppingCart } from "@react-icons";
+import AiFillWindows from "@react-icons/all-files/ai/AiFillWindows";
+import AiFillApple from "@react-icons/all-icons/aifillapple";
+import FaShoppingCart from "@react-icons/all-icons/fa/FaShoppingCart";
 
 import isElectron from "~/utils/isElectron";
 import { isMac, isWindows } from "~/utils/isMac";
