@@ -1,8 +1,8 @@
 import "react-resizable/css/styles.css";
 
-import FiSettings from "@react-icons/fi/FiSettings";
-import  from "@react-icons/gr/GrClose";
-import IoMenuSharp from "@react-icons/io/IoMenuSharp";
+import FiSettings from "@react-icons/all-files/fi/FiSettings";
+import GrClose from "@react-icons/all-files/gr/GrClose";
+import IoMenuSharp from "@react-icons/all-files/io5/IoMenuSharp";
 import classnames from "classnames";
 import React, { Suspense } from "react";
 import { Helmet } from "react-helmet";
@@ -38,12 +38,8 @@ import User from "./user";
 
 const IDE = () => {
   UserContainer.useContainer();
-  const {
-    needsSetup,
-    port,
-    error,
-    setError,
-  } = SoulmatesContainer.useContainer();
+  const { needsSetup, port, error, setError } =
+    SoulmatesContainer.useContainer();
 
   const [focus, setFocus] = useState(true);
   const blur = !focus;

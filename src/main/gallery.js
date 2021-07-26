@@ -1,4 +1,4 @@
-import IoPersonCircleOutline from "@react-icons/io/IoPersonCircleOutline";
+import IoPersonCircleOutline from "@react-icons/all-files/io5/IoPersonCircleOutline";
 import sortBy from "lodash/sortBy";
 import uniqBy from "lodash/uniqBy";
 import { Helmet } from "react-helmet";

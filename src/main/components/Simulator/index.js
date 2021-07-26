@@ -1,7 +1,7 @@
 import { drawPixels } from "@elliottkember/leduino";
+import BsFillPauseFill from "@react-icons/all-files/bs/BsFillPlayFill";
 import BsPlayFill from "@react-icons/all-files/bs/BsPlayFill";
-import FiCast from "@react-icons/all-icons/fi/FiCast";
-import BsFillPauseFill from "@react-icons/bs/bs-fill-pause-fill";
+import FiCast from "@react-icons/all-files/fi/FiCast";
 import useEventListener from "@use-it/event-listener";
 import _ from "lodash";
 import { useCallback } from "react";
