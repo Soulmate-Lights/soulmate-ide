@@ -1,6 +1,6 @@
 /* eslint-disable no-useless-escape */
 import React from "react";
-import ReactGA from "react-ga"
+import ReactGA from "react-ga";
 import { Helmet } from "react-helmet";
 import hand from "url:./hand.jpg";
 import logo from "url:./logo.png";
@@ -27,10 +27,7 @@ export default function MarketingPage() {
           property="og:description"
         />
         <meta content="product" property="og:type" />
-        <meta
-          content={hand}
-          property="og:image"
-        />
+        <meta content={hand} property="og:image" />
       </Helmet>
       <div className="relative overflow-hidden bg-white">
         <div className="mx-auto max-w-screen-xl">
@@ -252,7 +249,10 @@ export default function MarketingPage() {
                         className="inline-flex items-center flex-shrink-0 px-2 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 cursor-pointer select-none rounded-l-md leading-5 focus:z-10 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-100 active:text-gray-500 transition ease-in-out duration-150"
                         onClick={() => {
                           if (index > 0) {
-                            ReactGA.event({ category: "Marketing Tutorial", action: "Previous" });
+                            ReactGA.event({
+                              category: "Marketing Tutorial",
+                              action: "Previous",
+                            });
                             setIndex(index - 1);
                           }
                         }}
@@ -275,8 +275,13 @@ export default function MarketingPage() {
                         aria-label="Next"
                         className="inline-flex items-center flex-shrink-0 px-2 py-2 -ml-px text-sm font-medium text-gray-500 bg-white border border-gray-300 cursor-pointer select-none rounded-r-md leading-5 focus:z-10 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-100 active:text-gray-500 transition ease-in-out duration-150"
                         onClick={() => {
-                          ReactGA.event({ category: "Marketing Tutorial", action: "Next" });
-                          setIndex(index + 1 >= examples.length ? 0 : index + 1)
+                          ReactGA.event({
+                            category: "Marketing Tutorial",
+                            action: "Next",
+                          });
+                          setIndex(
+                            index + 1 >= examples.length ? 0 : index + 1
+                          );
                         }}
                       >
                         Next example
@@ -399,22 +404,6 @@ export default function MarketingPage() {
               <dd className="text-base text-gray-500 leading-6">
                 Soulmate firmware is free and open-source, and we plan to keep
                 it that way.
-              </dd>
-            </div>
-            <div className="px-4 mb-6 space-y-2">
-              <dt className="text-lg font-medium text-gray-900 leading-6">
-                Where can I buy a Soulmate?
-              </dt>
-              <dd className="text-base text-gray-500 leading-6">
-                Thanks for asking! You can buy a Soulmate from{" "}
-                <a
-                  href="https://shop.soulmatelights.com/"
-                  rel="noopener noreferrer"
-                  target="_blank"
-                >
-                  the Soulmate Store
-                </a>{" "}
-                - buying a Soulmate helps keep the compiler servers running.
               </dd>
             </div>
             <div className="px-4 mb-6 space-y-2">

@@ -125,36 +125,6 @@ const Menu = ({ className }) => {
                 </a>
               </nav>
             )}
-
-            <div className="mt-4 space-y-4">
-              <a
-                className="flex flex-col flex-shrink mx-4 mt-auto mb-4 overflow-hidden text-xs bg-gray-300 border rounded-lg dark-mode:bg-gray-800 align-center dark-mode:border-gray-600"
-                href={shopUrl}
-                onClick={(e) => {
-                  if (isElectron()) {
-                    e.preventDefault();
-                    electron.shell.openExternal(shopUrl);
-                  }
-                }}
-                rel="noopener noreferrer"
-                style={{ minHeight: 88 }}
-                target="_blank"
-              >
-                <div
-                  className="flex-shrink min-h-0 bg-center bg-cover"
-                  style={{ backgroundImage: `url(${square})` }}
-                >
-                  <br />
-                  <br />
-                  <br />
-                  <br />
-                </div>
-                <div className="flex-shrink-0 p-2 text-center">
-                  <p className="font-semibold">Buy a Soulmate Square!</p>
-                  <p className="font-light">$149 + shipping</p>
-                </div>
-              </a>
-            </div>
           </div>
 
           {isAdmin() && (
