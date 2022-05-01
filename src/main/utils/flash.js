@@ -30,13 +30,13 @@ const getNumberFromFlashOutput = (data) => {
 export const installDependencies = () => {
   const childProcess = window.require("child_process");
   if (remote.require("os").platform() === "darwin") {
-    const hasPip = childProcess.exec("/usr/bin/python -m pip");
+    const hasPip = childProcess.exec(`${python()} -m pip`);
     hasPip.on("close", (result) => {
       if (result !== 0) {
         console.log("Pip not installed. Installing pip.");
-        childProcess.execSync(`/usr/bin/python ./get-pip.py`);
+        childProcess.execSync(`${python()} ./get-pip.py`);
       }
-      childProcess.execSync(`/usr/bin/python -m pip install "pyserial>=3.5"`, {
+      childProcess.execSync(`${python()} -m pip install "pyserial>=3.5"`, {
         cwd: cwd(),
       });
     });
@@ -59,17 +59,26 @@ if (isElectron()) {
   }
 }
 
-/** Flash a build file to a USB output */
-export const flashBuild = async (port, file, progressCallback) => {
-  let errorOutput = [];
-  let dataOutput = [];
-  // const which = remote && remote?.require("which");
-  let python = "/usr/bin/python";
+const python = () => {
+  let python = "/usr/bin/python3";
+
+  if (!fs.existsSync(python) && fs.existsSync("/usr/bin/python3")) {
+    python = "/usr/bin/python3";
+  }
+
   if (remote.require("os").platform() !== "darwin") {
     python = "python";
   }
 
-  console.log(`[utils.flashBuild] Python: ${python}`);
+  return python;
+};
+
+/** Flash a build file to a USB output */
+export const flashBuild = async (port, file, progressCallback) => {
+  let errorOutput = [];
+  let dataOutput = [];
+
+  console.log(`[utils.flashBuild] Python: ${python()}`);
 
   // This configuration sets the baud to 921600, which works for
   // normal ESP32s. If the device is an M5 Atom Lite, it will
@@ -79,7 +88,7 @@ export const flashBuild = async (port, file, progressCallback) => {
     baud = "1500000";
   }
 
-  const cmd = `${python} ./esptool.py --chip esp32 -p ${port} --baud ${baud} --before default_reset --after hard_reset write_flash -z --flash_mode dio --flash_freq 80m --flash_size detect 0xe000 ./ota_data_initial.bin 0x1000 ./bootloader.bin 0x10000 "${file}" 0x8000 ./partitions.bin`;
+  const cmd = `${python()} ./esptool.py --chip esp32 -p ${port} --baud ${baud} --before default_reset --after hard_reset write_flash -z --flash_mode dio --flash_freq 80m --flash_size detect 0xe000 ./ota_data_initial.bin 0x1000 ./bootloader.bin 0x10000 "${file}" 0x8000 ./partitions.bin`;
 
   console.log("[flashBuild]", { cmd, cwd: cwd() });
 
