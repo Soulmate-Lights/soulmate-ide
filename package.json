@@ -236,6 +236,7 @@
   "resolutions": {
     "@serialport/bindings": "9.0.2",
     "@serialport/stream": "9.0.2",
-    "babel-core": "7.0.0-bridge.0"
+    "babel-core": "7.0.0-bridge.0",
+    "sharp": "0.30.4"
   }
 }
