@@ -100,7 +100,7 @@ jobs:
 
       - name: Release Mac
         if: startsWith(matrix.os, 'macos')
-        run: "yarn run electron-builder -m --publish always"
+        run: "yarn run ./node_modules/.bin/electron-builder -m --publish always"
         env:
           API_KEY_ID: ${{ secrets.api_key_id }}
           API_KEY_ISSUER_ID: ${{ secrets.api_key_issuer_id }}

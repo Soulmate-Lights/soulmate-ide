@@ -117,7 +117,7 @@
     "mocha": "^8.3.2",
     "moment": "^2.27.0",
     "node-abi": "^2.19.3",
-    "node-gyp": "^9.0.0",
+    "node-gyp": "7.1.2",
     "normalize-url": "4",
     "npm-version": "^1.1.0",
     "parcel": "^2.0.0-beta.2",
