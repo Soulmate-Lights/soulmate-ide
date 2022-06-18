@@ -100,7 +100,7 @@ jobs:
 
       - name: Release Mac
         if: startsWith(matrix.os, 'macos')
-        run: "./node_modules/.bin/electron-builder -m --publish always"
+        run: "NODE_GYP_FORCE_PYTHON=python2.7 ./node_modules/.bin/electron-builder -m --publish always"
         env:
           API_KEY_ID: ${{ secrets.api_key_id }}
           API_KEY_ISSUER_ID: ${{ secrets.api_key_issuer_id }}
