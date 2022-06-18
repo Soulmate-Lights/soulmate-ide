@@ -11,6 +11,20 @@ const cwd = () => {
     : path?.join(rootPath, "builder");
 };
 
+const python = () => {
+  let python = "/usr/bin/python3";
+
+  if (!fs.existsSync(python) && fs.existsSync("/usr/bin/python3")) {
+    python = "/usr/bin/python3";
+  }
+
+  if (remote.require("os").platform() !== "darwin") {
+    python = "python";
+  }
+
+  return python;
+};
+
 // Flashing
 
 /** Get a progress percentage from a USB flash serial output */
@@ -58,20 +72,6 @@ if (isElectron()) {
     console.log("Error installing dependencies", e);
   }
 }
-
-const python = () => {
-  let python = "/usr/bin/python3";
-
-  if (!fs.existsSync(python) && fs.existsSync("/usr/bin/python3")) {
-    python = "/usr/bin/python3";
-  }
-
-  if (remote.require("os").platform() !== "darwin") {
-    python = "python";
-  }
-
-  return python;
-};
 
 /** Flash a build file to a USB output */
 export const flashBuild = async (port, file, progressCallback) => {
