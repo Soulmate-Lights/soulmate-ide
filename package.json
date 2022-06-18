@@ -46,7 +46,8 @@
     "prerender-node": "^3.2.5",
     "react-ga": "^3.3.0",
     "react-use": "^17.1.1",
-    "serialport": "9.0.2"
+    "serialport": "9.0.2",
+    "terser": "^5.14.1"
   },
   "optionalDependencies": {
     "keytar": "^7.6.0"
