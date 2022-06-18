@@ -21,8 +21,9 @@ jobs:
 
     strategy:
       matrix:
-        # os: [macos-10.15] #, windows-latest]
-        os: [windows-latest]
+        os: [macos-latest] #, windows-latest]
+        # os: [macos-10.15, windows-latest]
+        # os: [windows-latest]
 
     steps:
       - name: Check out Git repository
@@ -54,7 +55,9 @@ jobs:
           xcode-select -print-path
           sudo xcode-select --reset
           xcode-select -print-path
-          curl -sL https://github.com/nodejs/node-gyp/raw/master/macOS_Catalina_acid_test.sh | bash
+
+        # This was a script we were using for double-checking xcode-select was right
+        # curl -sL https://github.com/nodejs/node-gyp/raw/master/macOS_Catalina_acid_test.sh | bash
 
       - name: Install Node.js, NPM and Yarn for Mac
         if: startsWith(matrix.os, 'macos')
