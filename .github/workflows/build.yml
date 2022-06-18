@@ -47,14 +47,17 @@ jobs:
         with:
           xcode-version: latest
 
-      - name: Set up python / Xcode
+      - name: Set up Xcode
         if: startsWith(matrix.os, 'macos')
         run: |
-          echo "::set-env name=NODE_GYP_FORCE_PYTHON::python3"
           sudo rm -rf /Library/Developer/CommandLineTools
           xcode-select -print-path
           sudo xcode-select --reset
           xcode-select -print-path
+
+      - uses: actions/setup-python@v4
+        with:
+          python-version: "2.7"
 
         # This was a script we were using for double-checking xcode-select was right
         # curl -sL https://github.com/nodejs/node-gyp/raw/master/macOS_Catalina_acid_test.sh | bash
