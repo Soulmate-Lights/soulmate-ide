@@ -75,11 +75,11 @@ jobs:
           node-version: 15
 
       # Cache both Yarn cache directory and node_modules
-      - uses: c-hive/gha-yarn-cache@v1
-      - uses: actions/cache@v2.1.0
-        with:
-          path: "**/node_modules"
-          key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
+      # - uses: c-hive/gha-yarn-cache@v1
+      # - uses: actions/cache@v2.1.0
+      #   with:
+      #     path: "**/node_modules"
+      #     key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
 
       - name: yarn install
         uses: nick-invision/retry@v2
