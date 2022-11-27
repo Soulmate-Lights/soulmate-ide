@@ -8,14 +8,17 @@ import { createContainer } from "~/utils/unstated-next";
 if (localStorage.appServerUrl === "https://editor.soulmatelights.com/")
   localStorage.appServerUrl = "https://server.soulmatelights.com/";
 
-if (localStorage.simulatorUrl == "https://editor.soulmatelights.com/sketches/build")
-  localStorage.simulatorUrl = "https://firmware.soulmatelights.com:8082/build"
+if (
+  localStorage.simulatorUrl ==
+  "https://editor.soulmatelights.com/sketches/build"
+)
+  localStorage.simulatorUrl = "https://build.soulmatelights.com/hexi";
 
 let initialSimulatorUrl =
-  localStorage.simulatorUrl || "https://firmware.soulmatelights.com:8082/build";
+  localStorage.simulatorUrl || "https://build.soulmatelights.com/hexi";
 
 let initialFirmwareUrl =
-  localStorage.firmwareUrl || "https://firmware.soulmatelights.com:8083/build";
+  localStorage.firmwareUrl || "https://build.soulmatelights.com/builder";
 
 let initialAppServerUrl =
   localStorage.appServerUrl || "https://server.soulmatelights.com/";

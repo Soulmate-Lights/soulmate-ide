@@ -114,7 +114,7 @@ const Settings = () => {
               onChange={setSimulator}
               options={[
                 {
-                  option: "https://firmware.soulmatelights.com:8082/build",
+                  option: "https://build.soulmatelights.com/hexi",
                   name: "Production",
                 },
                 { option: "http://localhost:8080/build", name: "Local" },
@@ -130,7 +130,7 @@ const Settings = () => {
               onChange={setFirmware}
               options={[
                 {
-                  option: "https://firmware.soulmatelights.com:8083/build",
+                  option: "https://build.soulmatelights.com/build",
                   name: "Production",
                 },
                 { option: "http://localhost:8081/build", name: "Local" },
