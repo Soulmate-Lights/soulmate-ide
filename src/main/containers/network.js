@@ -11,14 +11,14 @@ if (localStorage.appServerUrl === "https://editor.soulmatelights.com/")
 if (
   localStorage.firmwareUrl === "https://firmware.soulmatelights.com:8083/build"
 )
-  localStorage.firmwareUrl = undefined;
+  delete localStorage.firmwareUrl;
 
 if (
   localStorage.simulatorUrl ==
     "https://editor.soulmatelights.com/sketches/build" ||
   localStorage.simulatorUrl == "https://firmware.soulmatelights.com:8082/build"
 )
-  localStorage.simulatorUrl = undefined;
+  delete localStorage.simulatorUrl;
 
 let initialSimulatorUrl =
   localStorage.simulatorUrl || "https://build.soulmatelights.com/hexi";
