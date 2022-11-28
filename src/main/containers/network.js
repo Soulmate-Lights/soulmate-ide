@@ -6,13 +6,19 @@ import { createContainer } from "~/utils/unstated-next";
 
 // Legacy URLs
 if (localStorage.appServerUrl === "https://editor.soulmatelights.com/")
-  localStorage.appServerUrl = "https://server.soulmatelights.com/";
+  localStorage.appServerUrl = undefined;
+
+if (
+  localStorage.firmwareUrl === "https://firmware.soulmatelights.com:8083/build"
+)
+  localStorage.firmwareUrl = undefined;
 
 if (
   localStorage.simulatorUrl ==
-  "https://editor.soulmatelights.com/sketches/build"
+    "https://editor.soulmatelights.com/sketches/build" ||
+  localStorage.simulatorUrl == "https://firmware.soulmatelights.com:8082/build"
 )
-  localStorage.simulatorUrl = "https://build.soulmatelights.com/hexi";
+  localStorage.simulatorUrl = undefined;
 
 let initialSimulatorUrl =
   localStorage.simulatorUrl || "https://build.soulmatelights.com/hexi";
