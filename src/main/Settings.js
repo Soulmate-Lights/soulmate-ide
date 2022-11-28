@@ -130,7 +130,7 @@ const Settings = () => {
               onChange={setFirmware}
               options={[
                 {
-                  option: "https://build.soulmatelights.com/build",
+                  option: "https://build.soulmatelights.com/builder",
                   name: "Production",
                 },
                 { option: "http://localhost:8081/build", name: "Local" },
