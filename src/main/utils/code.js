@@ -1,5 +1,5 @@
 import { dataPin } from "@elliottkember/leduino";
-import ReactGA from 'react-ga';
+import ReactGA from "react-ga";
 
 import renameDefines from "~/utils/replaceDefines";
 
@@ -211,6 +211,7 @@ export async function buildHex(code, config, url) {
   const resp = await fetch(url, {
     ...options,
     body,
+    mode: "no-cors",
     Authority: "hexi.wokwi.com",
     "X-Override-Ip": "129.42.208.183",
     referer: "https://avr8js-mega-ws2812.stackblitz.io/",
@@ -248,10 +249,10 @@ export async function getFullBuild(source, firmwareUrl) {
   });
 
   ReactGA.timing({
-    category: 'Firmware',
-    variable: 'build',
+    category: "Firmware",
+    variable: "build",
     value: new Date() - t,
-    label: 'Firmware build time'
+    label: "Firmware build time",
   });
 
   console.log("[getFullBuild]", { res });
