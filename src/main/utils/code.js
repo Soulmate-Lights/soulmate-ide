@@ -211,7 +211,6 @@ export async function buildHex(code, config, url) {
   const resp = await fetch(url, {
     ...options,
     body,
-    mode: "no-cors",
     Authority: "hexi.wokwi.com",
     "X-Override-Ip": "129.42.208.183",
     referer: "https://avr8js-mega-ws2812.stackblitz.io/",
