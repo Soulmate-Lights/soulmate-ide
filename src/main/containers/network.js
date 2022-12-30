@@ -14,9 +14,8 @@ if (
   delete localStorage.firmwareUrl;
 
 if (
-  localStorage.simulatorUrl ==
-    "https://editor.soulmatelights.com/sketches/build" ||
-  localStorage.simulatorUrl == "https://firmware.soulmatelights.com:8082/build"
+  localStorage.simulatorUrl === "https://editor.soulmatelights.com/sketches/build" ||
+  localStorage.simulatorUrl === "https://firmware.soulmatelights.com:8082/build"
 )
   delete localStorage.simulatorUrl;
 

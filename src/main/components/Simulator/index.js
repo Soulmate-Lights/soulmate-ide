@@ -63,7 +63,7 @@ const Simulator = ({
     for (let i = 0; i < pixels.length; i += 1) {
       const index = i * 4;
       const pixel = pixels[i];
-      d[index] = i == 0 ? 1 : 0;
+      d[index] = i === 0 ? 1 : 0;
       d[index + 1] = pixel.r;
       d[index + 2] = pixel.g;
       d[index + 3] = pixel.b;

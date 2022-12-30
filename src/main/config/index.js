@@ -55,7 +55,7 @@ const Config = () => {
     setConfig(originalConfig);
   }, [originalConfig]);
 
-  const dirty = originalConfig != config && !flashing;
+  const dirty = originalConfig !== config && !flashing;
   const isUsingCustomChip =
     config.button !== 39 || config.data !== 32 || config.clock !== 26;
 
@@ -276,7 +276,7 @@ const Config = () => {
                         value={config.data}
                       />
                     </div>
-                    {config.ledType == "APA102" && (
+                    {config.ledType === "APA102" && (
                       <div className="flex flex-row items-center w-6/12">
                         <span className="inline-flex items-center h-10 px-3 text-gray-500 border border-r-0 border-gray-300 rounded-l-md bg-gray-50">
                           Clock

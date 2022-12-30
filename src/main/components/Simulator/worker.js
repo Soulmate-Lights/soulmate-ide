@@ -8,9 +8,9 @@ let _hex;
 self.addEventListener("message", (e) => {
   const { hex, rows, cols } = e.data;
 
-  if (e.data.paused == true) {
+  if (e.data.paused === true) {
     arduino?.stop();
-  } else if (e.data.paused == false) {
+  } else if (e.data.paused === false) {
     arduino?.start();
   }
 

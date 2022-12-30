@@ -6,7 +6,7 @@ const selectedClass = "text-gray-900 dark-mode:text-gray-900 bg-gray-300";
 
 const NamesMenu = ({ sketches, onChange, index, setIndex }) =>
   sketches?.map((sketch, i) => {
-    const selected = i == index;
+    const selected = i === index;
     return (
       <div
         className={classnames(sketchClass, {
