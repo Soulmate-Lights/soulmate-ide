@@ -47,7 +47,7 @@
     "react-ga": "^3.3.0",
     "react-use": "^17.1.1",
     "serialport": "9.0.2",
-    "terser": "^5.14.1"
+    "terser": "^5.14.2"
   },
   "optionalDependencies": {
     "keytar": "^7.6.0"
